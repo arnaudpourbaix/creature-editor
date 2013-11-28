@@ -1,0 +1,92 @@
+id;name;short_label;long_label;type;min_value;max_value;length;attribute_id
+1;NAME;Name;Name;stringref;null;null;null;null
+2;TOOLTIP;Tooltip;Tooltip;stringref;null;null;null;1
+3;ANIMATION;Animation;Animation;animate.ids;null;null;null;null
+4;XP_VALUE;Xp value;Xp value;integer;0;500000;null;null
+5;XP;Power level/Experience;Creature Power Level for summoning spells / Experience of the creature for party members;integer;0;8000000;null;null
+6;GOLD;Gold;Gold;integer;0;100000;null;null
+7;FLAGS;Flags;Flags;bit;null;null;null;null
+8;STATUS;Permanent status flags;Permanent status flags;bit;null;null;null;null
+9;THAC0;THAC0;THAC0;integer;-20;25;null;null
+10;NUMBER_OF_ATTACKS;Number of attacks;Number of attacks;integer;0;10;null;null
+11;FATIGUE;Fatigue;Fatigue;integer;0;100;null;null
+12;INTOXICATION;Intoxication;Intoxication;integer;0;100;null;null
+13;LUCK;Luck;Luck (default value 0);integer;-10;10;null;null
+14;GENDER;Gender;Gender (checked for the summoning cap);gender.ids;null;null;null;null
+15;SEX;Sex;Sex;gender.ids;null;null;null;14
+16;GENERAL;General;General;general.ids;null;null;null;null
+17;RACE;Race;Race;race.ids;null;null;null;null
+18;CLASS;Class;Class;class.ids;null;null;null;null
+19;KIT;Kit;Kit;kitlist.2da;null;null;null;null
+20;RACIAL_ENEMY;Racial enemy;Racial enemy;race.ids;null;null;null;null
+21;ALIGNMENT;Alignment;Alignment;alignmen.ids;null;null;null;null
+22;ALLEGIANCE;Allegiance;Allegiance;ea.ids;null;null;null;null
+23;DEATH_VARIABLE;Death variable;Death variable;string;null;null;null;null
+24;DIALOG_FILE;Dialog file;Dialog file;dlg;null;null;null;null
+25;LEVEL;Level;Level;;null;null;null;null
+26;LEVEL1;Level 1;First class level;integer;0;50;null;25
+27;LEVEL2;Level 2;Second class level;integer;0;50;null;25
+28;LEVEL3;Level 3;Third class level;integer;0;50;null;25
+29;HIT_POINTS;Hit points;Hit points;;null;null;null;null
+30;CURRENT_HP;Current hit points;Current Hit Points;integer;0;1000;null;29
+31;MAXIMUM_HP;Maximum hit points;Maximum Hit Points;integer;0;1000;null;29
+32;ABILITY_SCORES;Ability scores;Ability scores;;null;null;null;null
+33;STRENGTH;Strength;Strength;integer;1;25;null;32
+34;EXCEPTIONNAL_STRENGTH;Strength bonus;Strength bonus (%);integer;0;100;null;34
+35;INTELLIGENCE;Intelligence;Intelligence;integer;1;25;null;32
+36;WISDOM;Wisdom;Wisdom;integer;1;25;null;32
+37;DEXTERITY;Dexterity;Dexterity;integer;1;25;null;32
+38;CONSTITUTION;Constitution;Constitution;integer;1;25;null;32
+39;CHARISMA;Charisma;Charisma;integer;1;25;null;32
+40;ARMOR_CLASS;Armor class;Armor class;;null;null;null;null
+41;NATURAL_ARMOR_CLASS;Natural armor class;Armor Class (Natural);integer;-10;10;null;40
+42;EFFECTIVE_ARMOR_CLASS;Effective armor class;Armor Class (Effective);integer;-10;10;null;40
+43;CRUSHING_ARMOR_CLASS;Crushing armor class;Armor Class (Crushing attacks modifier);integer;-10;10;null;40
+44;MISSILE_ARMOR_CLASS;Missile armor class;Armor Class (Missile attacks modifier);integer;-10;10;null;40
+45;PIERCING_ARMOR_CLASS;Piercing armor class;Armor Class (Piercing attacks modifier);integer;-10;10;null;40
+46;SLASHING_ARMOR_CLASS;Slashing armor class;Armor Class (Slashing attacks modifier);integer;-10;10;null;40
+47;SAVING_THROWS;Saving throws;Saving throws;;null;null;null;null
+48;SAVE_VERSUS_DEATH;Save versus death;Save versus death;integer;0;20;null;47
+49;SAVE_VERSUS_WANDS;Save versus wands;Save versus wands;integer;0;20;null;47
+50;SAVE_VERSUS_POLYMORPH;Save versus polymorph;Save versus polymorph;integer;0;20;null;47
+51;SAVE_VERSUS_BREATH attacks;Save versus breath;Save versus breath attacks;integer;0;20;null;47
+52;SAVE_VERSUS_SPELLS;Save versus spells;Save versus spells;integer;0;20;null;47
+53;MORALE;Morale;Morale;integer;0;20;null;null
+54;MORALE_BREAK;Morale break;Morale break;integer;0;20;null;53
+55;MORALE_RECOVERY_TIME;Morale recovery time;Morale Recovery Time (default value 60);integer;0;100;null;53
+56;RESISTANCES;Resistances;Resistances;;null;null;null;null
+57;RESIST_FIRE;Resist fire;Resist fire;integer;0;150;null;56
+58;RESIST_COLD;Resist cold;Resist cold;integer;0;150;null;56
+59;RESIST_ELECTRICITY;Resist electricity;Resist electricity;integer;0;150;null;56
+60;RESIST_ACID;Resist acid;Resist acid;integer;0;150;null;56
+61;RESIST_MAGIC;Resist magic;Resist magic;integer;0;150;null;56
+62;RESIST_MAGIC_FIRE;Resist magic fire;Resist magic fire;integer;0;150;null;56
+63;RESIST_MAGIC_COLD;Resist magic cold;Resist magic cold;integer;0;150;null;56
+64;RESIST_SLASHING;Resist slashing;Resist slashing;integer;0;150;null;56
+65;RESIST_CRUSHING;Resist crushing;Resist crushing;integer;0;150;null;56
+66;RESIST_PIERCING;Resist piercing;Resist piercing;integer;0;150;null;56
+67;RESIST_MISSILE;Resist missile;Resist missile;integer;0;150;null;56
+68;THIEVING_SKILL_SCORES;Thieving skill scores;Thieving skill scores;;null;null;null;null
+69;STEALTH;Stealth;Stealth;integer;0;100;null;68
+70;HIDE_IN_SHADOWS;Hide in shadows;Hide in Shadows;integer;0;100;null;68
+71;DETECT_ILLUSION;Detect illusion;Detect illusion;integer;0;100;null;68
+72;SET_TRAPS;Set traps;Set traps;integer;0;100;null;68
+73;FIND_DISARM_TRAPS;Find/disarm traps;Find/disarm traps;integer;0;100;null;68
+74;LOCKPICKING;Lockpicking;Lockpicking;integer;0;100;null;68
+75;PICK_POCKETS;Pick pockets;Pick pockets;integer;0;100;null;68
+76;TRACKING_SKILL;Tracking skill;Tracking skill;integer;0;100;null;68
+77;PROFICIENCIES;Proficiencies;Proficiencies;;null;null;null;null
+78;LARGE_SWORDS_PROFICIENCY;Large swords proficiency;Large swords proficiency;integer;0;5;null;77
+79;SMALL_SWORDS_PROFICIENCY;Small swords proficiency;Small swords proficiency;integer;0;5;null;77
+80;BOWS_PROFICIENCY;Bows proficiency;Bows proficiency;integer;0;5;null;77
+81;SPEARS_PROFICIENCY;Spears proficiency;Spears proficiency;integer;0;5;null;77
+82;BLUNT_PROFICIENCY;Blunt proficiency;Blunt proficiency;integer;0;5;null;77
+83;SPIKED_PROFICIENCY;Spiked proficiency;Spiked proficiency;integer;0;5;null;77
+84;AXE_PROFICIENCY;Axe proficiency;Axe proficiency;integer;0;5;null;77
+85;MISSILE_PROFICIENCY;Missile proficiency;Missile proficiency;integer;0;5;null;77
+86;SCRIPTS;Scripts;Scripts;;null;null;null;null
+87;OVERRIDE_SCRIPT;Override script;Creature script - Override;script;null;null;null;86
+88;CLASS_SCRIPT;Class script;Creature script - Class;script;null;null;null;86
+89;RACE_SCRIPT;Race script;Creature script - Race;script;null;null;null;86
+90;GENERAL_SCRIPT;General script;Creature script - General;script;null;null;null;86
+91;DEFAULT_SCRIPT;Default script;Creature script - Default;script;null;null;null;86

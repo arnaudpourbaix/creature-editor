@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+
+<hibernate-reverse-engineering>
+	<table-filter match-name="DATABASECHANGELOG" match-catalog="PUBLIC" match-schema="PUBLIC" exclude="true"></table-filter>
+	<table-filter match-name="DATABASECHANGELOGLOCK" match-catalog="PUBLIC" match-schema="PUBLIC" exclude="true"></table-filter>
+	<table-filter match-name=".*" match-catalog="PUBLIC" match-schema="PUBLIC"></table-filter>
+	<table schema="PUBLIC" name="CATEGORY">
+		<foreign-key constraint-name="FK_CATEGORY_CATEGORY">
+			<many-to-one property="parent" />
+			<set property="children" />
+		</foreign-key>
+	</table>
+	<table schema="PUBLIC" name="STATE">
+		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE_STATE">
+			<set exclude="true" />
+		</foreign-key>
+	</table>
+	<table schema="PUBLIC" name="GAME_EDITION">
+		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE_GAME_EDITION">
+			<set exclude="true" />
+		</foreign-key>
+	</table>
+	<table schema="PUBLIC" name="ATTRIBUTE">
+		<foreign-key constraint-name="FK_ATTRIBUTE_ATTRIBUTE">
+			<many-to-one property="parent" />
+			<set property="children" />
+		</foreign-key>
+		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE_ATTRIBUTE">
+			<set exclude="true" />
+		</foreign-key>
+	</table>
+</hibernate-reverse-engineering>

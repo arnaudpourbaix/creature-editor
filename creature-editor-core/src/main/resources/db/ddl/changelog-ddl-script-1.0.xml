@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+        					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        					http://www.liquibase.org/xml/ns/dbchangelog-ext 
+        					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="apourbaix" id="script-001">
+		<createTable tableName="trigger">
+			<column name="name" type="VARCHAR(50)">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="tobEx" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
+			<column name="params" type="VARCHAR(100)" />
+			<column name="label" type="VARCHAR(1500)" />
+		</createTable>
+		
+		<createTable tableName="keyword">
+			<column name="id" type="int" autoIncrement="true" >
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR(50)">
+				<constraints unique="true" nullable="false"/>
+			</column>
+			<column name="type" type="VARCHAR(15)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		
+		<createTable tableName="trigger_keyword">
+			<column name="id" type="int" autoIncrement="true" >
+				<constraints primaryKey="true" />
+			</column>
+			<column name="trigger_id" type="VARCHAR(50)" />
+			<column name="keyword_id" type="int" />
+			<column name="result" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
+			<column name="param1" type="VARCHAR(50)"/>
+			<column name="param2" type="VARCHAR(50)"/>
+			<column name="param3" type="VARCHAR(50)"/>
+			<column name="param4" type="VARCHAR(50)"/>
+		</createTable>
+		
+		<createTable tableName="action">
+			<column name="name" type="VARCHAR(50)">
+				<constraints primaryKey="true"/>
+			</column>
+			<column name="tobEx" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
+			<column name="params" type="VARCHAR(100)" />
+			<column name="label" type="VARCHAR(1500)" />
+		</createTable>
+		
+	</changeSet>
+
+	<changeSet author="apourbaix" id="script-002">
+		<addForeignKeyConstraint constraintName="fk_pk_trigger_keyword_trigger" baseTableName="trigger_keyword" baseColumnNames="trigger_id" referencedTableName="trigger" referencedColumnNames="name" />
+		<addForeignKeyConstraint constraintName="fk_pk_trigger_keyword_keyword" baseTableName="trigger_keyword" baseColumnNames="keyword_id" referencedTableName="keyword" referencedColumnNames="id" />
+	</changeSet>
+
+</databaseChangeLog>

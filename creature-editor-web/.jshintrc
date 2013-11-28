@@ -1,0 +1,22 @@
+{
+	"camelcase" : true,
+	"curly": true,
+	"eqeqeq": true,
+	"latedef": true,
+	"noarg": true,
+	"undef": true,
+	"unused": false,
+	"trailing": true,
+	"strict": true,
+	
+	"eqnull": true,
+	
+	"browser": true,
+	"devel": true,
+	
+	"globals": {
+    	"jquery": true,
+    	"$": true,
+    	"angular": true
+	}	
+}

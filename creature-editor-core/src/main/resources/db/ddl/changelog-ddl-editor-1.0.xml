@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+        					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        					http://www.liquibase.org/xml/ns/dbchangelog-ext 
+        					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+	<changeSet author="apourbaix" id="editor-001">
+		<createTable tableName="account">
+			<column name="id" type="int">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="email" type="VARCHAR2(100)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="password" type="VARCHAR2(200)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="role" type="VARCHAR2(50)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		<createSequence sequenceName="account_id_seq" />
+
+		<createTable tableName="game">
+			<column name="id" type="int" autoIncrement="true" >
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR2(50)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<createTable tableName="mod">
+			<column name="id" type="int" autoIncrement="true" >
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR2(100)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<createTable tableName="game_edition">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="code" type="VARCHAR2(5)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="name" type="VARCHAR2(50)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+
+		<createTable tableName="state">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR2(10)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="label" type="VARCHAR2(50)">
+				<constraints nullable="false"/>
+			</column>
+		</createTable>
+		
+		<createTable tableName="category">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR2(250)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="category_id" type="int" />
+		</createTable>
+
+		<createTable tableName="creature">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="game_id" type="int" />
+		</createTable>
+
+		<createTable tableName="attribute">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="name" type="VARCHAR2(30)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="short_label" type="VARCHAR2(100)" />
+			<column name="long_label" type="VARCHAR2(250)" />
+			<column name="type" type="VARCHAR2(20)" />
+			<column name="min_value" type="int" />
+			<column name="max_value" type="int" />
+			<column name="length" type="int" />
+			<column name="attribute_id" type="int" />
+		</createTable>
+
+		<createTable tableName="attribute_value">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="value" type="VARCHAR2(30)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="creature_id" type="int" />
+			<column name="attribute_id" type="int" />
+			<column name="game_edition_id" type="int" />
+			<column name="state_id" type="int" />
+		</createTable>
+		
+
+		<createTable tableName="creature_category">
+			<column name="creature_id" type="int" />
+			<column name="category_id" type="int" />
+		</createTable>
+		<addPrimaryKey constraintName="pk_creature_category" tableName="creature_category" columnNames="creature_id, category_id" />
+		
+	</changeSet>
+	
+	<changeSet author="apourbaix" id="editor-002">
+		<addForeignKeyConstraint constraintName="fk_creature_game" baseTableName="creature" baseColumnNames="game_id" referencedTableName="game" referencedColumnNames="id" /> 
+		<addForeignKeyConstraint constraintName="fk_category_category" baseTableName="category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_attribute" baseTableName="attribute" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value_attribute" baseTableName="attribute_value" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value_creature" baseTableName="attribute_value" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value_game_edition" baseTableName="attribute_value" baseColumnNames="game_edition_id" referencedTableName="game_edition" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value_state" baseTableName="attribute_value" baseColumnNames="state_id" referencedTableName="state" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_creature_category_creature" baseTableName="creature_category" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_creature_category_category" baseTableName="creature_category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
+	</changeSet>
+
+</databaseChangeLog>
