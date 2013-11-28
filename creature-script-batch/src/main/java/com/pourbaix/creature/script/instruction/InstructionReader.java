@@ -1,7 +1,9 @@
 package com.pourbaix.creature.script.instruction;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import com.pourbaix.creature.script.generator.GeneratorException;
-import com.pourbaix.creature.script.keyword.KeywordValue;
 
 /**
  * read text and build keywordValue object.
@@ -11,12 +13,57 @@ public class InstructionReader {
 
 	private String text;
 	private int position;
-	private String currentKeywordValueName;
-	private String currentKeywordValueParams;
+	private boolean result;
+	private String keyword;
+	private String params;
+	private static final String NEGATIVE_RESULT = "!";
+	private static final String KEYWORD_REGEX = "^!?[\\w\\s%'_-]+";
 
 	public InstructionReader(String text) {
 		this.text = text;
 		this.position = 0;
+	}
+
+	/**
+	 * find next keyword in text.
+	 * 
+	 * @return true is a keyword is found
+	 * @throws GeneratorException
+	 */
+	public boolean next() throws GeneratorException {
+		Pattern keywordPattern = Pattern.compile(KEYWORD_REGEX);
+		Matcher matcher = keywordPattern.matcher(this.text);
+		if (!matcher.find(this.position)) {
+			return false;
+		}
+		this.keyword = matcher.group();
+		this.result = !this.keyword.startsWith(NEGATIVE_RESULT);
+		if (this.keyword.startsWith(NEGATIVE_RESULT)) {
+			this.keyword = this.keyword.substring(1);
+		}
+		this.position = matcher.end();
+		return true;
+		// if (position >= text.length()) {
+		// return false;
+		// }
+		// int i = position;
+		// boolean found = false;
+		// while (i < text.length() && !found) {
+		// if (text.charAt(i) == ',' || text.charAt(i) == '(') {
+		// found = true;
+		// } else if (text.substring(i, i + 1).matches("[\\w\\s%_'!-]")) {
+		// i++;
+		// } else {
+		// throw new GeneratorException("invalid keyword name: " + text.substring(position));
+		// }
+		// }
+		// currentKeywordValueName = text.substring(position, i);
+		// currentKeywordValueParams = "";
+		// position = i + 1;
+		// if (found && text.charAt(i) == '(') {
+		// retrieveParameters();
+		// }
+		// return found;
 	}
 
 	public String getText() {
@@ -35,91 +82,20 @@ public class InstructionReader {
 		this.position = position;
 	}
 
-	public String getCurrentKeywordValueName() {
-		return currentKeywordValueName;
+	public boolean isResult() {
+		return result;
 	}
 
-	public void setCurrentKeywordValueName(String currentKeywordValueName) {
-		this.currentKeywordValueName = currentKeywordValueName;
+	public void setResult(boolean result) {
+		this.result = result;
 	}
 
-	public String getCurrentKeywordValueParams() {
-		return currentKeywordValueParams;
+	public String getKeyword() {
+		return keyword;
 	}
 
-	public void setCurrentKeywordValueParams(String currentKeywordValueParams) {
-		this.currentKeywordValueParams = currentKeywordValueParams;
-	}
-
-	/**
-	 * get a keywordValue object from current cursor.
-	 * 
-	 * @return keywordValue object
-	 * @throws GeneratorException
-	 */
-	public KeywordValue getValue() throws GeneratorException {
-		KeywordValue keywordValue = new KeywordValue(currentKeywordValueName);
-		if (!currentKeywordValueParams.isEmpty()) {
-			InstructionReader reader = new InstructionReader(currentKeywordValueParams);
-			while (reader.next()) {
-				keywordValue.addValue(reader.getValue());
-			}
-		}
-		return keywordValue;
-	}
-
-	/**
-	 * find next keywordValue in text.
-	 * 
-	 * @return true is a keywordValue is found
-	 * @throws GeneratorException
-	 */
-	public boolean next() throws GeneratorException {
-		if (position >= text.length()) {
-			return false;
-		}
-		// find name
-		int i = position;
-		boolean found = false;
-		while (i < text.length() && !found) {
-			if (text.charAt(i) == ',' || text.charAt(i) == '(') {
-				found = true;
-			} else if (text.substring(i, i + 1).matches("[\\w\\s%_'!-]")) {
-				i++;
-			} else {
-				throw new GeneratorException("invalid keyword name: " + text.substring(position));
-			}
-		}
-		currentKeywordValueName = text.substring(position, i);
-		currentKeywordValueParams = "";
-		position = i + 1;
-		if (found && text.charAt(i) == '(') {
-			retrieveParameters();
-		}
-		return true;
-	}
-
-	/**
-	 * retrieve parameters' text from a keywordValue.
-	 * 
-	 * @throws GeneratorException
-	 */
-	private void retrieveParameters() throws GeneratorException {
-		int parentheses = 1;
-		int i = position;
-		while (i < text.length() && parentheses > 0) {
-			if (text.charAt(i) == '(') {
-				parentheses++;
-			} else if (text.charAt(i) == ')') {
-				parentheses--;
-			}
-			i++;
-		}
-		if (parentheses != 0) {
-			throw new GeneratorException("parantheses don't match for " + currentKeywordValueName + ": " + text.substring(position));
-		}
-		currentKeywordValueParams = text.substring(position, i - 1);
-		position = i + 1;
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 }
