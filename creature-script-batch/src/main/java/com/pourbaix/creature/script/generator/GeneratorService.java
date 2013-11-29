@@ -24,6 +24,7 @@ import com.pourbaix.creature.script.context.GlobalContext;
 import com.pourbaix.creature.script.instruction.CommentInstruction;
 import com.pourbaix.creature.script.instruction.GeneratedInstruction;
 import com.pourbaix.creature.script.instruction.Instruction;
+import com.pourbaix.creature.script.instruction.InstructionException;
 import com.pourbaix.creature.script.instruction.InstructionService;
 import com.pourbaix.creature.script.instruction.InstructionTypeEnum;
 import com.pourbaix.creature.script.instruction.NativeInstruction;
@@ -104,6 +105,8 @@ public class GeneratorService {
 			}
 			throw new GeneratorException(message, e);
 		} catch (FileNotFoundException e) {
+			throw new GeneratorException(e);
+		} catch (InstructionException e) {
 			throw new GeneratorException(e);
 		}
 		return null;

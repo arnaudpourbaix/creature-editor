@@ -1,9 +1,9 @@
 package com.pourbaix.creature.script.instruction;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.pourbaix.creature.script.generator.GeneratorException;
 
 /**
  * read text and build keywordValue object.
@@ -11,91 +11,83 @@ import com.pourbaix.creature.script.generator.GeneratorException;
  */
 public class InstructionReader {
 
+	private static final String NEGATIVE_RESULT = "!";
+	private static final String KEYWORD_PATTERN = "^!?[\\w\\s%'_-]+";
+	private static final String KEYWORD_SEPARATOR_PATTERN = "^\\s*,\\s*";
+	private static final char OPENING_PARAM_CHAR = '(';
+	private static final char CLOSING_PARAM_CHAR = ')';
+
+	private Pattern keywordPattern = Pattern.compile(KEYWORD_PATTERN);
+	private Pattern keywordSeparatorPattern = Pattern.compile(KEYWORD_SEPARATOR_PATTERN);
 	private String text;
 	private int position;
-	private boolean result;
-	private String keyword;
-	private String params;
-	private static final String NEGATIVE_RESULT = "!";
-	private static final String KEYWORD_REGEX = "^!?[\\w\\s%'_-]+";
+	private List<RawKeywordParam> keywords = new ArrayList<>();
 
-	public InstructionReader(String text) {
-		this.text = text;
+	public InstructionReader(String text) throws InstructionException {
+		this.text = text.trim();
 		this.position = 0;
+		RawKeywordParam keyword;
+		while ((keyword = readKeyword()) != null) {
+			keywords.add(keyword);
+			skipSeparator();
+		}
 	}
 
-	/**
-	 * find next keyword in text.
-	 * 
-	 * @return true is a keyword is found
-	 * @throws GeneratorException
-	 */
-	public boolean next() throws GeneratorException {
-		Pattern keywordPattern = Pattern.compile(KEYWORD_REGEX);
+	private boolean endOfString() {
+		return this.position >= this.text.length();
+	}
+
+	private RawKeywordParam readKeyword() throws InstructionException {
 		Matcher matcher = keywordPattern.matcher(this.text);
 		if (!matcher.find(this.position)) {
-			return false;
+			return null;
 		}
-		this.keyword = matcher.group();
-		this.result = !this.keyword.startsWith(NEGATIVE_RESULT);
-		if (this.keyword.startsWith(NEGATIVE_RESULT)) {
-			this.keyword = this.keyword.substring(1);
-		}
+		RawKeywordParam keyword = new RawKeywordParam(matcher.group().trim());
+		// this.result = !this.keyword.startsWith(NEGATIVE_RESULT);
+		// if (this.keyword.startsWith(NEGATIVE_RESULT)) {
+		// this.keyword = this.keyword.substring(1).trim();
+		// }
 		this.position = matcher.end();
-		return true;
-		// if (position >= text.length()) {
-		// return false;
-		// }
-		// int i = position;
-		// boolean found = false;
-		// while (i < text.length() && !found) {
-		// if (text.charAt(i) == ',' || text.charAt(i) == '(') {
-		// found = true;
-		// } else if (text.substring(i, i + 1).matches("[\\w\\s%_'!-]")) {
-		// i++;
-		// } else {
-		// throw new GeneratorException("invalid keyword name: " + text.substring(position));
-		// }
-		// }
-		// currentKeywordValueName = text.substring(position, i);
-		// currentKeywordValueParams = "";
-		// position = i + 1;
-		// if (found && text.charAt(i) == '(') {
-		// retrieveParameters();
-		// }
-		// return found;
-	}
-
-	public String getText() {
-		return text;
-	}
-
-	public void setText(String text) {
-		this.text = text;
-	}
-
-	public int getPosition() {
-		return position;
-	}
-
-	public void setPosition(int position) {
-		this.position = position;
-	}
-
-	public boolean isResult() {
-		return result;
-	}
-
-	public void setResult(boolean result) {
-		this.result = result;
-	}
-
-	public String getKeyword() {
+		retrieveParameters();
 		return keyword;
 	}
 
-	public void setKeyword(String keyword) {
-		this.keyword = keyword;
+	private void skipSeparator() throws InstructionException {
+		if (endOfString()) {
+			return;
+		}
+		Matcher matcher = keywordSeparatorPattern.matcher(this.text);
+		if (!matcher.find(this.position)) {
+			throw new InstructionException(InstructionException.BAD_SEPARATOR_ERROR_MESSAGE + ": " + this.text.substring(this.position));
+		}
+		this.position = matcher.end();
+	}
+
+	private void retrieveParameters() throws InstructionException {
+		// this.params = null;
+		if (this.position + 3 >= this.text.length()) {
+			return;
+		}
+		if (this.text.charAt(this.position) != OPENING_PARAM_CHAR) {
+			return;
+		}
+		int bracketCount = 0;
+		int pos = this.position + 1;
+		while (pos < this.text.length()) {
+			if (this.text.charAt(pos) == OPENING_PARAM_CHAR) {
+				bracketCount++;
+			} else if (this.text.charAt(pos) == CLOSING_PARAM_CHAR) {
+				if (bracketCount == 0) {
+					break;
+				}
+				bracketCount--;
+			}
+			pos++;
+		}
+		if (pos >= this.text.length() || this.text.charAt(pos) != CLOSING_PARAM_CHAR) {
+			throw new InstructionException(InstructionException.MATCHING_BRACKET_ERROR_MESSAGE + ": " + this.text.substring(this.position));
+		}
+		// this.params = this.text.substring(this.position + 1, pos).trim();
 	}
 
 }
