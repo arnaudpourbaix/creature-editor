@@ -6,8 +6,13 @@ public class RawKeywordParam {
 	private boolean result;
 	private String param;
 
-	public RawKeywordParam(String keyword) {
-
+	public RawKeywordParam(String keyword, boolean result) {
+		this.keyword = keyword;
+		this.result = result;
+	}
+	
+	public String toString() {
+		return "result: " + this.result + ", keyword: " + this.keyword + ", param: " + this.param;
 	}
 
 	public String getKeyword() {

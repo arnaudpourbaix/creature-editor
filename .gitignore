@@ -22,6 +22,7 @@ creature-script-core/.classpath
 creature-script-core/target
 creature-script-batch/.settings
 creature-script-batch/.classpath
+creature-script-batch/bin
 creature-script-batch/target
 creature-editor-old-script/.settings
 creature-editor-old-script/.classpath
