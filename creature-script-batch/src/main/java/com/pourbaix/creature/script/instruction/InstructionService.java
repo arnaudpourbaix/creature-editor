@@ -1,8 +1,12 @@
 package com.pourbaix.creature.script.instruction;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class InstructionService {
@@ -30,8 +34,21 @@ public class InstructionService {
 	 */
 	public void parseGeneratedInstruction(GeneratedInstruction instruction) throws InstructionException {
 		logger.debug(instruction.getRawText());
-		InstructionReader reader = new InstructionReader(instruction.getRawText());
+		List<RawKeywordParam> keywordParams = getRowKeywordParamList(instruction.getRawText());
+	}
 
+	public List<RawKeywordParam> getRowKeywordParamList(String rawText) throws InstructionException {
+		List<RawKeywordParam> keywordParams = new ArrayList<>();
+		if (StringUtils.isEmpty(rawText)) {
+			return keywordParams;
+		}
+		InstructionStringReader reader = new InstructionStringReader(rawText);
+		RawKeywordParam keyword;
+		while ((keyword = reader.getKeyword()) != null) {
+			keyword.getParams().addAll(getRowKeywordParamList(keyword.getParam()));
+			keywordParams.add(keyword);
+		}
+		return keywordParams;
 	}
 
 }
