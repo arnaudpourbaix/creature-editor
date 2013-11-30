@@ -5,13 +5,26 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
+import com.pourbaix.creature.editor.domain.Keyword;
+import com.pourbaix.creature.editor.repository.ActionRepository;
+import com.pourbaix.creature.editor.repository.KeywordRepository;
+import com.pourbaix.creature.editor.repository.TriggerRepository;
 
 @Service
 public class InstructionService {
 
 	private static final Logger logger = LoggerFactory.getLogger(InstructionService.class);
+
+	@Autowired
+	private KeywordRepository keywordRepository;
+	@Autowired
+	private TriggerRepository triggerRepository;
+	@Autowired
+	private ActionRepository actionRepository;
 
 	public void parseInstruction(Instruction instruction) throws InstructionException {
 		if (instruction instanceof GeneratedInstruction) {
@@ -34,10 +47,25 @@ public class InstructionService {
 	 */
 	public void parseGeneratedInstruction(GeneratedInstruction instruction) throws InstructionException {
 		logger.debug(instruction.getRawText());
-		List<RawKeywordParam> keywordParams = getRowKeywordParamList(instruction.getRawText());
+		List<RawKeywordParam> rawKeywordParams = getRawKeywordParamList(instruction.getRawText());
+		List<KeywordParam> keywordParams = getKeywordParamList(rawKeywordParams);
+		for (RawKeywordParam rawKeywordParam : rawKeywordParams) {
+			KeywordParam keywordParam = getKeywordParam(rawKeywordParam);
+			keywordParams.add(keywordParam);
+		}
 	}
 
-	public List<RawKeywordParam> getRowKeywordParamList(String rawText) throws InstructionException {
+	public KeywordParam getKeywordParam(RawKeywordParam rawKeywordParam) throws InstructionException {
+		Keyword keyword = keywordRepository.findByName(rawKeywordParam.getKeyword());
+		return null;
+	}
+
+	public List<KeywordParam> getKeywordParamList(List<RawKeywordParam> rawKeywordParams) throws InstructionException {
+		List<KeywordParam> keywordParams = new ArrayList<>();
+		return keywordParams;
+	}
+
+	public List<RawKeywordParam> getRawKeywordParamList(String rawText) throws InstructionException {
 		List<RawKeywordParam> keywordParams = new ArrayList<>();
 		if (StringUtils.isEmpty(rawText)) {
 			return keywordParams;
@@ -45,7 +73,7 @@ public class InstructionService {
 		InstructionStringReader reader = new InstructionStringReader(rawText);
 		RawKeywordParam keyword;
 		while ((keyword = reader.getKeyword()) != null) {
-			keyword.getParams().addAll(getRowKeywordParamList(keyword.getParam()));
+			keyword.getParams().addAll(getRawKeywordParamList(keyword.getParam()));
 			keywordParams.add(keyword);
 		}
 		return keywordParams;

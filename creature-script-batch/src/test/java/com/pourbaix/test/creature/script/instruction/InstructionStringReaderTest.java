@@ -23,19 +23,19 @@ public class InstructionStringReaderTest {
 
 	@Test
 	public void noKeyword() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("");
 		assertTrue("empty string cant result to a successful read", keywords.isEmpty());
 	}
 
 	@Test
 	public void wrongKeyword() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("[moveToObject");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("[moveToObject");
 		assertTrue("wrong keyword", keywords.isEmpty());
 	}
 
 	@Test
 	public void singleKeyword() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("nothing");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("nothing");
 		assertTrue(!keywords.isEmpty());
 		RawKeywordParam keywordParam = keywords.get(0);
 		assertEquals("nothing", keywordParam.getKeyword());
@@ -45,7 +45,7 @@ public class InstructionStringReaderTest {
 
 	@Test
 	public void singleKeywordEmptyParam() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("sleep()");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("sleep()");
 		assertTrue(!keywords.isEmpty());
 		RawKeywordParam keywordParam = keywords.get(0);
 		assertEquals("sleep", keywordParam.getKeyword());
@@ -55,7 +55,7 @@ public class InstructionStringReaderTest {
 
 	@Test
 	public void singleKeywordNegativeResult() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("!rest()");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("!rest()");
 		assertTrue(!keywords.isEmpty());
 		RawKeywordParam keywordParam = keywords.get(0);
 		assertEquals("rest", keywordParam.getKeyword());
@@ -65,7 +65,7 @@ public class InstructionStringReaderTest {
 
 	@Test
 	public void singleKeywordNegativeResultWithSpaces() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("! spell	(  fire  )");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("! spell	(  fire  )");
 		assertTrue(!keywords.isEmpty());
 		RawKeywordParam keywordParam = keywords.get(0);
 		assertEquals("spell", keywordParam.getKeyword());
@@ -75,7 +75,7 @@ public class InstructionStringReaderTest {
 
 	@Test
 	public void singleKeywordNestedParams() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("spell(confusion,!state(confused),random(25))");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("spell(confusion,!state(confused),random(25))");
 		assertTrue(!keywords.isEmpty());
 		RawKeywordParam keywordParam = keywords.get(0);
 		assertEquals("spell", keywordParam.getKeyword());
@@ -87,12 +87,12 @@ public class InstructionStringReaderTest {
 	public void singleKeywordWrongNestedParams() throws InstructionException {
 		exception.expect(InstructionException.class);
 		exception.expectMessage(containsString(InstructionException.MATCHING_BRACKET_ERROR_MESSAGE));
-		instructionService.getRowKeywordParamList("forcespell(confusion,!state(confused),random(25)");
+		instructionService.getRawKeywordParamList("forcespell(confusion,!state(confused),random(25)");
 	}
 
 	@Test
 	public void multipleKeyword() throws InstructionException {
-		List<RawKeywordParam> keywords = instructionService.getRowKeywordParamList("nothing  , !to(   ),do(sleep())");
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("nothing  , !to(   ),do(sleep())");
 		assertEquals(3, keywords.size());
 
 		RawKeywordParam keywordParam1 = keywords.get(0);
@@ -115,7 +115,7 @@ public class InstructionStringReaderTest {
 	public void multipleKeywordBadSeparator() throws InstructionException {
 		exception.expect(InstructionException.class);
 		exception.expectMessage(containsString(InstructionException.BAD_SEPARATOR_ERROR_MESSAGE));
-		instructionService.getRowKeywordParamList("nothing  ; !to(   ),do(sleep())");
+		instructionService.getRawKeywordParamList("nothing  ; !to(   ),do(sleep())");
 	}
 
 }

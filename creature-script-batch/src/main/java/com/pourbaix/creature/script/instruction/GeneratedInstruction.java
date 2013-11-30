@@ -8,6 +8,11 @@ public class GeneratedInstruction extends Instruction {
 		super(type);
 	}
 
+	public GeneratedInstruction(String rawText) {
+		super();
+		setRawText(rawText);
+	}
+
 	@Override
 	public void setRawText(String rawText) {
 		// strip comments, end-line separators, and semi-colon

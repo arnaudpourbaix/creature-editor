@@ -7,12 +7,21 @@ public abstract class Instruction {
 	protected InstructionTypeEnum type;
 	protected String rawText;
 
+	@Override
 	public String toString() {
 		return type.toString() + ":" + Constant.CARRIAGE_RETURN + rawText;
 	}
 
+	public Instruction() {
+		// empty constructor
+	}
+
 	public Instruction(InstructionTypeEnum type) {
 		this.type = type;
+	}
+
+	public Instruction(String rawText) {
+		this.rawText = rawText;
 	}
 
 	public InstructionTypeEnum getType() {
