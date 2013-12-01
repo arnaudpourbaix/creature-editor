@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import com.pourbaix.creature.editor.domain.Action;
 import com.pourbaix.creature.editor.domain.Keyword;
+import com.pourbaix.creature.editor.domain.Trigger;
 import com.pourbaix.creature.editor.repository.ActionRepository;
 import com.pourbaix.creature.editor.repository.KeywordRepository;
 import com.pourbaix.creature.editor.repository.TriggerRepository;
@@ -56,8 +58,22 @@ public class InstructionService {
 	}
 
 	public KeywordParam getKeywordParam(RawKeywordParam rawKeywordParam) throws InstructionException {
-		Keyword keyword = keywordRepository.findByName(rawKeywordParam.getKeyword());
-		return null;
+		Keyword keyword = keywordRepository.findByName(rawKeywordParam.getKeyword().toUpperCase());
+		if (keyword != null) {
+			// TODO
+			return new KeywordParam();
+		}
+		Action action = actionRepository.findByName(rawKeywordParam.getKeyword());
+		if (action != null) {
+			// TODO
+			return new KeywordParam();
+		}
+		Trigger trigger = triggerRepository.findByName(rawKeywordParam.getKeyword());
+		if (trigger != null) {
+			// TODO
+			return new KeywordParam();
+		}
+		throw new InstructionException(InstructionException.UNKNOWN_KEYWORD_ERROR_MESSAGE + ": " + rawKeywordParam.getKeyword());
 	}
 
 	public List<KeywordParam> getKeywordParamList(List<RawKeywordParam> rawKeywordParams) throws InstructionException {

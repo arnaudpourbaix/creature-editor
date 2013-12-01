@@ -1,6 +1,10 @@
 package com.pourbaix.test.creature.script.instruction;
 
+import static org.hamcrest.CoreMatchers.containsString;
+
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,17 @@ public class ParseGeneratedInstructionTest {
 	@InjectMocks
 	@Autowired
 	InstructionService instructionService;
+
+	@Rule
+	public ExpectedException exception = ExpectedException.none();
+
+	@Test
+	public void mispelledKeyword() throws InstructionException {
+		exception.expect(InstructionException.class);
+		exception.expectMessage(containsString(InstructionException.UNKNOWN_KEYWORD_ERROR_MESSAGE));
+		GeneratedInstruction instruction = new GeneratedInstruction("spel(confusion)");
+		instructionService.parseGeneratedInstruction(instruction);
+	}
 
 	@Test
 	public void spellConfusion() throws InstructionException {

@@ -6,6 +6,7 @@ public class InstructionException extends Exception {
 
 	public static final String MATCHING_BRACKET_ERROR_MESSAGE = "matching bracket error";
 	public static final String BAD_SEPARATOR_ERROR_MESSAGE = "bad separator error";
+	public static final String UNKNOWN_KEYWORD_ERROR_MESSAGE = "unknown keyword";
 
 	public InstructionException() {
 
