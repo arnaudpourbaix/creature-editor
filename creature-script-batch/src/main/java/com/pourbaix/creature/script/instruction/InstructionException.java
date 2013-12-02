@@ -4,8 +4,7 @@ public class InstructionException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
-	public static final String MATCHING_BRACKET_ERROR_MESSAGE = "matching bracket error";
-	public static final String BAD_SEPARATOR_ERROR_MESSAGE = "bad separator error";
+	public static final String INVALID_INSTRUCTION_ERROR_MESSAGE = "invalid instruction";
 	public static final String UNKNOWN_KEYWORD_ERROR_MESSAGE = "unknown keyword";
 
 	public InstructionException() {

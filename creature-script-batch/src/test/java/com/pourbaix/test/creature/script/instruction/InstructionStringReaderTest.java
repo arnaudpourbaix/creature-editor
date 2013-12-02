@@ -86,7 +86,7 @@ public class InstructionStringReaderTest {
 	@Test
 	public void singleKeywordWrongNestedParams() throws InstructionException {
 		exception.expect(InstructionException.class);
-		exception.expectMessage(containsString(InstructionException.MATCHING_BRACKET_ERROR_MESSAGE));
+		exception.expectMessage(containsString(InstructionException.INVALID_INSTRUCTION_ERROR_MESSAGE));
 		instructionService.getRawKeywordParamList("forcespell(confusion,!state(confused),random(25)");
 	}
 
@@ -114,8 +114,33 @@ public class InstructionStringReaderTest {
 	@Test
 	public void multipleKeywordBadSeparator() throws InstructionException {
 		exception.expect(InstructionException.class);
-		exception.expectMessage(containsString(InstructionException.BAD_SEPARATOR_ERROR_MESSAGE));
+		exception.expectMessage(containsString(InstructionException.INVALID_INSTRUCTION_ERROR_MESSAGE));
 		instructionService.getRawKeywordParamList("nothing  ; !to(   ),do(sleep())");
+	}
+
+	@Test
+	public void singleKeywordMultipleParamsWithSingleParam() throws InstructionException {
+		List<RawKeywordParam> keywords = instructionService.getRawKeywordParamList("config(CLASS=WIZARD,CASTER_LEVEL=12,MAX_SPELL_LEVEL=6)");
+		assertEquals(1, keywords.size());
+		RawKeywordParam keywordParam = keywords.get(0);
+		assertEquals("config", keywordParam.getKeyword());
+		assertEquals(3, keywordParam.getParams().size());
+		RawKeywordParam param1 = keywordParam.getParams().get(0);
+		assertEquals("CLASS", param1.getKeyword());
+		assertEquals("WIZARD", param1.getParam());
+		RawKeywordParam param2 = keywordParam.getParams().get(1);
+		assertEquals("CASTER_LEVEL", param2.getKeyword());
+		assertEquals("12", param2.getParam());
+		RawKeywordParam param3 = keywordParam.getParams().get(2);
+		assertEquals("MAX_SPELL_LEVEL", param3.getKeyword());
+		assertEquals("6", param3.getParam());
+	}
+
+	@Test
+	public void singleKeywordMultipleParamsWithSingleParamWrongBracket() throws InstructionException {
+		exception.expect(InstructionException.class);
+		exception.expectMessage(containsString(InstructionException.INVALID_INSTRUCTION_ERROR_MESSAGE));
+		instructionService.getRawKeywordParamList("config(CLASS=WIZARD,CASTER_LEVEL=12,RESISTANCES(fire,cold),MAX_SPELL_LEVEL=6))");
 	}
 
 }
