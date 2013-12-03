@@ -15,6 +15,7 @@ import com.pourbaix.creature.editor.domain.Trigger;
 import com.pourbaix.creature.editor.repository.ActionRepository;
 import com.pourbaix.creature.editor.repository.KeywordRepository;
 import com.pourbaix.creature.editor.repository.TriggerRepository;
+import com.pourbaix.creature.script.keyword.RawKeywordParam;
 
 @Service
 public class InstructionService {
@@ -28,7 +29,7 @@ public class InstructionService {
 	@Autowired
 	private ActionRepository actionRepository;
 
-	public void parseInstruction(Instruction instruction) throws InstructionException {
+	public void parseInstruction(final Instruction instruction) throws InstructionException {
 		if (instruction instanceof GeneratedInstruction) {
 			parseGeneratedInstruction((GeneratedInstruction) instruction);
 		}
@@ -47,38 +48,47 @@ public class InstructionService {
 	 * @return list of keywords
 	 * @throws InstructionException
 	 */
-	public void parseGeneratedInstruction(GeneratedInstruction instruction) throws InstructionException {
+	public void parseGeneratedInstruction(final GeneratedInstruction instruction) throws InstructionException {
 		logger.debug(instruction.getRawText());
 		List<RawKeywordParam> rawKeywordParams = getRawKeywordParamList(instruction.getRawText());
-		List<KeywordParam> keywordParams = getKeywordParamList(rawKeywordParams);
 		for (RawKeywordParam rawKeywordParam : rawKeywordParams) {
-			KeywordParam keywordParam = getKeywordParam(rawKeywordParam);
-			keywordParams.add(keywordParam);
+			parseGeneratedInstruction(instruction, rawKeywordParam);
 		}
 	}
 
-	public KeywordParam getKeywordParam(RawKeywordParam rawKeywordParam) throws InstructionException {
+	public void parseGeneratedInstruction(final GeneratedInstruction instruction, RawKeywordParam rawKeywordParam) throws InstructionException {
 		Keyword keyword = keywordRepository.findByName(rawKeywordParam.getKeyword().toUpperCase());
 		if (keyword != null) {
-			// TODO
-			return new KeywordParam();
+			parseGeneratedInstruction(instruction, rawKeywordParam, keyword);
+			return;
 		}
 		Action action = actionRepository.findByName(rawKeywordParam.getKeyword());
 		if (action != null) {
-			// TODO
-			return new KeywordParam();
+			parseGeneratedInstruction(instruction, rawKeywordParam, action);
+			return;
 		}
 		Trigger trigger = triggerRepository.findByName(rawKeywordParam.getKeyword());
 		if (trigger != null) {
-			// TODO
-			return new KeywordParam();
+			parseGeneratedInstruction(instruction, rawKeywordParam, trigger);
+			return;
 		}
 		throw new InstructionException(InstructionException.UNKNOWN_KEYWORD_ERROR_MESSAGE + ": " + rawKeywordParam.getKeyword());
 	}
 
-	public List<KeywordParam> getKeywordParamList(List<RawKeywordParam> rawKeywordParams) throws InstructionException {
-		List<KeywordParam> keywordParams = new ArrayList<>();
-		return keywordParams;
+	public void parseGeneratedInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Keyword keyword)
+			throws InstructionException {
+		logger.debug(rawKeywordParam.toString());
+	}
+
+	public void parseGeneratedInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Action action)
+			throws InstructionException {
+		logger.debug(rawKeywordParam.toString());
+
+	}
+
+	public void parseGeneratedInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Trigger trigger)
+			throws InstructionException {
+		logger.debug(rawKeywordParam.toString());
 	}
 
 	public List<RawKeywordParam> getRawKeywordParamList(String rawText) throws InstructionException {

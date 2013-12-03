@@ -6,27 +6,27 @@
 	<table-filter match-name="DATABASECHANGELOGLOCK" match-catalog="PUBLIC" match-schema="PUBLIC" exclude="true"></table-filter>
 	<table-filter match-name=".*" match-catalog="PUBLIC" match-schema="PUBLIC"></table-filter>
 	<table schema="PUBLIC" name="CATEGORY">
-		<foreign-key constraint-name="FK_CATEGORY_CATEGORY">
+		<foreign-key constraint-name="FK_CATEGORY__CATEGORY">
 			<many-to-one property="parent" />
 			<set property="children" />
 		</foreign-key>
 	</table>
 	<table schema="PUBLIC" name="STATE">
-		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE_STATE">
+		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE__STATE">
 			<set exclude="true" />
 		</foreign-key>
 	</table>
 	<table schema="PUBLIC" name="GAME_EDITION">
-		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE_GAME_EDITION">
+		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE__GAME_EDITION">
 			<set exclude="true" />
 		</foreign-key>
 	</table>
 	<table schema="PUBLIC" name="ATTRIBUTE">
-		<foreign-key constraint-name="FK_ATTRIBUTE_ATTRIBUTE">
+		<foreign-key constraint-name="FK_ATTRIBUTE__ATTRIBUTE">
 			<many-to-one property="parent" />
 			<set property="children" />
 		</foreign-key>
-		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE_ATTRIBUTE">
+		<foreign-key constraint-name="FK_ATTRIBUTE_VALUE__ATTRIBUTE">
 			<set exclude="true" />
 		</foreign-key>
 	</table>

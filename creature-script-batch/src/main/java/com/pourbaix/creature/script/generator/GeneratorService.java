@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FilenameFilter;
 import java.io.OutputStreamWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -15,8 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.common.collect.Lists;
-import com.pourbaix.creature.editor.domain.Keyword;
 import com.pourbaix.creature.editor.repository.ActionRepository;
 import com.pourbaix.creature.editor.repository.KeywordRepository;
 import com.pourbaix.creature.editor.repository.TriggerRepository;
@@ -80,8 +79,6 @@ public class GeneratorService {
 
 	public void generateFile(final String file) {
 		logger.debug("generating " + file);
-		Iterable<Keyword> keywords = keywordRepository.findAll();
-		List<Keyword> words = Lists.newArrayList(keywords);
 		try {
 			loadFile(file);
 			logger.debug("done!");
@@ -90,12 +87,14 @@ public class GeneratorService {
 		}
 	}
 
-	private FileContent loadFile(final String input) throws GeneratorException {
+	private List<Instruction> loadFile(final String input) throws GeneratorException {
 		try {
+			List<Instruction> instructions = new ArrayList<>();
 			TextFileReader textFileReader = new TextFileReader(input);
 			Instruction instruction = null;
 			while ((instruction = getInstruction(textFileReader)) != null) {
 				instructionService.parseInstruction(instruction);
+				instructions.add(instruction);
 			}
 			textFileReader.close();
 		} catch (TextFileReaderException e) {

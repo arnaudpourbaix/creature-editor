@@ -6,6 +6,8 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pourbaix.creature.script.keyword.RawKeywordParam;
+
 public class InstructionStringReader {
 
 	private static final Logger logger = LoggerFactory.getLogger(InstructionStringReader.class);

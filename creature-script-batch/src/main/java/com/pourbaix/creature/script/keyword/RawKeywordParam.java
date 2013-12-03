@@ -1,4 +1,4 @@
-package com.pourbaix.creature.script.instruction;
+package com.pourbaix.creature.script.keyword;
 
 import java.util.ArrayList;
 import java.util.List;

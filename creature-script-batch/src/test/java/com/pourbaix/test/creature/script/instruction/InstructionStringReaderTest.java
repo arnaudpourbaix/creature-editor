@@ -12,7 +12,7 @@ import org.junit.rules.ExpectedException;
 
 import com.pourbaix.creature.script.instruction.InstructionException;
 import com.pourbaix.creature.script.instruction.InstructionService;
-import com.pourbaix.creature.script.instruction.RawKeywordParam;
+import com.pourbaix.creature.script.keyword.RawKeywordParam;
 
 public class InstructionStringReaderTest {
 

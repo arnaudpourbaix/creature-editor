@@ -110,26 +110,47 @@
 			<column name="game_edition_id" type="int" />
 			<column name="state_id" type="int" />
 		</createTable>
-		
 
 		<createTable tableName="creature_category">
 			<column name="creature_id" type="int" />
 			<column name="category_id" type="int" />
 		</createTable>
 		<addPrimaryKey constraintName="pk_creature_category" tableName="creature_category" columnNames="creature_id, category_id" />
+
+		<createTable tableName="spell">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="resource" type="VARCHAR2(8)" />
+			<column name="name" type="VARCHAR2(50)" />
+			<column name="identifier" type="VARCHAR2(50)" />
+			<column name="description" type="VARCHAR2(3000)" />
+			<column name="level" type="int" />
+			<column name="range" type="int" />
+			<column name="school" type="VARCHAR2(15)" />
+			<column name="hurt_ally" type="BOOLEAN" />
+		</createTable>
+
+		<createTable tableName="spell_mod">
+			<column name="spell_id" type="int" />
+			<column name="mod_id" type="int" />
+		</createTable>
+		<addPrimaryKey constraintName="pk_spell_mod" tableName="spell_mod" columnNames="spell_id, mod_id" />
 		
 	</changeSet>
 	
 	<changeSet author="apourbaix" id="editor-002">
-		<addForeignKeyConstraint constraintName="fk_creature_game" baseTableName="creature" baseColumnNames="game_id" referencedTableName="game" referencedColumnNames="id" /> 
-		<addForeignKeyConstraint constraintName="fk_category_category" baseTableName="category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_attribute_attribute" baseTableName="attribute" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_attribute_value_attribute" baseTableName="attribute_value" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_attribute_value_creature" baseTableName="attribute_value" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_attribute_value_game_edition" baseTableName="attribute_value" baseColumnNames="game_edition_id" referencedTableName="game_edition" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_attribute_value_state" baseTableName="attribute_value" baseColumnNames="state_id" referencedTableName="state" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_creature_category_creature" baseTableName="creature_category" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_creature_category_category" baseTableName="creature_category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_creature__game" baseTableName="creature" baseColumnNames="game_id" referencedTableName="game" referencedColumnNames="id" /> 
+		<addForeignKeyConstraint constraintName="fk_category__category" baseTableName="category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute__attribute" baseTableName="attribute" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value__attribute" baseTableName="attribute_value" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value__creature" baseTableName="attribute_value" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value__game_edition" baseTableName="attribute_value" baseColumnNames="game_edition_id" referencedTableName="game_edition" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_attribute_value__state" baseTableName="attribute_value" baseColumnNames="state_id" referencedTableName="state" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_creature_category__creature" baseTableName="creature_category" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_creature_category__category" baseTableName="creature_category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_spell_mod__spell" baseTableName="spell_mod" baseColumnNames="spell_id" referencedTableName="spell" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_spell_mod__mod" baseTableName="spell_mod" baseColumnNames="mod_id" referencedTableName="mod" referencedColumnNames="id" />
 	</changeSet>
 
 </databaseChangeLog>

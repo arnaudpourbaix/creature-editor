@@ -1,11 +1,12 @@
 /**
  * Cynthandria
  */
+ 
+	// local configuration
+config(CLASS=WIZARD,CASTER_LEVEL=12,MAX_SPELL_LEVEL=6);
 
 [spell=Spirit Armor/* coucou */,!sleep/*toward the end!*/];
 
-	// local configuration
-config(CLASS=WIZARD,CASTER_LEVEL=12,MAX_SPELL_LEVEL=6);
 
   /* regeneration */
   forceSpell(Regenerate),self=empty,hplostgt(10),hp%lt(50);
