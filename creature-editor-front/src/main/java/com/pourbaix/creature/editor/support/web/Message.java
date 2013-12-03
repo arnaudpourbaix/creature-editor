@@ -1,4 +1,4 @@
-package com.pourbaix.editor.creature.support.web;
+package com.pourbaix.creature.editor.support.web;
 
 /**
  * A message to be displayed in web context. Depending on the type, different style will be applied.

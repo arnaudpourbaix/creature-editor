@@ -1,4 +1,4 @@
-package com.pourbaix.editor.creature.config;
+package com.pourbaix.creature.editor.config;
 
 import java.util.*;
 
@@ -16,10 +16,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext) throws ServletException {
 
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.setConfigLocation("com.pourbaix.editor.creature.config");
-		
-//		FilterRegistration.Dynamic securityFilter = servletContext.addFilter("securityFilter", new DelegatingFilterProxy("springSecurityFilterChain"));
-//		securityFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+		context.setConfigLocation("com.pourbaix.creature.editor.config");
 		
 		FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());
 		characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");

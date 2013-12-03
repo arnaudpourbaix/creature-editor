@@ -1,6 +1,6 @@
-package com.pourbaix.editor.creature.support.web;
+package com.pourbaix.creature.editor.support.web;
 
-import static com.pourbaix.editor.creature.support.web.Message.MESSAGE_ATTRIBUTE;
+import static com.pourbaix.creature.editor.support.web.Message.MESSAGE_ATTRIBUTE;
 
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

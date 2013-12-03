@@ -1,4 +1,4 @@
-package com.pourbaix.editor.creature.error;
+package com.pourbaix.creature.editor.error;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
