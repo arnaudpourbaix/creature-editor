@@ -121,14 +121,22 @@
 			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="resource" type="VARCHAR2(8)" />
-			<column name="name" type="VARCHAR2(50)" />
+			<column name="resource" type="VARCHAR2(8)">
+				<constraints nullable="false"/>
+			</column>
+			<column name="name" type="VARCHAR2(50)">
+				<constraints nullable="false"/>
+			</column>
 			<column name="identifier" type="VARCHAR2(50)" />
 			<column name="description" type="VARCHAR2(3000)" />
-			<column name="level" type="int" />
+			<column name="level" type="int">
+				<constraints nullable="false"/>
+			</column>
 			<column name="range" type="int" />
 			<column name="school" type="VARCHAR2(15)" />
-			<column name="hurt_ally" type="BOOLEAN" />
+			<column name="hurt_ally" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
 		</createTable>
 
 		<createTable tableName="spell_mod">

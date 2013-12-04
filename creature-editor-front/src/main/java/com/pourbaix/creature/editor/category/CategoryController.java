@@ -25,48 +25,49 @@ import com.pourbaix.creature.editor.service.CategoryService;
 public class CategoryController {
 
 	static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
-    private static final ConcurrentSkipListMap<Long, Category> categoryRepository = new ConcurrentSkipListMap<Long, Category>();
-    
-    @Autowired
-    private CategoryService categoryService;
-    
+	private static final ConcurrentSkipListMap<Long, Category> categoryRepository = new ConcurrentSkipListMap<Long, Category>();
 
-//    @RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-//    public @ResponseBody List<Category> list() {
-//    	List<Category> categories = categoryService.getList();
-//    	return categories;
-//    }
+	@Autowired
+	private CategoryService categoryService;
 
-    @Transactional
-    @RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody List<CategoryDTO> list() {
-    	List<Category> categories = categoryService.getList();
-    	List<CategoryDTO> result = Lists.transform(categories, new Function<Category, CategoryDTO>() {
+	// @RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
+	// public @ResponseBody List<Category> list() {
+	// List<Category> categories = categoryService.getList();
+	// return categories;
+	// }
+
+	@Transactional
+	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	List<CategoryDTO> list() {
+		List<Category> categories = categoryService.getList();
+		List<CategoryDTO> result = Lists.transform(categories, new Function<Category, CategoryDTO>() {
 			@Override
 			public CategoryDTO apply(Category input) {
 				return new CategoryDTO(input);
 			}
-    	});
-    	return result;
-    }
-    
-    @RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
-    public @ResponseBody Category getById(@PathVariable long id) {
-        return categoryRepository.get(id);
-    }
+		});
+		return result;
+	}
 
-    @RequestMapping(value = "/category", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void create(@RequestBody Category category) {
-//        long id = categoryRepository.incrementAndGet();
-//        category.setId(id);
-        categoryRepository.put(1L, category);
-    }
+	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	Category getById(@PathVariable long id) {
+		return categoryRepository.get(id);
+	}
 
-    @RequestMapping(value = "/category/{id}", method = RequestMethod.DELETE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable long id) {
-    	categoryRepository.remove(id);
-    }
+	@RequestMapping(value = "/category", method = RequestMethod.PUT)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void create(@RequestBody Category category) {
+		// long id = categoryRepository.incrementAndGet();
+		// category.setId(id);
+		categoryRepository.put(1L, category);
+	}
+
+	@RequestMapping(value = "/category/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable long id) {
+		categoryRepository.remove(id);
+	}
 
 }

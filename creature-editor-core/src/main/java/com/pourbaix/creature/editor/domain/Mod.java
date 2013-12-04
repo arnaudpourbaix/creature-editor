@@ -1,10 +1,16 @@
 package com.pourbaix.creature.editor.domain;
 
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 /**
@@ -23,12 +29,20 @@ public class Mod implements java.io.Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 100)
 	private String name;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "SPELL_MOD", schema = "PUBLIC", catalog = "PUBLIC", joinColumns = { @JoinColumn(name = "MOD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "SPELL_ID", nullable = false, updatable = false) })
+	private Set<Spell> spells = new HashSet<Spell>(0);
 
 	public Mod() {
 	}
 
 	public Mod(String name) {
 		this.name = name;
+	}
+
+	public Mod(String name, Set<Spell> spells) {
+		this.name = name;
+		this.spells = spells;
 	}
 
 	public Integer getId() {
@@ -45,6 +59,14 @@ public class Mod implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Set<Spell> getSpells() {
+		return this.spells;
+	}
+
+	public void setSpells(Set<Spell> spells) {
+		this.spells = spells;
 	}
 
 }

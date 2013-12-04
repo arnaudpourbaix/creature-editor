@@ -34,11 +34,11 @@ public class Category implements java.io.Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 250)
 	private String name;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
-	private Set<Category> children = new HashSet<Category>(0);
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "CREATURE_CATEGORY", schema = "PUBLIC", catalog = "PUBLIC", joinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "CREATURE_ID", nullable = false, updatable = false) })
 	private Set<Creature> creatures = new HashSet<Creature>(0);
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	private Set<Category> children = new HashSet<Category>(0);
 
 	public Category() {
 	}
@@ -47,11 +47,11 @@ public class Category implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Category(Category parent, String name, Set<Category> children, Set<Creature> creatures) {
+	public Category(Category parent, String name, Set<Creature> creatures, Set<Category> children) {
 		this.parent = parent;
 		this.name = name;
-		this.children = children;
 		this.creatures = creatures;
+		this.children = children;
 	}
 
 	public Integer getId() {
@@ -78,20 +78,20 @@ public class Category implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public Set<Category> getChildren() {
-		return this.children;
-	}
-
-	public void setChildren(Set<Category> children) {
-		this.children = children;
-	}
-
 	public Set<Creature> getCreatures() {
 		return this.creatures;
 	}
 
 	public void setCreatures(Set<Creature> creatures) {
 		this.creatures = creatures;
+	}
+
+	public Set<Category> getChildren() {
+		return this.children;
+	}
+
+	public void setChildren(Set<Category> children) {
+		this.children = children;
 	}
 
 }

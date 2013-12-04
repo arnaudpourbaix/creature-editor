@@ -31,19 +31,19 @@ public class Creature implements java.io.Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creature")
+	private Set<AttributeValue> attributeValues = new HashSet<AttributeValue>(0);
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "CREATURE_CATEGORY", schema = "PUBLIC", catalog = "PUBLIC", joinColumns = { @JoinColumn(name = "CREATURE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) })
 	private Set<Category> categories = new HashSet<Category>(0);
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creature")
-	private Set<AttributeValue> attributeValues = new HashSet<AttributeValue>(0);
 
 	public Creature() {
 	}
 
-	public Creature(Game game, Set<Category> categories, Set<AttributeValue> attributeValues) {
+	public Creature(Game game, Set<AttributeValue> attributeValues, Set<Category> categories) {
 		this.game = game;
-		this.categories = categories;
 		this.attributeValues = attributeValues;
+		this.categories = categories;
 	}
 
 	public Integer getId() {
@@ -62,20 +62,20 @@ public class Creature implements java.io.Serializable {
 		this.game = game;
 	}
 
-	public Set<Category> getCategories() {
-		return this.categories;
-	}
-
-	public void setCategories(Set<Category> categories) {
-		this.categories = categories;
-	}
-
 	public Set<AttributeValue> getAttributeValues() {
 		return this.attributeValues;
 	}
 
 	public void setAttributeValues(Set<AttributeValue> attributeValues) {
 		this.attributeValues = attributeValues;
+	}
+
+	public Set<Category> getCategories() {
+		return this.categories;
+	}
+
+	public void setCategories(Set<Category> categories) {
+		this.categories = categories;
 	}
 
 }
