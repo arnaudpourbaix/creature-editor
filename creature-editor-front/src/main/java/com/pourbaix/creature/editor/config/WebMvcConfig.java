@@ -1,6 +1,9 @@
 package com.pourbaix.creature.editor.config;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
@@ -21,14 +24,14 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		return requestMappingHandlerMapping;
 	}
 
-	// @Bean(name = "messageSource")
-	// public MessageSource configureMessageSource() {
-	// ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
-	// messageSource.setBasename(MESSAGE_SOURCE);
-	// messageSource.setCacheSeconds(5);
-	// return messageSource;
-	// }
-	//
+	@Bean(name = "messageSource")
+	public MessageSource configureMessageSource() {
+		ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+		messageSource.setBasename(MESSAGE_SOURCE);
+		messageSource.setCacheSeconds(5);
+		return messageSource;
+	}
+
 	// @Bean
 	// public ViewResolver configureViewResolver() {
 	// InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();

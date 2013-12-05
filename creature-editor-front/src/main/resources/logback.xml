@@ -5,7 +5,7 @@
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
 			<pattern>
-				%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{32} - %msg%n
+				%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger{0} - %msg%n
 			</pattern>
 		</encoder>
 	</appender>
@@ -15,5 +15,6 @@
 		<appender-ref ref="STDOUT" />
 	</root>
 
-	<logger name="com.pourbaix.editor.creature" level="ALL" />
+	<logger name="org.springframework.web" level="DEBUG" />
+	<logger name="com.pourbaix.creature.editor" level="ALL" />
 </configuration>
