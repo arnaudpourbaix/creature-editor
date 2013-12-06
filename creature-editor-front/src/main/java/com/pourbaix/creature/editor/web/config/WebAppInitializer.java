@@ -1,4 +1,4 @@
-package com.pourbaix.creature.editor.config;
+package com.pourbaix.creature.editor.web.config;
 
 import java.util.EnumSet;
 import java.util.Set;
@@ -30,7 +30,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext) throws ServletException {
 
 		ConfigurableWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.setConfigLocation("com.pourbaix.creature.editor.config");
+		context.setConfigLocation("com.pourbaix.creature.editor.web.config");
 
 		FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());
 		characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");

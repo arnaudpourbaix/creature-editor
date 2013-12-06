@@ -1,4 +1,4 @@
-package com.pourbaix.creature.editor.category;
+package com.pourbaix.creature.editor.web.category;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentSkipListMap;

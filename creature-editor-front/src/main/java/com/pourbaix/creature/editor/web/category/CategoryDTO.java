@@ -1,4 +1,4 @@
-package com.pourbaix.creature.editor.category;
+package com.pourbaix.creature.editor.web.category;
 
 import com.pourbaix.creature.editor.domain.Category;
 

@@ -8,9 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -29,8 +27,7 @@ public class Mod implements java.io.Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 100)
 	private String name;
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "SPELL_MOD", schema = "PUBLIC", catalog = "PUBLIC", joinColumns = { @JoinColumn(name = "MOD_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "SPELL_ID", nullable = false, updatable = false) })
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mod")
 	private Set<Spell> spells = new HashSet<Spell>(0);
 
 	public Mod() {

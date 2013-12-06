@@ -1,10 +1,12 @@
-package com.pourbaix.creature.editor.config;
+package com.pourbaix.creature.editor.web.config;
 
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 @Configuration
@@ -22,6 +24,15 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		requestMappingHandlerMapping.setUseSuffixPatternMatch(false);
 		requestMappingHandlerMapping.setUseTrailingSlashMatch(false);
 		return requestMappingHandlerMapping;
+	}
+
+	@Bean
+	public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
+		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
+		converter.setObjectMapper(new HibernateAwareObjectMapper());
+		RequestMappingHandlerAdapter handlerAdapter = super.requestMappingHandlerAdapter();
+		handlerAdapter.getMessageConverters().add(0, converter);
+		return handlerAdapter;
 	}
 
 	@Bean(name = "messageSource")

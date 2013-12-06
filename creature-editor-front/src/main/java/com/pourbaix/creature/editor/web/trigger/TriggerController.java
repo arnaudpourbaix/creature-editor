@@ -1,4 +1,4 @@
-package com.pourbaix.creature.editor.trigger;
+package com.pourbaix.creature.editor.web.trigger;
 
 import java.util.List;
 

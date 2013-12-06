@@ -137,13 +137,10 @@
 			<column name="hurt_ally" type="BOOLEAN">
 				<constraints nullable="false"/>
 			</column>
+			<column name="mod_id" type="int">
+				<constraints nullable="false"/>
+			</column>
 		</createTable>
-
-		<createTable tableName="spell_mod">
-			<column name="spell_id" type="int" />
-			<column name="mod_id" type="int" />
-		</createTable>
-		<addPrimaryKey constraintName="pk_spell_mod" tableName="spell_mod" columnNames="spell_id, mod_id" />
 		
 	</changeSet>
 	
@@ -157,8 +154,7 @@
 		<addForeignKeyConstraint constraintName="fk_attribute_value__state" baseTableName="attribute_value" baseColumnNames="state_id" referencedTableName="state" referencedColumnNames="id" />
 		<addForeignKeyConstraint constraintName="fk_creature_category__creature" baseTableName="creature_category" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />
 		<addForeignKeyConstraint constraintName="fk_creature_category__category" baseTableName="creature_category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_spell_mod__spell" baseTableName="spell_mod" baseColumnNames="spell_id" referencedTableName="spell" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_spell_mod__mod" baseTableName="spell_mod" baseColumnNames="mod_id" referencedTableName="mod" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_spell__mod" baseTableName="spell" baseColumnNames="mod_id" referencedTableName="mod" referencedColumnNames="id" />
 	</changeSet>
 
 </databaseChangeLog>
