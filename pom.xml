@@ -25,6 +25,7 @@
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.13</logback.version>
 		<jackson.version>1.9.13</jackson.version>
+		<jackson-datatype-hibernate4.version>2.2.3</jackson-datatype-hibernate4.version>
 		<google.guava.version>13.0.1</google.guava.version>
 		<commons-lang.version>3.1</commons-lang.version>
 		<hsqldb.version>2.3.1</hsqldb.version>
@@ -138,10 +139,6 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter</artifactId> 
-			<version>${spring-boot.version}</version> </dependency> <dependency> <groupId>org.springframework.boot</groupId> 
-			<artifactId>spring-boot-starter-web</artifactId> <version>${spring-boot.version}</version> 
-			</dependency> -->
 		<!-- Hibernate -->
 		<dependency>
 			<groupId>org.hibernate</groupId>
@@ -203,7 +200,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-hibernate4</artifactId>
-			<version>2.2.3</version>
+			<version>${jackson-datatype-hibernate4.version}</version>
 		</dependency>
 		<!-- Utilities -->
 		<dependency>

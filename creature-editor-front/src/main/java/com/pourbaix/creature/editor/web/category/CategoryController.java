@@ -1,14 +1,12 @@
 package com.pourbaix.creature.editor.web.category;
 
 import java.util.List;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,16 +17,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pourbaix.creature.editor.domain.Category;
-import com.pourbaix.creature.editor.service.CategoryService;
+import com.pourbaix.creature.editor.repository.CategoryRepository;
 
 @Controller
 public class CategoryController {
 
 	static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
-	private static final ConcurrentSkipListMap<Long, Category> categoryRepository = new ConcurrentSkipListMap<Long, Category>();
 
 	@Autowired
-	private CategoryService categoryService;
+	private CategoryRepository categoryRepository;
 
 	// @RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
 	// public @ResponseBody List<Category> list() {
@@ -36,11 +33,10 @@ public class CategoryController {
 	// return categories;
 	// }
 
-	@Transactional
 	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<CategoryDTO> list() {
-		List<Category> categories = categoryService.getList();
+		List<Category> categories = categoryRepository.findAllFetchParent();
 		List<CategoryDTO> result = Lists.transform(categories, new Function<Category, CategoryDTO>() {
 			@Override
 			public CategoryDTO apply(Category input) {
@@ -52,22 +48,22 @@ public class CategoryController {
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
-	Category getById(@PathVariable long id) {
-		return categoryRepository.get(id);
+	Category getById(@PathVariable Integer id) {
+		return categoryRepository.findOne(id);
 	}
 
 	@RequestMapping(value = "/category", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void create(@RequestBody Category category) {
-		// long id = categoryRepository.incrementAndGet();
-		// category.setId(id);
-		categoryRepository.put(1L, category);
+		//		long id = categoryRepository.incrementAndGet();
+		//		category.setId(id);
+		//		categoryRepository.put(1L, category);
 	}
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable long id) {
-		categoryRepository.remove(id);
+		//		categoryRepository.remove(id);
 	}
 
 }

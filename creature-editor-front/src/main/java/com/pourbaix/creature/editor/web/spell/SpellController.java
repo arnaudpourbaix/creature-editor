@@ -24,8 +24,7 @@ public class SpellController {
 	@RequestMapping(value = "/spell", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
 	List<Spell> list() {
-		List<Spell> spells2 = spellRepository.findAllSpells();
-		List<Spell> spells = spellRepository.findAll();
+		List<Spell> spells = spellRepository.findAllFetchMod();
 		return spells;
 	}
 

@@ -9,7 +9,7 @@ import com.pourbaix.creature.editor.domain.Spell;
 
 public interface SpellRepository extends JpaRepository<Spell, Integer> {
 
-	@Query("SELECT s FROM Spell s JOIN FETCH s.mod ORDER BY s.resource desc")
-	public List<Spell> findAllSpells();
+	@Query("SELECT s FROM Spell s JOIN FETCH s.mod")
+	public List<Spell> findAllFetchMod();
 
 }
