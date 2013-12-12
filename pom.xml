@@ -9,6 +9,7 @@
 		<module>creature-editor-web</module>
 		<module>creature-editor-core</module>
 		<module>creature-script-batch</module>
+		<module>infinity-file-reader</module>
 	</modules>
 	<version>0.0.1</version>
 	<properties>
