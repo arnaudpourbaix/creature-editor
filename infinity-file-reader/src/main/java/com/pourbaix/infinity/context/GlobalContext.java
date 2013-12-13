@@ -4,26 +4,85 @@ import java.io.File;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import com.pourbaix.infinity.entity.GameVersionEnum;
+
 public class GlobalContext {
 
+	@Value("${default.language}")
+	private String defaultLanguage;
+	@Value("${default.language}")
+	private String language;
+	@Value("${game.version}")
+	private GameVersionEnum gameVersion;
 	@Value("${game.directory}")
-	private String gameDirectory;
-	private File rootDirectory;
+	private File gameDirectory;
+	private File userGameDirectory;
+	private File languageDirectory;
+	private File dialogFile;
+	private File[] rootDirectories;
 
-	public String getGameDirectory() {
+	public GameVersionEnum getGameVersion() {
+		return gameVersion;
+	}
+
+	public void setGameVersion(GameVersionEnum gameVersion) {
+		this.gameVersion = gameVersion;
+	}
+
+	public File getGameDirectory() {
 		return gameDirectory;
 	}
 
-	public void setGameDirectory(String gameDirectory) {
+	public void setGameDirectory(File gameDirectory) {
 		this.gameDirectory = gameDirectory;
 	}
 
-	public File getRootDirectory() {
-		return rootDirectory;
+	public File getUserGameDirectory() {
+		return userGameDirectory;
 	}
 
-	public void setRootDirectory(File rootDirectory) {
-		this.rootDirectory = rootDirectory;
+	public void setUserGameDirectory(File userGameDirectory) {
+		this.userGameDirectory = userGameDirectory;
+	}
+
+	public File getDialogFile() {
+		return dialogFile;
+	}
+
+	public void setDialogFile(File dialogFile) {
+		this.dialogFile = dialogFile;
+	}
+
+	public String getDefaultLanguage() {
+		return defaultLanguage;
+	}
+
+	public void setDefaultLanguage(String defaultLanguage) {
+		this.defaultLanguage = defaultLanguage;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public File[] getRootDirectories() {
+		return rootDirectories;
+	}
+
+	public void setRootDirectories(File[] rootDirectories) {
+		this.rootDirectories = rootDirectories;
+	}
+
+	public File getLanguageDirectory() {
+		return languageDirectory;
+	}
+
+	public void setLanguageDirectory(File languageDirectory) {
+		this.languageDirectory = languageDirectory;
 	}
 
 }

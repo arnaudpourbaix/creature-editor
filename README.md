@@ -61,3 +61,6 @@ It is split in 4 maven submodules.
 1. Start Tomcat server
 2. Open a shell command in webapp project root directory 
 3. `grunt server`
+
+
+## Credits

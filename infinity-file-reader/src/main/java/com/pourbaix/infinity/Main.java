@@ -2,11 +2,12 @@ package com.pourbaix.infinity;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.BeanCreationException;
+import org.springframework.beans.BeansException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
 import com.pourbaix.infinity.config.RootConfig;
+import com.pourbaix.infinity.entity.GameVersionEnum;
 import com.pourbaix.infinity.service.ReaderService;
 
 public class Main {
@@ -19,14 +20,25 @@ public class Main {
 			ReaderService readerService = ctx.getBean(ReaderService.class);
 			readerService.process(args);
 			ctx.close();
-		} catch (BeanCreationException e) {
-			if (e.getMessage().contains("IllegalArgumentException")) {
-				logger.error("Configuration error !");
-				logger.error(e.getMessage());
-			} else {
-				logger.error(e.getMessage());
-				e.printStackTrace();
-			}
+		} catch (BeansException e) {
+			displayError(e);
 		}
 	}
+
+	public static void displayError(BeansException e) {
+		if (e.getMessage().contains(GameVersionEnum.class.getName())) {
+			logger.error("Game version is not defined or has an invalid value, check configuration");
+		} else if (e.getMessage().contains("game.directory")) {
+			logger.error("Game directory is not defined, check configuration");
+		} else if (e.getMessage().contains("default.language")) {
+			logger.error("Default language is not defined, check configuration");
+		} else if (e.getMessage().contains("IllegalArgumentException")) {
+			logger.error("Configuration error !");
+			logger.error(e.getMessage());
+		} else {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
 }

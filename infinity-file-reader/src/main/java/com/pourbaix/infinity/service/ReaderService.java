@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.context.GlobalContext;
-import com.pourbaix.infinity.entity.GameVersionEnum;
 
 @Service
 public class ReaderService {
@@ -19,7 +18,7 @@ public class ReaderService {
 	private GlobalContext globalContext;
 
 	@Autowired
-	private GameVersionService gameVersionService;
+	private GameService gameService;
 
 	public void process(final String[] args) {
 		// if (args.length == 0) {
@@ -27,30 +26,10 @@ public class ReaderService {
 		// return;
 		// }
 		try {
-			GameVersionEnum gameVersion = gameVersionService.getVersion();
-			logger.debug(gameVersion.toString());
-		} catch (GameVersionException e) {
+			gameService.openGame();
+		} catch (GameException e) {
 			logger.error(e.getMessage());
 		}
-		// File f = new File(args[0]);
-		// if (f.isDirectory()) {
-		// String path = args[0];
-		// final FilenameFilter filter = new FilenameFilter() {
-		// @Override
-		// public boolean accept(final File dir, final String name) {
-		// return name.toUpperCase().endsWith(Constant.SCRIPT_EXT);
-		// }
-		// };
-		// final String[] chld = f.list(filter);
-		// for (final String c : chld) {
-		// final String filename = path + "\\" + c;
-		// generateFile(filename);
-		// }
-		// } else if (f.isFile()) {
-		// generateFile(args[0]);
-		// } else {
-		// logger.error("bad path: " + args[0]);
-		// }
 	}
 
 }

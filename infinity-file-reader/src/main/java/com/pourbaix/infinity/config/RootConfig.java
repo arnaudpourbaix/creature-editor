@@ -8,6 +8,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import com.pourbaix.infinity.context.GlobalContext;
+import com.pourbaix.infinity.resource.StringResource;
 
 @Configuration
 @ComponentScan(basePackages = { "com.pourbaix.infinity" })
@@ -25,6 +26,11 @@ public class RootConfig {
 	@Bean
 	public GlobalContext globalContext() {
 		return new GlobalContext();
+	}
+
+	@Bean
+	public StringResource stringResource() {
+		return new StringResource();
 	}
 
 }
