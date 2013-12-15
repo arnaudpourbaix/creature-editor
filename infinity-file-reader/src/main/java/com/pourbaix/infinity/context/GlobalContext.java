@@ -41,18 +41,6 @@ public class GlobalContext {
 		return rootDirs;
 	}
 
-	public File getFile(String filename) {
-		//		File file = NIFile.getFile(rootDirs, filename);
-		//		if (file.exists())
-		//			return file;
-		//		for (final File biffDir : biffDirs) {
-		//			file = new File(biffDir, filename);
-		//			if (file.exists())
-		//				return file;
-		//		}
-		return null;
-	}
-
 	public GameVersionEnum getGameVersion() {
 		return gameVersion;
 	}

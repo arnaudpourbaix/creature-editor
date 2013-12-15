@@ -1,11 +1,17 @@
 package com.pourbaix.infinity.resource.key;
 
+import java.io.File;
+
 public interface ResourceEntry {
 
 	String getResourceName();
 
 	String getExtension();
 
-	boolean isOverride();
+	File getOverrideFile();
+
+	byte[] getResourceData() throws Exception;
+
+	String getSearchString();
 
 }

@@ -10,13 +10,11 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
-import com.pourbaix.infinity.context.GlobalContext;
 import com.pourbaix.infinity.util.DynamicArray;
 import com.pourbaix.infinity.util.FileReader;
 
@@ -25,6 +23,8 @@ public class Keyfile {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(Keyfile.class);
 
+	private static Keyfile instance;
+
 	public static final Map<Integer, String> EXTENSIONS = ImmutableMap.<Integer, String> builder().put(0x3ed, "ITM").put(0x3ee, "SPL").put(0x3ef, "BCS")
 			.put(0x3f0, "IDS").put(0x3f1, "CRE").put(0x3f3, "DLG").put(0x3f4, "2DA").put(0x3f6, "STO").put(0x3f8, "EFF").put(0x3fd, "PRO").build();
 
@@ -32,13 +32,18 @@ public class Keyfile {
 	private List<ResourceEntry> resourceEntries;
 	private String signature;
 	private String version;
+	private File keyfile;
 
-	@Autowired
-	private GlobalContext globalContext;
+	public static Keyfile getInstance() {
+		if (Keyfile.instance == null) {
+			Keyfile.instance = new Keyfile();
+		}
+		return Keyfile.instance;
+	}
 
-	public void init() throws IOException {
-		byte[] buffer;
-		buffer = readChitinKey();
+	public void init(File keyfile) throws IOException {
+		this.keyfile = keyfile;
+		byte[] buffer = readChitinKey();
 		readBiffEntries(buffer);
 		readBiffResources(buffer);
 	}
@@ -56,8 +61,11 @@ public class Keyfile {
 		return entry.isPresent() ? entry.get() : null;
 	}
 
+	public boolean resourceExists(String resourcename) {
+		return getResourceEntry(resourcename) != null;
+	}
+
 	private byte[] readChitinKey() throws IOException {
-		File keyfile = globalContext.getChitinKey();
 		BufferedInputStream is = new BufferedInputStream(new FileInputStream(keyfile));
 		byte[] buffer = FileReader.readBytes(is, (int) keyfile.length());
 		is.close();

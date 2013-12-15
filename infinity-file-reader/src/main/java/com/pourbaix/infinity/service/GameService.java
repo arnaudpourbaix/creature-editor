@@ -29,10 +29,6 @@ public class GameService {
 
 	@Resource
 	private GlobalContext globalContext;
-	@Resource
-	private StringResource stringResource;
-	@Resource
-	private Keyfile keyfile;
 
 	public void openGame() throws GameServiceException {
 		checkGameDirectory();
@@ -42,12 +38,11 @@ public class GameService {
 		}
 		fetchChitinKey();
 		fetchDialogFile();
-		//fetchRootDirectories();
 		loadResources();
 		try {
-			String test = stringResource.getStringRef(500);
+			String test = StringResource.getInstance().getStringRef(500);
 			logger.debug("test=" + test);
-			ResourceEntry entry2 = keyfile.getResourceEntry("SPWI101.SPL");
+			ResourceEntry entry2 = Keyfile.getInstance().getResourceEntry("SPWI101.SPL");
 			logger.debug(entry2.getResourceName());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -173,8 +168,8 @@ public class GameService {
 
 	private void loadResources() throws GameServiceException {
 		try {
-			stringResource.init(globalContext.getDialogFile());
-			keyfile.init();
+			StringResource.getInstance().init(globalContext.getDialogFile(), globalContext.isEnhancedEdition());
+			Keyfile.getInstance().init(globalContext.getChitinKey());
 		} catch (Exception e) {
 			throw new GameServiceException(e);
 		}
@@ -189,12 +184,12 @@ public class GameService {
 					continue;
 				}
 				String filename = overrideFile.getName().toUpperCase();
-				ResourceEntry entry = keyfile.getResourceEntry(filename);
+				ResourceEntry entry = Keyfile.getInstance().getResourceEntry(filename);
 				if (entry == null) {
-					FileResourceEntry fileEntry = new FileResourceEntry(overrideFile, true);
-					keyfile.addResourceEntry(fileEntry);
+					ResourceEntry fileEntry = new FileResourceEntry(overrideFile);
+					Keyfile.getInstance().addResourceEntry(fileEntry);
 				} else if (entry instanceof BiffResourceEntry) {
-					((BiffResourceEntry) entry).setOverride(true);
+					((BiffResourceEntry) entry).setOverrideFile(overrideFile);
 				}
 			}
 		}

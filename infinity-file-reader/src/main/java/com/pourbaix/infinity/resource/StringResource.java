@@ -6,15 +6,11 @@ import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import javax.annotation.Resource;
-
-import com.pourbaix.infinity.context.GlobalContext;
 import com.pourbaix.infinity.util.FileReader;
 
 public class StringResource {
 
-	@Resource
-	private GlobalContext globalContext;
+	private static StringResource instance;
 
 	private File file;
 	private RandomAccessFile randomAccessFile;
@@ -22,9 +18,19 @@ public class StringResource {
 	private int maxnr, startindex;
 	private Charset charset = Charset.forName("windows-1252");
 
-	public void init(File file) throws StringResourceException {
+	public void init(File file, boolean enhancedEdition) throws StringResourceException {
 		this.file = file;
+		if (enhancedEdition) {
+			charset = Charset.forName("utf8");
+		}
 		close();
+	}
+
+	public static StringResource getInstance() {
+		if (StringResource.instance == null) {
+			StringResource.instance = new StringResource();
+		}
+		return StringResource.instance;
 	}
 
 	public void close() throws StringResourceException {
@@ -110,9 +116,6 @@ public class StringResource {
 				randomAccessFile.seek((long) 0x0C);
 			maxnr = FileReader.readInt(randomAccessFile);
 			startindex = FileReader.readInt(randomAccessFile);
-			if (globalContext.isEnhancedEdition()) {
-				charset = Charset.forName("utf8");
-			}
 		} catch (IOException e) {
 			throw new StringResourceException(e);
 		}
