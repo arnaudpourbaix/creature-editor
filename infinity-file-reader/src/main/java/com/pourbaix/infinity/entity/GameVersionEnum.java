@@ -1,5 +1,6 @@
 package com.pourbaix.infinity.entity;
 
+
 public enum GameVersionEnum {
 	BG1EE("Baldur's Gate - Enhanced Edition"), BG2EE("Baldur's Gate II - Enhanced Edition"), TUTU("Baldur's Gate - Tutu"), BGT("Baldur's Gate - Trilogy");
 

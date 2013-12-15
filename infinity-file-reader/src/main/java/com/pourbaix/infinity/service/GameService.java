@@ -2,6 +2,7 @@ package com.pourbaix.infinity.service;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,8 +15,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.context.GlobalContext;
-import com.pourbaix.infinity.entity.GameVersionEnum;
 import com.pourbaix.infinity.resource.StringResource;
+import com.pourbaix.infinity.resource.key.BiffResourceEntry;
+import com.pourbaix.infinity.resource.key.FileResourceEntry;
+import com.pourbaix.infinity.resource.key.Keyfile;
+import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.util.Constant;
 
 @Service
@@ -27,89 +31,51 @@ public class GameService {
 	private GlobalContext globalContext;
 	@Resource
 	private StringResource stringResource;
+	@Resource
+	private Keyfile keyfile;
 
-	public void openGame() throws GameException {
-		if (globalContext.getGameDirectory() == null) {
-			throw new GameException("game directory is not defined in configuration");
+	public void openGame() throws GameServiceException {
+		checkGameDirectory();
+		if (globalContext.isEnhancedEdition()) {
+			fetchUserGameProfileDirectory();
+			fetchLanguage();
 		}
-		if (!globalContext.getGameDirectory().isDirectory()) {
-			throw new GameException("game directory is invalid, please check configuration");
-		}
-		fetchUserGameDirectory();
-		fetchLanguage();
-		fetchRootDirectories();
+		fetchChitinKey();
 		fetchDialogFile();
+		//fetchRootDirectories();
 		loadResources();
-		logger.debug("language:" + globalContext.getLanguage());
 		try {
 			String test = stringResource.getStringRef(500);
 			logger.debug("test=" + test);
+			ResourceEntry entry2 = keyfile.getResourceEntry("SPWI101.SPL");
+			logger.debug(entry2.getResourceName());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// if (!new File(globalContext.getRootDirectory(), "chitin.key").exists()) {
-		// throw new GameException("no chitin key in game directory");
-		// }
-		logger.debug("success");
 	}
 
-	public void loadResources() throws GameException {
-		// Get resources from keyfile
-		// keyfile.addBIFFResourceEntries(treeModel);
-		stringResource.init(globalContext.getDialogFile());
-		//
-		// // Add other resources
-		// for (final String extraDir : games[currentGame].extraDirs) {
-		// for (final File root : rootDirs) {
-		// File directory = NIFile.getFile(root, extraDir);
-		// if (directory.exists())
-		// treeModel.addDirectory((ResourceTreeFolder) treeModel.getRoot(), directory);
-		// }
-		// }
-		//
-		// boolean overrideInOverride = (BrowserMenuBar.getInstance() != null && BrowserMenuBar.getInstance().getOverrideMode() ==
-		// BrowserMenuBar.OVERRIDE_IN_OVERRIDE);
-		// for (final File rootDir : rootDirs) {
-		// File overrideDir = NIFile.getFile(rootDir, OVERRIDEFOLDER);
-		// if (overrideDir.exists()) {
-		// File overrideFiles[] = overrideDir.listFiles();
-		// for (final File overrideFile : overrideFiles) {
-		// if (!overrideFile.isDirectory()) {
-		// String filename = overrideFile.getName().toUpperCase();
-		// ResourceEntry entry = getResourceEntry(filename);
-		// if (entry == null) {
-		// FileResourceEntry fileEntry = new FileResourceEntry(overrideFile, true);
-		// treeModel.addResourceEntry(fileEntry, fileEntry.getTreeFolder());
-		// } else if (entry instanceof BIFFResourceEntry) {
-		// ((BIFFResourceEntry) entry).setOverride(true);
-		// if (overrideInOverride) {
-		// treeModel.removeResourceEntry(entry, entry.getExtension());
-		// treeModel.addResourceEntry(new FileResourceEntry(overrideFile, true), OVERRIDEFOLDER);
-		// }
-		// }
-		// }
-		// }
-		// }
-		// }
-		// treeModel.sort();
+	private void checkGameDirectory() throws GameServiceException {
+		if (globalContext.getGameDirectory() == null) {
+			throw new GameServiceException("game directory is not defined in configuration");
+		}
+		if (!globalContext.getGameDirectory().isDirectory()) {
+			throw new GameServiceException("game directory is invalid, please check configuration");
+		}
 	}
 
 	/**
 	 * Attempts to find the user-profile game folder (supported by BG1EE and BG2EE)
 	 */
-	private void fetchUserGameDirectory() {
-		if (globalContext.getGameVersion() != GameVersionEnum.BG1EE && globalContext.getGameVersion() != GameVersionEnum.BG2EE) {
+	private void fetchUserGameProfileDirectory() {
+		File userHomeDirectory = FileSystemView.getFileSystemView().getDefaultDirectory();
+		File userGameProfileDirectory = new File(userHomeDirectory, globalContext.getGameVersion().getName());
+		if (userGameProfileDirectory.exists()) {
+			globalContext.setUserGameProfileDirectory(userGameProfileDirectory);
 			return;
 		}
-		File userHomeDirectory = FileSystemView.getFileSystemView().getDefaultDirectory();
-		File userGameDirectory = new File(userHomeDirectory, globalContext.getGameVersion().getName());
-		if (userGameDirectory.exists()) {
-			globalContext.setUserGameDirectory(userGameDirectory);
-		}
 
-		String userGameDirectoryPrefix = null;
-		String userGameDirectorySuffix = null;
+		String userGameProfileDirectoryPrefix = null;
+		String userGameProfileDirectorySuffix = null;
 		if (System.getProperty("os.name").contains(Constant.OperatingSystemName.WINDOWS)) {
 			try {
 				Process p = Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
@@ -119,38 +85,42 @@ public class GameService {
 				in.read(b);
 				in.close();
 				String[] splitted = new String(b).split("\\s\\s+");
-				userGameDirectoryPrefix = splitted[splitted.length - 1];
+				userGameProfileDirectoryPrefix = splitted[splitted.length - 1];
 			} catch (Throwable t) {
 				return;
 			}
-			userGameDirectorySuffix = globalContext.getGameVersion().getName();
+			userGameProfileDirectorySuffix = globalContext.getGameVersion().getName();
 		} else if (System.getProperty("os.name").contains(Constant.OperatingSystemName.MAC)) {
-			userGameDirectoryPrefix = System.getProperty("user.home");
-			userGameDirectorySuffix = File.separator + "Documents" + File.separator + globalContext.getGameVersion().getName();
+			userGameProfileDirectoryPrefix = System.getProperty("user.home");
+			userGameProfileDirectorySuffix = File.separator + "Documents" + File.separator + globalContext.getGameVersion().getName();
 		}
 
-		if (userGameDirectoryPrefix == null || userGameDirectorySuffix == null) {
+		if (userGameProfileDirectoryPrefix == null) {
+			logger.warn("can not locate user game profile directory !");
 			return;
 		}
 
-		userGameDirectory = new File(userGameDirectoryPrefix, userGameDirectorySuffix);
-		if (userGameDirectory.exists()) {
-			globalContext.setUserGameDirectory(userGameDirectory);
+		userGameProfileDirectory = new File(userGameProfileDirectoryPrefix, userGameProfileDirectorySuffix);
+		if (!userGameProfileDirectory.exists()) {
+			logger.warn("can not locate user game profile directory !");
+			return;
 		}
+
+		globalContext.setUserGameProfileDirectory(userGameProfileDirectory);
 	}
 
-	private void fetchLanguage() throws GameException {
-		if (globalContext.getDefaultLanguage().isEmpty()) {
-			throw new GameException("default language is not defined in configuration");
-		}
-		if (globalContext.getGameVersion() != GameVersionEnum.BG1EE && globalContext.getGameVersion() != GameVersionEnum.BG2EE) {
-			return;
-		}
-		File iniFile = new File(globalContext.getUserGameDirectory(), Constant.INI_FILENAME);
-		if (!iniFile.exists()) {
-			return;
-		}
+	/**
+	 * Attempts to find language and dialog directory (supported by BG1EE and BG2EE)
+	 */
+	private void fetchLanguage() throws GameServiceException {
 		try {
+			if (globalContext.getDefaultLanguage().isEmpty() || !globalContext.getDefaultLanguage().matches("\\w{2}_\\w{2}")) {
+				throw new GameServiceException("default language is not defined or invalid");
+			}
+			File iniFile = new File(globalContext.getUserGameProfileDirectory(), Constant.INI_FILENAME);
+			if (!iniFile.exists()) {
+				throw new FileNotFoundException();
+			}
 			BufferedReader br = new BufferedReader(new FileReader(iniFile));
 			String line = br.readLine();
 			while (line != null) {
@@ -169,32 +139,65 @@ public class GameService {
 				line = br.readLine();
 			}
 			br.close();
+		} catch (FileNotFoundException e) {
+			logger.warn(Constant.INI_FILENAME + " not found. Using default language: " + globalContext.getDefaultLanguage().substring(0, 2));
 		} catch (IOException e) {
-			logger.error("Error parsing " + Constant.INI_FILENAME + ". Using language defaults.");
+			logger.warn("Error parsing " + Constant.INI_FILENAME + ". Using default language: " + globalContext.getDefaultLanguage().substring(0, 2));
+		} finally {
+			logger.info("setting language directory based on " + globalContext.getLanguage());
+			File langDirectory = new File(globalContext.getGameDirectory(), "lang" + File.separator + globalContext.getLanguage());
+			if (langDirectory.exists()) {
+				globalContext.setLanguageDirectory(langDirectory);
+			}
 		}
 	}
 
-	private void fetchRootDirectories() throws GameException {
-		File langRoot = new File(globalContext.getGameDirectory(), "lang" + File.separator + globalContext.getLanguage());
-		if (langRoot.exists()) {
-			globalContext.setLanguageDirectory(langRoot);
+	private void fetchChitinKey() throws GameServiceException {
+		File chitinKey = new File(globalContext.getGameDirectory(), "chitin.key");
+		if (!chitinKey.exists()) {
+			throw new GameServiceException("no chitin key in game directory !");
 		}
-		if (globalContext.getUserGameDirectory() != null && langRoot.exists()) {
-			globalContext.setRootDirectories(new File[] { langRoot, globalContext.getUserGameDirectory(), globalContext.getGameDirectory() });
-		} else if (globalContext.getUserGameDirectory() != null) {
-			globalContext.setRootDirectories(new File[] { globalContext.getUserGameDirectory(), globalContext.getGameDirectory() });
-		} else if (langRoot.exists()) {
-			globalContext.setRootDirectories(new File[] { langRoot, globalContext.getGameDirectory() });
-		} else {
-			globalContext.setRootDirectories(new File[] { globalContext.getGameDirectory() });
-		}
+		globalContext.setChitinKey(chitinKey);
 	}
 
-	private void fetchDialogFile() {
+	private void fetchDialogFile() throws GameServiceException {
 		if (globalContext.getLanguageDirectory() != null) {
 			globalContext.setDialogFile(new File(globalContext.getLanguageDirectory(), Constant.DIALOG_FILENAME));
 		} else {
 			globalContext.setDialogFile(new File(globalContext.getGameDirectory(), Constant.DIALOG_FILENAME));
 		}
+		if (!globalContext.getDialogFile().exists()) {
+			throw new GameServiceException(Constant.DIALOG_FILENAME + " not found !");
+		}
 	}
+
+	private void loadResources() throws GameServiceException {
+		try {
+			stringResource.init(globalContext.getDialogFile());
+			keyfile.init();
+		} catch (Exception e) {
+			throw new GameServiceException(e);
+		}
+		// Add override resources
+		for (final File rootDir : globalContext.getRootDirectories()) {
+			File overrideDir = new File(rootDir, Constant.OVERRIDE_DIRECTORY);
+			if (!overrideDir.exists() || !overrideDir.isDirectory()) {
+				continue;
+			}
+			for (final File overrideFile : overrideDir.listFiles()) {
+				if (overrideFile.isDirectory()) {
+					continue;
+				}
+				String filename = overrideFile.getName().toUpperCase();
+				ResourceEntry entry = keyfile.getResourceEntry(filename);
+				if (entry == null) {
+					FileResourceEntry fileEntry = new FileResourceEntry(overrideFile, true);
+					keyfile.addResourceEntry(fileEntry);
+				} else if (entry instanceof BiffResourceEntry) {
+					((BiffResourceEntry) entry).setOverride(true);
+				}
+			}
+		}
+	}
+
 }

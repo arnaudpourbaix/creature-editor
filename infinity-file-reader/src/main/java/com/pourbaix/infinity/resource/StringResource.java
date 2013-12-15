@@ -9,73 +9,76 @@ import java.util.Arrays;
 import javax.annotation.Resource;
 
 import com.pourbaix.infinity.context.GlobalContext;
-import com.pourbaix.infinity.entity.GameVersionEnum;
-import com.pourbaix.infinity.util.Filereader;
+import com.pourbaix.infinity.util.FileReader;
 
 public class StringResource {
 
 	@Resource
 	private GlobalContext globalContext;
 
-	private File ffile;
-	private RandomAccessFile file;
+	private File file;
+	private RandomAccessFile randomAccessFile;
 	private String version;
 	private int maxnr, startindex;
-	private Charset cp1252Charset = Charset.forName("windows-1252");
-	private Charset utf8Charset = Charset.forName("utf8");
-	private Charset charset = cp1252Charset;
-	private Charset usedCharset = charset;
+	private Charset charset = Charset.forName("windows-1252");
 
-	public void init(File ffile) {
+	public void init(File file) throws StringResourceException {
+		this.file = file;
 		close();
-		this.ffile = ffile;
 	}
 
-	public Charset getCharset() {
-		return charset;
-	}
-
-	public void setCharset(String cs) {
-		charset = Charset.forName(cs);
-		usedCharset = charset;
-	}
-
-	public void close() {
-		if (file == null)
+	public void close() throws StringResourceException {
+		if (randomAccessFile == null) {
 			return;
-		try {
-			file.close();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-		file = null;
-	}
-
-	public File getFile() {
-		return ffile;
-	}
-
-	public int getMaxIndex() {
-		return maxnr;
-	}
-
-	public String getResource(int index) throws Exception {
 		try {
-			if (file == null)
+			randomAccessFile.close();
+		} catch (IOException e) {
+			throw new StringResourceException("Error when closing file " + this.randomAccessFile, e);
+		}
+	}
+
+	public String getStringRef(int index) throws StringResourceException {
+		try {
+			if (randomAccessFile == null) {
+				open();
+			}
+			if (index >= maxnr || index < 0) {
+				throw new StringResourceException("No such index");
+			}
+			if (version.equalsIgnoreCase("V1  ")) {
+				index *= 0x1A;
+				randomAccessFile.seek((long) (0x12 + index + 0x12));
+			} else if (version.equalsIgnoreCase("V3.0")) {
+				index *= 0x28;
+				randomAccessFile.seek((long) (0x14 + index + 0x1C));
+			}
+			int offset = startindex + FileReader.readInt(randomAccessFile);
+			int length = FileReader.readInt(randomAccessFile);
+			randomAccessFile.seek((long) offset);
+			return FileReader.readString(randomAccessFile, length, charset);
+		} catch (IOException e) {
+			throw new StringResourceException("Error reading " + file.getName());
+		}
+	}
+
+	public String getResource(int index) throws StringResourceException {
+		try {
+			if (randomAccessFile == null)
 				open();
 			if (index >= maxnr || index == 0xffffffff)
 				return null;
 			byte buffer[] = null;
 			if (version.equalsIgnoreCase("V1  ")) {
 				index *= 0x1a;
-				file.seek((long) (0x12 + index + 0x02));
+				randomAccessFile.seek((long) (0x12 + index + 0x02));
 				buffer = new byte[8];
 			} else if (version.equalsIgnoreCase("V3.0")) {
 				index *= 0x28;
-				file.seek((long) (0x14 + index + 0x04));
+				randomAccessFile.seek((long) (0x14 + index + 0x04));
 				buffer = new byte[16];
 			}
-			file.readFully(buffer);
+			randomAccessFile.readFully(buffer);
 			if (buffer[0] == 0)
 				return null;
 			int max = buffer.length;
@@ -89,50 +92,29 @@ public class StringResource {
 				buffer = Arrays.copyOfRange(buffer, 0, max);
 			return new String(buffer);
 		} catch (Exception e) {
-			e.printStackTrace();
-			throw new Exception("Error reading " + ffile.getName());
+			throw new StringResourceException("Error reading " + file.getName());
 		}
 	}
 
-	public String getStringRef(int index) throws Exception {
+	private void open() throws StringResourceException {
 		try {
-			if (file == null)
-				open();
-			if (index >= maxnr || index < 0)
-				return "No such index";
-			// if (index == 0xffffffff) return "none";
-			if (version.equalsIgnoreCase("V1  ")) {
-				index *= 0x1A;
-				file.seek((long) (0x12 + index + 0x12));
-			} else if (version.equalsIgnoreCase("V3.0")) {
-				index *= 0x28;
-				file.seek((long) (0x14 + index + 0x1C));
+			randomAccessFile = new RandomAccessFile(file, "r");
+			randomAccessFile.seek((long) 0x00);
+			String signature = FileReader.readString(randomAccessFile, 4);
+			if (!signature.equalsIgnoreCase("TLK "))
+				throw new IOException("Not valid TLK file");
+			version = FileReader.readString(randomAccessFile, 4);
+			if (version.equalsIgnoreCase("V1  "))
+				randomAccessFile.seek((long) 0x0A);
+			else if (version.equalsIgnoreCase("V3.0"))
+				randomAccessFile.seek((long) 0x0C);
+			maxnr = FileReader.readInt(randomAccessFile);
+			startindex = FileReader.readInt(randomAccessFile);
+			if (globalContext.isEnhancedEdition()) {
+				charset = Charset.forName("utf8");
 			}
-			int offset = startindex + Filereader.readInt(file);
-			int length = Filereader.readInt(file);
-			file.seek((long) offset);
-			return Filereader.readString(file, length, usedCharset);
 		} catch (IOException e) {
-			e.printStackTrace();
-			throw new Exception("Error reading " + ffile.getName());
-		}
-	}
-
-	private void open() throws IOException {
-		file = new RandomAccessFile(ffile, "r");
-		file.seek((long) 0x00);
-		String signature = Filereader.readString(file, 4);
-		if (!signature.equalsIgnoreCase("TLK "))
-			throw new IOException("Not valid TLK file");
-		version = Filereader.readString(file, 4);
-		if (version.equalsIgnoreCase("V1  "))
-			file.seek((long) 0x0A);
-		else if (version.equalsIgnoreCase("V3.0"))
-			file.seek((long) 0x0C);
-		maxnr = Filereader.readInt(file);
-		startindex = Filereader.readInt(file);
-		if (globalContext.getGameVersion() == GameVersionEnum.BG1EE || globalContext.getGameVersion() == GameVersionEnum.BG2EE) {
-			usedCharset = utf8Charset;
+			throw new StringResourceException(e);
 		}
 	}
 

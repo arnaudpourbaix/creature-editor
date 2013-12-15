@@ -27,7 +27,7 @@ public class ReaderService {
 		// }
 		try {
 			gameService.openGame();
-		} catch (GameException e) {
+		} catch (GameServiceException e) {
 			logger.error(e.getMessage());
 		}
 	}

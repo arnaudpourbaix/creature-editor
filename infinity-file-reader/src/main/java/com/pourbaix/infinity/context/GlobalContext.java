@@ -1,6 +1,8 @@
 package com.pourbaix.infinity.context;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 
@@ -14,12 +16,42 @@ public class GlobalContext {
 	private String language;
 	@Value("${game.version}")
 	private GameVersionEnum gameVersion;
+	@Value("${ignore.read.errors}")
+	private boolean ignoreReadErrors;
 	@Value("${game.directory}")
 	private File gameDirectory;
-	private File userGameDirectory;
+	private File userGameProfileDirectory;
 	private File languageDirectory;
 	private File dialogFile;
-	private File[] rootDirectories;
+	private File chitinKey;
+
+	public boolean isEnhancedEdition() {
+		return gameVersion == GameVersionEnum.BG1EE || gameVersion == GameVersionEnum.BG2EE;
+	}
+
+	public List<File> getRootDirectories() {
+		List<File> rootDirs = new ArrayList<File>();
+		if (userGameProfileDirectory != null) {
+			rootDirs.add(userGameProfileDirectory);
+		}
+		if (languageDirectory != null) {
+			rootDirs.add(languageDirectory);
+		}
+		rootDirs.add(gameDirectory);
+		return rootDirs;
+	}
+
+	public File getFile(String filename) {
+		//		File file = NIFile.getFile(rootDirs, filename);
+		//		if (file.exists())
+		//			return file;
+		//		for (final File biffDir : biffDirs) {
+		//			file = new File(biffDir, filename);
+		//			if (file.exists())
+		//				return file;
+		//		}
+		return null;
+	}
 
 	public GameVersionEnum getGameVersion() {
 		return gameVersion;
@@ -37,12 +69,12 @@ public class GlobalContext {
 		this.gameDirectory = gameDirectory;
 	}
 
-	public File getUserGameDirectory() {
-		return userGameDirectory;
+	public File getUserGameProfileDirectory() {
+		return userGameProfileDirectory;
 	}
 
-	public void setUserGameDirectory(File userGameDirectory) {
-		this.userGameDirectory = userGameDirectory;
+	public void setUserGameProfileDirectory(File userGameProfileDirectory) {
+		this.userGameProfileDirectory = userGameProfileDirectory;
 	}
 
 	public File getDialogFile() {
@@ -69,20 +101,28 @@ public class GlobalContext {
 		this.language = language;
 	}
 
-	public File[] getRootDirectories() {
-		return rootDirectories;
-	}
-
-	public void setRootDirectories(File[] rootDirectories) {
-		this.rootDirectories = rootDirectories;
-	}
-
 	public File getLanguageDirectory() {
 		return languageDirectory;
 	}
 
 	public void setLanguageDirectory(File languageDirectory) {
 		this.languageDirectory = languageDirectory;
+	}
+
+	public boolean isIgnoreReadErrors() {
+		return ignoreReadErrors;
+	}
+
+	public void setIgnoreReadErrors(boolean ignoreReadErrors) {
+		this.ignoreReadErrors = ignoreReadErrors;
+	}
+
+	public File getChitinKey() {
+		return chitinKey;
+	}
+
+	public void setChitinKey(File chitinKey) {
+		this.chitinKey = chitinKey;
 	}
 
 }
