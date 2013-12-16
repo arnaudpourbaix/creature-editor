@@ -1,6 +1,7 @@
 package com.pourbaix.infinity.resource.key;
 
 import java.io.File;
+import java.io.IOException;
 
 public interface ResourceEntry {
 
@@ -10,7 +11,7 @@ public interface ResourceEntry {
 
 	File getOverrideFile();
 
-	byte[] getResourceData() throws Exception;
+	byte[] getResourceData() throws IOException;
 
 	String getSearchString();
 

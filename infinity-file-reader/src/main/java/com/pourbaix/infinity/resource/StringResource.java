@@ -6,6 +6,7 @@ import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
+import com.pourbaix.infinity.util.DynamicArray;
 import com.pourbaix.infinity.util.Filereader;
 
 public class StringResource {
@@ -42,6 +43,11 @@ public class StringResource {
 		} catch (IOException e) {
 			throw new StringResourceException("Error when closing file " + this.randomAccessFile, e);
 		}
+	}
+
+	public String getStringRef(byte buffer[], int offset) throws StringResourceException {
+		int index = DynamicArray.getInt(buffer, offset);
+		return getStringRef(index);
 	}
 
 	public String getStringRef(int index) throws StringResourceException {

@@ -1,6 +1,7 @@
 package com.pourbaix.infinity.resource.key;
 
 import java.io.File;
+import java.io.IOException;
 
 public abstract class BaseResourceEntry implements ResourceEntry, Comparable<BaseResourceEntry> {
 
@@ -13,7 +14,7 @@ public abstract class BaseResourceEntry implements ResourceEntry, Comparable<Bas
 		return resourceName.compareToIgnoreCase(entry.resourceName);
 	}
 
-	public abstract byte[] getResourceData() throws Exception;
+	public abstract byte[] getResourceData() throws IOException;
 
 	public String toString() {
 		return resourceName;

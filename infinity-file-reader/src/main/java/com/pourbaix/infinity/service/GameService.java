@@ -17,13 +17,10 @@ import org.springframework.stereotype.Service;
 import com.pourbaix.infinity.context.GlobalContext;
 import com.pourbaix.infinity.resource.ResourceFactory;
 import com.pourbaix.infinity.resource.StringResource;
-import com.pourbaix.infinity.resource.cre.CreResource;
 import com.pourbaix.infinity.resource.key.BiffResourceEntry;
 import com.pourbaix.infinity.resource.key.FileResourceEntry;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
-import com.pourbaix.infinity.resource.other.PlainTextResource;
-import com.pourbaix.infinity.resource.spl.SplResource;
 import com.pourbaix.infinity.util.Constant;
 
 @Service
@@ -42,21 +39,9 @@ public class GameService {
 		}
 		fetchChitinKey();
 		fetchDialogFile();
+		ResourceFactory.getInstance().setGameVersion(globalContext.getGameVersion());
 		ResourceFactory.getInstance().setRootDirs(globalContext.getRootDirectories());
 		loadResources();
-		try {
-			String test = StringResource.getInstance().getStringRef(500);
-			logger.debug("test=" + test);
-			ResourceEntry entry = Keyfile.getInstance().getResourceEntry("SPWI112.SPL");
-			SplResource spell = new SplResource(entry);
-			ResourceEntry entry2 = Keyfile.getInstance().getResourceEntry("KAHRK.CRE");
-			CreResource creature = new CreResource(entry2);
-			PlainTextResource ids = new PlainTextResource(Keyfile.getInstance().getResourceEntry("spell.ids"));
-			PlainTextResource f2da = new PlainTextResource(Keyfile.getInstance().getResourceEntry("spells.2da"));
-			logger.debug("end");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	private void checkGameDirectory() throws GameServiceException {
@@ -66,7 +51,6 @@ public class GameService {
 		if (!globalContext.getGameDirectory().isDirectory()) {
 			throw new GameServiceException("game directory is invalid, please check configuration");
 		}
-		ResourceFactory.getInstance().setGameVersion(globalContext.getGameVersion());
 	}
 
 	/**

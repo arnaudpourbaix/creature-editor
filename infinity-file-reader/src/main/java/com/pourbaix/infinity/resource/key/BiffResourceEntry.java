@@ -2,6 +2,7 @@ package com.pourbaix.infinity.resource.key;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import com.pourbaix.infinity.util.DynamicArray;
@@ -31,7 +32,7 @@ public class BiffResourceEntry extends BaseResourceEntry {
 	}
 
 	@Override
-	public byte[] getResourceData() throws Exception {
+	public byte[] getResourceData() throws IOException {
 		if (overrideFile != null) {
 			InputStream is = new BufferedInputStream(new FileInputStream(overrideFile));
 			byte buffer[] = Filereader.readBytes(is, (int) overrideFile.length());
