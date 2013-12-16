@@ -4,6 +4,9 @@
 
 package com.pourbaix.infinity.resource.datatype;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.pourbaix.infinity.util.DynamicArray;
 
 public class Bitmap extends Datatype {
@@ -21,6 +24,11 @@ public class Bitmap extends Datatype {
 			value = (int) DynamicArray.getByte(buffer, offset);
 		else
 			throw new IllegalArgumentException();
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		super.writeInt(os, value);
 	}
 
 	@Override

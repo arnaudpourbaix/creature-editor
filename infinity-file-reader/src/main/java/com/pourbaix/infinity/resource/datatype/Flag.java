@@ -1,5 +1,8 @@
 package com.pourbaix.infinity.resource.datatype;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.pourbaix.infinity.util.DynamicArray;
 
 public class Flag extends Datatype {
@@ -25,6 +28,11 @@ public class Flag extends Datatype {
 		table = new String[8 * length];
 		for (int i = 1; i < stable.length; i++)
 			table[i - 1] = stable[i];
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		super.writeLong(os, value);
 	}
 
 	@Override

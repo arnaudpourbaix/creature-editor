@@ -1,15 +1,17 @@
 package com.pourbaix.infinity.resource.datatype;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
+import com.pourbaix.infinity.util.Filewriter;
 
 public class ResourceRef extends Datatype {
 	private static final String NONE = "None";
-	private final String type[];
 	private String curtype;
 	String resname;
 	private boolean wasNull;
@@ -29,10 +31,6 @@ public class ResourceRef extends Datatype {
 
 	public ResourceRef(byte h_buffer[], int offset, int length, String name, String[] type) {
 		super(offset, length, name);
-		if (type == null || type.length == 0)
-			this.type = new String[] { "" };
-		else
-			this.type = type;
 		curtype = type[0];
 		buffer = Arrays.copyOfRange(h_buffer, offset, offset + length);
 		if (buffer[0] == 0x00 || buffer[0] == 0x4e && buffer[1] == 0x6f && buffer[2] == 0x6e && buffer[3] == 0x65 && buffer[4] == 0x00) {
@@ -62,6 +60,17 @@ public class ResourceRef extends Datatype {
 				}
 			}
 		}
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		if (resname.equals(NONE)) {
+			if (wasNull)
+				Filewriter.writeBytes(os, buffer);
+			else
+				Filewriter.writeBytes(os, new byte[getSize()]);
+		} else
+			Filewriter.writeString(os, resname, getSize());
 	}
 
 	@Override
@@ -99,19 +108,10 @@ public class ResourceRef extends Datatype {
 	// -------------------------- INNER CLASSES --------------------------
 
 	static final class ResourceRefEntry {
-		private final ResourceEntry entry;
 		private final String name;
-
-		private ResourceRefEntry(ResourceEntry entry) {
-			this.entry = entry;
-			String string = entry.toString();
-			String search = entry.getSearchString();
-			name = string + " (" + search + ')';
-		}
 
 		ResourceRefEntry(String name) {
 			this.name = name;
-			entry = null;
 		}
 
 		@Override

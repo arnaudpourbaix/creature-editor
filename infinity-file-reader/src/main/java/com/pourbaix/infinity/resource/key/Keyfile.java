@@ -8,20 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 import com.pourbaix.infinity.util.DynamicArray;
-import com.pourbaix.infinity.util.FileReader;
+import com.pourbaix.infinity.util.Filereader;
 
 public class Keyfile {
-
-	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(Keyfile.class);
 
 	private static Keyfile instance;
 
@@ -30,6 +24,8 @@ public class Keyfile {
 
 	private List<BiffEntry> biffEntries;
 	private List<ResourceEntry> resourceEntries;
+	private BiffArchive currentBIFF; // Caching of last BifFile - improves performance
+	private BiffEntry currentBIFFEntry;
 	private String signature;
 	private String version;
 	private File keyfile;
@@ -55,7 +51,7 @@ public class Keyfile {
 	public ResourceEntry getResourceEntry(final String resourcename) {
 		Optional<ResourceEntry> entry = Iterables.tryFind(resourceEntries, new Predicate<ResourceEntry>() {
 			public boolean apply(ResourceEntry entry) {
-				return entry.getResourceName().equals(resourcename);
+				return entry.getResourceName().equalsIgnoreCase(resourcename);
 			}
 		});
 		return entry.isPresent() ? entry.get() : null;
@@ -65,9 +61,26 @@ public class Keyfile {
 		return getResourceEntry(resourcename) != null;
 	}
 
+	public BiffEntry getBIFFEntry(int index) {
+		return biffEntries.get(index);
+	}
+
+	public BiffArchive getBIFFFile(BiffEntry entry) throws IOException {
+		if (currentBIFFEntry == entry)
+			return currentBIFF; // Caching
+		File file = entry.getFile();
+		if (file == null)
+			throw new IOException(entry + " not found");
+		if (currentBIFF != null)
+			currentBIFF.close();
+		currentBIFFEntry = entry;
+		currentBIFF = new BiffArchive(file);
+		return currentBIFF;
+	}
+
 	private byte[] readChitinKey() throws IOException {
 		BufferedInputStream is = new BufferedInputStream(new FileInputStream(keyfile));
-		byte[] buffer = FileReader.readBytes(is, (int) keyfile.length());
+		byte[] buffer = Filereader.readBytes(is, (int) keyfile.length());
 		is.close();
 		signature = new String(buffer, 0, 4);
 		version = new String(buffer, 4, 4);

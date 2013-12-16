@@ -6,7 +6,7 @@ import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 
-import com.pourbaix.infinity.util.FileReader;
+import com.pourbaix.infinity.util.Filereader;
 
 public class StringResource {
 
@@ -59,10 +59,10 @@ public class StringResource {
 				index *= 0x28;
 				randomAccessFile.seek((long) (0x14 + index + 0x1C));
 			}
-			int offset = startindex + FileReader.readInt(randomAccessFile);
-			int length = FileReader.readInt(randomAccessFile);
+			int offset = startindex + Filereader.readInt(randomAccessFile);
+			int length = Filereader.readInt(randomAccessFile);
 			randomAccessFile.seek((long) offset);
-			return FileReader.readString(randomAccessFile, length, charset);
+			return Filereader.readString(randomAccessFile, length, charset);
 		} catch (IOException e) {
 			throw new StringResourceException("Error reading " + file.getName());
 		}
@@ -106,16 +106,16 @@ public class StringResource {
 		try {
 			randomAccessFile = new RandomAccessFile(file, "r");
 			randomAccessFile.seek((long) 0x00);
-			String signature = FileReader.readString(randomAccessFile, 4);
+			String signature = Filereader.readString(randomAccessFile, 4);
 			if (!signature.equalsIgnoreCase("TLK "))
 				throw new IOException("Not valid TLK file");
-			version = FileReader.readString(randomAccessFile, 4);
+			version = Filereader.readString(randomAccessFile, 4);
 			if (version.equalsIgnoreCase("V1  "))
 				randomAccessFile.seek((long) 0x0A);
 			else if (version.equalsIgnoreCase("V3.0"))
 				randomAccessFile.seek((long) 0x0C);
-			maxnr = FileReader.readInt(randomAccessFile);
-			startindex = FileReader.readInt(randomAccessFile);
+			maxnr = Filereader.readInt(randomAccessFile);
+			startindex = Filereader.readInt(randomAccessFile);
 		} catch (IOException e) {
 			throw new StringResourceException(e);
 		}

@@ -1,6 +1,10 @@
 package com.pourbaix.infinity.resource.datatype;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
+
+import com.pourbaix.infinity.util.Filewriter;
 
 public class Unknown extends Datatype {
 	private static final String UNKNOWN = "Unknown";
@@ -18,6 +22,11 @@ public class Unknown extends Datatype {
 
 	public byte[] getData() {
 		return data;
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		Filewriter.writeBytes(os, data);
 	}
 
 	@Override

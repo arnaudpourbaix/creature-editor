@@ -5,7 +5,7 @@ import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.nio.charset.Charset;
 
-public final class FileReader {
+public final class Filereader {
 	private static final byte[] buffer4 = new byte[4];
 	private static final byte[] buffer2 = new byte[2];
 
@@ -201,6 +201,6 @@ public final class FileReader {
 		return DynamicArray.getString(buffer, 0, length);
 	}
 
-	private FileReader() {
+	private Filereader() {
 	}
 }

@@ -1,29 +1,21 @@
 package com.pourbaix.infinity.resource;
 
-import java.awt.Component;
 import java.io.Closeable;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import com.pourbaix.infinity.resource.datatype.SectionCount;
-import com.pourbaix.infinity.resource.datatype.SectionOffset;
-import com.pourbaix.infinity.resource.datatype.Unknown;
 import com.pourbaix.infinity.resource.dlg.AbstractCode;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 
 public abstract class AbstractStruct implements StructEntry, Closeable {
 	protected List<StructEntry> list;
 	private AbstractStruct superStruct;
-	private Map<Class<? extends StructEntry>, SectionCount> countmap;
-	private Map<Class<? extends StructEntry>, SectionOffset> offsetmap;
 	private ResourceEntry entry;
 	private String name;
 	private int startoffset, endoffset, extraoffset;
-	private Collection<Component> viewerComponents = null;
 
 	protected AbstractStruct() {
 	}
@@ -34,11 +26,6 @@ public abstract class AbstractStruct implements StructEntry, Closeable {
 		name = entry.toString();
 		byte buffer[] = entry.getResourceData();
 		endoffset = read(buffer, 0);
-		if (this instanceof HasAddRemovable && list.size() > 0) {// Is this enough?
-			Collections.sort(list); // This way we can writeField out in the order in list - sorted by offset
-			fixHoles(buffer);
-			initAddStructMaps();
-		}
 	}
 
 	protected AbstractStruct(AbstractStruct superStruct, String name, int startoffset, int listSize) {
@@ -48,43 +35,27 @@ public abstract class AbstractStruct implements StructEntry, Closeable {
 		list = new ArrayList<StructEntry>(listSize);
 	}
 
-	//	protected AbstractStruct(AbstractStruct superStruct, String name, byte buffer[], int startoffset) throws Exception {
-	//		this(superStruct, name, buffer, startoffset, 10);
-	//	}
+	protected AbstractStruct(AbstractStruct superStruct, String name, byte buffer[], int startoffset) throws Exception {
+		this(superStruct, name, buffer, startoffset, 10);
+	}
 
-	//	protected AbstractStruct(AbstractStruct superStruct, String name, byte buffer[], int startoffset, int listSize) throws Exception {
-	//		this(superStruct, name, startoffset, listSize);
-	//		endoffset = read(buffer, startoffset);
-	//		if (this instanceof HasAddRemovable) {
-	//			if (!(this instanceof Actor)) // Is this enough?
-	//				Collections.sort(list); // This way we can writeField out in the order in list - sorted by offset
-	//			initAddStructMaps();
-	//		}
-	//	}
+	protected AbstractStruct(AbstractStruct superStruct, String name, byte buffer[], int startoffset, int listSize) throws Exception {
+		this(superStruct, name, startoffset, listSize);
+		endoffset = read(buffer, startoffset);
+	}
 
-	protected abstract int read(byte buffer[], int startoffset) throws Exception;
-
-	private void fixHoles(byte buffer[]) {
+	public void realignStructOffsets() {
 		int offset = startoffset;
-		List<StructEntry> flatList = getFlatList();
-		for (int i = 0; i < flatList.size(); i++) {
-			StructEntry se = flatList.get(i);
-			int delta = se.getOffset() - offset;
-			if (delta > 0) {
-				Unknown hole = new Unknown(buffer, offset, delta, "Unused bytes?");
-				list.add(hole);
-				flatList.add(i, hole);
-				System.out.println("Hole: " + name + " off: " + Integer.toHexString(offset) + "h len: " + delta);
-				i++;
-			}
-			offset = se.getOffset() + se.getSize();
-		}
-		if (endoffset < buffer.length) { // Does this break anything?
-			list.add(new Unknown(buffer, endoffset, buffer.length - endoffset, "Unused bytes?"));
-			System.out.println("Hole: " + name + " off: " + Integer.toHexString(offset) + "h len: " + (buffer.length - endoffset));
-			endoffset = buffer.length;
+		for (int i = 0; i < list.size(); i++) {
+			StructEntry structEntry = list.get(i);
+			structEntry.setOffset(offset);
+			offset += structEntry.getSize();
+			if (structEntry instanceof AbstractStruct)
+				((AbstractStruct) structEntry).realignStructOffsets();
 		}
 	}
+
+	protected abstract int read(byte buffer[], int startoffset) throws Exception;
 
 	public int getEndOffset() {
 		return endoffset;
@@ -145,6 +116,14 @@ public abstract class AbstractStruct implements StructEntry, Closeable {
 		endoffset = newoffset + delta;
 	}
 
+	protected void setExtraOffset(int offset) {
+		extraoffset = offset;
+	}
+
+	protected void setStartOffset(int offset) {
+		startoffset = offset;
+	}
+
 	@Override
 	public void copyNameAndOffset(StructEntry structEntry) {
 		name = structEntry.getName();
@@ -160,6 +139,55 @@ public abstract class AbstractStruct implements StructEntry, Closeable {
 		return getOffset() - o.getOffset();
 	}
 
+	public StructEntry getAttribute(int offset) {
+		List<StructEntry> flatList = getFlatList();
+		for (int i = 0; i < flatList.size(); i++) {
+			StructEntry structEntry = flatList.get(i);
+			if (offset >= structEntry.getOffset() && offset < structEntry.getOffset() + structEntry.getSize())
+				return structEntry;
+		}
+		return null;
+	}
+
+	// returns a specific StructEntry object located at the specified offset
+	public StructEntry getAttribute(int offset, Class<? extends StructEntry> type) {
+		for (int i = 0; i < list.size(); i++) {
+			StructEntry structEntry = list.get(i);
+			if (offset >= structEntry.getOffset()) {
+				if (offset == structEntry.getOffset() && type.isInstance(structEntry)) {
+					return structEntry;
+				} else if (structEntry instanceof AbstractStruct) {
+					StructEntry res = ((AbstractStruct) structEntry).getAttribute(offset, type);
+					if (res != null)
+						return res;
+				}
+			}
+		}
+		return null;
+	}
+
+	public StructEntry getAttribute(String ename) {
+		for (int i = 0; i < list.size(); i++) {
+			StructEntry structEntry = list.get(i);
+			if (structEntry.getName().equalsIgnoreCase(ename))
+				return structEntry;
+		}
+		return null;
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		Collections.sort(list); // This way we can writeField out in the order in list - sorted by offset
+		for (int i = 0; i < list.size(); i++)
+			list.get(i).write(os);
+	}
+
+	protected void writeFlatList(OutputStream os) throws IOException {
+		List<StructEntry> flatList = getFlatList();
+		for (int i = 0; i < flatList.size(); i++)
+			flatList.get(i).write(os);
+	}
+
 	private void addFlatList(List<StructEntry> flatList) {
 		for (int i = 0; i < list.size(); i++) {
 			StructEntry o = list.get(i);
@@ -169,21 +197,6 @@ public abstract class AbstractStruct implements StructEntry, Closeable {
 				((AbstractCode) o).addFlatList(flatList);
 			else
 				flatList.add(o);
-		}
-	}
-
-	private void initAddStructMaps() {
-		countmap = new HashMap<Class<? extends StructEntry>, SectionCount>();
-		offsetmap = new HashMap<Class<? extends StructEntry>, SectionOffset>();
-		for (int i = 0; i < list.size(); i++) {
-			Object o = list.get(i);
-			if (o instanceof SectionOffset) {
-				SectionOffset so = (SectionOffset) o;
-				if (so.getSection() != null) {
-					offsetmap.put(so.getSection(), so);
-				}
-			} else if (o instanceof SectionCount)
-				countmap.put(((SectionCount) o).getSection(), (SectionCount) o);
 		}
 	}
 

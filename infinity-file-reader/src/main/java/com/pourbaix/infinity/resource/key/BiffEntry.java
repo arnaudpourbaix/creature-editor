@@ -1,5 +1,8 @@
 package com.pourbaix.infinity.resource.key;
 
+import java.io.File;
+
+import com.pourbaix.infinity.resource.ResourceFactory;
 import com.pourbaix.infinity.util.DynamicArray;
 
 public final class BiffEntry implements Comparable<BiffEntry> {
@@ -11,7 +14,7 @@ public final class BiffEntry implements Comparable<BiffEntry> {
 	public BiffEntry(String filename) {
 		this.filename = filename;
 		// Location: Indicates where file might be found
-		// Bit 1: Data or movies        (LSB)
+		// Bit 1: Data or movies (LSB)
 		// Bit 2: ???
 		// Bit 3: ??? (CD1-directory?)
 		// Bit 4: CD2-directory
@@ -65,14 +68,10 @@ public final class BiffEntry implements Comparable<BiffEntry> {
 		return filename;
 	}
 
-	//	public File getFile() {
-	//		File file = ResourceFactory.getInstance().getFile(filename);
-	//		if (file == null) {
-	//			String bifFilename = filename.substring(0, filename.lastIndexOf((int) '.')) + ".cbf";
-	//			file = ResourceFactory.getInstance().getFile(bifFilename); // Icewind Dale
-	//		}
-	//		return file;
-	//	}
+	public File getFile() {
+		File file = ResourceFactory.getInstance().getFile(filename);
+		return file;
+	}
 
 	public int getIndex() {
 		return index;

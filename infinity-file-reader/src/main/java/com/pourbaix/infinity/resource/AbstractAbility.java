@@ -1,11 +1,7 @@
 package com.pourbaix.infinity.resource;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import com.pourbaix.infinity.resource.datatype.DecNumber;
 import com.pourbaix.infinity.resource.datatype.SectionCount;
-import com.pourbaix.infinity.resource.datatype.SectionOffset;
 
 public abstract class AbstractAbility extends AbstractStruct {
 	protected static final String[] s_type = { "", "Melee", "Ranged", "Magical", "Launcher" };
@@ -160,15 +156,6 @@ public abstract class AbstractAbility extends AbstractStruct {
 		super(superStruct, name, buffer, offset);
 	}
 
-	@Override
-	protected void setAddRemovableOffset(AddRemovable datatype) {
-		if (datatype instanceof Effect && getEffectsCount() >= 1) {
-			SectionOffset effectOffset = (SectionOffset) getSuperStruct().getAttribute("Effects offset");
-			int effectIndex = ((DecNumber) getAttribute("First effect index")).getValue() + getEffectsCount() - 1;
-			datatype.setOffset(effectOffset.getValue() + effectIndex * 48);
-		}
-	}
-
 	public int getEffectsCount() {
 		return ((SectionCount) getAttribute("# effects")).getValue();
 	}
@@ -187,15 +174,4 @@ public abstract class AbstractAbility extends AbstractStruct {
 		return off;
 	}
 
-	public void setEffectsIndex(int value) {
-		((DecNumber) getAttribute("First effect index")).setValue(value);
-	}
-
-	public void writeEffects(OutputStream os) throws IOException {
-		for (int i = 0; i < list.size(); i++) {
-			Writeable w = list.get(i);
-			if (w instanceof Effect)
-				w.write(os);
-		}
-	}
 }

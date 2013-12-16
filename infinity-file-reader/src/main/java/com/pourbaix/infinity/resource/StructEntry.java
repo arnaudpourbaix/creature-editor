@@ -1,6 +1,6 @@
 package com.pourbaix.infinity.resource;
 
-public interface StructEntry extends Comparable<StructEntry> {
+public interface StructEntry extends Comparable<StructEntry>, Writeable {
 
 	void copyNameAndOffset(StructEntry fromEntry);
 

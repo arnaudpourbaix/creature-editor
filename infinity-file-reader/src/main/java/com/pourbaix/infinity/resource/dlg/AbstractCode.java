@@ -6,13 +6,12 @@ package com.pourbaix.infinity.resource.dlg;
 
 import java.util.List;
 
-import com.pourbaix.infinity.resource.AddRemovable;
 import com.pourbaix.infinity.resource.StructEntry;
 import com.pourbaix.infinity.resource.datatype.Datatype;
 import com.pourbaix.infinity.resource.datatype.DecNumber;
 import com.pourbaix.infinity.resource.datatype.TextString;
 
-public abstract class AbstractCode extends Datatype implements AddRemovable {
+public abstract class AbstractCode extends Datatype {
 	private final DecNumber len;
 	private final DecNumber off;
 	private String text;
@@ -27,11 +26,6 @@ public abstract class AbstractCode extends Datatype implements AddRemovable {
 		off = new DecNumber(buffer, offset, 4, "Offset");
 		len = new DecNumber(buffer, offset + 4, 4, "Length");
 		text = new String(buffer, off.getValue(), len.getValue());
-	}
-
-	@Override
-	public boolean canRemove() {
-		return true;
 	}
 
 	@Override

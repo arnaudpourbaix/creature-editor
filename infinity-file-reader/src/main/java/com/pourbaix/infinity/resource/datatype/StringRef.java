@@ -1,5 +1,8 @@
 package com.pourbaix.infinity.resource.datatype;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.util.DynamicArray;
@@ -16,6 +19,11 @@ public final class StringRef extends Datatype {
 	public StringRef(byte buffer[], int offset, String name) {
 		super(offset, 4, name);
 		value = DynamicArray.getInt(buffer, offset);
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		super.writeInt(os, value);
 	}
 
 	@Override

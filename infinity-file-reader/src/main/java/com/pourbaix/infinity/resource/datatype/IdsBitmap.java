@@ -1,5 +1,8 @@
 package com.pourbaix.infinity.resource.datatype;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import com.pourbaix.infinity.util.DynamicArray;
 import com.pourbaix.infinity.util.IdsMapCache;
 import com.pourbaix.infinity.util.IdsMapEntry;
@@ -45,6 +48,11 @@ public final class IdsBitmap extends Datatype {
 			value = (long) DynamicArray.getUnsignedByte(buffer, offset);
 		else
 			throw new IllegalArgumentException();
+	}
+
+	@Override
+	public void write(OutputStream os) throws IOException {
+		super.writeLong(os, value);
 	}
 
 	@Override

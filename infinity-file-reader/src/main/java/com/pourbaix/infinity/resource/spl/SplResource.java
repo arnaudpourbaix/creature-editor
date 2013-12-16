@@ -5,6 +5,7 @@
 package com.pourbaix.infinity.resource.spl;
 
 import com.pourbaix.infinity.resource.AbstractStruct;
+import com.pourbaix.infinity.resource.Effect;
 import com.pourbaix.infinity.resource.Resource;
 import com.pourbaix.infinity.resource.datatype.Bitmap;
 import com.pourbaix.infinity.resource.datatype.DecNumber;
@@ -56,7 +57,7 @@ public final class SplResource extends AbstractStruct implements Resource {
 		list.add(new Flag(buffer, offset + 24, 4, "Flags", s_spellflag));
 		list.add(new Bitmap(buffer, offset + 28, 2, "Spell type", s_spelltype));
 		list.add(new Flag(buffer, offset + 30, 4, "Exclusion flags", s_exclude)); // 0x1e
-		//	    list.add(new HashBitmap(buffer, offset + 32, 2, "Priest type", m_priesttype));     // 0x20
+		// list.add(new HashBitmap(buffer, offset + 32, 2, "Priest type", m_priesttype)); // 0x20
 		list.add(new Bitmap(buffer, offset + 34, 2, "Casting animation", s_anim)); // 0x22
 		list.add(new Unknown(buffer, offset + 36, 1)); // 0x23
 		if (Keyfile.getInstance().resourceExists("SCHOOL.IDS"))
