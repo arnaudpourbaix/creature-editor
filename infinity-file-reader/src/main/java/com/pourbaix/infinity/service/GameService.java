@@ -31,7 +31,7 @@ public class GameService {
 	@Resource
 	private GlobalContext globalContext;
 
-	public void openGame() throws GameServiceException {
+	public void openGame() throws ServiceException {
 		checkGameDirectory();
 		if (globalContext.isEnhancedEdition()) {
 			fetchUserGameProfileDirectory();
@@ -44,12 +44,12 @@ public class GameService {
 		loadResources();
 	}
 
-	private void checkGameDirectory() throws GameServiceException {
+	private void checkGameDirectory() throws ServiceException {
 		if (globalContext.getGameDirectory() == null) {
-			throw new GameServiceException("game directory is not defined in configuration");
+			throw new ServiceException("game directory is not defined in configuration");
 		}
 		if (!globalContext.getGameDirectory().isDirectory()) {
-			throw new GameServiceException("game directory is invalid, please check configuration");
+			throw new ServiceException("game directory is invalid, please check configuration");
 		}
 	}
 
@@ -102,10 +102,10 @@ public class GameService {
 	/**
 	 * Attempts to find language and dialog directory (supported by BG1EE and BG2EE)
 	 */
-	private void fetchLanguage() throws GameServiceException {
+	private void fetchLanguage() throws ServiceException {
 		try {
 			if (globalContext.getDefaultLanguage().isEmpty() || !globalContext.getDefaultLanguage().matches("\\w{2}_\\w{2}")) {
-				throw new GameServiceException("default language is not defined or invalid");
+				throw new ServiceException("default language is not defined or invalid");
 			}
 			File iniFile = new File(globalContext.getUserGameProfileDirectory(), Constant.INI_FILENAME);
 			if (!iniFile.exists()) {
@@ -142,31 +142,31 @@ public class GameService {
 		}
 	}
 
-	private void fetchChitinKey() throws GameServiceException {
+	private void fetchChitinKey() throws ServiceException {
 		File chitinKey = new File(globalContext.getGameDirectory(), "chitin.key");
 		if (!chitinKey.exists()) {
-			throw new GameServiceException("no chitin key in game directory !");
+			throw new ServiceException("no chitin key in game directory !");
 		}
 		globalContext.setChitinKey(chitinKey);
 	}
 
-	private void fetchDialogFile() throws GameServiceException {
+	private void fetchDialogFile() throws ServiceException {
 		if (globalContext.getLanguageDirectory() != null) {
 			globalContext.setDialogFile(new File(globalContext.getLanguageDirectory(), Constant.DIALOG_FILENAME));
 		} else {
 			globalContext.setDialogFile(new File(globalContext.getGameDirectory(), Constant.DIALOG_FILENAME));
 		}
 		if (!globalContext.getDialogFile().exists()) {
-			throw new GameServiceException(Constant.DIALOG_FILENAME + " not found !");
+			throw new ServiceException(Constant.DIALOG_FILENAME + " not found !");
 		}
 	}
 
-	private void loadResources() throws GameServiceException {
+	private void loadResources() throws ServiceException {
 		try {
 			StringResource.getInstance().init(globalContext.getDialogFile(), globalContext.isEnhancedEdition());
 			Keyfile.getInstance().init(globalContext.getChitinKey());
 		} catch (Exception e) {
-			throw new GameServiceException(e);
+			throw new ServiceException(e);
 		}
 		// Add override resources
 		for (final File rootDir : globalContext.getRootDirectories()) {

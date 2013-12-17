@@ -51,12 +51,16 @@ public class StringResource {
 	}
 
 	public String getStringRef(int index) throws StringResourceException {
+		if (index == -1) {
+			return null;
+		}
 		try {
 			if (randomAccessFile == null) {
 				open();
 			}
 			if (index >= maxnr || index < 0) {
-				throw new StringResourceException("No such index");
+				// throw new StringResourceException("No such index");
+				return null;
 			}
 			if (version.equalsIgnoreCase("V1  ")) {
 				index *= 0x1A;

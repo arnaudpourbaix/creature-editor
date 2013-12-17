@@ -12,6 +12,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import com.pourbaix.infinity.util.DynamicArray;
 import com.pourbaix.infinity.util.Filereader;
 
@@ -55,6 +56,15 @@ public class Keyfile {
 			}
 		});
 		return entry.isPresent() ? entry.get() : null;
+	}
+
+	public List<ResourceEntry> getResourceEntriesByExtension(final String extension) {
+		Iterable<ResourceEntry> result = Iterables.filter(resourceEntries, new Predicate<ResourceEntry>() {
+			public boolean apply(ResourceEntry entry) {
+				return entry.getExtension().equalsIgnoreCase(extension);
+			}
+		});
+		return Lists.newArrayList(result);
 	}
 
 	public boolean resourceExists(String resourcename) {

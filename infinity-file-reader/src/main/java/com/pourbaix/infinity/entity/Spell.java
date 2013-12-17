@@ -2,20 +2,25 @@ package com.pourbaix.infinity.entity;
 
 public class Spell {
 	private String resource;
+	private String identifier;
 	private String name;
+	private int level;
 	private String description;
+	private SpellTypeEnum type;
+	private SchoolEnum school;
+	private SpellSecondaryTypeEnum secondaryType;
 	private short flags;
-	private short type;
 	private short exclusionFlags;
-	private byte school;
-	private short level;
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer("");
-		sb.append("name: ").append(name);
-		sb.append(", description: ").append(description);
-		sb.append(", type: ").append(SpellTypeEnum.values()[type]);
-		sb.append(", school: ").append(SchoolEnum.values()[school]);
+		sb.append("resource: ").append(resource);
+		sb.append(", name: ").append(name);
+		sb.append(", level: ").append(level);
+		sb.append(", identifier: ").append(identifier);
+		sb.append(", type: ").append(type.getLabel());
+		sb.append(", school: ").append(school.getLabel());
+		sb.append(", secondary type: ").append(secondaryType.getLabel());
 		return sb.toString();
 	}
 
@@ -27,12 +32,28 @@ public class Spell {
 		this.resource = resource;
 	}
 
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
 	public String getName() {
 		return name;
 	}
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 
 	public String getDescription() {
@@ -43,6 +64,30 @@ public class Spell {
 		this.description = description;
 	}
 
+	public SpellTypeEnum getType() {
+		return type;
+	}
+
+	public void setType(SpellTypeEnum type) {
+		this.type = type;
+	}
+
+	public SchoolEnum getSchool() {
+		return school;
+	}
+
+	public void setSchool(SchoolEnum school) {
+		this.school = school;
+	}
+
+	public SpellSecondaryTypeEnum getSecondaryType() {
+		return secondaryType;
+	}
+
+	public void setSecondaryType(SpellSecondaryTypeEnum secondaryType) {
+		this.secondaryType = secondaryType;
+	}
+
 	public short getFlags() {
 		return flags;
 	}
@@ -51,36 +96,12 @@ public class Spell {
 		this.flags = flags;
 	}
 
-	public short getType() {
-		return type;
-	}
-
-	public void setType(short type) {
-		this.type = type;
-	}
-
 	public short getExclusionFlags() {
 		return exclusionFlags;
 	}
 
 	public void setExclusionFlags(short exclusionFlags) {
 		this.exclusionFlags = exclusionFlags;
-	}
-
-	public byte getSchool() {
-		return school;
-	}
-
-	public void setSchool(byte school) {
-		this.school = school;
-	}
-
-	public short getLevel() {
-		return level;
-	}
-
-	public void setLevel(short level) {
-		this.level = level;
 	}
 
 }

@@ -9,6 +9,7 @@ import org.springframework.context.support.AbstractApplicationContext;
 import com.pourbaix.infinity.config.RootConfig;
 import com.pourbaix.infinity.entity.GameVersionEnum;
 import com.pourbaix.infinity.service.ReaderService;
+import com.pourbaix.infinity.service.ServiceException;
 
 public class Main {
 
@@ -22,6 +23,8 @@ public class Main {
 			ctx.close();
 		} catch (BeansException e) {
 			displayError(e);
+		} catch (ServiceException e) {
+			logger.error(e.getMessage());
 		}
 	}
 
