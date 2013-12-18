@@ -11,10 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.context.GlobalContext;
-import com.pourbaix.infinity.entity.Ids;
+import com.pourbaix.infinity.entity.IdentifierFile;
 import com.pourbaix.infinity.entity.Spell;
 import com.pourbaix.infinity.resource.FactoryException;
-import com.pourbaix.infinity.resource.ids.IdsFactory;
+import com.pourbaix.infinity.resource.ids.IdentifierFactory;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.resource.spl.SpellFactory;
@@ -76,7 +76,7 @@ public class ReaderService {
 
 	public List<Spell> getSpells() throws ServiceException {
 		try {
-			Ids ids = IdsFactory.getIds("spell.ids");
+			IdentifierFile ids = IdentifierFactory.getIdentifierFile("spell.ids");
 			List<Spell> spells = new ArrayList<>();
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("spl")) {
 				Spell spell = SpellFactory.getSpell(entry);
@@ -91,7 +91,7 @@ public class ReaderService {
 
 	public Spell getSpell(String resource) throws ServiceException {
 		try {
-			Ids ids = IdsFactory.getIds("spell.ids");
+			IdentifierFile ids = IdentifierFactory.getIdentifierFile("spell.ids");
 			Spell spell = SpellFactory.getSpell(resource);
 			return spell;
 		} catch (FactoryException e) {
@@ -99,11 +99,11 @@ public class ReaderService {
 		}
 	}
 
-	public List<Ids> getIds() throws ServiceException {
-		List<Ids> ids = new ArrayList<>();
+	public List<IdentifierFile> getIds() throws ServiceException {
+		List<IdentifierFile> ids = new ArrayList<>();
 		for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("ids")) {
 			try {
-				Ids id = IdsFactory.getIds(entry);
+				IdentifierFile id = IdentifierFactory.getIdentifierFile(entry);
 				ids.add(id);
 			} catch (FactoryException e) {
 				throw new ServiceException(e);

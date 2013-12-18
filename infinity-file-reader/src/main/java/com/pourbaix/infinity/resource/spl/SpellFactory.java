@@ -2,7 +2,7 @@ package com.pourbaix.infinity.resource.spl;
 
 import java.io.IOException;
 
-import com.pourbaix.infinity.entity.Ids;
+import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.SchoolEnum;
 import com.pourbaix.infinity.entity.Spell;
 import com.pourbaix.infinity.entity.SpellSecondaryTypeEnum;
@@ -12,7 +12,7 @@ import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.datatype.Flag;
-import com.pourbaix.infinity.resource.ids.IdsFactory;
+import com.pourbaix.infinity.resource.ids.IdentifierFactory;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.util.DynamicArray;
@@ -26,8 +26,6 @@ public abstract class SpellFactory {
 			"Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf", "Half-elf",
 			"Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
 
-	private static Ids spellIdentifier = null;
-
 	public static Spell getSpell(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
@@ -37,9 +35,6 @@ public abstract class SpellFactory {
 	}
 
 	public static Spell getSpell(ResourceEntry entry) throws FactoryException {
-		if (spellIdentifier == null) {
-			spellIdentifier = IdsFactory.getIds("spell.ids");
-		}
 		try {
 			Spell spell = new Spell();
 			spell.setResource(entry.getResourceName());
@@ -53,10 +48,8 @@ public abstract class SpellFactory {
 			spell.setSecondaryType(SpellSecondaryTypeEnum.valueOf(DynamicArray.getByte(buffer, 39)));
 			spell.setLevel(DynamicArray.getInt(buffer, 52));
 			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
-			// 1 SPPR
-			// 2 SPWI
-			// 3 SPIN
-			// 4 SPCL
+			IdentifierEntry identifierEntry = IdentifierFactory.getSpellIdentifier(spell.getResource());
+			spell.setIdentifier(identifierEntry.getFirstValue());
 			return spell;
 		} catch (UnknownValueException | IOException | StringResourceException e) {
 			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
