@@ -9,8 +9,8 @@ public class Spell {
 	private SpellTypeEnum type;
 	private SchoolEnum school;
 	private SpellSecondaryTypeEnum secondaryType;
-	private short flags;
-	private short exclusionFlags;
+	private Flag flags;
+	private Flag exclusionFlags;
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer("");
@@ -21,6 +21,8 @@ public class Spell {
 		sb.append(", type: ").append(type.getLabel());
 		sb.append(", school: ").append(school.getLabel());
 		sb.append(", secondary type: ").append(secondaryType.getLabel());
+		sb.append(", flags: ").append(flags.toString());
+		sb.append(", exclusionFlags: ").append(exclusionFlags.toString());
 		return sb.toString();
 	}
 
@@ -88,19 +90,19 @@ public class Spell {
 		this.secondaryType = secondaryType;
 	}
 
-	public short getFlags() {
+	public Flag getFlags() {
 		return flags;
 	}
 
-	public void setFlags(short flags) {
+	public void setFlags(Flag flags) {
 		this.flags = flags;
 	}
 
-	public short getExclusionFlags() {
+	public Flag getExclusionFlags() {
 		return exclusionFlags;
 	}
 
-	public void setExclusionFlags(short exclusionFlags) {
+	public void setExclusionFlags(Flag exclusionFlags) {
 		this.exclusionFlags = exclusionFlags;
 	}
 

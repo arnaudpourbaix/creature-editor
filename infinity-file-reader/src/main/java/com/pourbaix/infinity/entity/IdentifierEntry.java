@@ -7,6 +7,23 @@ public class IdentifierEntry {
 	private final String key;
 	private final List<String> values;
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		IdentifierEntry other = (IdentifierEntry) obj;
+		if (key == null) {
+			if (other.key != null)
+				return false;
+		} else if (!key.equals(other.key))
+			return false;
+		return true;
+	}
+
 	public IdentifierEntry(String key) {
 		this.key = key;
 		this.values = new ArrayList<>();
@@ -18,6 +35,10 @@ public class IdentifierEntry {
 
 	public String getFirstValue() {
 		return values.isEmpty() ? null : values.get(0);
+	}
+
+	public boolean contains(String value) {
+		return values.contains(value);
 	}
 
 	public String getKey() {

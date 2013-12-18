@@ -1,9 +1,21 @@
-package com.pourbaix.infinity.resource;
+package com.pourbaix.infinity.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.pourbaix.infinity.resource.Effect;
+import com.pourbaix.infinity.resource.StructEntry;
+import com.pourbaix.infinity.resource.datatype.Bitmap;
 import com.pourbaix.infinity.resource.datatype.DecNumber;
+import com.pourbaix.infinity.resource.datatype.ProRef;
+import com.pourbaix.infinity.resource.datatype.ResourceRef;
 import com.pourbaix.infinity.resource.datatype.SectionCount;
+import com.pourbaix.infinity.resource.datatype.Unknown;
+import com.pourbaix.infinity.resource.datatype.UnsignDecNumber;
+import com.pourbaix.infinity.resource.key.Keyfile;
 
-public abstract class AbstractAbility extends AbstractStruct {
+public class Ability {
+	private static final String s_abilityuse[] = { "", "", "Spell slots", "", "Innate slots" };
 	protected static final String[] s_type = { "", "Melee", "Ranged", "Magical", "Launcher" };
 	protected static final String[] s_targettype = { "", "Living actor", "Inventory", "Dead actor", "Any point within range", "Caster", "",
 			"Caster (keep spell, no animation)" };
@@ -50,26 +62,32 @@ public abstract class AbstractAbility extends AbstractStruct {
 			"Fireball (just projectile)", "New hold necromancy", "Web (one person)", "Holy word (not party)", "Unholy word (not party)", "Power word, sleep",
 			"MDK bullet", "Storm of vengeance", "Comet" };
 
-	protected AbstractAbility(AbstractStruct superStruct, String name, byte buffer[], int offset) throws Exception {
-		super(superStruct, name, buffer, offset);
-	}
+	protected List<StructEntry> list;
 
-	public int getEffectsCount() {
-		return ((SectionCount) getAttribute("# effects")).getValue();
-	}
-
-	public void incEffectsIndex(int value) {
-		((DecNumber) getAttribute("First effect index")).incValue(value);
-	}
-
-	public int readEffects(byte buffer[], int off) throws Exception {
-		int effect_count = ((SectionCount) getAttribute("# effects")).getValue();
-		for (int i = 0; i < effect_count; i++) {
-			Effect eff = new Effect(this, buffer, off, i);
-			off = eff.getEndOffset();
-			list.add(eff);
-		}
-		return off;
+	public Ability(byte buffer[], int offset, int number) {
+		list = new ArrayList<>();
+		list.add(new Bitmap(buffer, offset, 2, "Type", s_type));
+		list.add(new Bitmap(buffer, offset + 2, 2, "Ability location", s_abilityuse));
+		list.add(new ResourceRef(buffer, offset + 4, "Icon", "BAM"));
+		list.add(new Bitmap(buffer, offset + 12, 1, "Target", s_targettype));
+		list.add(new UnsignDecNumber(buffer, offset + 13, 1, "# targets"));
+		list.add(new DecNumber(buffer, offset + 14, 2, "Range (feet)"));
+		list.add(new DecNumber(buffer, offset + 16, 2, "Minimum level"));
+		list.add(new DecNumber(buffer, offset + 18, 2, "Casting speed"));
+		list.add(new DecNumber(buffer, offset + 20, 2, "Bonus to hit"));
+		list.add(new DecNumber(buffer, offset + 22, 2, "Dice size"));
+		list.add(new DecNumber(buffer, offset + 24, 2, "# dice thrown"));
+		list.add(new DecNumber(buffer, offset + 26, 2, "Damage bonus"));
+		list.add(new Bitmap(buffer, offset + 28, 2, "Damage type", s_dmgtype));
+		list.add(new SectionCount(buffer, offset + 30, 2, "# effects", Effect.class));
+		list.add(new DecNumber(buffer, offset + 32, 2, "First effect index"));
+		list.add(new DecNumber(buffer, offset + 34, 2, "# charges"));
+		list.add(new Unknown(buffer, offset + 36, 2));
+		if (Keyfile.getInstance().resourceExists("PROJECTL.IDS"))
+			list.add(new ProRef(buffer, offset + 38, "Projectile"));
+		else
+			list.add(new Bitmap(buffer, offset + 38, 2, "Projectile", s_projectile));
+		// super(superStruct, "Spell ability " + number, buffer, offset);
 	}
 
 }

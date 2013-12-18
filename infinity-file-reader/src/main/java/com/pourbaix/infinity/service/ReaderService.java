@@ -41,30 +41,16 @@ public class ReaderService {
 			logger.error(e.getMessage());
 		}
 		try {
+			// logger.debug(IdentifierFactory.getResourceNameByIdentifier("CLERIC_DRAW_UPON_HOLY_MIGHT"));
 			Spell spell = SpellFactory.getSpell("spwi112.spl");
+			logger.debug(spell.toString());
+			spell = SpellFactory.getSpell("SPPR214.spl");
+			logger.debug(spell.toString());
+			spell = SpellFactory.getSpell("SPCL321.spl");
 			logger.debug(spell.toString());
 		} catch (FactoryException e) {
 			throw new ServiceException(e);
 		}
-		// List<Spell> spells = getSpells();
-		// List<String> ids = getIds();
-		// try {
-		// ResourceEntry entry = Keyfile.getInstance().getResourceEntry("SPWI112.SPL");
-		// Spell spell = SpellFactory.getSpell(entry);
-		// logger.debug(spell.toString());
-		// ResourceEntry entry2 = Keyfile.getInstance().getResourceEntry("SPWI219.SPL");
-		// Spell spell2 = SpellFactory.getSpell(entry2);
-		// logger.debug(spell2.toString());
-		// ResourceEntry entry3 = Keyfile.getInstance().getResourceEntry("SPPR214.SPL");
-		// Spell spell3 = SpellFactory.getSpell(entry3);
-		// logger.debug(spell3.toString());
-		// ResourceEntry entry4 = Keyfile.getInstance().getResourceEntry("SPCL321.SPL");
-		// Spell spell4 = SpellFactory.getSpell(entry4);
-		// logger.debug(spell4.toString());
-		// SplResource spl = new SplResource(entry);
-		// PlainTextResource ids = new PlainTextResource(Keyfile.getInstance().getResourceEntry("spell.ids"));
-		// logger.debug(ids.getText());
-		//
 		// // ResourceEntry entry2 = Keyfile.getInstance().getResourceEntry("KAHRK.CRE");
 		// // CreResource creature = new CreResource(entry2);
 		// // PlainTextResource f2da = new PlainTextResource(Keyfile.getInstance().getResourceEntry("spells.2da"));
@@ -76,7 +62,6 @@ public class ReaderService {
 
 	public List<Spell> getSpells() throws ServiceException {
 		try {
-			IdentifierFile ids = IdentifierFactory.getIdentifierFile("spell.ids");
 			List<Spell> spells = new ArrayList<>();
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("spl")) {
 				Spell spell = SpellFactory.getSpell(entry);
@@ -91,7 +76,6 @@ public class ReaderService {
 
 	public Spell getSpell(String resource) throws ServiceException {
 		try {
-			IdentifierFile ids = IdentifierFactory.getIdentifierFile("spell.ids");
 			Spell spell = SpellFactory.getSpell(resource);
 			return spell;
 		} catch (FactoryException e) {
@@ -99,7 +83,7 @@ public class ReaderService {
 		}
 	}
 
-	public List<IdentifierFile> getIds() throws ServiceException {
+	public List<IdentifierFile> getIdentifierFiles() throws ServiceException {
 		List<IdentifierFile> ids = new ArrayList<>();
 		for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("ids")) {
 			try {
