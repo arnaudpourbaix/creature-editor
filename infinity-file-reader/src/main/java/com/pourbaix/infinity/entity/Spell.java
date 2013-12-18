@@ -1,5 +1,7 @@
 package com.pourbaix.infinity.entity;
 
+import java.util.List;
+
 public class Spell {
 	private String resource;
 	private String identifier;
@@ -11,9 +13,10 @@ public class Spell {
 	private SpellSecondaryTypeEnum secondaryType;
 	private Flag flags;
 	private Flag exclusionFlags;
+	private List<Ability> abilities;
 
 	public String toString() {
-		StringBuffer sb = new StringBuffer("");
+		StringBuffer sb = new StringBuffer();
 		sb.append("resource: ").append(resource);
 		sb.append(", name: ").append(name);
 		sb.append(", level: ").append(level);
@@ -104,6 +107,14 @@ public class Spell {
 
 	public void setExclusionFlags(Flag exclusionFlags) {
 		this.exclusionFlags = exclusionFlags;
+	}
+
+	public List<Ability> getAbilities() {
+		return abilities;
+	}
+
+	public void setAbilities(List<Ability> abilities) {
+		this.abilities = abilities;
 	}
 
 }

@@ -29,7 +29,6 @@ public enum SpellSecondaryTypeEnum {
 				return type;
 			}
 		}
-		// return null;
 		throw new UnknownValueException("no SpellSecondaryTypeEnum found for " + value);
 	}
 

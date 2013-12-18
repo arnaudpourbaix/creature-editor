@@ -26,7 +26,6 @@ public enum SpellTypeEnum {
 				return type;
 			}
 		}
-		// return null;
 		throw new UnknownValueException("no SchoolEnum found for " + value);
 	}
 

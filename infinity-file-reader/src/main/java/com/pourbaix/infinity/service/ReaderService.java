@@ -10,14 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.context.GlobalContext;
 import com.pourbaix.infinity.entity.IdentifierFile;
 import com.pourbaix.infinity.entity.Spell;
+import com.pourbaix.infinity.factory.IdentifierFactory;
+import com.pourbaix.infinity.factory.SpellFactory;
 import com.pourbaix.infinity.resource.FactoryException;
-import com.pourbaix.infinity.resource.ids.IdentifierFactory;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
-import com.pourbaix.infinity.resource.spl.SpellFactory;
 
 @Service
 public class ReaderService {
@@ -48,7 +49,7 @@ public class ReaderService {
 			logger.debug(spell.toString());
 			spell = SpellFactory.getSpell("SPCL321.spl");
 			logger.debug(spell.toString());
-		} catch (FactoryException e) {
+		} catch (FactoryException | CacheException e) {
 			throw new ServiceException(e);
 		}
 		// // ResourceEntry entry2 = Keyfile.getInstance().getResourceEntry("KAHRK.CRE");
@@ -69,7 +70,7 @@ public class ReaderService {
 				spells.add(spell);
 			}
 			return spells;
-		} catch (FactoryException e) {
+		} catch (FactoryException | CacheException e) {
 			throw new ServiceException(e);
 		}
 	}
@@ -78,7 +79,7 @@ public class ReaderService {
 		try {
 			Spell spell = SpellFactory.getSpell(resource);
 			return spell;
-		} catch (FactoryException e) {
+		} catch (FactoryException | CacheException e) {
 			throw new ServiceException(e);
 		}
 	}

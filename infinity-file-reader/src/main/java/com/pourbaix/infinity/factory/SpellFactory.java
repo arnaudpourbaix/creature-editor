@@ -1,10 +1,11 @@
-package com.pourbaix.infinity.resource.spl;
+package com.pourbaix.infinity.factory;
 
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.entity.Flag;
 import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.SchoolEnum;
@@ -15,7 +16,6 @@ import com.pourbaix.infinity.entity.UnknownValueException;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
-import com.pourbaix.infinity.resource.ids.IdentifierFactory;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.util.DynamicArray;
@@ -32,7 +32,7 @@ public abstract class SpellFactory {
 			"Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf", "Half-elf",
 			"Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
 
-	public static Spell getSpell(String entryName) throws FactoryException {
+	public static Spell getSpell(String entryName) throws FactoryException, CacheException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
 			throw new FactoryException("Entry doesn't exist: " + entryName);
@@ -40,7 +40,7 @@ public abstract class SpellFactory {
 		return getSpell(entry);
 	}
 
-	public static Spell getSpell(ResourceEntry entry) throws FactoryException {
+	public static Spell getSpell(ResourceEntry entry) throws FactoryException, CacheException {
 		try {
 			Spell spell = new Spell();
 			spell.setResource(entry.getResourceName());
@@ -55,22 +55,16 @@ public abstract class SpellFactory {
 			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
 			IdentifierEntry identifierEntry = IdentifierFactory.getSpellIdentifierByResource(spell.getResource());
 			spell.setIdentifier(identifierEntry.getFirstValue());
-			fetchSpellAbilities(buffer);
+			fetchSpellAbilities(spell, buffer);
 			return spell;
 		} catch (UnknownValueException | IOException | StringResourceException e) {
 			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
 		}
 	}
 
-	public static void fetchSpellAbilities(byte buffer[]) {
-		int abil_offset = DynamicArray.getInt(buffer, 100);
-		int abil_count = DynamicArray.getShort(buffer, 104);
-		com.pourbaix.infinity.entity.Ability abilities[] = new com.pourbaix.infinity.entity.Ability[abil_count];
-		for (int i = 0; i < abilities.length; i++) {
-			abilities[i] = new com.pourbaix.infinity.entity.Ability(buffer, abil_offset, i);
-			// abil_offset = abilities[i].getEndOffset();
-			break;
-		}
+	public static void fetchSpellAbilities(Spell spell, byte buffer[]) throws FactoryException {
+		int offset = DynamicArray.getInt(buffer, 100);
+		int count = DynamicArray.getShort(buffer, 104);
+		spell.setAbilities(AbilityFactory.getAbilities(spell.getResource(), buffer, offset, count));
 	}
-
 }

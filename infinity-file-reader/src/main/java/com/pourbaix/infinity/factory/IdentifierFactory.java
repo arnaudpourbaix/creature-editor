@@ -1,4 +1,4 @@
-package com.pourbaix.infinity.resource.ids;
+package com.pourbaix.infinity.factory;
 
 import java.io.IOException;
 import java.util.regex.Matcher;
@@ -12,8 +12,11 @@ import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableBiMap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Multisets;
+import com.pourbaix.infinity.cache.CacheException;
+import com.pourbaix.infinity.cache.IdsCacheService;
 import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.IdentifierFile;
+import com.pourbaix.infinity.entity.IdsEnum;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
@@ -25,8 +28,6 @@ public abstract class IdentifierFactory {
 	private static final Logger logger = LoggerFactory.getLogger(IdentifierFactory.class);
 
 	private static final BiMap<String, String> IDENTIFIER_KEY_RESOURCES = ImmutableBiMap.of("1", "SPPR", "2", "SPWI", "3", "SPIN", "4", "SPCL");
-
-	private static IdentifierFile spellIdentifier = null;
 
 	public static IdentifierFile getIdentifierFile(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
@@ -67,10 +68,8 @@ public abstract class IdentifierFactory {
 		}
 	}
 
-	public static IdentifierEntry getSpellIdentifierByResource(String resource) throws FactoryException {
-		if (spellIdentifier == null) {
-			spellIdentifier = getIdentifierFile("spell.ids");
-		}
+	public static IdentifierEntry getSpellIdentifierByResource(String resource) throws FactoryException, CacheException {
+		IdentifierFile spellIdentifier = IdsCacheService.get(IdsEnum.Spell);
 		Pattern pattern = Pattern.compile("^(SPPR|SPWI|SPIN|SPCL)(\\d+)(.SPL)?$");
 		Matcher matcher = pattern.matcher(resource);
 		if (!matcher.find()) {
@@ -80,10 +79,8 @@ public abstract class IdentifierFactory {
 		return spellIdentifier.getEntryByKey(key);
 	}
 
-	public static String getResourceNameByIdentifier(String identifier) throws FactoryException {
-		if (spellIdentifier == null) {
-			spellIdentifier = getIdentifierFile("spell.ids");
-		}
+	public static String getResourceNameByIdentifier(String identifier) throws FactoryException, CacheException {
+		IdentifierFile spellIdentifier = IdsCacheService.get(IdsEnum.Spell);
 		IdentifierEntry entry = spellIdentifier.getEntryByValue(identifier);
 		if (entry == null) {
 			return null;

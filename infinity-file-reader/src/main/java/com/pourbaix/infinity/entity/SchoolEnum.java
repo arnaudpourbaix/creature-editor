@@ -27,7 +27,6 @@ public enum SchoolEnum {
 				return school;
 			}
 		}
-		// return null;
 		throw new UnknownValueException("no SchoolEnum found for " + value);
 	}
 
