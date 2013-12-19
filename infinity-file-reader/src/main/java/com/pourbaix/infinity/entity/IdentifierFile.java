@@ -4,9 +4,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class IdentifierFile {
-	private final LinkedHashMap<String, IdentifierEntry> entries = new LinkedHashMap<>();
+	private final LinkedHashMap<Long, IdentifierEntry> entries = new LinkedHashMap<>();
 
-	public LinkedHashMap<String, IdentifierEntry> getEntries() {
+	public LinkedHashMap<Long, IdentifierEntry> getEntries() {
 		return entries;
 	}
 
@@ -14,13 +14,13 @@ public class IdentifierFile {
 		entries.put(entry.getKey(), entry);
 	}
 
-	public IdentifierEntry getEntryByKey(String key) {
+	public IdentifierEntry getEntryByKey(Long key) {
 		return entries.get(key);
 	}
 
 	public IdentifierEntry getEntryByValue(String value) {
 		IdentifierEntry result = null;
-		for (Map.Entry<String, IdentifierEntry> entry : entries.entrySet()) {
+		for (Map.Entry<Long, IdentifierEntry> entry : entries.entrySet()) {
 			if (entry.getValue().contains(value)) {
 				result = entry.getValue();
 				break;

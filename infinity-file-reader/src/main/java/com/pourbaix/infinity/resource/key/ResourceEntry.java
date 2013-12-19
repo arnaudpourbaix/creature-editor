@@ -13,6 +13,8 @@ public interface ResourceEntry {
 
 	byte[] getResourceData() throws IOException;
 
+	String getResourceTextData() throws IOException;
+
 	String getSearchString();
 
 }

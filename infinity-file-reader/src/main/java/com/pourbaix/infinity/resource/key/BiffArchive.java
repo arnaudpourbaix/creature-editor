@@ -295,9 +295,6 @@ public final class BiffArchive {
 			tileheader = getTisHeader(size, tilesize);
 			size *= tilesize;
 		}
-		// FileReader.readShort(ranfile); // Type
-		// FileReader.readShort(ranfile); // Unknown
-
 		byte buffer[] = new byte[isTile ? size + tileheader.length : size];
 		int index = 0;
 		if (isTile) {

@@ -84,25 +84,20 @@ public abstract class AbilityFactory {
 			ability.setRange(DynamicArray.getShort(buffer, offset + 14));
 			ability.setLevel(DynamicArray.getShort(buffer, offset + 16));
 			ability.setCastingTime(DynamicArray.getShort(buffer, offset + 18));
-			//		list.add(new SectionCount(buffer, offset + 30, 2, "# effects", Effect.class));
-			//		list.add(new DecNumber(buffer, offset + 32, 2, "First effect index"));
-			//			list.add(new ProRef(buffer, offset + 38, "Projectile"));
+			// list.add(new SectionCount(buffer, offset + 30, 2, "# effects", Effect.class));
+			// list.add(new DecNumber(buffer, offset + 32, 2, "First effect index"));
+			// list.add(new ProRef(buffer, offset + 38, "Projectile"));
 			fetchProjectile(ability, buffer, offset);
 		} catch (UnknownValueException e) {
 			throw new FactoryException(e);
 		}
-		//		list.add(new DecNumber(buffer, offset + 34, 2, "# charges"));
-		//		list.add(new Unknown(buffer, offset + 36, 2));
-		//		if (Keyfile.getInstance().resourceExists("PROJECTL.IDS"))
-		//		else
-		//			list.add(new Bitmap(buffer, offset + 38, 2, "Projectile", s_projectile));
-		// super(superStruct, "Spell ability " + number, buffer, offset);
-		logger.debug(ability.toString());
+		// list.add(new DecNumber(buffer, offset + 34, 2, "# charges"));
+		// list.add(new Unknown(buffer, offset + 36, 2));
 		return ability;
 	}
 
 	public static void fetchProjectile(Ability ability, byte buffer[], int offset) throws FactoryException, CacheException {
-		String key = String.valueOf(DynamicArray.getUnsignedShort(buffer, offset + 38));
+		Long key = (long) DynamicArray.getUnsignedShort(buffer, offset + 38);
 		ability.setProjectile(ProjectileFactory.getProjectileByIdsKey(key));
 	}
 }

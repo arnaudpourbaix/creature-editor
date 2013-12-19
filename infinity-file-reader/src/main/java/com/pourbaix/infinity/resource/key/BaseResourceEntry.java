@@ -3,6 +3,8 @@ package com.pourbaix.infinity.resource.key;
 import java.io.File;
 import java.io.IOException;
 
+import com.pourbaix.infinity.util.Decryptor;
+
 public abstract class BaseResourceEntry implements ResourceEntry, Comparable<BaseResourceEntry> {
 
 	protected String resourceName;
@@ -15,6 +17,17 @@ public abstract class BaseResourceEntry implements ResourceEntry, Comparable<Bas
 	}
 
 	public abstract byte[] getResourceData() throws IOException;
+
+	public String getResourceTextData() throws IOException {
+		byte[] data = getResourceData();
+		String text;
+		if (data != null && data.length > 1 && data[0] == -1) {
+			text = Decryptor.decrypt(data, 2, data.length);
+		} else {
+			text = new String(data);
+		}
+		return text;
+	}
 
 	public String toString() {
 		return resourceName;
@@ -37,7 +50,7 @@ public abstract class BaseResourceEntry implements ResourceEntry, Comparable<Bas
 	}
 
 	public String getSearchString() {
-		return ""; //FIXME
+		return ""; // FIXME
 	}
 
 }

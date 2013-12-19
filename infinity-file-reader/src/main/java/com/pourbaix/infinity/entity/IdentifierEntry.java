@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IdentifierEntry {
-	private final String key;
+	private final Long key;
 	private final List<String> values;
 
 	@Override
@@ -24,7 +24,7 @@ public class IdentifierEntry {
 		return true;
 	}
 
-	public IdentifierEntry(String key) {
+	public IdentifierEntry(Long key) {
 		this.key = key;
 		this.values = new ArrayList<>();
 	}
@@ -41,7 +41,7 @@ public class IdentifierEntry {
 		return values.contains(value);
 	}
 
-	public String getKey() {
+	public Long getKey() {
 		return key;
 	}
 

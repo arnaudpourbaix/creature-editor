@@ -38,9 +38,10 @@ public abstract class IdentifierFactory {
 	}
 
 	public static IdentifierFile getIdentifierFile(ResourceEntry entry) throws FactoryException {
+		String content = "";
 		try {
 			IdentifierFile identifierFile = new IdentifierFile();
-			String content = new String(entry.getResourceData());
+			content = entry.getResourceTextData();
 			// determine number of columns
 			Multiset<Integer> columns = HashMultiset.create();
 			for (String line : content.split(Constant.CARRIAGE_RETURN)) {
@@ -51,12 +52,15 @@ public abstract class IdentifierFactory {
 			int colCount = Multisets.copyHighestCountFirst(columns).iterator().next();
 			// add entries
 			for (String line : content.split(Constant.CARRIAGE_RETURN)) {
-				String trimLine = line.trim();
-				String[] cols = trimLine.split("\\s+");
+				if (line.contains("IDS V1.0")) {
+					continue;
+				}
+				String[] cols = line.trim().split("[\\s\\t]+");
 				if (cols.length < colCount) {
 					continue;
 				}
-				IdentifierEntry identifierEntry = new IdentifierEntry(cols[0]);
+				long key = cols[0].startsWith("0x") ? Long.parseLong(cols[0].substring(2), 16) : Long.parseLong(cols[0]);
+				IdentifierEntry identifierEntry = new IdentifierEntry(key);
 				for (int i = 1; i < cols.length; i++) {
 					identifierEntry.addValue(cols[i]);
 				}
@@ -71,11 +75,11 @@ public abstract class IdentifierFactory {
 	public static IdentifierEntry getSpellIdentifierByResource(String resource) throws FactoryException, CacheException {
 		IdentifierFile spellIdentifier = IdsCacheService.get(IdsEnum.Spell);
 		Pattern pattern = Pattern.compile("^(SPPR|SPWI|SPIN|SPCL)(\\d+)(.SPL)?$");
-		Matcher matcher = pattern.matcher(resource);
+		Matcher matcher = pattern.matcher(resource.toUpperCase());
 		if (!matcher.find()) {
 			return null;
 		}
-		String key = IDENTIFIER_KEY_RESOURCES.inverse().get(matcher.group(1)) + matcher.group(2);
+		Long key = Long.valueOf(IDENTIFIER_KEY_RESOURCES.inverse().get(matcher.group(1)) + matcher.group(2));
 		return spellIdentifier.getEntryByKey(key);
 	}
 
@@ -85,6 +89,7 @@ public abstract class IdentifierFactory {
 		if (entry == null) {
 			return null;
 		}
-		return IDENTIFIER_KEY_RESOURCES.get(entry.getKey().substring(0, 1)) + entry.getKey().substring(1);
+		String key = entry.getKey().toString();
+		return IDENTIFIER_KEY_RESOURCES.get(key.substring(0, 1)) + key.substring(1);
 	}
 }
