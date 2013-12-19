@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.entity.Ability;
 import com.pourbaix.infinity.entity.AbilityLocationEnum;
 import com.pourbaix.infinity.entity.AbilityTargetEnum;
@@ -62,7 +63,7 @@ public abstract class AbilityFactory {
 			"Fireball (just projectile)", "New hold necromancy", "Web (one person)", "Holy word (not party)", "Unholy word (not party)", "Power word, sleep",
 			"MDK bullet", "Storm of vengeance", "Comet" };
 
-	public static List<Ability> getAbilities(String resource, byte buffer[], int offset, int count) throws FactoryException {
+	public static List<Ability> getAbilities(String resource, byte buffer[], int offset, int count) throws FactoryException, CacheException {
 		logger.debug(resource);
 		List<Ability> abilities = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
@@ -73,7 +74,7 @@ public abstract class AbilityFactory {
 		return abilities;
 	}
 
-	private static Ability getAbility(byte buffer[], int offset) throws FactoryException {
+	private static Ability getAbility(byte buffer[], int offset) throws FactoryException, CacheException {
 		Ability ability = new Ability();
 		try {
 			ability.setType(AbilityTypeEnum.valueOf(DynamicArray.getShort(buffer, offset)));
@@ -86,6 +87,7 @@ public abstract class AbilityFactory {
 			//		list.add(new SectionCount(buffer, offset + 30, 2, "# effects", Effect.class));
 			//		list.add(new DecNumber(buffer, offset + 32, 2, "First effect index"));
 			//			list.add(new ProRef(buffer, offset + 38, "Projectile"));
+			fetchProjectile(ability, buffer, offset);
 		} catch (UnknownValueException e) {
 			throw new FactoryException(e);
 		}
@@ -97,5 +99,10 @@ public abstract class AbilityFactory {
 		// super(superStruct, "Spell ability " + number, buffer, offset);
 		logger.debug(ability.toString());
 		return ability;
+	}
+
+	public static void fetchProjectile(Ability ability, byte buffer[], int offset) throws FactoryException, CacheException {
+		String key = String.valueOf(DynamicArray.getUnsignedShort(buffer, offset + 38));
+		ability.setProjectile(ProjectileFactory.getProjectileByIdsKey(key));
 	}
 }

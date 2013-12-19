@@ -3,6 +3,10 @@ package com.pourbaix.infinity.factory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.pourbaix.infinity.cache.CacheException;
+import com.pourbaix.infinity.cache.IdsCacheService;
+import com.pourbaix.infinity.entity.IdentifierFile;
+import com.pourbaix.infinity.entity.IdsEnum;
 import com.pourbaix.infinity.entity.Projectile;
 import com.pourbaix.infinity.resource.FactoryException;
 
@@ -52,9 +56,10 @@ public abstract class ProjectileFactory {
 			"Fireball (just projectile)", "New hold necromancy", "Web (one person)", "Holy word (not party)", "Unholy word (not party)", "Power word, sleep",
 			"MDK bullet", "Storm of vengeance", "Comet" };
 
-	public static Projectile getProjectile(String resource, byte buffer[], int offset, int count) throws FactoryException {
-		logger.debug(resource);
+	public static Projectile getProjectileByIdsKey(String key) throws FactoryException, CacheException {
+		IdentifierFile projectileIdentifier = IdsCacheService.get(IdsEnum.Projectile);
 		Projectile projectile = new Projectile();
+		projectile.setResource(projectileIdentifier.getEntryByKey(key).getFirstValue());
 		return projectile;
 	}
 

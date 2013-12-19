@@ -62,9 +62,10 @@ public abstract class SpellFactory {
 		}
 	}
 
-	public static void fetchSpellAbilities(Spell spell, byte buffer[]) throws FactoryException {
+	public static void fetchSpellAbilities(Spell spell, byte buffer[]) throws FactoryException, CacheException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
 		spell.setAbilities(AbilityFactory.getAbilities(spell.getResource(), buffer, offset, count));
 	}
+
 }
