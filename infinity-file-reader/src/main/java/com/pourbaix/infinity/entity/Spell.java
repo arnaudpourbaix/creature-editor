@@ -14,6 +14,7 @@ public class Spell {
 	private Flag flags;
 	private Flag exclusionFlags;
 	private List<Ability> abilities;
+	private List<Effect> globalEffects;
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -115,6 +116,14 @@ public class Spell {
 
 	public void setAbilities(List<Ability> abilities) {
 		this.abilities = abilities;
+	}
+
+	public List<Effect> getGlobalEffects() {
+		return globalEffects;
+	}
+
+	public void setGlobalEffects(List<Effect> globalEffects) {
+		this.globalEffects = globalEffects;
 	}
 
 }

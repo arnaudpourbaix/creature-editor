@@ -1,5 +1,7 @@
 package com.pourbaix.infinity.entity;
 
+import com.pourbaix.infinity.util.Constant;
+
 public class Projectile {
 
 	private long reference;
@@ -10,6 +12,7 @@ public class Projectile {
 	private Flag areaOfEffectFlags;
 	private int triggerRadius;
 	private int areaOfEffectRadius;
+	private int coneWidth;
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -19,9 +22,27 @@ public class Projectile {
 		sb.append(", speed: ").append(speed);
 		sb.append(", behavior: ").append(behaviorFlags.toString());
 		sb.append(", area of effect flags: ").append(areaOfEffectFlags.toString());
-		sb.append(", trigger radius: ").append(triggerRadius);
-		sb.append(", area of effect radius: ").append(areaOfEffectRadius);
+		sb.append(", affect allies: ").append(affectAllies());
+		sb.append(", trigger radius (feet): ").append(getFeetTriggerRadius());
+		sb.append(", area of effect radius (feet): ").append(getFeetAreaOfEffectRadius());
+		sb.append(", cone width (feet): ").append(getFeetConeWidth());
 		return sb.toString();
+	}
+
+	public boolean affectAllies() {
+		return !areaOfEffectFlags.isFlagSet(6);
+	}
+
+	public int getFeetTriggerRadius() {
+		return (int) (triggerRadius / Constant.RADIUS_TO_FEET_DIVIDER);
+	}
+
+	public int getFeetAreaOfEffectRadius() {
+		return (int) (areaOfEffectRadius / Constant.RADIUS_TO_FEET_DIVIDER);
+	}
+
+	public int getFeetConeWidth() {
+		return (int) (coneWidth / Constant.RADIUS_TO_FEET_DIVIDER);
 	}
 
 	public String getResource() {
@@ -86,6 +107,14 @@ public class Projectile {
 
 	public void setAreaOfEffectRadius(int areaOfEffectRadius) {
 		this.areaOfEffectRadius = areaOfEffectRadius;
+	}
+
+	public int getConeWidth() {
+		return coneWidth;
+	}
+
+	public void setConeWidth(int coneWidth) {
+		this.coneWidth = coneWidth;
 	}
 
 }

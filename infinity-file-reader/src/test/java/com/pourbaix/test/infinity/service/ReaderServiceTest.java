@@ -32,7 +32,7 @@ public class ReaderServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	@Test
+	// @Test
 	public void idsFile() {
 		try {
 			readerService.getIdentifierFiles();
@@ -41,7 +41,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void spwi112Identifier() {
 		try {
 			IdentifierEntry entry = IdentifierFactory.getSpellIdentifierByResource("spwi112");
@@ -51,7 +51,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void resourceByIdentifier() {
 		try {
 			String resource = IdentifierFactory.getResourceNameByIdentifier("WIZARD_MAGIC_MISSILE");
@@ -61,17 +61,37 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void spellFireBall() {
 		try {
 			Spell spell = readerService.getSpell("spwi304.spl");
-			assertEquals(1, spell.getLevel());
+			assertEquals(3, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}
 	}
 
 	@Test
+	public void spellSlow() {
+		try {
+			Spell spell = readerService.getSpell("spwi312.spl");
+			assertEquals(3, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	// @Test
+	public void spellConeOfCold() {
+		try {
+			Spell spell = readerService.getSpell("spwi503.spl");
+			assertEquals(5, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	// @Test
 	public void spellMagicMissile() {
 		try {
 			Spell spell = readerService.getSpell("spwi112.spl");
@@ -81,7 +101,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void spellDrawUponHolyMight() {
 		try {
 			Spell spell = readerService.getSpell("SPPR214.spl");
@@ -91,7 +111,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void spellBerserkerRage() {
 		try {
 			Spell spell = readerService.getSpell("SPCL321.spl");

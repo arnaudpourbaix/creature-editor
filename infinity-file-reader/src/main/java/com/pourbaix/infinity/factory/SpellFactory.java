@@ -55,17 +55,24 @@ public abstract class SpellFactory {
 			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
 			IdentifierEntry identifierEntry = IdentifierFactory.getSpellIdentifierByResource(spell.getResource());
 			spell.setIdentifier(identifierEntry.getFirstValue());
-			fetchSpellAbilities(spell, buffer);
+			int effectOffset = DynamicArray.getInt(buffer, 106);
+			fetchSpellAbilities(spell, buffer, effectOffset);
+			fetchSpellEffects(spell, buffer, effectOffset);
 			return spell;
 		} catch (UnknownValueException | IOException | StringResourceException e) {
 			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
 		}
 	}
 
-	public static void fetchSpellAbilities(Spell spell, byte buffer[]) throws FactoryException, CacheException {
+	public static void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
-		spell.setAbilities(AbilityFactory.getAbilities(spell.getResource(), buffer, offset, count));
+		spell.setAbilities(AbilityFactory.getAbilities(buffer, offset, count, effectOffset));
+	}
+
+	public static void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
+		int count = DynamicArray.getShort(buffer, 112);
+		EffectFactory.getEffects(buffer, effectOffset, count);
 	}
 
 }

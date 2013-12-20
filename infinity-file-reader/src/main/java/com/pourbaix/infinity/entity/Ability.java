@@ -1,5 +1,7 @@
 package com.pourbaix.infinity.entity;
 
+import java.util.List;
+
 public class Ability {
 	private AbilityTypeEnum type;
 	private AbilityLocationEnum location;
@@ -9,6 +11,7 @@ public class Ability {
 	private short level;
 	private short castingTime;
 	private Projectile projectile;
+	private List<Effect> effects;
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
@@ -87,6 +90,14 @@ public class Ability {
 
 	public void setProjectile(Projectile projectile) {
 		this.projectile = projectile;
+	}
+
+	public List<Effect> getEffects() {
+		return effects;
+	}
+
+	public void setEffects(List<Effect> effects) {
+		this.effects = effects;
 	}
 
 }
