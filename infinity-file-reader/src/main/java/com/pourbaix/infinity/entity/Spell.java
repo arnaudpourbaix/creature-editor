@@ -6,7 +6,7 @@ public class Spell {
 	private String resource;
 	private String identifier;
 	private String name;
-	private int level;
+	private byte level;
 	private String description;
 	private SpellTypeEnum type;
 	private SchoolEnum school;
@@ -54,11 +54,11 @@ public class Spell {
 		this.name = name;
 	}
 
-	public int getLevel() {
+	public byte getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(byte level) {
 		this.level = level;
 	}
 

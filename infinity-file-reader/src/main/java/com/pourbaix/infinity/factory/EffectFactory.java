@@ -8,7 +8,10 @@ import org.slf4j.LoggerFactory;
 
 import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.entity.Effect;
+import com.pourbaix.infinity.entity.Flag;
+import com.pourbaix.infinity.entity.ResistanceEnum;
 import com.pourbaix.infinity.entity.TargetTypeEnum;
+import com.pourbaix.infinity.entity.TimingEnum;
 import com.pourbaix.infinity.entity.UnknownValueException;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.util.DynamicArray;
@@ -18,11 +21,8 @@ public abstract class EffectFactory {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(EffectFactory.class);
 
-	private static final String s_dispel[] = { "No dispel/bypass resistance", "Dispel/Not bypass resistance", "Not dispel/bypass resistance",
-			"Dispel/Bypass resistance" };
-
-	private static final String s_target[] = { "None", "Self", "Preset target", "Party", "Everyone", "Everyone except party", "Caster group", "Target group",
-			"Everyone except self", "Original caster" };
+	static final String[] SAVE_TYPES = { "No save", "Spell", "Breath weapon", "Paralyze/Poison/Death", "Rod/Staff/Wand", "Petrify/Polymorph", "", "", "", "",
+			"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Ex: bypass mirror image", "EE: ignore difficulty" };
 
 	private static final String[] EFFECT_OPCODES = new String[] { "AC bonus", "Modify attacks per round", "Cure sleep", "Berserk", "Cure berserk",
 			"Charm creature", "Charisma bonus", "Set color", "Set color glow solid", "Set color glow pulse", "Constitution bonus", "Cure poison", "Damage",
@@ -88,16 +88,25 @@ public abstract class EffectFactory {
 		int value = (int) DynamicArray.getShort(buffer, offset);
 		try {
 			effect.setTarget(TargetTypeEnum.valueOf(DynamicArray.getByte(buffer, offset + 2)));
-			int timing = (int) DynamicArray.getByte(buffer, offset + 12); // s_duration
-			int dispelResistance = (int) DynamicArray.getByte(buffer, offset + 13); // s_dispel
-			int duration = DynamicArray.getInt(buffer, offset + 14);
-			int probability1 = (int) DynamicArray.getByte(buffer, offset + 18);
-			int probability2 = (int) DynamicArray.getByte(buffer, offset + 19);
+			effect.setTiming(TimingEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
+			effect.setResistance(ResistanceEnum.valueOf(DynamicArray.getByte(buffer, offset + 13)));
+			effect.setDuration(DynamicArray.getInt(buffer, offset + 14));
+			effect.setProbability1(DynamicArray.getByte(buffer, offset + 18));
+			effect.setProbability2(DynamicArray.getByte(buffer, offset + 19));
+			effect.setDiceThrown((short) DynamicArray.getInt(buffer, offset + 28));
+			effect.setDiceSides((short) DynamicArray.getInt(buffer, offset + 32));
+			effect.setSavingThrowType(new Flag(DynamicArray.getInt(buffer, offset + 36), 4, SAVE_TYPES));
+			effect.setSavingThrowBonus((short) DynamicArray.getInt(buffer, offset + 40));
+			fetchResource(effect, buffer, offset);
 		} catch (UnknownValueException e) {
 			throw new FactoryException(e);
 		}
 		logger.debug(EFFECT_OPCODES[value] + ", " + effect.toString());
 		return effect;
+	}
+
+	private static void fetchResource(Effect effect, byte buffer[], int offset) throws FactoryException, CacheException {
+		//new ResourceRef(buffer, offset, "Resource", resourceType.split(":"));
 	}
 
 }

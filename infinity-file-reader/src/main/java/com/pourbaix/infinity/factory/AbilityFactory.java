@@ -38,8 +38,9 @@ public abstract class AbilityFactory {
 			ability.setTarget(AbilityTargetEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
 			ability.setTargetCount(DynamicArray.getByte(buffer, offset + 13));
 			ability.setRange(DynamicArray.getShort(buffer, offset + 14));
-			ability.setLevel(DynamicArray.getShort(buffer, offset + 16));
-			ability.setCastingTime(DynamicArray.getShort(buffer, offset + 18));
+			ability.setLevel((byte) DynamicArray.getShort(buffer, offset + 16));
+			ability.setCastingTime((byte) DynamicArray.getShort(buffer, offset + 18));
+			//logger.debug(ability.toString());
 			fetchProjectile(ability, buffer, offset);
 			fetchEffects(ability, buffer, offset, globalEffectOffset);
 		} catch (UnknownValueException e) {
@@ -48,15 +49,19 @@ public abstract class AbilityFactory {
 		return ability;
 	}
 
-	public static void fetchProjectile(Ability ability, byte buffer[], int offset) throws FactoryException, CacheException {
-		Long key = (long) DynamicArray.getUnsignedShort(buffer, offset + 38);
-		ability.setProjectile(ProjectileFactory.getProjectileByIdsKey(key));
+	private static void fetchProjectile(Ability ability, byte buffer[], int offset) throws FactoryException, CacheException {
+		try {
+			Long key = (long) DynamicArray.getUnsignedShort(buffer, offset + 38);
+			ability.setProjectile(ProjectileFactory.getProjectileByIdsKey(key));
+		} catch (FactoryException e) {
+			logger.error(e.getMessage());
+		}
 	}
 
-	public static void fetchEffects(Ability ability, byte buffer[], int offset, int globalEffectOffset) throws FactoryException, CacheException {
-		int effectOffset = (int) DynamicArray.getShort(buffer, offset + 32);
+	private static void fetchEffects(Ability ability, byte buffer[], int offset, int globalEffectOffset) throws FactoryException, CacheException {
+		int effectIndex = (int) DynamicArray.getShort(buffer, offset + 32);
 		int effectCount = (int) DynamicArray.getShort(buffer, offset + 30);
-		EffectFactory.getEffects(buffer, globalEffectOffset + effectOffset, effectCount);
+		EffectFactory.getEffects(buffer, globalEffectOffset + (effectIndex * 48), effectCount);
 	}
 
 }

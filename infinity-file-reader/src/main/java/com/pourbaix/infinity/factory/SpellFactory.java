@@ -51,10 +51,12 @@ public abstract class SpellFactory {
 			spell.setType(SpellTypeEnum.valueOf(DynamicArray.getShort(buffer, 28)));
 			spell.setSchool(SchoolEnum.valueOf(DynamicArray.getByte(buffer, 37)));
 			spell.setSecondaryType(SpellSecondaryTypeEnum.valueOf(DynamicArray.getByte(buffer, 39)));
-			spell.setLevel(DynamicArray.getInt(buffer, 52));
+			spell.setLevel((byte) DynamicArray.getInt(buffer, 52));
 			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
 			IdentifierEntry identifierEntry = IdentifierFactory.getSpellIdentifierByResource(spell.getResource());
-			spell.setIdentifier(identifierEntry.getFirstValue());
+			if (identifierEntry != null) {
+				spell.setIdentifier(identifierEntry.getFirstValue());
+			}
 			int effectOffset = DynamicArray.getInt(buffer, 106);
 			fetchSpellAbilities(spell, buffer, effectOffset);
 			fetchSpellEffects(spell, buffer, effectOffset);
@@ -64,13 +66,13 @@ public abstract class SpellFactory {
 		}
 	}
 
-	public static void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
+	private static void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
 		spell.setAbilities(AbilityFactory.getAbilities(buffer, offset, count, effectOffset));
 	}
 
-	public static void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
+	private static void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
 		int count = DynamicArray.getShort(buffer, 112);
 		EffectFactory.getEffects(buffer, effectOffset, count);
 	}

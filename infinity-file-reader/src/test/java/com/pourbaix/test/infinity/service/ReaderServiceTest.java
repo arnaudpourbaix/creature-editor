@@ -41,6 +41,15 @@ public class ReaderServiceTest {
 		}
 	}
 
+	//	@Test
+	public void allSpells() {
+		try {
+			readerService.getSpells();
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
 	// @Test
 	public void spwi112Identifier() {
 		try {
@@ -116,6 +125,16 @@ public class ReaderServiceTest {
 		try {
 			Spell spell = readerService.getSpell("SPCL321.spl");
 			assertEquals(1, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	//	@Test
+	public void spellTarss() {
+		try {
+			Spell spell = readerService.getSpell("1TARSS.SPL");
+			assertEquals(4, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}

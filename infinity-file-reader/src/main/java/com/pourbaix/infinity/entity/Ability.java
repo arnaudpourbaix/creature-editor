@@ -8,8 +8,8 @@ public class Ability {
 	private AbilityTargetEnum target;
 	private byte targetCount;
 	private short range;
-	private short level;
-	private short castingTime;
+	private byte level;
+	private byte castingTime;
 	private Projectile projectile;
 	private List<Effect> effects;
 
@@ -68,19 +68,19 @@ public class Ability {
 		this.range = range;
 	}
 
-	public short getLevel() {
+	public byte getLevel() {
 		return level;
 	}
 
-	public void setLevel(short level) {
+	public void setLevel(byte level) {
 		this.level = level;
 	}
 
-	public short getCastingTime() {
+	public byte getCastingTime() {
 		return castingTime;
 	}
 
-	public void setCastingTime(short castingTime) {
+	public void setCastingTime(byte castingTime) {
 		this.castingTime = castingTime;
 	}
 
