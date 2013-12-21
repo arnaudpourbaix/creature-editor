@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum SpellSecondaryTypeEnum {
 	None((byte) 0, "None"), SpellProtections((byte) 1, "Spell protections"), SpecificProtections((byte) 2, "Specific protections"), IllusionaryProtections(

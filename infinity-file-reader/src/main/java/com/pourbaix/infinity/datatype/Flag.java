@@ -1,4 +1,4 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
 
 public class Flag {
 	private long value;

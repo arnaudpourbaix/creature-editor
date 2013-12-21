@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum TimingEnum {
 	Duration((byte) 0, "Duration"), Permanent((byte) 1, "Permanent"), WhileEquipped((byte) 2, "While equipped"), DelayedDuration((byte) 3, "Delayed Duration"), DelayedPermanent(

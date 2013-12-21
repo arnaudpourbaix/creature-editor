@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum SpellTypeEnum {
 	Special((short) 0, "Special"), Wizard((short) 1, "Wizard"), Cleric((short) 2, "Cleric"), Psionic((short) 3, "Psionic"), Innate((short) 4, "Innate"), Bardsong(

@@ -551,59 +551,59 @@ public final class EffectFactory {
 		String restype = null;
 
 		switch (effectType) {
-		case 0x5: // Charm creature (CGameEffectCharm)
+		case 0x5: // Charm creature
 			s.add(new IdsBitmap(buffer, offset, 4, "Creature type", "GENERAL.IDS"));
 			s.add(new Flag(buffer, offset + 4, 4, "Charm flags",
 					new String[] { "No flags set", "Turn hostile afterward", "Dire charm", "Controlled by cleric" }));
 			break;
 
-		case 0x6: // Charisma bonus (CGameEffectCHR)
-		case 0xA: // Constitution bonus (CGameEffectCON)
-		case 0x13: // Intelligence bonus (CGameEffectINT)
-		case 0x1B: // Acid resistance bonus (CGameEffectResistAcid)
-		case 0x1C: // Cold resistance bonus (CGameEffectResistCold)
-		case 0x1D: // Electricity resistance bonus (CGameEffectResistElectricity)
-		case 0x1E: // Fire resistance bonus (CGameEffectResistFire)
-		case 0x1F: // Magic damage resistance bonus (CGameEffectResistMagic)
-		case 0x21: // Save vs. death bonus (CGameEffectSaveVsDeath) / Fortitude save bonus
-		case 0x22: // Save vs. wand bonus (CGameEffectSaveVsWands) / Reflex save bonus
-		case 0x23: // Save vs. polymorph bonus (CGameEffectSaveVsPoly) / Will save bonus
-		case 0x24: // Save vs. breath bonus (CGameEffectSaveVsBreath)
-		case 0x25: // Save vs. spell bonus (CGameEffectSaveVsSpell)
-		case 0x31: // Wisdom bonus (CGameEffectWIS)
-		case 0x36: // Base THAC0 bonus (CGameEffectThac0) / Base attack bonus
-		case 0x3B: // Stealth bonus / Move silently bonus (CGameEffectSkillStealth)
-		case 0x54: // Magical fire resistance bonus (CGameEffectResistMagicFire)
-		case 0x55: // Magical cold resistance bonus (CGameEffectResistMagicCold)
-		case 0x56: // Slashing resistance bonus (CGameEffectResistSlashing)
-		case 0x57: // Crushing resistance bonus (CGameEffectResistCrushing)
-		case 0x58: // Piercing resistance bonus (CGameEffectResistPiercing)
-		case 0x59: // Missile resistance bonus (CGameEffectResistMissile)
-		case 0x5A: // Open locks bonus (CGameEffectSkillLockPicking)
-		case 0x5B: // Find traps bonus (CGameEffectSkillTraps)
-		case 0x5C: // Pick pockets bonus (CGameEffectSkillPickPocket)
-		case 0x5D: // Fatigue bonus (CGameEffectFatigue)
-		case 0x5E: // Intoxication bonus (CGameEffectIntoxication)
-		case 0x5F: // Tracking bonus (CGameEffectSkillTracking)
-		case 0x60: // Change level (CGameEffectLevel)
-		case 0x61: // Exceptional strength bonus (CGameEffectSTRExtra)
-		case 0x68: // XP bonus (CGameEffectXP)
-		case 0x69: // Remove gold (CGameEffectGold)
-		case 0x6A: // Morale break (CGameEffectMoraleBreak)
-		case 0x6C: // Reputation bonus (CGameEffectReputation)
-		case 0x7E: // Movement rate bonus (CGameEffectMovementRate)
-		case 0xA7: // Missile THAC0 bonus (CGameEffectMissileTHAC0Bonus) / Missile attack bonus
-		case 0xB0: // Movement rate bonus 2 (CGameEffectMovementRate) / Movement rate penalty
+		case 0x6: // Charisma bonus
+		case 0xA: // Constitution bonus
+		case 0x13: // Intelligence bonus
+		case 0x1B: // Acid resistance bonus
+		case 0x1C: // Cold resistance bonus
+		case 0x1D: // Electricity resistance bonus
+		case 0x1E: // Fire resistance bonus 
+		case 0x1F: // Magic damage resistance bonus 
+		case 0x21: // Save vs. death bonus
+		case 0x22: // Save vs. wand bonus 
+		case 0x23: // Save vs. polymorph bonus 
+		case 0x24: // Save vs. breath bonus 
+		case 0x25: // Save vs. spell bonus 
+		case 0x31: // Wisdom bonus 
+		case 0x36: // Base THAC0 bonus 
+		case 0x3B: // Stealth bonus / Move silently bonus 
+		case 0x54: // Magical fire resistance bonus 
+		case 0x55: // Magical cold resistance bonus 
+		case 0x56: // Slashing resistance bonus 
+		case 0x57: // Crushing resistance bonus 
+		case 0x58: // Piercing resistance bonus
+		case 0x59: // Missile resistance bonus
+		case 0x5A: // Open locks bonus
+		case 0x5B: // Find traps bonus
+		case 0x5C: // Pick pockets bonus 
+		case 0x5D: // Fatigue bonus
+		case 0x5E: // Intoxication bonus 
+		case 0x5F: // Tracking bonus 
+		case 0x60: // Change level 
+		case 0x61: // Exceptional strength bonus 
+		case 0x68: // XP bonus
+		case 0x69: // Remove gold 
+		case 0x6A: // Morale break 
+		case 0x6C: // Reputation bonus 
+		case 0x7E: // Movement rate bonus 
+		case 0xA7: // Missile THAC0 bonus 
+		case 0xB0: // Movement rate bonus 2 
 			s.add(new DecNumber(buffer, offset, 4, "Value"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Modifier type", s_inctype));
 			break;
 
-		case 0x7: // Set color (CGameEffectColorChange)
+		case 0x7: // Set color
 			s.add(new ColorValue(buffer, offset, 4, "Color"));
 			s.add(new HashBitmap(buffer, offset + 4, 4, "Location", m_colorloc));
 			break;
 
-		case 0x8: // Set color glow solid (CGameEffectColorGlowSolid)
+		case 0x8: // Set color glow solid
 			s.add(new Unknown(buffer, offset, 1));
 			s.add(new UnsignDecNumber(buffer, offset + 1, 1, "Red"));
 			s.add(new UnsignDecNumber(buffer, offset + 2, 1, "Green"));
@@ -611,7 +611,7 @@ public final class EffectFactory {
 			s.add(new HashBitmap(buffer, offset + 4, 4, "Location", m_colorloc));
 			break;
 
-		case 0x9: // Set color glow pulse (CGameEffectColorGlowPulse)
+		case 0x9: // Set color glow pulse
 			s.add(new Unknown(buffer, offset, 1));
 			s.add(new UnsignDecNumber(buffer, offset + 1, 1, "Red"));
 			s.add(new UnsignDecNumber(buffer, offset + 2, 1, "Green"));
@@ -620,46 +620,46 @@ public final class EffectFactory {
 			s.add(new DecNumber(buffer, offset + 6, 2, "Cycle speed"));
 			break;
 
-		case 0xD: // Kill target (CGameEffectDeath)
+		case 0xD: // Kill target
 			s.add(new Bitmap(buffer, offset, 4, "Display text?", s_yesno));
 			s.add(new Flag(buffer, offset + 4, 4, "Death type", new String[] { "Acid", "Burning", "Crushed", "Normal", "Exploding", "Stoned", "Freezing",
 					"Exploding stoned", "Exploding freezing", "Electrified", "Disintegration" }));
 			break;
 
-		case 0x10: // Haste (CGameEffectHaste)
+		case 0x10: // Haste 
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Haste type", new String[] { "Normal", "Improved", "Movement rate only" }));
 			break;
 
-		case 0x12: // Maximum HP bonus (CGameEffectHitPoints)
+		case 0x12: // Maximum HP bonus 
 			s.add(new DecNumber(buffer, offset, 4, "Value"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Modifier type", new String[] { "Increment", "Set", "Set % of", "Increment, don't update current HP",
 					"Set, don't update current HP", "Set % of, don't update current HP" }));
 			break;
 
-		case 0x14: // Invisibility (CGameEffectInvisible)
+		case 0x14: // Invisibility 
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Invisibility type", new String[] { "Normal", "Improved" }));
 			break;
 
-		case 0x15: // Lore bonus (CGameEffectLore) / Knowledge arcana
+		case 0x15: // Lore bonus 
 			s.add(new DecNumber(buffer, offset, 4, "Value"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Modifier type", new String[] { "Increment", "Set", "Mastery" }));
 			break;
 
-		case 0x29: // Sparkle (CGameEffectSparkle)
+		case 0x29: // Sparkle 
 			s.add(new Bitmap(buffer, offset, 4, "Color", new String[] { "", "Black", "Blue", "Chromatic", "Gold", "Green", "Purple", "Red", "White", "Ice",
 					"Stone", "Magenta", "Orange" }));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Particle effect", new String[] { "", "Explosion", "Swirl", "Shower" }));
 			break;
 
-		case 0x2A: // Bonus wizard spells (CGameEffectSpellMemorizationMage)
+		case 0x2A: // Bonus wizard spells 
 			s.add(new DecNumber(buffer, offset, 4, "# spells to add"));
 			s.add(new Flag(buffer, offset + 4, 4, "Spell levels", new String[] { "Double spells", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5",
 					"Level 6", "Level 7", "Level 8", "Level 9" }));
 			break;
 
-		case 0x32: // Character color pulse (CGameEffectSingleColorPulseAll)
+		case 0x32: // Character color pulse 
 			s.add(new Unknown(buffer, offset, 1));
 			s.add(new UnsignDecNumber(buffer, offset + 1, 1, "Red"));
 			s.add(new UnsignDecNumber(buffer, offset + 2, 1, "Green"));
@@ -668,8 +668,8 @@ public final class EffectFactory {
 			s.add(new DecNumber(buffer, offset + 6, 2, "Cycle speed"));
 			break;
 
-		case 0x33: // Character tint solid (CGameEffectColorTintSolid)
-		case 0x34: // Character tint bright (CGameEffectColorLightSolid)
+		case 0x33: // Character tint solid 
+		case 0x34: // Character tint bright 
 			s.add(new Unknown(buffer, offset, 1));
 			s.add(new UnsignDecNumber(buffer, offset + 1, 1, "Red"));
 			s.add(new UnsignDecNumber(buffer, offset + 2, 1, "Green"));
@@ -678,53 +678,53 @@ public final class EffectFactory {
 			s.add(new Unknown(buffer, offset + 6, 2));
 			break;
 
-		case 0x35: // Animation change (CGameEffectAnimationChange)
+		case 0x35: // Animation change 
 			s.add(new IdsBitmap(buffer, offset, 4, "Morph into", "ANIMATE.IDS"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Morph type", new String[] { "Temporary change", "Remove temporary change", "Permanent change" }));
 			break;
 
-		case 0x37: // Slay (CGameEffectSlay)
-		case 0x64: // Protection from creature type (CGameEffectProtectionFromCreature)
-		case 0x6D: // Paralyze (CGameEffectHoldCreature)
-		case 0xAF: // Hold creature (CGameEffectHoldCreatureSpell)
-		case 0xB2: // THAC0 vs. type bonus (CGameEffectSelectiveToHitBonus)
-		case 0xB3: // Damage vs. type bonus (CGameEffectSelectiveDamageBonus)
-		case 0xB9: // Hold creature 2 (CGameEffectHoldCreatureSpell)
+		case 0x37: // Slay 
+		case 0x64: // Protection from creature type 
+		case 0x6D: // Paralyze 
+		case 0xAF: // Hold creature 
+		case 0xB2: // THAC0 vs. type bonus 
+		case 0xB3: // Damage vs. type bonus 
+		case 0xB9: // Hold creature 2 
 			s.add(new IDSTargetEffect(buffer, offset));
 			break;
 
-		case 0x39: // Change alignment (CGameEffectAlignmentChange)
+		case 0x39: // Change alignment 
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new IdsBitmap(buffer, offset + 4, 4, "Alignment", "ALIGN.IDS"));
 			break;
 
-		case 0x3A: // Dispel effects (CGameEffectDispelEffects)
+		case 0x3A: // Dispel effects 
 			s.add(new DecNumber(buffer, offset, 4, "Level"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Dispel type", new String[] { "Always dispel", "Use caster level", "Use specific level" }));
 			break;
 
-		case 0x3E: // Bonus priest spells (CGameEffectSpellMemorizationCleric)
+		case 0x3E: // Bonus priest spells 
 			s.add(new DecNumber(buffer, offset, 4, "# spells to add"));
 			s.add(new Flag(buffer, offset + 4, 4, "Spell levels", new String[] { "Double spells", "Level 1", "Level 2", "Level 3", "Level 4", "Level 5",
 					"Level 6", "Level 7" }));
 			break;
 
-		case 0x44: // Unsummon creature (CGameEffectUnsummon)
+		case 0x44: // Unsummon creature 
 			s.add(new Bitmap(buffer, offset, 4, "Display text?", s_noyes));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			break;
 
-		case 0x47: // Change gender (CGameEffectSexChange)
+		case 0x47: // Change gender 
 			s.add(new IdsBitmap(buffer, offset, 4, "Gender", "GENDER.IDS"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "How?", new String[] { "Reverse gender", "Set gender" }));
 			break;
 
-		case 0x48: // Change AI type (CGameEffectAIChange)
+		case 0x48: // Change AI type 
 			s.add(new DecNumber(buffer, offset, 4, "Value"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "AI type", new String[] { "Allegiance", "General", "Race", "Class", "Specifics", "Gender", "Alignment" }));
 			break;
 
-		case 0x53: // Immunity to projectile (CGameEffectImmunityToProjectile)
+		case 0x53: // Immunity to projectile 
 			s.add(new Unknown(buffer, offset, 4));
 			if (Keyfile.getInstance().resourceExists("PROJECTL.IDS"))
 				s.add(new IdsBitmap(buffer, offset + 4, 4, "Projectile", "PROJECTL.IDS"));
@@ -732,83 +732,83 @@ public final class EffectFactory {
 				s.add(new DecNumber(buffer, offset + 4, 4, "Projectile"));
 			break;
 
-		case 0x63: // Modify duration (CGameEffectDurationCasting)
+		case 0x63: // Modify duration 
 			s.add(new DecNumber(buffer, offset, 4, "Percentage"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Spell class", new String[] { "Wizard", "Priest" }));
 			break;
 
-		case 0x65: // Immunity to effect (CGameEffectImmunityToEffect)
+		case 0x65: // Immunity to effect
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Effect", s_effname));
 			break;
 
-		case 0x66: // Immunity to spell level (CGameEffectImmunityToSpellLevel)
+		case 0x66: // Immunity to spell level 
 			s.add(new DecNumber(buffer, offset, 4, "Spell level"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			break;
 
-		case 0x67: // Change name (CGameEffectName)
+		case 0x67: // Change name 
 			s.add(new StringRef(buffer, offset, "Name"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			break;
 
-		case 0x6B: // Change portrait (CGameEffectPortrait)
+		case 0x6B: // Change portrait
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Which portrait?", new String[] { "Small", "Large" }));
 			restype = "BMP";
 			break;
 
-		case 0x6F: // Create weapon (CGameEffectCreateWeapon)
-		case 0x7A: // Create inventory item (CGameEffectCreateItem)
+		case 0x6F: // Create weapon
+		case 0x7A: // Create inventory item 
 			s.add(new DecNumber(buffer, offset, 4, "# to create"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			restype = "ITM";
 			break;
 
-		case 0x70: // Remove item (CGameEffectDestroyWeapon)
-		case 0x7B: // Remove inventory item (CGameEffectDestroyItem)
+		case 0x70: // Remove item 
+		case 0x7B: // Remove inventory item 
 			restype = "ITM";
 			break;
 
-		case 0x73: // Detect alignment (CGameEffectDetectAlignment)
+		case 0x73: // Detect alignment
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Alignment mask", new String[] { "Evil", "Neutral", "Good" }));
 			break;
 
-		case 0x78: // Immunity to weapons (CGameEffectImmuneToWeapon)
+		case 0x78: // Immunity to weapons 
 			s.add(new DecNumber(buffer, offset, 4, "Maximum enchantment"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Weapon type", new String[] { "Enchanted", "Magical", "Non-magical", "Silver", "Non-silver",
 					"Non-silver, non-magical", "Two-handed", "One-handed", "Cursed", "Non-cursed", "Cold iron", "Non-cold-iron" }));
 			break;
 
-		case 0x7F: // Summon monsters (CGameEffectRandomSummon)
+		case 0x7F: // Summon monsters 
 			s.add(new DecNumber(buffer, offset, 4, "Total XP"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "From 2DA file", new String[] { "Monsum01 (ally)", "Monsum02 (ally)", "Monsum03 (ally)", "Anisum01 (ally)",
 					"Anisum02 (ally)", "Monsum01 (enemy)", "Monsum02 (enemy)", "Monsum03 (enemy)", "Anisum01 (enemy)", "Anisum02 (enemy)" }));
 			restype = "2DA";
 			break;
 
-		case 0x81: // Aid (non-cumulative) (CGameEffectNon_CumulativeAid)
+		case 0x81: // Aid (non-cumulative) 
 			s.add(new DecNumber(buffer, offset, 4, "Amount"));
 			s.add(new DecNumber(buffer, offset + 4, 4, "HP bonus"));
 			break;
 
-		case 0x82: // Bless (non-cumulative) (CGameEffectNon_CumulativeBless)
-		case 0x84: // Draw upon holy might (non-cumulative) (CGameEffectNon_CumulativeDrawUponHolyMight)
-		case 0x85: // Luck (non-cumulative) (CGameEffectNon_CumulativeLuck)
-		case 0x89: // Bad chant (non-cumulative) (CGameEffectNon_CumulativeChantBad)
-		case 0xAD: // Poison resistance bonus (CGameEffectResistanceToPoison)
+		case 0x82: // Bless (non-cumulative)
+		case 0x84: // Draw upon holy might (non-cumulative) 
+		case 0x85: // Luck (non-cumulative) 
+		case 0x89: // Bad chant (non-cumulative) 
+		case 0xAD: // Poison resistance bonus 
 			s.add(new DecNumber(buffer, offset, 4, "Amount"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			break;
 
-		case 0x87: // Polymorph (CGameEffectPolymorph)
+		case 0x87: // Polymorph
 			s.add(new IdsBitmap(buffer, offset, 4, "Animation", "ANIMATE.IDS"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Polymorph type", new String[] { "Change into", "Appearance only", "Appearance only", "Appearance only" }));
 			restype = "CRE";
 			break;
 
-		case 0x8A: // Set animation sequence (CGameEffectSetSequence)
+		case 0x8A: // Set animation sequence 
 			s.add(new Unknown(buffer, offset, 4));
 			if (Keyfile.getInstance().resourceExists("ANIMSTAT.IDS"))
 				s.add(new IdsBitmap(buffer, offset + 4, 4, "Sequence", "ANIMSTAT.IDS"));
@@ -821,12 +821,12 @@ public final class EffectFactory {
 			}
 			break;
 
-		case 0x8B: // Display string (CGameEffectDisplayString)
+		case 0x8B: // Display string 
 			s.add(new StringRef(buffer, offset, "String"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			break;
 
-		case 0x8C: // Casting glow (CGameEffectCastingGlow)
+		case 0x8C: // Casting glow 
 			final LongIntegerHashMap<String> m_castglow = new LongIntegerHashMap<String>();
 			m_castglow.put(9L, "Necromancy");
 			m_castglow.put(10L, "Alteration");
@@ -840,7 +840,7 @@ public final class EffectFactory {
 			s.add(new HashBitmap(buffer, offset + 4, 4, "Glow", m_castglow));
 			break;
 
-		case 0x8D: // Lighting effects (CGameEffectVisualSpellHit) / Visual spell hit
+		case 0x8D: // Lighting effects
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Effect", new String[] { "Necromancy air", "Necromancy earth", "Necromancy water", "", "Alteration air",
 					"Alteration earth", "Alteration water", "", "Enchantment air", "Enchantment earth", "Enchantment water", "", "Abjuration air",
@@ -850,40 +850,40 @@ public final class EffectFactory {
 					"Hit finger of death" }));
 			break;
 
-		case 0x8E: // Display portrait icon (CGameEffectPortraitIcon)
-		case 0xA9: // Prevent portrait icon (CGameEffectImmunityToPortraitIcon)
+		case 0x8E: // Display portrait icon
+		case 0xA9: // Prevent portrait icon 
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Icon", s_poricon));
 			break;
 
-		case 0x8F: // Create item in slot (CGameEffectReplaceItem)
+		case 0x8F: // Create item in slot 
 			s.add(new IdsBitmap(buffer, offset, 4, "Slot", "SLOTS.IDS"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			restype = "ITM";
 			break;
 
-		case 0x92: // Cast spell (CGameEffectCastSpell)
-		case 0x94: // Cast spell at point (CGameEffectCastSpellPoint)
+		case 0x92: // Cast spell 
+		case 0x94: // Cast spell at point 
 			s.add(new DecNumber(buffer, offset, 4, "Cast at level"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Cast instantly?", s_noyes));
 			restype = "SPL";
 			break;
 
-		case 0x93: // Learn spell (CGameEffectLearnSpell)
-		case 0xAB: // Give innate ability (CGameEffectAddInnateAbility)
-		case 0xAC: // Remove spell (CGameEffectRemoveInnateAbility) / Remove innate ability
+		case 0x93: // Learn spell 
+		case 0xAB: // Give innate ability 
+		case 0xAC: // Remove spell 
 			restype = "SPL";
 			break;
 
-		case 0x97: // Replace self (CGameEffectReplaceSelf)
+		case 0x97: // Replace self
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Replacement method", new String[] { "Remove silently", "Remove via chunked death",
 					"Remove via normal death", "Don't remove" }));
 			restype = "CRE";
 			break;
 
-		case 0x98: // Play movie (CGameEffectPlayMovie)
-			// FIX ME if (gameid == ResourceFactory.ID_BGEE || gameid == ResourceFactory.ID_BG2EE) {
+		case 0x98: // Play movie
+			// FIXME if (gameid == ResourceFactory.ID_BGEE || gameid == ResourceFactory.ID_BG2EE) {
 			// restype = "WBM";
 			// } else {
 			// restype = "MVE";
@@ -891,32 +891,32 @@ public final class EffectFactory {
 			restype = "WBM";
 			break;
 
-		case 0x9F: // Mirror image effect (CGameEffectMirrorImageRun)
+		case 0x9F: // Mirror image effect 
 			s.add(new DecNumber(buffer, offset, 4, "# images"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			break;
 
-		case 0xA6: // Magic resistance bonus (CGameEffectResistanceToMagic)
+		case 0xA6: // Magic resistance bonus
 			s.add(new DecNumber(buffer, offset, 4, "Value"));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Modifier type", new String[] { "Increment", "Set" }));
 			break;
 
-		case 0xAA: // Play damage animation (CGameEffectDamageVisualEffect)
+		case 0xAA: // Play damage animation 
 			s.add(new Unknown(buffer, offset, 4));
 			s.add(new Bitmap(buffer, offset + 4, 4, "Animation", new String[] { "Blood (behind)", "Blood (front)", "Blood (left)", "Blood (right)", "Fire 1",
 					"Fire 2", "Fire 3", "Electricity 1", "Electricity 2", "Electricity 3" }));
 			break;
 
-		case 0xAE: // Play sound (CGameEffectPlaySound)
+		case 0xAE: // Play sound 
 			restype = "WAV";
 			break;
 
-		case 0xB1: // Use EFF file (CGameEffectApplyEffect)
+		case 0xB1: // Use EFF file 
 			s.add(new IDSTargetEffect(buffer, offset));
 			restype = "EFF";
 			break;
 
-		case 0xB4: // Disallow item (CGameEffectRestrictEquipItem)
+		case 0xB4: // Disallow item 
 			s.add(new StringRef(buffer, offset, "String"));
 			s.add(new Unknown(buffer, offset + 4, 4));
 			restype = "ITM";

@@ -7,11 +7,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pourbaix.infinity.cache.CacheException;
+import com.pourbaix.infinity.datatype.AbilityLocationEnum;
+import com.pourbaix.infinity.datatype.AbilityTargetEnum;
+import com.pourbaix.infinity.datatype.AbilityTypeEnum;
+import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.entity.Ability;
-import com.pourbaix.infinity.entity.AbilityLocationEnum;
-import com.pourbaix.infinity.entity.AbilityTargetEnum;
-import com.pourbaix.infinity.entity.AbilityTypeEnum;
-import com.pourbaix.infinity.entity.UnknownValueException;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.util.DynamicArray;
 

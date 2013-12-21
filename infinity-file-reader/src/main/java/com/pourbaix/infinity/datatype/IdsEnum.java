@@ -1,4 +1,4 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
 
 public enum IdsEnum {
 	Spell("spell.ids"), Projectile("projectl.ids");

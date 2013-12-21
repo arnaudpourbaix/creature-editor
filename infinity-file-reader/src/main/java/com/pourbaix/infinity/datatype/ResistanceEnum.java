@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum ResistanceEnum {
 	NonMagical((byte) 0, "Non magical"), DispelResistance((byte) 1, "Can be dispelled/Affected by resistance"), NoDispelNoResistance((byte) 2,

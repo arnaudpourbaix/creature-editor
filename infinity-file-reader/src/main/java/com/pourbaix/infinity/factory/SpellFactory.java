@@ -6,13 +6,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pourbaix.infinity.cache.CacheException;
-import com.pourbaix.infinity.entity.Flag;
+import com.pourbaix.infinity.datatype.Flag;
+import com.pourbaix.infinity.datatype.SchoolEnum;
+import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
+import com.pourbaix.infinity.datatype.SpellTypeEnum;
+import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.entity.IdentifierEntry;
-import com.pourbaix.infinity.entity.SchoolEnum;
 import com.pourbaix.infinity.entity.Spell;
-import com.pourbaix.infinity.entity.SpellSecondaryTypeEnum;
-import com.pourbaix.infinity.entity.SpellTypeEnum;
-import com.pourbaix.infinity.entity.UnknownValueException;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;

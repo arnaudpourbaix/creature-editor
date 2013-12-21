@@ -1,18 +1,19 @@
 package com.pourbaix.infinity.factory;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.pourbaix.infinity.cache.CacheException;
+import com.pourbaix.infinity.datatype.Flag;
+import com.pourbaix.infinity.datatype.ResistanceEnum;
+import com.pourbaix.infinity.datatype.TargetTypeEnum;
+import com.pourbaix.infinity.datatype.TimingEnum;
+import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.entity.Effect;
-import com.pourbaix.infinity.entity.Flag;
-import com.pourbaix.infinity.entity.ResistanceEnum;
-import com.pourbaix.infinity.entity.TargetTypeEnum;
-import com.pourbaix.infinity.entity.TimingEnum;
-import com.pourbaix.infinity.entity.UnknownValueException;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.util.DynamicArray;
 
@@ -88,6 +89,7 @@ public abstract class EffectFactory {
 		int value = (int) DynamicArray.getShort(buffer, offset);
 		try {
 			effect.setTarget(TargetTypeEnum.valueOf(DynamicArray.getByte(buffer, offset + 2)));
+			effect.setPower(DynamicArray.getByte(buffer, offset + 3));
 			effect.setTiming(TimingEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
 			effect.setResistance(ResistanceEnum.valueOf(DynamicArray.getByte(buffer, offset + 13)));
 			effect.setDuration(DynamicArray.getInt(buffer, offset + 14));
@@ -97,6 +99,7 @@ public abstract class EffectFactory {
 			effect.setDiceSides((short) DynamicArray.getInt(buffer, offset + 32));
 			effect.setSavingThrowType(new Flag(DynamicArray.getInt(buffer, offset + 36), 4, SAVE_TYPES));
 			effect.setSavingThrowBonus((short) DynamicArray.getInt(buffer, offset + 40));
+			fetchParameters(effect, buffer, offset);
 			fetchResource(effect, buffer, offset);
 		} catch (UnknownValueException e) {
 			throw new FactoryException(e);
@@ -107,6 +110,25 @@ public abstract class EffectFactory {
 
 	private static void fetchResource(Effect effect, byte buffer[], int offset) throws FactoryException, CacheException {
 		//new ResourceRef(buffer, offset, "Resource", resourceType.split(":"));
+		byte[] res = Arrays.copyOfRange(buffer, offset + 20, offset + 28);
+		//effect.setResource(new String());
+
+		//		if (resourceType == null) {
+		//			if (effectType == 0x13F && param2 == 11) {
+		//				s.add(new TextString(buffer, offset, 8, "Script name"));
+		//			} else {
+		//				s.add(new Unknown(buffer, offset, 8, "Unused"));
+		//			}
+		//		} else if (resourceType.equalsIgnoreCase("String")) {
+		//			s.add(new TextString(buffer, offset, 8, "String"));
+		//		} else {
+		//			s.add(new ResourceRef(buffer, offset, "Resource", resourceType.split(":")));
+		//		}
+	}
+
+	private static void fetchParameters(Effect effect, byte buffer[], int offset) {
+		effect.setParam1(DynamicArray.getInt(buffer, offset + 4));
+		effect.setParam2(DynamicArray.getInt(buffer, offset + 8));
 	}
 
 }

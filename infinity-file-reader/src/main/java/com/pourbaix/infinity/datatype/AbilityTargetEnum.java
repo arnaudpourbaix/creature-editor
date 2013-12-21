@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum AbilityTargetEnum {
 	Invalid((byte) 0, "Invalid"), Creature((byte) 1, "Creature"), Inventory((byte) 2, "Inventory"), Portrait((byte) 3, "Character portrait"), Area((byte) 4,

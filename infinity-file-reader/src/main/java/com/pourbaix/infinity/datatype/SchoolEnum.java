@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum SchoolEnum {
 	None((byte) 0, "None"), Abjurer((byte) 1, "Abjurer"), Conjurer((byte) 2, "Conjurer"), Diviner((byte) 3, "Diviner"), Enchanter((byte) 4, "Enchanter"), Illusionist(

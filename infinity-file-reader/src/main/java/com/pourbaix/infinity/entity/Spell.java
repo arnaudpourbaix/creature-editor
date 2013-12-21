@@ -2,6 +2,11 @@ package com.pourbaix.infinity.entity;
 
 import java.util.List;
 
+import com.pourbaix.infinity.datatype.Flag;
+import com.pourbaix.infinity.datatype.SchoolEnum;
+import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
+import com.pourbaix.infinity.datatype.SpellTypeEnum;
+
 public class Spell {
 	private String resource;
 	private String identifier;

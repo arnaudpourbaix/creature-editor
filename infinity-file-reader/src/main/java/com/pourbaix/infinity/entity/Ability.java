@@ -2,6 +2,10 @@ package com.pourbaix.infinity.entity;
 
 import java.util.List;
 
+import com.pourbaix.infinity.datatype.AbilityLocationEnum;
+import com.pourbaix.infinity.datatype.AbilityTargetEnum;
+import com.pourbaix.infinity.datatype.AbilityTypeEnum;
+
 public class Ability {
 	private AbilityTypeEnum type;
 	private AbilityLocationEnum location;

@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum AbilityTypeEnum {
 	Unknown((short) 0, "Unknown"), Melee((short) 1, "Melee"), Ranged((short) 2, "Ranged"), Magical((short) 3, "Magical"), Launcher((short) 4, "Launcher");

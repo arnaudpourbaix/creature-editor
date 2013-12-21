@@ -1,5 +1,7 @@
 package com.pourbaix.infinity.entity;
 
+import com.pourbaix.infinity.datatype.Flag;
+import com.pourbaix.infinity.datatype.ProjectileTypeEnum;
 import com.pourbaix.infinity.util.Constant;
 
 public class Projectile {

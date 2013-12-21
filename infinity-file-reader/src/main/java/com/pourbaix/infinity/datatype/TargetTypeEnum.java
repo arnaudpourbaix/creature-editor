@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum TargetTypeEnum {
 	None((byte) 0, "None"), Self((byte) 1, "Self"), PresetTarget((byte) 2, "Preset target"), Party((byte) 3, "Party"), Everyone((byte) 4, "Everyone"), EveryoneExceptParty(

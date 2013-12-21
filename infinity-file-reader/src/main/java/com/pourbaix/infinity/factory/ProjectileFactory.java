@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.cache.IdsCacheService;
-import com.pourbaix.infinity.entity.Flag;
+import com.pourbaix.infinity.datatype.Flag;
+import com.pourbaix.infinity.datatype.IdsEnum;
+import com.pourbaix.infinity.datatype.ProjectileTypeEnum;
 import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.IdentifierFile;
-import com.pourbaix.infinity.entity.IdsEnum;
 import com.pourbaix.infinity.entity.Projectile;
-import com.pourbaix.infinity.entity.ProjectileTypeEnum;
 import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;

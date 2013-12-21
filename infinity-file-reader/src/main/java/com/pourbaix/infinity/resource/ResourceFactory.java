@@ -3,7 +3,7 @@ package com.pourbaix.infinity.resource;
 import java.io.File;
 import java.util.List;
 
-import com.pourbaix.infinity.entity.GameVersionEnum;
+import com.pourbaix.infinity.datatype.GameVersionEnum;
 import com.pourbaix.infinity.util.NIFile;
 
 public class ResourceFactory {

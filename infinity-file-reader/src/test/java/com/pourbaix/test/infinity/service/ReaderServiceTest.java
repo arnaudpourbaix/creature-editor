@@ -18,6 +18,9 @@ import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.Spell;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.resource.FactoryException;
+import com.pourbaix.infinity.resource.key.Keyfile;
+import com.pourbaix.infinity.resource.key.ResourceEntry;
+import com.pourbaix.infinity.resource.spl.SplResource;
 import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
 
@@ -80,12 +83,33 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	//	@Test
 	public void spellSlow() {
 		try {
 			Spell spell = readerService.getSpell("spwi312.spl");
 			assertEquals(3, spell.getLevel());
 		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void spellDireCharm() {
+		try {
+			Spell spell = readerService.getSpell("spwi316.spl");
+			assertEquals(3, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	//	@Test
+	public void splSlow() {
+		try {
+			ResourceEntry entry = Keyfile.getInstance().getResourceEntry("SPWI312.SPL");
+			SplResource spell = new SplResource(entry);
+			spell.getList();
+		} catch (Exception e) {
 			fail(e.getMessage());
 		}
 	}

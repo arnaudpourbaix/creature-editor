@@ -1,4 +1,5 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.datatype;
+
 
 public enum AbilityLocationEnum {
 	Unknown0((short) 0, "Unknown"), Unknown1((short) 1, "Unknown"), SpellSlot((short) 2, "Spell slots"), Unknown3((short) 3, "Unknown"), InnateSlot((short) 4,

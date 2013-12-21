@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import com.pourbaix.infinity.entity.GameVersionEnum;
+import com.pourbaix.infinity.datatype.GameVersionEnum;
 
 public class GlobalContext {
 

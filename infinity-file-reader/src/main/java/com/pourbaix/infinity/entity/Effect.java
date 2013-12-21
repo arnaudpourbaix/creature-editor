@@ -1,8 +1,16 @@
 package com.pourbaix.infinity.entity;
 
+import com.pourbaix.infinity.datatype.Flag;
+import com.pourbaix.infinity.datatype.ResistanceEnum;
+import com.pourbaix.infinity.datatype.TargetTypeEnum;
+import com.pourbaix.infinity.datatype.TimingEnum;
+
 public class Effect {
 
 	private short opcode;
+	private int param1;
+	private int param2;
+	private byte power;
 	private TargetTypeEnum target;
 	private TimingEnum timing;
 	private ResistanceEnum resistance;
@@ -18,6 +26,9 @@ public class Effect {
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
 		sb.append("target: ").append(target.getLabel());
+		sb.append(", param1: ").append(param1);
+		sb.append(", param2: ").append(param2);
+		sb.append(", power: ").append(power);
 		sb.append(", timing: ").append(timing.getLabel());
 		sb.append(", resistance: ").append(resistance.getLabel());
 		sb.append(", duration: ").append(duration);
@@ -117,6 +128,30 @@ public class Effect {
 
 	public void setSavingThrowBonus(short savingThrowBonus) {
 		this.savingThrowBonus = savingThrowBonus;
+	}
+
+	public byte getPower() {
+		return power;
+	}
+
+	public void setPower(byte power) {
+		this.power = power;
+	}
+
+	public int getParam1() {
+		return param1;
+	}
+
+	public void setParam1(int param1) {
+		this.param1 = param1;
+	}
+
+	public int getParam2() {
+		return param2;
+	}
+
+	public void setParam2(int param2) {
+		this.param2 = param2;
 	}
 
 }

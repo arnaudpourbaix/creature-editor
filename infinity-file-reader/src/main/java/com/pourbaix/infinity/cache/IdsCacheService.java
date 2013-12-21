@@ -3,8 +3,8 @@ package com.pourbaix.infinity.cache;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.pourbaix.infinity.datatype.IdsEnum;
 import com.pourbaix.infinity.entity.IdentifierFile;
-import com.pourbaix.infinity.entity.IdsEnum;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.resource.FactoryException;
 
