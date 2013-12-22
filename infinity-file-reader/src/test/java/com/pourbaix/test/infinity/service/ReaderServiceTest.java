@@ -12,12 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.config.RootConfig;
 import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.Spell;
+import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
-import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.resource.spl.SplResource;
@@ -32,10 +31,13 @@ public class ReaderServiceTest {
 	@Autowired
 	ReaderService readerService;
 
+	@Autowired
+	IdentifierFactory identifierFactory;
+
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	// @Test
+	//	@Test
 	public void idsFile() {
 		try {
 			readerService.getIdentifierFiles();
@@ -56,9 +58,9 @@ public class ReaderServiceTest {
 	// @Test
 	public void spwi112Identifier() {
 		try {
-			IdentifierEntry entry = IdentifierFactory.getSpellIdentifierByResource("spwi112");
+			IdentifierEntry entry = identifierFactory.getSpellIdentifierByResource("spwi112");
 			assertEquals("WIZARD_MAGIC_MISSILE", entry.getFirstValue());
-		} catch (FactoryException | CacheException e) {
+		} catch (FactoryException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -66,9 +68,9 @@ public class ReaderServiceTest {
 	// @Test
 	public void resourceByIdentifier() {
 		try {
-			String resource = IdentifierFactory.getResourceNameByIdentifier("WIZARD_MAGIC_MISSILE");
+			String resource = identifierFactory.getResourceNameByIdentifier("WIZARD_MAGIC_MISSILE");
 			assertEquals("SPWI112", resource);
-		} catch (FactoryException | CacheException e) {
+		} catch (FactoryException e) {
 			fail(e.getMessage());
 		}
 	}
@@ -134,7 +136,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	//	@Test
 	public void spellDrawUponHolyMight() {
 		try {
 			Spell spell = readerService.getSpell("SPPR214.spl");

@@ -30,4 +30,24 @@
 			<set exclude="true" />
 		</foreign-key>
 	</table>
+	
+	<table schema="PUBLIC" name="OPCODE">
+		<foreign-key constraint-name="FK_OPCODE_PARAMETER_LINK_KEY1">
+			<many-to-one property="opcode" />
+			<set property="parameters" />
+		</foreign-key>
+	</table>
+	<table schema="PUBLIC" name="OPCODE_PARAMETER">
+		<foreign-key constraint-name="FK_OPCODE_PARAMETER_VALUE__OPCODE_PARAMETER">
+			<many-to-one property="parameter" />
+			<set property="values" />
+		</foreign-key>
+	</table>
+	<table schema="PUBLIC" name="OPCODE_PARAMETER">
+		<foreign-key constraint-name="FK_OPCODE_PARAMETER_LINK_KEY2">
+			<many-to-one property="parameter" />
+			<set property="parameters" />
+		</foreign-key>
+	</table>
+	
 </hibernate-reverse-engineering>

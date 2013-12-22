@@ -1,4 +1,4 @@
-package com.pourbaix.infinity.resource;
+package com.pourbaix.infinity.factory;
 
 public class FactoryException extends Exception {
 

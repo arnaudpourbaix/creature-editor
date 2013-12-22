@@ -4,8 +4,9 @@ import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
@@ -13,14 +14,23 @@ import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.entity.IdentifierEntry;
 import com.pourbaix.infinity.entity.Spell;
-import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.util.DynamicArray;
 
-public abstract class SpellFactory {
+@Service
+public class SpellFactory {
+
+	@Autowired
+	private IdentifierFactory identifierFactory;
+
+	@Autowired
+	private AbilityFactory abilityFactory;
+
+	@Autowired
+	private EffectFactory effectFactory;
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(SpellFactory.class);
@@ -32,7 +42,7 @@ public abstract class SpellFactory {
 			"Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf", "Half-elf",
 			"Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
 
-	public static Spell getSpell(String entryName) throws FactoryException, CacheException {
+	public Spell getSpell(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
 			throw new FactoryException("Entry doesn't exist: " + entryName);
@@ -40,7 +50,7 @@ public abstract class SpellFactory {
 		return getSpell(entry);
 	}
 
-	public static Spell getSpell(ResourceEntry entry) throws FactoryException, CacheException {
+	public Spell getSpell(ResourceEntry entry) throws FactoryException {
 		try {
 			Spell spell = new Spell();
 			spell.setResource(entry.getResourceName());
@@ -53,7 +63,7 @@ public abstract class SpellFactory {
 			spell.setSecondaryType(SpellSecondaryTypeEnum.valueOf(DynamicArray.getByte(buffer, 39)));
 			spell.setLevel((byte) DynamicArray.getInt(buffer, 52));
 			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
-			IdentifierEntry identifierEntry = IdentifierFactory.getSpellIdentifierByResource(spell.getResource());
+			IdentifierEntry identifierEntry = identifierFactory.getSpellIdentifierByResource(spell.getResource());
 			if (identifierEntry != null) {
 				spell.setIdentifier(identifierEntry.getFirstValue());
 			}
@@ -66,15 +76,15 @@ public abstract class SpellFactory {
 		}
 	}
 
-	private static void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
+	private void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
-		spell.setAbilities(AbilityFactory.getAbilities(buffer, offset, count, effectOffset));
+		spell.setAbilities(abilityFactory.getAbilities(buffer, offset, count, effectOffset));
 	}
 
-	private static void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException, CacheException {
+	private void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int count = DynamicArray.getShort(buffer, 112);
-		EffectFactory.getEffects(buffer, effectOffset, count);
+		effectFactory.getEffects(buffer, effectOffset, count);
 	}
 
 }

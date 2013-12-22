@@ -5,22 +5,29 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.datatype.AbilityLocationEnum;
 import com.pourbaix.infinity.datatype.AbilityTargetEnum;
 import com.pourbaix.infinity.datatype.AbilityTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.entity.Ability;
-import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.util.DynamicArray;
 
-public abstract class AbilityFactory {
+@Service
+public class AbilityFactory {
 
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AbilityFactory.class);
 
-	public static List<Ability> getAbilities(byte buffer[], int offset, int count, int globalEffectOffset) throws FactoryException, CacheException {
+	@Autowired
+	private ProjectileFactory projectileFactory;
+
+	@Autowired
+	private EffectFactory effectFactory;
+
+	public List<Ability> getAbilities(byte buffer[], int offset, int count, int globalEffectOffset) throws FactoryException {
 		List<Ability> abilities = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
 			Ability ability = getAbility(buffer, offset, globalEffectOffset);
@@ -30,7 +37,7 @@ public abstract class AbilityFactory {
 		return abilities;
 	}
 
-	private static Ability getAbility(byte buffer[], int offset, int globalEffectOffset) throws FactoryException, CacheException {
+	private Ability getAbility(byte buffer[], int offset, int globalEffectOffset) throws FactoryException {
 		Ability ability = new Ability();
 		try {
 			ability.setType(AbilityTypeEnum.valueOf(DynamicArray.getShort(buffer, offset)));
@@ -49,19 +56,19 @@ public abstract class AbilityFactory {
 		return ability;
 	}
 
-	private static void fetchProjectile(Ability ability, byte buffer[], int offset) throws FactoryException, CacheException {
+	private void fetchProjectile(Ability ability, byte buffer[], int offset) throws FactoryException {
 		try {
 			Long key = (long) DynamicArray.getUnsignedShort(buffer, offset + 38);
-			ability.setProjectile(ProjectileFactory.getProjectileByIdsKey(key));
+			ability.setProjectile(projectileFactory.getProjectileByIdsKey(key));
 		} catch (FactoryException e) {
 			logger.error(e.getMessage());
 		}
 	}
 
-	private static void fetchEffects(Ability ability, byte buffer[], int offset, int globalEffectOffset) throws FactoryException, CacheException {
+	private void fetchEffects(Ability ability, byte buffer[], int offset, int globalEffectOffset) throws FactoryException {
 		int effectIndex = (int) DynamicArray.getShort(buffer, offset + 32);
 		int effectCount = (int) DynamicArray.getShort(buffer, offset + 30);
-		EffectFactory.getEffects(buffer, globalEffectOffset + (effectIndex * 48), effectCount);
+		effectFactory.getEffects(buffer, globalEffectOffset + (effectIndex * 48), effectCount);
 	}
 
 }

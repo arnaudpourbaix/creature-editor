@@ -7,9 +7,9 @@ import com.pourbaix.infinity.datatype.TimingEnum;
 
 public class Effect {
 
-	private short opcode;
-	private int param1;
-	private int param2;
+	private String opcode;
+	private EffectParameter param1 = new EffectParameter();
+	private EffectParameter param2 = new EffectParameter();
 	private byte power;
 	private TargetTypeEnum target;
 	private TimingEnum timing;
@@ -25,9 +25,10 @@ public class Effect {
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("target: ").append(target.getLabel());
-		sb.append(", param1: ").append(param1);
-		sb.append(", param2: ").append(param2);
+		sb.append("opcode: ").append(opcode);
+		sb.append(", target: ").append(target.getLabel());
+		sb.append(", param 1: ").append(param1.getName()).append("=").append(param1.getValue());
+		sb.append(", param 2: ").append(param2.getName()).append("=").append(param2.getValue());
 		sb.append(", power: ").append(power);
 		sb.append(", timing: ").append(timing.getLabel());
 		sb.append(", resistance: ").append(resistance.getLabel());
@@ -138,19 +139,27 @@ public class Effect {
 		this.power = power;
 	}
 
-	public int getParam1() {
+	public String getOpcode() {
+		return opcode;
+	}
+
+	public void setOpcode(String opcode) {
+		this.opcode = opcode;
+	}
+
+	public EffectParameter getParam1() {
 		return param1;
 	}
 
-	public void setParam1(int param1) {
+	public void setParam1(EffectParameter param1) {
 		this.param1 = param1;
 	}
 
-	public int getParam2() {
+	public EffectParameter getParam2() {
 		return param2;
 	}
 
-	public void setParam2(int param2) {
+	public void setParam2(EffectParameter param2) {
 		this.param2 = param2;
 	}
 

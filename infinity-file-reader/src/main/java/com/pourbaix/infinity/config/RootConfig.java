@@ -10,14 +10,13 @@ import org.springframework.core.io.Resource;
 import com.pourbaix.infinity.context.GlobalContext;
 
 @Configuration
-@ComponentScan(basePackages = { "com.pourbaix.infinity" })
+@ComponentScan(basePackages = { "com.pourbaix.infinity", "com.pourbaix.creature" })
 public class RootConfig {
 
 	@Bean
 	public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
 		PropertySourcesPlaceholderConfigurer configurer = new PropertySourcesPlaceholderConfigurer();
-		// Resource[] resources = new Resource[] { new ClassPathResource("config.properties"), new ClassPathResource("/hibernate/persistence.properties") };
-		Resource[] resources = new Resource[] { new ClassPathResource("config.properties") };
+		Resource[] resources = new Resource[] { new ClassPathResource("config.properties"), new ClassPathResource("/hibernate/persistence.properties") };
 		configurer.setLocations(resources);
 		return configurer;
 	}

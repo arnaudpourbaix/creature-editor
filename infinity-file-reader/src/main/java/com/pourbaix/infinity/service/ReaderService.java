@@ -11,19 +11,19 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pourbaix.infinity.cache.CacheException;
 import com.pourbaix.infinity.context.GlobalContext;
 import com.pourbaix.infinity.entity.IdentifierFile;
 import com.pourbaix.infinity.entity.Spell;
+import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.factory.SpellFactory;
-import com.pourbaix.infinity.resource.FactoryException;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 
 @Service
 public class ReaderService {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(ReaderService.class);
 
 	@Resource
@@ -31,6 +31,12 @@ public class ReaderService {
 
 	@Autowired
 	private GameService gameService;
+
+	@Autowired
+	private SpellFactory spellFactory;
+
+	@Autowired
+	private IdentifierFactory identifierFactory;
 
 	@PostConstruct
 	private void init() throws ServiceException {
@@ -48,20 +54,20 @@ public class ReaderService {
 		try {
 			List<Spell> spells = new ArrayList<>();
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("spl")) {
-				Spell spell = SpellFactory.getSpell(entry);
+				Spell spell = spellFactory.getSpell(entry);
 				spells.add(spell);
 			}
 			return spells;
-		} catch (FactoryException | CacheException e) {
+		} catch (FactoryException e) {
 			throw new ServiceException(e);
 		}
 	}
 
 	public Spell getSpell(String resource) throws ServiceException {
 		try {
-			Spell spell = SpellFactory.getSpell(resource);
+			Spell spell = spellFactory.getSpell(resource);
 			return spell;
-		} catch (FactoryException | CacheException e) {
+		} catch (FactoryException e) {
 			throw new ServiceException(e);
 		}
 	}
@@ -70,7 +76,7 @@ public class ReaderService {
 		List<IdentifierFile> ids = new ArrayList<>();
 		for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("ids")) {
 			try {
-				IdentifierFile id = IdentifierFactory.getIdentifierFile(entry);
+				IdentifierFile id = identifierFactory.getIdentifierFile(entry);
 				ids.add(id);
 			} catch (FactoryException e) {
 				throw new ServiceException(e);
