@@ -70,6 +70,7 @@ public class SpellFactory {
 			int effectOffset = DynamicArray.getInt(buffer, 106);
 			fetchSpellAbilities(spell, buffer, effectOffset);
 			fetchSpellEffects(spell, buffer, effectOffset);
+			logger.debug(spell.toString());
 			return spell;
 		} catch (UnknownValueException | IOException | StringResourceException e) {
 			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
@@ -84,7 +85,7 @@ public class SpellFactory {
 
 	private void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int count = DynamicArray.getShort(buffer, 112);
-		effectFactory.getEffects(buffer, effectOffset, count);
+		spell.setGlobalEffects(effectFactory.getEffects(buffer, effectOffset, count));
 	}
 
 }

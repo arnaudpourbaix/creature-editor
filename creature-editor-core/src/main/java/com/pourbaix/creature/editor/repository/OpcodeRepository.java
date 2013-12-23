@@ -13,6 +13,6 @@ public interface OpcodeRepository extends JpaRepository<Opcode, Integer> {
 
 	@Query("select o from Opcode o left join fetch o.parameters params join fetch params.parameter p left join fetch p.values where o.id = :id")
 	@QueryHints({ @QueryHint(name = "org.hibernate.cacheable", value = "true") })
-	public Opcode findOpcodeById(@Param("id")int id);
-	
+	public Opcode findOpcodeById(@Param("id") int id);
+
 }

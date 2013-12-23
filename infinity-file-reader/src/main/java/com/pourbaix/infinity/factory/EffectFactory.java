@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import com.pourbaix.creature.editor.domain.Opcode;
 import com.pourbaix.creature.editor.domain.OpcodeParameter;
@@ -25,6 +26,7 @@ import com.pourbaix.infinity.entity.EffectParameter;
 import com.pourbaix.infinity.util.DynamicArray;
 
 @Service
+@Transactional
 public class EffectFactory {
 
 	@SuppressWarnings("unused")
@@ -68,12 +70,12 @@ public class EffectFactory {
 		} catch (UnknownValueException e) {
 			throw new FactoryException(e);
 		}
-		logger.debug(effect.toString());
 		return effect;
 	}
 
 	private void fetchOpcode(Effect effect, byte buffer[], int offset) throws FactoryException {
 		int opcodeId = (int) DynamicArray.getShort(buffer, offset);
+		effect.setOpcodeId(opcodeId);
 		Opcode opcode = opcodeRepository.findOpcodeById(opcodeId);
 		if (opcode == null) {
 			return;
@@ -86,21 +88,21 @@ public class EffectFactory {
 	}
 
 	private void fetchResource(Effect effect, byte buffer[], int offset) throws FactoryException {
-		//new ResourceRef(buffer, offset, "Resource", resourceType.split(":"));
+		// new ResourceRef(buffer, offset, "Resource", resourceType.split(":"));
 		byte[] res = Arrays.copyOfRange(buffer, offset + 20, offset + 28);
-		//effect.setResource(new String());
+		// effect.setResource(new String());
 
-		//		if (resourceType == null) {
-		//			if (effectType == 0x13F && param2 == 11) {
-		//				s.add(new TextString(buffer, offset, 8, "Script name"));
-		//			} else {
-		//				s.add(new Unknown(buffer, offset, 8, "Unused"));
-		//			}
-		//		} else if (resourceType.equalsIgnoreCase("String")) {
-		//			s.add(new TextString(buffer, offset, 8, "String"));
-		//		} else {
-		//			s.add(new ResourceRef(buffer, offset, "Resource", resourceType.split(":")));
-		//		}
+		// if (resourceType == null) {
+		// if (effectType == 0x13F && param2 == 11) {
+		// s.add(new TextString(buffer, offset, 8, "Script name"));
+		// } else {
+		// s.add(new Unknown(buffer, offset, 8, "Unused"));
+		// }
+		// } else if (resourceType.equalsIgnoreCase("String")) {
+		// s.add(new TextString(buffer, offset, 8, "String"));
+		// } else {
+		// s.add(new ResourceRef(buffer, offset, "Resource", resourceType.split(":")));
+		// }
 	}
 
 	private void fetchParameter(Effect effect, Opcode opcode, EffectParameter effectParameter, int order, int paramValue) throws FactoryException {
@@ -118,7 +120,7 @@ public class EffectFactory {
 		}
 		// find value
 		effectParameter.setName(parameter.getName());
-		if (StringUtils.isNotBlank(parameter.getIds())) {
+		if (!StringUtils.isEmpty(parameter.getIds())) {
 			effectParameter.setValue(identifierFactory.getFirstValueByKey(parameter.getIds() + ".IDS", Long.valueOf(paramValue)));
 		} else {
 			for (OpcodeParameterValue value : parameter.getValues()) {

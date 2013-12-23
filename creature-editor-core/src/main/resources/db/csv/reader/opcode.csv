@@ -1,29 +1,25 @@
 id;name;description
-0;AC vs. Damage Type Modifier ;Applies the modifier value specified by the 'AC Modifier' field to the category specified by the 'Type' field. 
-1;Attacks Per Round Modifier ;Alters a characters Attacks per Round, by changing the Key by the modifier value specified by the 'Key Value' field, in the style specified by 'Type' field.  
-2;Cure sleep;"Removes the state_sleeping flag from the targeted creature(s). 
-This effect ignores durations attributed to it. 
-NB. Does not remove the state_helpless flag."
-3;Berserk;Applies the berserk effect to the targeted creature(s). Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag. This opcode only affects party members.
-4;Cure berserk;"Removes the state_beserk flag from the targeted creature(s). This effect only affects Player Characters. 
-This effect ignores durations attributed to it."
-5;Charm creature;Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids. 
-6;Charisma Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
-7;Set Character colors by Palette ;
+0;AC vs. Damage Type Modifier;"Applies the modifier value specified by the 'AC Modifier' field to the category specified by the 'Type' field." 
+1;Attacks Per Round Modifier;"Alters a characters Attacks per Round, by changing the Key by the modifier value specified by the 'Key Value' field, in the style specified by 'Type' field." 
+2;Cure sleep;"Removes the state_sleeping flag from the targeted creature(s). This effect ignores durations attributed to it. Does not remove the state_helpless flag."
+3;Berserk;"Applies the berserk effect to the targeted creature(s). Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag. This opcode only affects party members."
+4;Cure berserk;"Removes the state_beserk flag from the targeted creature(s). This effect only affects Player Characters. This effect ignores durations attributed to it."
+5;Charm creature;"Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids." 
+6;Charisma Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
+7;Set Character colors by Palette;
 8;Set color by RGB;
 9;Set color glow pulse;
-10;Constitution Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
-11;Cure poison;"Removes the poison effect from the targeted creature(s). This effect ignores durations attributed to it.
-"
-12;Damage;Damages the target by the value specified by the 'Damage Amount' field, with the damage type specified by the 'Type' field. The Dice values can be used to inflict varying damage amounts.
-13;Instant Death ;Instantly kills the targeted creature(s), in the style specified by the 'Death Type' value.  
-14;Defrost (Graphics);Removes the frozen_death state from the targeted creature(s). 
-15;Dexterity Modifier ;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
-16;Haste;Applies the Haste effect, in the style specified by the 'Type' value.  This effect will cancel out the slow opcode.
-17;Current HP Modifier ;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
-18;Maximum HP Modifier ;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
-19;Intelligence Modifier ;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. 
-20;Invisibility;
+10;Constitution Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
+11;Cure poison;"Removes the poison effect from the targeted creature(s). This effect ignores durations attributed to it."
+12;Damage;"Damages the target by the value specified by the 'Damage Amount' field, with the damage type specified by the 'Type' field. The Dice values can be used to inflict varying damage amounts."
+13;Instant Death;"Instantly kills the targeted creature(s), in the style specified by the 'Death Type' value."
+14;Defrost (Graphics);"Removes the frozen_death state from the targeted creature(s)."
+15;Dexterity Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
+16;Haste;"Applies the Haste effect, in the style specified by the 'Type' value.  This effect will cancel out the slow opcode."
+17;Current HP Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
+18;Maximum HP Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
+19;Intelligence Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
+20;Invisibility;"Applies the invisibility effect, in the style specified by the 'Type' value."
 21;Lore bonus;
 22;Luck bonus;
 23;Reset morale;

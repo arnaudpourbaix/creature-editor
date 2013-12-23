@@ -37,7 +37,7 @@ public class ReaderServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	//	@Test
+	// @Test
 	public void idsFile() {
 		try {
 			readerService.getIdentifierFiles();
@@ -46,7 +46,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	//	@Test
+	// @Test
 	public void allSpells() {
 		try {
 			readerService.getSpells();
@@ -85,7 +85,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	//	@Test
+	// @Test
 	public void spellSlow() {
 		try {
 			Spell spell = readerService.getSpell("spwi312.spl");
@@ -95,7 +95,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void spellDireCharm() {
 		try {
 			Spell spell = readerService.getSpell("spwi316.spl");
@@ -105,7 +105,17 @@ public class ReaderServiceTest {
 		}
 	}
 
-	//	@Test
+	// @Test
+	public void spellImprovedInvisibility() {
+		try {
+			Spell spell = readerService.getSpell("spwi405.spl");
+			assertEquals(4, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	// @Test
 	public void splSlow() {
 		try {
 			ResourceEntry entry = Keyfile.getInstance().getResourceEntry("SPWI312.SPL");
@@ -136,7 +146,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	//	@Test
+	// @Test
 	public void spellDrawUponHolyMight() {
 		try {
 			Spell spell = readerService.getSpell("SPPR214.spl");
@@ -156,11 +166,21 @@ public class ReaderServiceTest {
 		}
 	}
 
-	//	@Test
+	// @Test
 	public void spellTarss() {
 		try {
 			Spell spell = readerService.getSpell("1TARSS.SPL");
 			assertEquals(4, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void spellSelection() {
+		try {
+			readerService.getSpell("SPCL521.SPL");
+			readerService.getSpell("SPCL521D.SPL");
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}

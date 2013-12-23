@@ -1,0 +1,1105 @@
+1STAFM0.SPL, name: Magic Missile, opcodes: 112 122 
+1STAFM0B.SPL, name: Magic Missile, opcodes: 112 122 
+1STAFM0C.SPL, name: Magic Missile, opcodes: 112 122 
+1STAFM0D.SPL, name: Magic Missile, opcodes: 112 122 
+1STAFM0E.SPL, name: Magic Missile, opcodes: 112 122 
+1STAFM1.SPL, name: Magic Missile, opcodes: 112 122 
+1TARSP.SPL, name: Wish, opcodes: 261 215 
+1TARSS.SPL, name: Fireshield (Blue), opcodes: 85 174 232 142 215 28 
+AX1H01.SPL, name: null, opcodes: 139 112 122 
+BLUN02.SPL, name: null, opcodes: 139 112 122 
+BLUN04.SPL, name: null, opcodes: 139 112 122 
+BLUN06.SPL, name: null, opcodes: 139 112 122 
+BLUN08.SPL, name: null, opcodes: 139 112 122 
+BLUN38.SPL, name: null, opcodes: 54 
+BPDISPEL.SPL, name: Dispel Magic, opcodes: 273 81 77 58 177 240 
+BPGIAQKE.SPL, name: null, opcodes: 174 39 269 
+BPLYKSUM.SPL, name: Animate Dead, opcodes: 177 
+BPNDQKE.SPL, name: null, opcodes: 174 269 
+CATTAC1.SPL, name: null, opcodes: 139 112 122 
+CUTHIDE.SPL, name: null, opcodes: 16 287 271 
+DAGG01.SPL, name: null, opcodes: 139 112 122 
+DAGG06.SPL, name: null, opcodes: 139 112 122 
+DAGG07.SPL, name: null, opcodes: 139 112 122 
+DAGGSHIT.SPL, name: null, opcodes: 139 112 122 
+FLIND1.SPL, name: null, opcodes: 139 112 122 
+HALB01.SPL, name: null, opcodes: 139 112 122 
+HAMM01.SPL, name: null, opcodes: 139 112 122 
+KELDORN.SPL, name: Fireshield (Blue), opcodes: 12 
+LEAT23A.SPL, name: Thorns, opcodes: 12 
+MARW201.SPL, name: Daer'Ragh's Mental Agility, opcodes: 189 
+MARW301.SPL, name: Daer'Ragh's Physical Agility, opcodes: 190 15 
+MARW401.SPL, name: Daer'Ragh's Aura Cleansing, opcodes: 188 
+MDK2SUMM.SPL, name: The MDK2 Spell, opcodes: 174 177 
+MISLEAD.SPL, name: Project Image, opcodes: 1 144 8 126 
+NCUT01.SPL, name: Wild Magic Zone, opcodes: 141 215 
+ohcut1hp.SPL, name: null, opcodes: 208 
+OHDETEVL.SPL, name: null, opcodes: 115 
+OHDSW0.SPL, name: null, opcodes: 221 139 
+OHDSW1.SPL, name: null, opcodes: 221 139 309 278 
+OHDSW2.SPL, name: null, opcodes: 206 
+OHDSW3.SPL, name: null, opcodes: 206 
+OHLOST.SPL, name: Find Familiar, opcodes: 172 
+OHMISC90.SPL, name: Find Familiar, opcodes: 44 
+OHWI924.SPL, name: null, opcodes: 141 174 151 
+OHWI925.SPL, name: null, opcodes: 141 174 151 
+PROJIMAG.SPL, name: Project Image, opcodes: 206 8 
+SIMULACR.SPL, name: Project Image, opcodes: 8 
+SPBLUN29.SPL, name: Chain Lightning, opcodes: 12 
+SPBP0001.SPL, name: Stone to Flesh, opcodes: 43 
+SPCL101.SPL, name: Dark Gift, opcodes: 34 35 139 206 33 174 36 142 37 9 131 215 
+SPCL102.SPL, name: Absorb Health, opcodes: 206 146 
+SPCL103.SPL, name: Aura of Despair, opcodes: 0 50 139 278 142 24 73 
+SPCL104.SPL, name: Resist Fear, opcodes: 169 101 23 142 321 296 267 161 106 240 
+SPCL105.SPL, name: Negative Plane Protection, opcodes: 169 101 142 282 267 
+SPCL106.SPL, name: Animate Dead, opcodes: 177 
+SPCL121.SPL, name: Called Shot, opcodes: 174 142 249 
+SPCL122.SPL, name: null, opcodes: 167 286 
+SPCL123.SPL, name: null, opcodes: 54 126 40 45 
+SPCL131.SPL, name: null, opcodes: 166 
+SPCL132.SPL, name: null, opcodes: 142 60 
+SPCL133.SPL, name: null, opcodes: 248 
+SPCL141.SPL, name: null, opcodes: 278 73 
+SPCL142.SPL, name: null, opcodes: 0 
+SPCL143.SPL, name: null, opcodes: 190 
+SPCL144.SPL, name: Kai, opcodes: 250 174 142 
+SPCL151.SPL, name: null, opcodes: 176 
+SPCL152.SPL, name: Barbarian Rage, opcodes: 0 169 101 37 142 282 161 10 46 106 44 23 321 296 267 215 240 
+SPCL153.SPL, name: null, opcodes: 87 86 89 88 
+SPCL154.SPL, name: null, opcodes: 87 86 89 88 
+SPCL211.SPL, name: Lay On Hands, opcodes: 17 50 139 215 
+SPCL212.SPL, name: Detect Evil, opcodes: 141 146 
+SPCL213.SPL, name: Protection From Evil, opcodes: 100 139 174 219 142 9 215 
+SPCL221.SPL, name: null, opcodes: 169 101 173 142 161 106 23 321 296 267 27 177 240 30 
+SPCL222.SPL, name: Remove Fear, opcodes: 50 169 101 141 174 23 142 321 267 161 106 240 
+SPCL231.SPL, name: Dispel Magic, opcodes: 139 81 77 58 177 215 240 
+SPCL232.SPL, name: True Sight, opcodes: 220 221 50 116 141 174 142 146 177 215 
+SPCL232D.SPL, name: True Seeing, opcodes: 220 221 116 177 
+SPCL233.SPL, name: Protection From Evil, 10' Radius, opcodes: 100 139 174 219 142 9 215 
+SPCL233B.SPL, name: null, opcodes: 169 101 142 296 267 
+SPCL234.SPL, name: null, opcodes: 144 
+SPCL235.SPL, name: null, opcodes: 144 
+SPCL236.SPL, name: Sun Soulray, opcodes: 141 215 177 12 
+SPCL237.SPL, name: Greater Sun, opcodes: 84 174 232 142 215 30 
+spcl237d.SPL, name: Greater Sun, opcodes: 12 
+SPCL238.SPL, name: Flaming Fists, opcodes: 141 174 248 142 215 
+SPCL239.SPL, name: Sun Soulbeam, opcodes: 206 146 177 
+SPCL239a.SPL, name: null, opcodes: 139 142 177 215 12 74 
+SPCL241.SPL, name: null, opcodes: 177 
+SPCL242.SPL, name: null, opcodes: 169 101 142 296 267 
+SPCL311.SPL, name: Charm Animal, opcodes: 5 215 
+SPCL321.SPL, name: Enrage, opcodes: 0 169 139 206 101 278 142 161 46 12 106 73 17 18 23 321 296 267 146 215 240 
+SPCL321D.SPL, name: null, opcodes: 0 139 206 54 142 73 
+SPCL322.SPL, name: null, opcodes: 144 
+SPCL331.SPL, name: null, opcodes: 275 59 
+SPCL332.SPL, name: null, opcodes: 263 
+SPCL341.SPL, name: null, opcodes: 275 59 
+SPCL342.SPL, name: Find Familiar, opcodes: 192 
+SPCL351.SPL, name: null, opcodes: 144 
+SPCL411.SPL, name: null, opcodes: 254 55 12 
+SPCL411F.SPL, name: null, opcodes: 55 12 
+SPCL412.SPL, name: Set Snare, opcodes: 252 215 
+SPCL414.SPL, name: Set Special Snare, opcodes: 252 215 
+SPCL415.SPL, name: null, opcodes: 169 101 206 141 175 174 142 40 12 166 85 254 84 87 86 155 185 213 267 177 89 88 
+SPCL417.SPL, name: Special Snare, opcodes: 277 
+SPCL421.SPL, name: null, opcodes: 278 73 
+SPCL422.SPL, name: null, opcodes: 142 25 40 
+SPCL423.SPL, name: Poison Weapon, opcodes: 141 174 248 142 249 321 
+SPCL441.SPL, name: null, opcodes: 0 
+SPCL442.SPL, name: null, opcodes: 263 
+SPCL521.SPL, name: Offensive Spin, opcodes: 1 169 206 101 65 174 142 73 250 54 321 267 126 
+SPCL521D.SPL, name: null, opcodes: 1 206 
+SPCL522.SPL, name: Defensive Spin, opcodes: 0 101 174 65 142 321 126 176 
+SPCL541.SPL, name: null, opcodes: 278 73 
+SPCL542.SPL, name: null, opcodes: 251 
+SPCL542A.SPL, name: null, opcodes: 0 169 101 278 23 321 142 296 267 161 106 73 240 
+SPCL611.SPL, name: Shapeshifts Brown Bear, opcodes: 171 172 144 111 215 135 
+SPCL612.SPL, name: Shapeshifts Wolf, opcodes: 171 172 144 111 215 135 
+SPCL613.SPL, name: Shapeshifts Black Bear, opcodes: 171 172 144 111 215 135 
+SPCL621.SPL, name: Summon Spirit Animal, opcodes: 214 
+SPCL622.SPL, name: Spirit Snake, opcodes: 177 
+SPCL623.SPL, name: Spirit Bear, opcodes: 177 
+SPCL624.SPL, name: Spirit Lion, opcodes: 177 
+SPCL625.SPL, name: Spirit Wolf, opcodes: 177 
+SPCL631.SPL, name: null, opcodes: 171 
+SPCL632.SPL, name: Shapeshifts Spider, opcodes: 171 172 144 111 215 135 
+SPCL633.SPL, name: Shapeshifts Baby Wyvern, opcodes: 171 172 144 111 215 135 
+SPCL634.SPL, name: Shapeshifts Fire Salamander, opcodes: 171 172 144 111 215 135 
+SPCL641.SPL, name: Charm Person or Mammal, opcodes: 174 5 215 177 
+SPCL642.SPL, name: null, opcodes: 10 44 
+SPCL643.SPL, name: Shapeshifts Werewolf, opcodes: 171 172 111 215 135 
+SPCL644.SPL, name: Shapeshifts Greater Werewolf, opcodes: 171 172 111 215 135 
+SPCL6XX.SPL, name: Summon Spirit Animal, opcodes: 41 215 
+SPCL721.SPL, name: Storm Shield, opcodes: 174 142 8 9 85 50 84 156 83 215 29 28 30 
+SPCL722.SPL, name: Lightning Bolt, opcodes: 12 
+SPCL731.SPL, name: Seeking Sword, opcodes: 174 111 215 
+SPCL732.SPL, name: True Sight, opcodes: 220 221 50 116 141 174 142 146 177 215 
+SPCL741.SPL, name: Boon of Lathander, opcodes: 34 1 35 169 101 33 141 174 36 142 37 282 73 50 54 267 215 
+SPCL741D.SPL, name: null, opcodes: 1 206 
+SPCL742.SPL, name: Hold Undead, opcodes: 185 177 
+SPCL751.SPL, name: null, opcodes: 251 
+SPCL751A.SPL, name: null, opcodes: 139 39 128 40 215 
+SPCL801.SPL, name: null, opcodes: 248 142 
+SPCL811.SPL, name: Stunning Blow, opcodes: 141 174 248 142 
+SPCL812.SPL, name: null, opcodes: 176 
+SPCL813.SPL, name: null, opcodes: 176 
+SPCL814.SPL, name: null, opcodes: 169 101 206 267 
+SPCL815.SPL, name: Lay On Hands, opcodes: 17 50 139 215 
+SPCL816.SPL, name: null, opcodes: 190 
+SPCL817.SPL, name: null, opcodes: 169 101 142 296 267 
+SPCL818.SPL, name: null, opcodes: 169 101 173 142 267 
+SPCL819.SPL, name: null, opcodes: 166 
+SPCL820.SPL, name: Quivering Palm, opcodes: 141 174 248 142 
+SPCL821.SPL, name: null, opcodes: 120 
+SPCL822.SPL, name: null, opcodes: 0 
+SPDD01.SPL, name: null, opcodes: 0 
+SPDD02.SPL, name: null, opcodes: 30 
+SPDD03.SPL, name: Breath Weapon, opcodes: 174 215 12 165 
+SPDD04.SPL, name: null, opcodes: 10 
+SPDD05.SPL, name: null, opcodes: 0 
+SPDD06.SPL, name: null, opcodes: 0 10 
+SPDD07.SPL, name: null, opcodes: 0 
+SPDM101.SPL, name: Blindness, opcodes: 50 139 174 142 215 74 
+SPDM102.SPL, name: Blur, opcodes: 34 0 35 139 206 33 174 65 36 37 
+SPDM103.SPL, name: Ghoul Touch, opcodes: 111 215 
+SPDM104.SPL, name: null, opcodes: 142 276 
+SPDM105.SPL, name: Frozen Fist, opcodes: 248 215 
+SPDM106.SPL, name: Mirror Image, opcodes: 119 139 174 
+SPDM107.SPL, name: null, opcodes: 0 
+SPDN01A.SPL, name: null, opcodes: 17 50 139 141 215 12 
+SPDR101.SPL, name: Chromatic Orb, opcodes: 0 139 141 174 142 12 74 44 15 45 134 55 54 
+SPDR201.SPL, name: Web, opcodes: 139 174 157 142 109 
+SPDR301.SPL, name: Lightning Bolt, opcodes: 12 
+SPDR401.SPL, name: Improved Invisibility, opcodes: 139 141 174 20 
+SPDR501.SPL, name: Chaos, opcodes: 50 139 174 142 128 215 
+SPDR601.SPL, name: Chain Lightning, opcodes: 12 
+SPDWD01.SPL, name: null, opcodes: 87 86 89 88 
+SPDWD02.SPL, name: Defensive Stance, opcodes: 34 35 33 36 37 142 87 86 321 176 215 89 88 
+SPER01.SPL, name: null, opcodes: 139 112 122 
+SPIN001.SPL, name: Druid Polymorph, opcodes: 135 
+SPIN101.SPL, name: Cure Light Wounds, opcodes: 17 50 139 215 164 
+SPIN102.SPL, name: Slow Poison, opcodes: 50 141 174 11 164 
+SPIN103.SPL, name: Draw Upon Holy Might, opcodes: 139 174 142 8 132 
+SPIN104.SPL, name: Larloch's Minor Drain, opcodes: 206 146 
+SPIN104A.SPL, name: null, opcodes: 18 141 174 12 
+SPIN105.SPL, name: Horror, opcodes: 50 139 174 142 24 215 106 
+SPIN106.SPL, name: Vampiric Touch, opcodes: 206 146 
+SPIN106A.SPL, name: null, opcodes: 141 174 146 215 12 
+SPIN106B.SPL, name: null, opcodes: 206 18 215 
+SPIN107.SPL, name: Shapeshifts Brown Bear, opcodes: 171 174 172 144 111 215 135 
+SPIN108.SPL, name: Charm Animal, opcodes: 5 215 
+SPIN109.SPL, name: Lay On Hands, opcodes: 17 50 139 141 
+SPIN110.SPL, name: Shapeshifts Wolf, opcodes: 171 174 172 144 111 215 135 
+SPIN111.SPL, name: Shapeshifts Black Bear, opcodes: 171 174 172 144 111 215 135 
+SPIN112.SPL, name: Dispel Magic, opcodes: 139 141 81 174 58 77 177 215 240 
+SPIN113.SPL, name: Spiritual Hammer, opcodes: 111 
+SPIN114.SPL, name: Summon Dread Wolf, opcodes: 174 67 
+SPIN115.SPL, name: Summon Ghast, opcodes: 174 67 
+SPIN116.SPL, name: Create Poisoned Arrows, opcodes: 174 122 
+SPIN117.SPL, name: Berserk, opcodes: 139 169 101 3 142 161 12 106 44 15 17 18 23 321 296 267 240 
+SPIN118.SPL, name: Invisibility, opcodes: 139 20 
+SPIN119.SPL, name: Charm Person, opcodes: 5 177 
+SPIN120.SPL, name: Detect Evil, opcodes: 141 146 
+SPIN121.SPL, name: Protection From Evil, opcodes: 0 34 35 139 169 101 33 141 174 36 142 37 9 296 267 
+SPIN122.SPL, name: Shapeshifts Natural Form, opcodes: 279 112 172 111 215 135 
+SPIN123.SPL, name: Shapeshifts Natural Form, opcodes: 279 112 172 111 215 135 
+SPIN124.SPL, name: Shapeshifts Natural Form, opcodes: 141 279 174 112 172 111 215 135 
+SPIN125.SPL, name: Shapeshifts Spider, opcodes: 171 174 172 144 111 215 135 
+SPIN126.SPL, name: Shapeshifts Baby Wyvern, opcodes: 171 174 172 144 111 215 135 
+SPIN127.SPL, name: Shapeshifts Fire Salamander, opcodes: 171 174 172 144 111 215 135 
+SPIN150.SPL, name: Shapeshifts Natural Form, opcodes: 279 141 174 172 112 135 
+SPIN151.SPL, name: Shapeshifts Natural Form, opcodes: 171 279 172 112 215 135 
+SPIN152.SPL, name: Shapechange: Mind Flayer, opcodes: 171 112 144 111 215 135 
+SPIN153.SPL, name: Shapechange: Iron Golem, opcodes: 171 141 172 112 144 111 215 135 
+SPIN154.SPL, name: Shapechange: Giant Troll, opcodes: 171 172 112 144 111 215 135 
+SPIN155.SPL, name: Shapechange: Greater Wolfwere, opcodes: 171 172 112 144 111 215 135 
+SPIN156.SPL, name: Shapechange: Fire Elemental, opcodes: 171 172 112 144 111 215 135 
+SPIN157.SPL, name: Shapechange: Earth Elemental, opcodes: 171 172 112 144 111 215 135 
+SPIN160.SPL, name: Breathe Fireball, opcodes: 215 12 
+SPIN575.SPL, name: Vortex Web, opcodes: 0 141 174 54 142 321 40 
+SPIN649.SPL, name: Pocket Plane, opcodes: 174 298 215 
+SPIN656.SPL, name: null, opcodes: 68 141 39 174 215 12 
+SPIN657.SPL, name: , opcodes: 
+SPIN658.SPL, name: null, opcodes: 235 39 174 
+SPIN659.SPL, name: null, opcodes: 151 
+SPIN660.SPL, name: Teleport, opcodes: 68 141 174 215 
+SPIN661.SPL, name: null, opcodes: 71 
+SPIN662.SPL, name: Dispel Magic, opcodes: 71 141 174 215 
+SPIN663.SPL, name: Flame Blade, opcodes: 111 
+SPIN664.SPL, name: null, opcodes: 34 35 33 21 174 36 37 
+SPIN665.SPL, name: null, opcodes: 174 
+SPIN666.SPL, name: Level Drain, opcodes: 216 174 
+SPIN667.SPL, name: End Slayer Change, opcodes: 141 174 172 112 265 31 135 
+SPIN668.SPL, name: null, opcodes: 295 
+SPIN669.SPL, name: null, opcodes: 295 
+SPIN670.SPL, name: null, opcodes: 174 151 
+SPIN671.SPL, name: Teleport, opcodes: 68 174 215 
+SPIN672.SPL, name: null, opcodes: 174 20 
+SPIN673.SPL, name: Cloudkill, opcodes: 55 174 215 12 
+SPIN674.SPL, name: Chaos, opcodes: 50 139 174 142 128 215 
+SPIN675.SPL, name: Wandering Horror, opcodes: 50 174 142 24 264 215 106 
+SPIN676.SPL, name: Invoke Courage, opcodes: 34 35 169 33 101 141 174 36 37 142 161 106 284 50 23 321 267 240 
+SPIN677.SPL, name: null, opcodes: 174 177 
+SPIN678.SPL, name: null, opcodes: 103 49 57 
+SPIN679.SPL, name: Heal, opcodes: 17 50 139 81 77 79 11 240 75 164 
+SPIN680.SPL, name: Deathsong, opcodes: 50 139 174 142 24 215 106 
+SPIN681.SPL, name: Wail of the Banshee, opcodes: 141 55 174 
+SPIN682.SPL, name: Lower Fire Resistance, opcodes: 141 174 30 
+SPIN683.SPL, name: Web Tangle, opcodes: 174 157 142 109 
+SPIN684.SPL, name: True Sight, opcodes: 220 50 141 174 142 177 
+SPIN685.SPL, name: Magic Missile, opcodes: 141 12 
+SPIN686.SPL, name: Protection From Magical Weapons, opcodes: 50 139 206 174 142 120 
+SPIN687.SPL, name: Create Shadows, opcodes: 139 141 174 20 
+SPIN688.SPL, name: Plant Growth, opcodes: 0 154 174 126 
+SPIN689.SPL, name: Summon Insects, opcodes: 272 141 142 60 
+SPIN690.SPL, name: null, opcodes: 174 
+SPIN691.SPL, name: Black Dragon Breath, opcodes: 174 215 12 
+SPIN692.SPL, name: Silence, 15' Radius, opcodes: 139 38 174 142 
+SPIN693.SPL, name: null, opcodes: 174 12 
+SPIN694.SPL, name: Stoneskin, opcodes: 174 218 
+SPIN695.SPL, name: Wing Buffet, opcodes: 273 235 39 174 12 
+SPIN696.SPL, name: Moon Dog Sight, opcodes: 220 50 115 141 215 150 
+SPIN697.SPL, name: Mirror Image, opcodes: 119 139 174 
+SPIN698.SPL, name: Improved Invisibility, opcodes: 69 139 141 174 20 
+SPIN699.SPL, name: Healing Lick, opcodes: 17 50 81 79 215 11 240 75 
+SPIN700.SPL, name: How COULD I have thought otherwise? Of COURSE you are., opcodes: 17 18 
+SPIN701.SPL, name: Fireball, opcodes: 265 12 
+SPIN702.SPL, name: Spawn Demons, opcodes: 174 215 
+SPIN703.SPL, name: Dispel Magic, opcodes: 139 81 174 77 58 215 177 240 
+SPIN704.SPL, name: Confusion, opcodes: 139 174 142 128 215 
+SPIN706.SPL, name: null, opcodes: 174 215 12 
+SPIN707.SPL, name: null, opcodes: 142 25 12 
+SPIN708.SPL, name: null, opcodes: 185 174 215 12 
+SPIN709.SPL, name: null, opcodes: 215 12 
+SPIN710.SPL, name: Spell Deflection, opcodes: 50 139 291 141 201 174 142 
+SPIN711.SPL, name: Heal, opcodes: 17 81 77 79 11 240 75 164 
+SPIN712.SPL, name: null, opcodes: 1 139 81 58 77 177 215 240 60 
+SPIN713.SPL, name: Ice Dust, opcodes: 141 30 
+SPIN714.SPL, name: Lightning Bolt, opcodes: 12 
+SPIN715.SPL, name: null, opcodes: 174 67 12 
+SPIN716.SPL, name: null, opcodes: 31 
+SPIN717.SPL, name: Slayer Change, opcodes: 174 111 215 135 
+SPIN718.SPL, name: End Slayer Change, opcodes: 141 174 172 112 93 265 215 31 135 
+SPIN719.SPL, name: Meteor Swarm, opcodes: 12 
+SPIN720.SPL, name: null, opcodes: 215 12 
+SPIN721.SPL, name: null, opcodes: 215 12 
+SPIN722.SPL, name: null, opcodes: 290 
+SPIN723.SPL, name: Dragon Rain, opcodes: 141 55 12 
+SPIN724.SPL, name: null, opcodes: 174 215 
+SPIN725.SPL, name: null, opcodes: 174 53 
+SPIN726.SPL, name: null, opcodes: 215 12 
+SPIN727.SPL, name: Psionic Blast, opcodes: 142 215 45 
+SPIN728.SPL, name: null, opcodes: 174 151 
+SPIN729.SPL, name: null, opcodes: 53 
+SPIN730.SPL, name: Summon Fungus, opcodes: 174 177 
+SPIN731.SPL, name: Wish, opcodes: 215 60 
+SPIN732.SPL, name: Wish, opcodes: 244 215 
+SPIN733.SPL, name: Wish, opcodes: 25 215 
+SPIN734.SPL, name: Wish, opcodes: 17 81 79 11 215 240 164 75 
+SPIN735.SPL, name: Wish, opcodes: 177 
+SPIN736.SPL, name: Wish, opcodes: 146 
+SPIN737.SPL, name: Wish, opcodes: 261 215 
+SPIN738.SPL, name: Wish, opcodes: 146 
+SPIN739.SPL, name: null, opcodes: 151 
+SPIN740.SPL, name: null, opcodes: 151 
+SPIN741.SPL, name: null, opcodes: 151 
+SPIN742.SPL, name: null, opcodes: 151 
+SPIN743.SPL, name: null, opcodes: 151 
+SPIN744.SPL, name: null, opcodes: 151 
+SPIN745.SPL, name: null, opcodes: 174 215 107 
+SPIN746.SPL, name: null, opcodes: 17 81 11 79 240 
+SPIN747.SPL, name: null, opcodes: 0 174 108 57 215 
+SPIN748.SPL, name: null, opcodes: 174 215 166 
+SPIN749.SPL, name: null, opcodes: 174 108 57 215 44 
+SPIN750.SPL, name: null, opcodes: 49 174 6 215 
+SPIN751.SPL, name: null, opcodes: 174 108 57 215 104 
+SPIN752.SPL, name: null, opcodes: 174 215 29 28 30 
+SPIN753.SPL, name: null, opcodes: 174 108 57 10 215 
+SPIN754.SPL, name: null, opcodes: 174 215 120 
+SPIN755.SPL, name: null, opcodes: 18 174 108 57 215 
+SPIN756.SPL, name: null, opcodes: 34 35 33 174 36 37 215 
+SPIN757.SPL, name: Word Of Power, opcodes: 174 215 265 269 
+SPIN758.SPL, name: Word Of Power, opcodes: 174 215 265 269 
+SPIN759.SPL, name: Charisma Increase, opcodes: 174 6 215 
+SPIN760.SPL, name: Constitution Increase, opcodes: 174 10 215 
+SPIN761.SPL, name: Dexterity Increase, opcodes: 174 215 15 
+SPIN762.SPL, name: Wisdom Increase, opcodes: 49 174 215 
+SPIN763.SPL, name: Intelligence Increase, opcodes: 19 174 215 
+SPIN764.SPL, name: Strength Increase, opcodes: 174 215 44 
+SPIN765.SPL, name: null, opcodes: 174 104 
+SPIN766.SPL, name: null, opcodes: 174 15 
+SPIN767.SPL, name: null, opcodes: 18 174 
+SPIN768.SPL, name: null, opcodes: 139 81 58 77 177 215 240 
+SPIN769.SPL, name: null, opcodes: 185 
+SPIN770.SPL, name: null, opcodes: 174 215 13 
+SPIN771.SPL, name: null, opcodes: 174 215 12 
+SPIN772.SPL, name: null, opcodes: 174 54 142 24 
+SPIN773.SPL, name: Lay On Hands, opcodes: 17 174 215 
+SPIN774.SPL, name: Maze, opcodes: 141 174 213 
+SPIN775.SPL, name: null, opcodes: 39 174 215 
+SPIN776.SPL, name: null, opcodes: 218 109 287 166 
+SPIN777.SPL, name: null, opcodes: 174 
+SPIN778.SPL, name: Wild Magic Zone, opcodes: 174 142 281 280 
+SPIN779.SPL, name: Anti-Magic, opcodes: 139 141 81 174 142 58 77 177 215 240 60 
+SPIN780.SPL, name: null, opcodes: 174 215 13 
+SPIN781.SPL, name: null, opcodes: 174 215 13 269 
+SPIN782.SPL, name: null, opcodes: 238 174 215 
+SPIN783.SPL, name: Slayer Change, opcodes: 169 101 141 174 142 296 111 267 215 208 135 
+SPIN784.SPL, name: Snake Gaze, opcodes: 141 174 142 78 
+SPIN785.SPL, name: null, opcodes: 5 215 
+SPIN786.SPL, name: Banishment, opcodes: 141 174 215 
+SPIN787.SPL, name: null, opcodes: 12 
+SPIN788.SPL, name: Imprisonment, opcodes: 141 174 211 
+SPIN789.SPL, name: Demilich Howl, opcodes: 141 55 174 
+SPIN790.SPL, name: , opcodes: 
+SPIN791.SPL, name: null, opcodes: 151 
+SPIN792.SPL, name: , opcodes: 174 12 
+SPIN793.SPL, name: null, opcodes: 238 174 215 
+SPIN794.SPL, name: null, opcodes: 174 215 
+SPIN795.SPL, name: null, opcodes: 174 215 269 
+SPIN796.SPL, name: null, opcodes: 174 215 
+SPIN797.SPL, name: null, opcodes: 174 215 
+SPIN798.SPL, name: null, opcodes: 215 151 
+SPIN799.SPL, name: Flame Strike, opcodes: 174 215 12 
+SPIN800.SPL, name: null, opcodes: 215 
+SPIN801.SPL, name: null, opcodes: 106 
+SPIN802.SPL, name: Pyschic Drain, opcodes: 39 174 215 
+SPIN803.SPL, name: null, opcodes: 174 215 151 
+SPIN804.SPL, name: Pyschic Drain, opcodes: 174 215 13 
+SPIN805.SPL, name: null, opcodes: 220 238 141 174 
+SPIN806.SPL, name: null, opcodes: 174 215 271 151 
+SPIN807.SPL, name: Slayer Fear, opcodes: 142 24 12 
+SPIN808.SPL, name: null, opcodes: 49 19 174 6 142 10 215 44 15 
+SPIN809.SPL, name: null, opcodes: 174 215 151 
+SPIN810.SPL, name: Slayer Change, opcodes: 171 139 174 215 
+SPIN811.SPL, name: null, opcodes: 174 215 151 
+SPIN812.SPL, name: null, opcodes: 174 215 151 
+SPIN813.SPL, name: Death Curse, opcodes: 141 174 13 
+SPIN814.SPL, name: null, opcodes: 174 215 151 
+SPIN815.SPL, name: null, opcodes: 174 215 151 
+SPIN816.SPL, name: null, opcodes: 174 215 151 
+SPIN817.SPL, name: null, opcodes: 40 12 44 15 
+SPIN818.SPL, name: null, opcodes: 40 44 
+SPIN819.SPL, name: Lava burst, opcodes: 141 174 12 269 
+SPIN820.SPL, name: Wail of the Banshee, opcodes: 141 55 174 
+SPIN821.SPL, name: null, opcodes: 
+SPIN822.SPL, name: Slayer Change, opcodes: 174 215 265 
+SPIN823.SPL, name: Slayer Change, opcodes: 171 139 169 206 101 174 172 142 111 161 12 106 135 23 321 296 267 215 240 
+SPIN824.SPL, name: Death Curse, opcodes: 141 174 
+SPIN825.SPL, name: Drow Transformation, opcodes: 141 174 215 177 
+SPIN826.SPL, name: Strength, opcodes: 50 139 54 174 142 97 215 44 
+SPIN827.SPL, name: Lay On Hands, opcodes: 17 50 139 141 215 
+SPIN828.SPL, name: Haste, opcodes: 16 139 141 174 142 93 
+SPIN829.SPL, name: Create Bruiser Mates, opcodes: 174 122 
+SPIN830.SPL, name: null, opcodes: 206 141 174 135 
+SPIN831.SPL, name: null, opcodes: 141 174 135 
+SPIN832.SPL, name: Silver Dragon Paralization, opcodes: 174 142 215 45 
+SPIN833.SPL, name: Silver Dragon Cone of Cold, opcodes: 174 215 12 
+SPIN834.SPL, name: Psionic Blast, opcodes: 142 215 12 45 
+SPIN835.SPL, name: null, opcodes: 
+SPIN836.SPL, name: Wish, opcodes: 141 55 174 
+SPIN837.SPL, name: Wish, opcodes: 231 
+SPIN838.SPL, name: Loses all Bhaal powers, opcodes: 172 
+SPIN839.SPL, name: Confusion, opcodes: 139 174 142 128 215 
+SPIN840.SPL, name: null, opcodes: 174 177 
+SPIN841.SPL, name: null, opcodes: 174 177 
+SPIN842.SPL, name: null, opcodes: 174 177 
+SPIN843.SPL, name: null, opcodes: 174 177 
+SPIN844.SPL, name: null, opcodes: 174 177 
+SPIN845.SPL, name: null, opcodes: 174 177 
+SPIN846.SPL, name: null, opcodes: 168 215 
+SPIN847.SPL, name: null, opcodes: 151 
+SPIN848.SPL, name: Level Drain, opcodes: 139 264 
+SPIN849.SPL, name: null, opcodes: 151 
+SPIN850.SPL, name: null, opcodes: 151 
+SPIN851.SPL, name: null, opcodes: 141 151 
+SPIN852.SPL, name: Slayer Change, opcodes: 169 101 174 142 172 296 111 247 267 215 208 135 
+SPIN853.SPL, name: Otiluke's Resilient Sphere, opcodes: 169 101 206 174 142 166 85 84 87 155 185 86 267 27 89 29 88 28 30 
+SPIN854.SPL, name: null, opcodes: 235 174 142 282 
+SPIN855.SPL, name: null, opcodes: 174 177 
+SPIN856.SPL, name: null, opcodes: 174 177 
+SPIN857.SPL, name: null, opcodes: 174 177 
+SPIN858.SPL, name: null, opcodes: 19 174 215 
+SPIN859.SPL, name: null, opcodes: 49 174 215 
+SPIN860.SPL, name: null, opcodes: 174 215 15 
+SPIN861.SPL, name: null, opcodes: 174 10 215 
+SPIN862.SPL, name: null, opcodes: 162 
+SPIN863.SPL, name: null, opcodes: 109 
+SPIN864.SPL, name: Rapture of the Father, opcodes: 141 55 174 12 
+SPIN865.SPL, name: Flesh to Stone, opcodes: 174 215 134 
+SPIN866.SPL, name: Dispel Magic, opcodes: 139 81 174 77 58 215 177 240 
+SPIN867.SPL, name: null, opcodes: 
+SPIN868.SPL, name: null, opcodes: 141 174 215 135 
+SPIN869.SPL, name: null, opcodes: 141 174 82 111 215 208 135 
+SPIN870.SPL, name: null, opcodes: 174 177 
+SPIN871.SPL, name: End Spell, opcodes: 141 123 13 
+SPIN872.SPL, name: null, opcodes: 169 101 23 142 321 296 267 161 106 240 
+SPIN873.SPL, name: null, opcodes: 270 
+SPIN874.SPL, name: null, opcodes: 141 174 215 151 
+SPIN875.SPL, name: null, opcodes: 141 151 
+SPIN876.SPL, name: null, opcodes: 141 151 
+SPIN877.SPL, name: Explosion, opcodes: 12 13 
+SPIN878.SPL, name: Level Drain, opcodes: 139 141 216 174 142 74 
+SPIN879.SPL, name: null, opcodes: 139 174 151 
+SPIN880.SPL, name: null, opcodes: 174 177 
+SPIN881.SPL, name: null, opcodes: 141 151 
+SPIN882.SPL, name: Vampire Fear, opcodes: 174 54 142 24 
+SPIN883.SPL, name: Domination, opcodes: 174 5 215 177 
+SPIN884.SPL, name: Change Chicken, opcodes: 141 174 53 
+SPIN885.SPL, name: Kamikaze Explosion, opcodes: 12 
+SPIN886.SPL, name: , opcodes: 
+SPIN887.SPL, name: null, opcodes: 215 
+SPIN888.SPL, name: Flesh to Stone, opcodes: 215 13 
+SPIN889.SPL, name: Flesh to Stone, opcodes: 174 134 
+SPIN890.SPL, name: Demon Fear, opcodes: 174 142 24 
+SPIN891.SPL, name: Moon Dog Howl, opcodes: 100 169 101 174 142 9 161 106 50 23 219 321 267 215 177 240 
+SPIN892.SPL, name: Sleep, opcodes: 39 
+SPIN893.SPL, name: Shadow Dragon Breath, opcodes: 139 141 216 174 142 215 74 
+SPIN894.SPL, name: Red Dragon Breath, opcodes: 
+SPIN895.SPL, name: Dragon Fear, opcodes: 174 54 142 24 
+SPIN896.SPL, name: Repulse X, opcodes: 235 
+SPIN897.SPL, name: Gas Spore, opcodes: 12 
+SPIN898.SPL, name: Archer Protection, opcodes: 0 
+SPIN899.SPL, name: null, opcodes: 
+SPIN900.SPL, name: Zombie Change, opcodes: 50 174 151 
+SPIN901.SPL, name: null, opcodes: 174 142 10 
+SPIN902.SPL, name: null, opcodes: 174 215 151 
+SPIN903.SPL, name: null, opcodes: 174 215 151 
+SPIN904.SPL, name: null, opcodes: 174 215 151 
+SPIN905.SPL, name: null, opcodes: 
+SPIN906.SPL, name: null, opcodes: 169 101 23 142 321 296 267 161 106 240 
+SPIN907.SPL, name: , opcodes: 12 
+SPIN908.SPL, name: null, opcodes: 12 
+SPIN909.SPL, name: Ego Whip, opcodes: 139 142 215 45 
+SPIN910.SPL, name: Domination, opcodes: 174 5 215 
+SPIN911.SPL, name: Ballistic Attack, opcodes: 12 
+SPIN912.SPL, name: Detonate, opcodes: 174 12 
+SPIN913.SPL, name: Mimic Acid, opcodes: 174 215 12 
+SPIN914.SPL, name: Mimic Glue, opcodes: 141 158 142 109 
+SPIN915.SPL, name: null, opcodes: 174 67 151 
+SPIN916.SPL, name: Nether Spell, opcodes: 71 141 174 215 
+SPIN917.SPL, name: Mane Gas, opcodes: 174 12 
+SPIN918.SPL, name: Polymorph Other, opcodes: 174 67 
+SPIN919.SPL, name: null, opcodes: 19 18 174 142 10 12 44 15 
+SPIN920.SPL, name: Minor Spell Turning, opcodes: 291 174 200 
+SPIN921.SPL, name: Deathsong, opcodes: 204 24 73 
+SPIN922.SPL, name: null, opcodes: 151 
+SPIN923.SPL, name: Limited Wish, opcodes: 17 50 139 215 164 
+SPIN924.SPL, name: Partial cover, opcodes: 0 
+SPIN925.SPL, name: Full cover, opcodes: 0 
+SPIN926.SPL, name: Water Jet, opcodes: 139 174 142 12 45 
+SPIN927.SPL, name: Boiling Rain Storm, opcodes: 174 142 12 45 
+SPIN929.SPL, name: Mist Ball, opcodes: 139 141 174 142 12 74 
+SPIN930.SPL, name: Magma Ball, opcodes: 12 
+SPIN931.SPL, name: Sooty Ball, opcodes: 139 141 174 142 12 74 
+SPIN932.SPL, name: Lightning Bolt, opcodes: 12 
+SPIN933.SPL, name: Lightning Bolt, opcodes: 12 
+SPIN934.SPL, name: Salt Crystals, opcodes: 174 142 12 45 
+SPIN935.SPL, name: Glass Dust, opcodes: 141 174 177 
+SPIN936.SPL, name: Ice Shard, opcodes: 174 12 
+SPIN937.SPL, name: Color Spray, opcodes: 141 174 39 142 7 165 
+SPIN938.SPL, name: Flame Fan, opcodes: 12 
+SPIN939.SPL, name: Flame Jet, opcodes: 12 
+SPIN940.SPL, name: Stinking Cloud, opcodes: 174 39 142 
+SPIN941.SPL, name: Stone Spit, opcodes: 141 174 12 
+SPIN942.SPL, name: Breathes Grit, opcodes: 174 12 165 
+SPIN943.SPL, name: Blur, opcodes: 34 0 35 139 33 174 65 36 37 321 
+SPIN944.SPL, name: Power Word, Stun, opcodes: 141 174 142 45 
+SPIN945.SPL, name: Spellstrike, opcodes: 141 174 
+SPIN946.SPL, name: Breach, opcodes: 141 174 
+SPIN947.SPL, name: Mind Fog, opcodes: 141 174 37 
+SPIN948.SPL, name: Lower Resistance, opcodes: 139 141 174 
+SPIN949.SPL, name: Ruby Ray Of Reversal, opcodes: 141 174 
+SPIN950.SPL, name: Flesh to Stone, opcodes: 139 174 215 134 
+SPIN951.SPL, name: Power Word, Kill, opcodes: 174 13 
+SPIN952.SPL, name: Phantasmal Killer, opcodes: 170 141 174 13 
+SPIN953.SPL, name: Imprisonment, opcodes: 139 174 13 
+SPIN954.SPL, name: Teleport, opcodes: 
+SPIN955.SPL, name: null, opcodes: 151 
+SPIN956.SPL, name: Hell Hound Flame Breath, opcodes: 12 165 
+SPIN957.SPL, name: null, opcodes: 54 174 142 
+SPIN958.SPL, name: Cure Serious Wounds, opcodes: 17 50 139 215 164 
+SPIN959.SPL, name: Psionic Blast, opcodes: 142 215 45 
+SPIN960.SPL, name: Paralyzation Ray, opcodes: 174 109 
+SPIN961.SPL, name: Finger of Death, opcodes: 55 174 12 
+SPIN962.SPL, name: Magic Missile, opcodes: 141 12 
+SPIN963.SPL, name: null, opcodes: 215 151 
+SPIN964.SPL, name: null, opcodes: 174 215 151 
+SPIN965.SPL, name: null, opcodes: 17 
+SPIN966.SPL, name: null, opcodes: 39 177 
+SPIN967.SPL, name: null, opcodes: 151 
+SPIN968.SPL, name: null, opcodes: 151 
+SPIN969.SPL, name: null, opcodes: 151 
+SPIN970.SPL, name: null, opcodes: 174 215 151 
+SPIN971.SPL, name: null, opcodes: 174 215 151 
+SPIN972.SPL, name: null, opcodes: 174 215 151 
+SPIN973.SPL, name: Air Elemental Whirlwind, opcodes: 174 12 13 
+SPIN974.SPL, name: Psionic Blast, opcodes: 142 215 45 
+SPIN975.SPL, name: Psionic Domination, opcodes: 174 5 215 
+SPIN976.SPL, name: Confusion, opcodes: 139 174 142 128 215 
+SPIN977.SPL, name: Golem Slow, opcodes: 0 141 174 54 321 40 
+SPIN978.SPL, name: Golem Haste, opcodes: 16 139 141 174 142 
+SPIN979.SPL, name: Gas Cloud, opcodes: 142 25 
+SPIN980.SPL, name: Charm Person, opcodes: 50 141 174 5 215 177 
+SPIN981.SPL, name: Fear, opcodes: 139 141 174 142 24 
+SPIN982.SPL, name: Disintegrate, opcodes: 238 141 174 
+SPIN983.SPL, name: Slow, opcodes: 0 139 141 174 54 321 40 
+SPIN984.SPL, name: Flesh to Stone, opcodes: 174 134 
+SPIN985.SPL, name: Domination, opcodes: 141 174 5 215 177 
+SPIN986.SPL, name: Cause Serious Wounds, opcodes: 50 141 174 12 
+SPIN987.SPL, name: Agannazar's Scorcher, opcodes: 12 165 
+SPIN988.SPL, name: Hold Person, opcodes: 50 141 175 174 177 
+SPIN989.SPL, name: Lightning Bolt, opcodes: 12 
+SPIN990.SPL, name: Paralyze, opcodes: 141 175 174 
+SPIN991.SPL, name: Death Ray, opcodes: 174 13 
+SPIN992.SPL, name: Anti-Magic Ray, opcodes: 139 141 81 58 77 177 215 240 60 
+SPIN994.SPL, name: null, opcodes: 174 12 
+SPIN995.SPL, name: null, opcodes: 141 151 
+SPIN996.SPL, name: Death Gaze, opcodes: 50 175 174 142 151 
+SPIN997.SPL, name: Vampiric Touch, opcodes: 206 146 
+SPIN997A.SPL, name: null, opcodes: 141 174 146 12 
+SPIN997B.SPL, name: null, opcodes: 18 
+SPIN998.SPL, name: Silence, 15' Radius, opcodes: 139 141 38 174 142 
+SPIN999.SPL, name: Paralyze, opcodes: 50 141 175 174 
+SPJA01.SPL, name: Harper's Call, opcodes: 32 172 215 12 
+SPPR101.SPL, name: Bless, opcodes: 139 174 142 215 130 
+SPPR102.SPL, name: Command, opcodes: 174 39 142 215 177 
+SPPR103.SPL, name: Cure Light Wounds, opcodes: 17 50 139 215 164 
+SPPR104.SPL, name: Detect Evil, opcodes: 141 146 
+SPPR105.SPL, name: Entangle, opcodes: 0 154 174 142 126 
+SPPR106.SPL, name: Magical Stone, opcodes: 141 174 12 
+SPPR107.SPL, name: Protection From Evil, opcodes: 100 139 174 219 142 9 215 
+SPPR108.SPL, name: Remove Fear, opcodes: 50 169 101 141 174 23 142 321 267 161 106 240 
+SPPR109.SPL, name: Sanctuary, opcodes: 153 174 
+SPPR110.SPL, name: Shillelagh, opcodes: 111 215 
+SPPR111.SPL, name: Armor of Faith, opcodes: 174 142 85 84 50 87 86 321 27 215 89 29 28 88 31 30 
+SPPR113.SPL, name: Doom, opcodes: 34 50 35 139 33 141 174 54 36 142 37 321 
+SPPR201.SPL, name: Aid, opcodes: 139 141 174 8 129 215 
+SPPR202.SPL, name: Barkskin, opcodes: 34 0 35 139 33 141 174 36 142 7 
+SPPR203.SPL, name: Chant, opcodes: 146 
+SPPR203D.SPL, name: null, opcodes: 34 35 139 33 174 36 142 37 321 9 131 215 
+SPPR203E.SPL, name: null, opcodes: 34 137 35 50 33 36 37 321 
+SPPR204.SPL, name: Charm Person or Mammal, opcodes: 174 5 215 177 
+SPPR205.SPL, name: Find Traps, opcodes: 50 141 174 146 150 
+SPPR205D.SPL, name: Find Traps, opcodes: 150 
+SPPR206.SPL, name: Flame Blade, opcodes: 111 215 
+SPPR207.SPL, name: Goodberry, opcodes: 141 174 122 
+SPPR208.SPL, name: Hold Person, opcodes: 175 174 177 
+SPPR209.SPL, name: Know Alignment, opcodes: 139 141 115 
+SPPR210.SPL, name: Resist Fire and Cold, opcodes: 85 84 50 139 174 142 321 215 28 30 
+SPPR211.SPL, name: Silence, 15' Radius, opcodes: 139 38 174 142 215 
+SPPR212.SPL, name: Slow Poison, opcodes: 50 141 174 11 164 
+SPPR213.SPL, name: Spiritual Hammer, opcodes: 111 215 
+SPPR214.SPL, name: Draw Upon Holy Might, opcodes: 139 174 142 8 132 
+SPPR301.SPL, name: Animate Dead, opcodes: 177 
+SPPR302.SPL, name: Call Lightning, opcodes: 12 
+SPPR303.SPL, name: Dispel Magic, opcodes: 139 81 77 58 215 177 240 
+SPPR304.SPL, name: Glyph of Warding, opcodes: 12 
+SPPR305.SPL, name: Hold Animal, opcodes: 175 174 177 
+SPPR306.SPL, name: Protection From Fire, opcodes: 50 84 139 174 142 321 215 30 
+SPPR307.SPL, name: Remove Curse, opcodes: 50 139 215 26 
+SPPR308.SPL, name: Remove Paralysis, opcodes: 50 163 162 215 46 240 
+SPPR309.SPL, name: Invisibility Purge, opcodes: 50 139 116 141 215 
+SPPR310.SPL, name: Miscast Magic, opcodes: 141 174 142 9 60 
+SPPR311.SPL, name: Rigid Thinking, opcodes: 50 139 141 174 142 128 
+SPPR312.SPL, name: Strength of One, opcodes: 50 139 174 142 97 215 44 
+SPPR313.SPL, name: Holy Smite, opcodes: 177 
+SPPR314.SPL, name: Unholy Blight, opcodes: 177 
+SPPR315.SPL, name: Cure Medium Wounds, opcodes: 17 50 139 215 164 
+SPPR317.SPL, name: Cure Disease, opcodes: 50 139 81 77 215 79 240 75 
+SPPR318.SPL, name: Zone of Sweet Air, opcodes: 273 215 
+SPPR319.SPL, name: Summon Insects, opcodes: 0 272 54 142 215 60 
+SPPR401.SPL, name: Cure Serious Wounds, opcodes: 17 50 139 215 164 
+SPPR402.SPL, name: Animal Summoning I, opcodes: 177 
+SPPR403.SPL, name: Free Action, opcodes: 169 101 206 174 142 163 296 9 126 162 267 215 46 240 
+SPPR404.SPL, name: Neutralize Poison, opcodes: 17 50 81 79 215 11 240 75 
+SPPR405.SPL, name: Mental Domination, opcodes: 139 174 5 215 
+SPPR406.SPL, name: Defensive Harmony, opcodes: 0 174 142 321 215 
+SPPR407.SPL, name: Protection From Lightning, opcodes: 50 174 142 215 29 
+SPPR408.SPL, name: Protection From Evil, 10' Radius, opcodes: 100 139 174 219 142 9 215 
+SPPR409.SPL, name: Death Ward, opcodes: 50 169 101 174 142 282 215 
+SPPR410.SPL, name: Call Woodland Beings, opcodes: 177 
+SPPR411.SPL, name: Poison, opcodes: 174 142 9 215 177 12 
+SPPR412.SPL, name: Holy Power, opcodes: 50 18 141 174 54 142 97 321 44 
+SPPR413.SPL, name: Negative Plane Protection, opcodes: 169 101 174 142 282 267 215 
+SPPR414.SPL, name: Cause Serious Wounds, opcodes: 50 141 174 111 
+SPPR415.SPL, name: Farsight, opcodes: 239 174 215 
+SPPR416.SPL, name: Cloak of Fear, opcodes: 50 174 142 24 264 215 
+SPPR417.SPL, name: Lesser Restoration, opcodes: 93 215 240 224 
+SPPR501.SPL, name: Animal Summoning II, opcodes: 177 
+SPPR502.SPL, name: Cure Critical Wounds, opcodes: 17 50 139 215 164 
+SPPR503.SPL, name: Flame Strike, opcodes: 215 12 
+SPPR504.SPL, name: Raise Dead, opcodes: 32 172 215 
+SPPR505.SPL, name: True Seeing, opcodes: 220 221 50 116 141 174 142 146 215 177 
+SPPR505D.SPL, name: True Seeing, opcodes: 220 221 116 177 
+SPPR506.SPL, name: Iron Skins, opcodes: 50 174 218 215 
+SPPR507.SPL, name: Champion's Strength, opcodes: 50 54 174 142 97 145 215 44 
+SPPR508.SPL, name: Chaotic Commands, opcodes: 50 169 206 101 174 142 296 267 215 
+SPPR509.SPL, name: Magic Resistance, opcodes: 50 174 142 215 166 
+SPPR510.SPL, name: Cause Critical Wounds, opcodes: 50 141 174 111 
+SPPR511.SPL, name: Slay Living, opcodes: 50 174 111 
+SPPR512.SPL, name: Greater Command, opcodes: 174 39 142 215 177 
+SPPR513.SPL, name: Righteous Magic, opcodes: 18 250 174 142 321 8 44 
+SPPR514.SPL, name: Mass Cure, opcodes: 17 50 139 215 164 
+SPPR515.SPL, name: Repulse Undead, opcodes: 141 174 232 142 8 
+SPPR515D.SPL, name: Repulse Undead, opcodes: 177 
+SPPR516.SPL, name: Pixie Dust, opcodes: 139 141 174 20 
+SPPR517.SPL, name: Insect Plague, opcodes: 272 142 24 215 60 
+SPPR599.SPL, name: Slay Living, opcodes: 141 55 12 
+SPPR601.SPL, name: Aerial Servant, opcodes: 177 
+SPPR602.SPL, name: Animal Summoning III, opcodes: 177 
+SPPR603.SPL, name: Blade Barrier, opcodes: 174 232 142 215 
+SPPR603D.SPL, name: Blade Barrier, opcodes: 12 
+SPPR604.SPL, name: Conjure Animals, opcodes: 177 
+SPPR605.SPL, name: Conjure Fire Elemental, opcodes: 177 
+SPPR606.SPL, name: Fire Seeds, opcodes: 139 174 122 
+SPPR607.SPL, name: Heal, opcodes: 17 50 139 81 77 215 79 11 240 75 164 
+SPPR608.SPL, name: Harm, opcodes: 50 174 111 
+SPPR609.SPL, name: False Dawn, opcodes: 146 177 
+SPPR609D.SPL, name: null, opcodes: 
+SPPR610.SPL, name: Dolorous Decay, opcodes: 174 142 25 40 215 
+SPPR611.SPL, name: Wondrous Recall, opcodes: 261 215 
+SPPR612.SPL, name: Bolt of Glory, opcodes: 215 177 
+SPPR613.SPL, name: Physical Mirror, opcodes: 174 197 
+SPPR614.SPL, name: Sol's Searing Orb, opcodes: 111 
+SPPR698.SPL, name: Blade Barrier, opcodes: 174 232 142 215 
+SPPR698D.SPL, name: Blade Barrier, opcodes: 12 
+SPPR699.SPL, name: Harm, opcodes: 50 141 174 12 
+SPPR701.SPL, name: Shield of the Archons, opcodes: 50 139 141 201 174 142 
+SPPR702.SPL, name: Conjure Earth Elemental, opcodes: 177 
+SPPR703.SPL, name: Gate, opcodes: 177 
+SPPR704.SPL, name: Nature's Beauty, opcodes: 139 141 55 174 142 215 74 
+SPPR705.SPL, name: Fire Storm, opcodes: 12 
+SPPR706.SPL, name: Symbol, Fear, opcodes: 141 174 142 24 
+SPPR707.SPL, name: Sunray, opcodes: 139 174 142 146 215 177 12 74 
+SPPR708.SPL, name: Finger of Death, opcodes: 141 55 12 
+SPPR709.SPL, name: Confusion, opcodes: 139 174 142 128 215 
+SPPR710.SPL, name: Holy Word, opcodes: 177 215 
+SPPR711.SPL, name: Regeneration, opcodes: 50 139 98 174 142 215 
+SPPR712.SPL, name: Resurrection, opcodes: 17 32 172 215 
+SPPR713.SPL, name: Greater Restoration, opcodes: 17 23 321 93 77 161 79 11 215 242 240 224 
+SPPR715.SPL, name: Unholy Word, opcodes: 215 177 
+SPPR717.SPL, name: Creeping Doom, opcodes: 272 142 215 60 
+SPPR718.SPL, name: Symbol, Stun, opcodes: 141 174 142 45 
+SPPR719.SPL, name: Symbol, Death, opcodes: 141 209 
+SPPR720.SPL, name: Earthquake, opcodes: 272 174 39 67 12 269 - Entry doesn't exist: SPENBLD.PRO
+SPPR721.SPL, name: Energy Blades, opcodes: 139 174 111 
+SPPR729.SPL, name: Mass Raise Dead, opcodes: 17 50 304 139 172 215 
+SPPR950.SPL, name: True Sight, opcodes: 220 221 116 177 
+SPPR951D.SPL, name: Fireshield (Blue), opcodes: 12 
+SPPR952D.SPL, name: Fireshield (Red), opcodes: 12 
+SPPR982.SPL, name: Dire Charm, opcodes: 141 174 5 177 
+SPPR983.SPL, name: Confusion, opcodes: 139 174 142 128 215 
+SPPR984.SPL, name: Chromatic Orb, opcodes: 139 141 174 142 12 45 
+SPPR985.SPL, name: Flame Strike, opcodes: 174 215 12 
+SPPR986.SPL, name: Miscast Magic, opcodes: 139 141 174 142 9 60 
+SPPR987.SPL, name: Call Lightning, opcodes: 12 
+SPPR988.SPL, name: Silence, 15' Radius, opcodes: 139 141 38 174 142 
+SPPR989.SPL, name: Hold Person, opcodes: 141 175 174 177 
+SPPR999.SPL, name: Raise Dead, opcodes: 32 
+SPRA301.SPL, name: Haste, opcodes: 16 139 141 174 142 93 
+SPRA302.SPL, name: Minor Spell Deflection, opcodes: 50 139 141 201 174 142 
+SPRA303.SPL, name: Protection From Normal Missiles, opcodes: 139 156 174 83 142 8 
+SPRA304.SPL, name: Animal Summoning I, opcodes: 174 177 
+SPRA305.SPL, name: Animal Summoning II, opcodes: 174 177 
+SPRA306.SPL, name: Animal Summoning III, opcodes: 174 177 
+SPSD01.SPL, name: null, opcodes: 275 34 35 33 36 37 59 
+spsd02.SPL, name: Shadowstep, opcodes: 1 206 20 66 7 144 231 145 
+SPSREST.SPL, name: null, opcodes: 316 
+SPVAMP1.SPL, name: null, opcodes: 151 
+SPWI001.SPL, name: Fireball, opcodes: 12 
+SPWI002.SPL, name: Lightning Bolt, opcodes: 12 
+SPWI003.SPL, name: Magic Missile, opcodes: 12 
+SPWI004.SPL, name: Stinking Cloud, opcodes: 39 142 
+SPWI005.SPL, name: null, opcodes: 12 
+SPWI006.SPL, name: null, opcodes: 55 174 12 
+SPWI007.SPL, name: null, opcodes: 12 
+SPWI008.SPL, name: null, opcodes: 142 25 12 
+SPWI009.SPL, name: null, opcodes: 12 
+SPWI010.SPL, name: null, opcodes: 139 141 81 174 58 77 177 215 12 240 
+SPWI011.SPL, name: null, opcodes: 12 
+SPWI012.SPL, name: null, opcodes: 12 
+SPWI013.SPL, name: null, opcodes: 12 
+SPWI014.SPL, name: Monster Summoning I, opcodes: 141 174 127 
+SPWI015.SPL, name: Frost, opcodes: 12 
+SPWI016.SPL, name: Cloudkill, opcodes: 55 12 
+SPWI017.SPL, name: Minor Lightning Bolt, opcodes: 12 
+SPWI018.SPL, name: Frost, opcodes: 12 
+SPWI019.SPL, name: Monster Summoning II, opcodes: 174 127 
+SPWI020.SPL, name: just ten damage, opcodes: 12 
+SPWI021.SPL, name: null, opcodes: 12 
+SPWI022.SPL, name: null, opcodes: 12 
+SPWI023.SPL, name: null, opcodes: 174 13 
+SPWI024.SPL, name: null, opcodes: 12 
+SPWI050.SPL, name: Chaos, opcodes: 
+SPWI051.SPL, name: Dispel Magic, opcodes: 
+SPWI052.SPL, name: Power Word, Silence, opcodes: 
+SPWI053.SPL, name: Flesh to Stone, opcodes: 174 215 134 
+SPWI054.SPL, name: Finger of Death, opcodes: 141 55 174 12 
+SPWI055.SPL, name: Disintegrate, opcodes: 238 174 215 
+SPWI056.SPL, name: Disintegrate, opcodes: 238 174 215 
+SPWI101.SPL, name: Grease, opcodes: 174 158 142 126 
+SPWI102.SPL, name: Armor, opcodes: 0 139 174 142 215 
+SPWI103.SPL, name: Burning Hands, opcodes: 12 165 
+SPWI104.SPL, name: Charm Person, opcodes: 50 174 5 215 177 
+SPWI105.SPL, name: Color Spray, opcodes: 139 39 142 7 165 
+SPWI106.SPL, name: Blindness, opcodes: 50 139 174 142 215 74 
+SPWI107.SPL, name: Friends, opcodes: 50 139 174 6 142 321 
+SPWI108.SPL, name: Protection From Petrification, opcodes: 139 101 174 142 9 267 215 
+SPWI110.SPL, name: Identify, opcodes: 21 
+SPWI111.SPL, name: Infravision, opcodes: 50 139 141 174 142 63 
+SPWI112.SPL, name: Magic Missile, opcodes: 141 12 
+SPWI113.SPL, name: Protection From Evil, opcodes: 100 139 174 219 142 9 215 
+SPWI114.SPL, name: Shield, opcodes: 0 50 139 206 174 142 215 
+SPWI115.SPL, name: Shocking Grasp, opcodes: 174 111 215 
+SPWI116.SPL, name: Sleep, opcodes: 139 174 39 142 215 177 
+SPWI117.SPL, name: Chill Touch, opcodes: 111 215 
+spwi117a.SPL, name: null, opcodes: 141 54 174 12 
+SPWI118.SPL, name: Chromatic Orb, opcodes: 0 139 141 174 142 12 74 44 15 45 134 55 54 
+SPWI119.SPL, name: Larloch's Minor Drain, opcodes: 206 146 
+SPWI119A.SPL, name: null, opcodes: 18 141 174 12 
+SPWI120.SPL, name: Reflected Image, opcodes: 141 174 159 
+SPWI123.SPL, name: Find Familiar, opcodes: 192 
+SPWI124.SPL, name: Nahal's Reckless Dweomer, opcodes: 214 280 
+SPWI125.SPL, name: Spook, opcodes: 139 141 174 142 24 
+SPWI201.SPL, name: Blur, opcodes: 34 0 35 139 33 174 65 36 37 321 
+SPWI202.SPL, name: Detect Evil, opcodes: 141 146 
+SPWI203.SPL, name: Detect Invisibility, opcodes: 50 116 141 174 215 
+SPWI205.SPL, name: Horror, opcodes: 50 139 174 142 24 215 
+SPWI206.SPL, name: Invisibility, opcodes: 139 174 20 
+SPWI207.SPL, name: Knock, opcodes: 139 141 174 125 
+SPWI208.SPL, name: Know Alignment, opcodes: 139 141 115 
+SPWI209.SPL, name: Luck, opcodes: 275 34 35 139 33 141 174 277 36 142 276 37 133 50 321 59 92 91 90 
+SPWI210.SPL, name: Resist Fear, opcodes: 50 169 101 174 23 142 321 267 161 215 106 240 
+SPWI211.SPL, name: Melf's Acid Arrow, opcodes: 142 215 12 
+SPWI212.SPL, name: Mirror Image, opcodes: 119 139 174 
+SPWI213.SPL, name: Stinking Cloud, opcodes: 39 142 
+SPWI214.SPL, name: Strength, opcodes: 50 139 174 142 97 321 215 44 
+SPWI215.SPL, name: Web, opcodes: 139 174 157 142 109 
+SPWI217.SPL, name: Agannazar's Scorcher, opcodes: 174 12 165 
+SPWI218.SPL, name: Ghoul Touch, opcodes: 111 215 
+SPWI219.SPL, name: Vocalize, opcodes: 50 139 169 101 48 174 142 267 215 240 
+SPWI220.SPL, name: Power Word, Sleep, opcodes: 50 217 215 
+SPWI221.SPL, name: Ray of Enfeeblement, opcodes: 50 139 141 174 142 44 
+SPWI222.SPL, name: Chaos Shield, opcodes: 142 321 281 215 
+SPWI223.SPL, name: Deafness, opcodes: 80 142 215 
+SPWI224.SPL, name: Glitterdust, opcodes: 50 139 116 174 142 215 74 
+SPWI298.SPL, name: Contingency – Mirror Image, opcodes: 119 139 
+SPWI299.SPL, name: Summon Cow, opcodes: 152 12 
+SPWI301.SPL, name: Clairvoyance, opcodes: 117 141 215 
+SPWI302.SPL, name: Remove Magic, opcodes: 139 81 77 58 215 177 240 
+SPWI303.SPL, name: Flame Arrow, opcodes: 12 
+SPWI304.SPL, name: Fireball, opcodes: 265 12 
+SPWI305.SPL, name: Haste, opcodes: 16 139 206 141 174 142 93 
+SPWI306.SPL, name: Hold Person, opcodes: 175 174 177 
+SPWI307.SPL, name: Invisibility, 10' Radius, opcodes: 139 141 174 20 
+SPWI308.SPL, name: Lightning Bolt, opcodes: 12 
+SPWI309.SPL, name: Monster Summoning I, opcodes: 177 
+SPWI310.SPL, name: Non-Detection, opcodes: 69 139 141 174 142 
+SPWI311.SPL, name: Protection From Normal Missiles, opcodes: 139 156 174 83 142 8 
+SPWI312.SPL, name: Slow, opcodes: 0 139 141 174 54 142 321 40 240 
+SPWI313.SPL, name: Skull Trap, opcodes: 141 12 
+SPWI314.SPL, name: Vampiric Touch, opcodes: 206 146 
+SPWI314A.SPL, name: null, opcodes: 141 146 215 12 
+SPWI314B.SPL, name: null, opcodes: 206 18 215 
+SPWI315.SPL, name: Wraithform, opcodes: 139 174 66 142 144 9 145 31 120 
+SPWI316.SPL, name: Dire Charm, opcodes: 174 5 215 177 
+SPWI317.SPL, name: Ghost Armor, opcodes: 0 50 139 174 142 9 215 
+SPWI318.SPL, name: Minor Spell Deflection, opcodes: 50 139 141 201 174 
+SPWI319.SPL, name: Protection From Fire, opcodes: 50 84 139 174 142 321 215 30 
+SPWI320.SPL, name: Protection From Cold, opcodes: 85 50 139 174 142 321 215 28 
+SPWI321.SPL, name: Spell Thrust, opcodes: 221 139 215 240 
+SPWI322.SPL, name: Detect Illusion, opcodes: 220 221 141 174 215 
+SPWI324.SPL, name: Hold Undead, opcodes: 185 177 
+SPWI325.SPL, name: Melf's Minute Meteors, opcodes: 141 174 111 
+SPWI326.SPL, name: Dispel Magic, opcodes: 139 81 77 58 215 177 240 
+SPWI399.SPL, name: Lightning Bolt, opcodes: 12 
+SPWI401.SPL, name: Confusion, opcodes: 139 174 142 128 215 
+SPWI402.SPL, name: Dimension Door, opcodes: 141 174 124 
+SPWI403.SPL, name: Fireshield (Blue), opcodes: 85 174 232 142 215 28 
+SPWI403D.SPL, name: Fireshield (Blue), opcodes: 12 
+SPWI404.SPL, name: Ice Storm, opcodes: 12 
+SPWI405.SPL, name: Improved Invisibility, opcodes: 139 141 174 20 
+SPWI406.SPL, name: Minor Globe of Invulnerability, opcodes: 102 139 155 206 174 142 8 
+SPWI407.SPL, name: Monster Summoning II, opcodes: 177 
+SPWI408.SPL, name: Stoneskin, opcodes: 50 174 218 215 
+SPWI409.SPL, name: Contagion, opcodes: 50 139 142 78 215 
+SPWI410.SPL, name: Remove Curse, opcodes: 50 139 215 26 
+SPWI411.SPL, name: Emotion: Hopelessness, opcodes: 50 169 101 174 39 23 142 321 267 161 215 106 240 
+SPWI412.SPL, name: Greater Malison, opcodes: 34 35 50 139 33 174 36 142 37 321 215 
+SPWI413.SPL, name: Otiluke's Resilient Sphere, opcodes: 205 102 204 206 174 166 85 84 87 185 86 20 27 215 89 29 28 88 30 
+SPWI414.SPL, name: Spirit Armor, opcodes: 0 50 139 174 37 7 142 9 215 12 
+SPWI415.SPL, name: Polymorph Other, opcodes: 0 18 141 174 111 135 44 60 
+SPWI416.SPL, name: Polymorph Self, opcodes: 171 139 206 142 172 146 215 
+SPWI417.SPL, name: Enchanted Weapon, opcodes: 214 215 
+SPWI418.SPL, name: Fireshield (Red), opcodes: 84 174 232 142 215 30 
+SPWI418D.SPL, name: Fireshield (Red), opcodes: 12 
+SPWI419.SPL, name: Secret Word, opcodes: 139 230 215 240 
+SPWI420.SPL, name: Minor Sequencer, opcodes: 257 215 
+SPWI420D.SPL, name: Spell Sequencer, opcodes: 258 172 
+spwi420p.SPL, name: Spell Sequencer, opcodes: 260 172 
+SPWI421.SPL, name: Teleport Field, opcodes: 222 141 174 
+SPWI423.SPL, name: Spider Spawn, opcodes: 177 
+SPWI424.SPL, name: Farsight, opcodes: 239 174 215 
+SPWI425.SPL, name: Wizard Eye, opcodes: 206 141 174 67 
+SPWI483.SPL, name: Morning Star, opcodes: 255 141 
+SPWI484.SPL, name: Quarterstaff, opcodes: 255 141 
+SPWI485.SPL, name: Long Sword, opcodes: 255 141 
+SPWI486.SPL, name: Short Sword, opcodes: 255 141 
+SPWI487.SPL, name: Axe, opcodes: 255 141 
+SPWI488.SPL, name: Mace, opcodes: 255 141 
+SPWI489.SPL, name: Shapeshifts Natural Form, opcodes: 279 141 174 112 135 
+SPWI490.SPL, name: Shapeshifts Natural Form, opcodes: 171 279 172 112 215 135 
+SPWI491.SPL, name: Shapeshifts Natural Form, opcodes: 279 112 172 111 215 135 
+SPWI493.SPL, name: Shapeshifts Flind, opcodes: 171 112 144 111 215 135 
+SPWI494.SPL, name: Shapeshifts Ogre, opcodes: 171 112 144 111 215 135 
+SPWI495.SPL, name: Shapeshifts Spider, opcodes: 171 112 144 111 215 135 
+SPWI496.SPL, name: Shapeshifts Mustard Jelly, opcodes: 171 112 144 111 215 135 
+SPWI497.SPL, name: Shapeshifts Brown Bear, opcodes: 171 112 144 111 215 135 
+SPWI498.SPL, name: Shapeshifts Black Bear, opcodes: 171 112 144 111 215 135 
+SPWI499.SPL, name: Shapeshifts Wolf, opcodes: 171 112 144 111 215 135 
+SPWI501.SPL, name: Animate Dead, opcodes: 177 
+SPWI502.SPL, name: Cloudkill, opcodes: 55 12 
+SPWI503.SPL, name: Cone of Cold, opcodes: 12 
+SPWI504.SPL, name: Monster Summoning III, opcodes: 177 
+SPWI505.SPL, name: Shadow Door, opcodes: 141 20 174 
+SPWI506.SPL, name: Domination, opcodes: 139 174 5 215 177 
+SPWI507.SPL, name: Hold Monster, opcodes: 139 175 174 142 215 
+SPWI508.SPL, name: Chaos, opcodes: 50 139 174 142 128 215 
+SPWI509.SPL, name: Feeblemind, opcodes: 50 142 76 215 
+SPWI510.SPL, name: Spell Immunity, opcodes: 141 174 214 
+SPWI511.SPL, name: Protection From Normal Weapons, opcodes: 50 139 206 174 142 215 120 
+SPWI512.SPL, name: Protection From Electricity, opcodes: 50 139 174 142 215 29 
+SPWI513.SPL, name: Breach, opcodes: 221 139 141 174 240 
+SPWI514.SPL, name: Lower Resistance, opcodes: 50 139 174 142 215 166 
+SPWI515.SPL, name: Oracle, opcodes: 220 221 116 141 174 215 177 
+SPWI516.SPL, name: Conjure Lesser Fire Elemental, opcodes: 142 177 215 165 
+SPWI517.SPL, name: Protection From Acid, opcodes: 50 139 141 174 142 27 215 
+SPWI518.SPL, name: Phantom Blade, opcodes: 174 111 215 
+SPWI519.SPL, name: Spell Shield, opcodes: 50 139 141 174 226 
+SPWI520.SPL, name: Conjure Lesser Air Elemental, opcodes: 142 215 177 165 
+SPWI521.SPL, name: Conjure Lesser Earth Elemental, opcodes: 142 177 215 165 
+SPWI522.SPL, name: Minor Spell Turning, opcodes: 50 139 141 174 200 
+SPWI523.SPL, name: Sunfire, opcodes: 206 148 
+SPWI523D.SPL, name: null, opcodes: 12 
+SPWI590.SPL, name: Immunity: Abjuration, opcodes: 50 204 141 174 142 
+SPWI591.SPL, name: Immunity: Conjuration, opcodes: 50 204 141 174 142 
+SPWI592.SPL, name: Immunity: Divination, opcodes: 50 204 141 174 142 
+SPWI593.SPL, name: Immunity: Enchantment, opcodes: 50 204 141 174 142 
+SPWI594.SPL, name: Immunity: Illusion, opcodes: 50 204 141 174 142 
+SPWI595.SPL, name: Immunity: Evocation, opcodes: 50 204 141 174 142 
+SPWI596.SPL, name: Immunity: Necromancy, opcodes: 50 204 141 174 142 
+SPWI597.SPL, name: Immunity: Alteration, opcodes: 50 204 141 174 142 
+SPWI601.SPL, name: Invisible Stalker, opcodes: 177 
+SPWI602.SPL, name: Globe of Invulnerability, opcodes: 102 139 155 206 174 142 8 
+SPWI603.SPL, name: Tenser's Transformation, opcodes: 0 18 54 174 142 321 8 145 215 73 
+SPWI604.SPL, name: Flesh to Stone, opcodes: 174 215 134 
+SPWI605.SPL, name: Death Spell, opcodes: 55 174 215 177 
+SPWI606.SPL, name: Protection From Magic Energy, opcodes: 50 139 174 142 215 31 
+SPWI607.SPL, name: Mislead, opcodes: 139 236 20 215 
+SPWI608.SPL, name: Pierce Magic, opcodes: 139 174 142 230 215 166 
+SPWI609.SPL, name: True Sight, opcodes: 220 221 50 116 141 174 142 146 215 177 
+SPWI609D.SPL, name: True Sight, opcodes: 220 221 116 177 
+SPWI611.SPL, name: Protection From Magical Weapons, opcodes: 50 139 206 174 142 215 120 
+SPWI612.SPL, name: Power Word, Silence, opcodes: 50 139 38 174 142 215 
+SPWI613.SPL, name: Improved Haste, opcodes: 16 139 206 141 174 
+SPWI614.SPL, name: Death Fog
+, opcodes: 141 177 12 
+SPWI615.SPL, name: Chain Lightning, opcodes: 12 
+SPWI616.SPL, name: Disintegrate, opcodes: 238 174 215 
+SPWI617.SPL, name: Contingency, opcodes: 234 146 215 
+SPWI618.SPL, name: Spell Deflection, opcodes: 50 139 141 201 174 
+SPWI619.SPL, name: Wyvern Call, opcodes: 177 
+SPWI620.SPL, name: Conjure Fire Elemental, opcodes: 142 215 177 165 
+SPWI621.SPL, name: Conjure Air Elemental, opcodes: 142 215 177 165 
+SPWI622.SPL, name: Conjure Earth Elemental, opcodes: 142 215 177 165 
+SPWI623.SPL, name: Carrion Summons, opcodes: 177 
+SPWI624.SPL, name: Summon Nishruu, opcodes: 177 
+SPWI625.SPL, name: Stone to Flesh, opcodes: 174 43 215 
+SPWI701.SPL, name: Spell Turning, opcodes: 50 139 141 174 200 
+SPWI702.SPL, name: Protection From The Elements, opcodes: 85 84 50 139 174 142 321 215 29 28 30 
+SPWI703.SPL, name: Project Image, opcodes: 206 236 215 
+SPWI704.SPL, name: Ruby Ray Of Reversal, opcodes: 139 230 215 240 
+SPWI705.SPL, name: Khelben's Warding Whip, opcodes: 139 230 177 215 240 
+SPWI707.SPL, name: Cacofiend, opcodes: 177 
+SPWI708.SPL, name: Mantle, opcodes: 50 139 206 174 142 215 120 
+SPWI710.SPL, name: Spell Sequencer, opcodes: 257 215 
+SPWI710D.SPL, name: Spell Sequencer, opcodes: 258 172 
+spwi710p.SPL, name: Spell Sequencer, opcodes: 260 172 
+SPWI711.SPL, name: Sphere of Chaos, opcodes: 238 141 174 39 111 128 109 12 135 17 16 222 145 
+SPWI712.SPL, name: Delayed Blast Fireball, opcodes: 12 
+SPWI713.SPL, name: Finger of Death, opcodes: 141 55 174 12 
+SPWI714.SPL, name: Prismatic Spray, opcodes: 238 139 141 142 76 12 74 134 
+SPWI715.SPL, name: Power Word, Stun, opcodes: 50 215 210 
+SPWI716.SPL, name: Mordenkainen's Sword, opcodes: 174 177 
+SPWI717.SPL, name: Summon Efreeti, opcodes: 177 
+SPWI718.SPL, name: Summon Djinni, opcodes: 177 
+SPWI719.SPL, name: Summon Hakeashar, opcodes: 177 
+SPWI720.SPL, name: Control Undead, opcodes: 177 241 
+SPWI721.SPL, name: Mass Invisibility, opcodes: 34 35 139 33 141 174 20 36 37 
+SPWI722.SPL, name: Limited Wish, opcodes: 177 
+SPWI723.SPL, name: Improved Chaos Shield, opcodes: 142 321 281 215 
+SPWI802.SPL, name: Spell Deflection, opcodes: 50 139 141 201 174 142 
+SPWI803.SPL, name: Protection From Energy, opcodes: 85 84 50 139 174 142 27 215 29 28 31 30 
+SPWI804.SPL, name: Simulacrum, opcodes: 206 236 215 
+SPWI805.SPL, name: Pierce Shield, opcodes: 174 142 230 215 166 
+SPWI807.SPL, name: Summon Fiend, opcodes: 177 
+SPWI808.SPL, name: Improved Mantle, opcodes: 50 139 206 174 142 215 120 
+SPWI809.SPL, name: Spell Trigger, opcodes: 257 215 
+SPWI809D.SPL, name: Spell Trigger, opcodes: 258 172 
+SPWI810.SPL, name: Incendiary Cloud, opcodes: 12 
+SPWI811.SPL, name: Symbol, Fear, opcodes: 141 174 142 24 
+SPWI812.SPL, name: Abi-Dalzim's Horrid Wilting, opcodes: 141 12 
+SPWI813.SPL, name: Maze, opcodes: 213 215 
+SPWI815.SPL, name: Power Word, Blind, opcodes: 50 139 174 142 215 74 
+SPWI816.SPL, name: Symbol, Stun, opcodes: 141 174 142 45 
+SPWI817.SPL, name: Symbol, Death, opcodes: 209 
+SPWI818.SPL, name: Bigby's Clenched Fist, opcodes: 175 174 142 215 12 
+SPWI853.SPL, name: Otiluke's Resilient Sphere, opcodes: 169 101 206 174 142 166 85 84 87 86 155 185 267 27 89 29 88 28 30 
+SPWI888.SPL, name: Flame Arrow, opcodes: 12 
+SPWI897.SPL, name: Symbol, Death, opcodes: 209 
+SPWI898.SPL, name: Symbol, Stun, opcodes: 139 141 174 142 45 
+SPWI899.SPL, name: Symbol, Fear, opcodes: 141 174 142 24 
+SPWI902.SPL, name: Spell Trap, opcodes: 259 50 139 141 174 
+SPWI903.SPL, name: Spellstrike, opcodes: 221 139 141 240 
+SPWI905.SPL, name: Gate, opcodes: 177 
+SPWI907.SPL, name: Absolute Immunity, opcodes: 50 139 206 174 142 215 120 
+SPWI908.SPL, name: Chain Contingency, opcodes: 234 146 215 
+SPWI909.SPL, name: Time Stop, opcodes: 174 231 
+SPWI910.SPL, name: Imprisonment, opcodes: 215 211 
+SPWI911.SPL, name: Meteor Swarm, opcodes: 12 
+SPWI912.SPL, name: Power Word, Kill, opcodes: 50 215 209 
+SPWI913.SPL, name: Wail of the Banshee, opcodes: 141 55 174 
+SPWI914.SPL, name: Energy Drain, opcodes: 50 141 216 174 
+SPWI915.SPL, name: Black Blade of Disaster, opcodes: 174 111 215 
+SPWI916.SPL, name: Shapechange, opcodes: 171 139 206 142 172 146 215 
+SPWI917.SPL, name: Freedom, opcodes: 174 212 
+SPWI918.SPL, name: Bigby's Crushing Hand, opcodes: 175 174 142 215 12 
+SPWI919.SPL, name: Wish, opcodes: 67 - Entry doesn't exist: SPENBLD.PRO
+SPWI920.SPL, name: Energy Blades, opcodes: 139 174 111 
+SPWI924.SPL, name: null, opcodes: 141 174 151 
+SPWI925.SPL, name: null, opcodes: 141 174 151 
+SPWI926.SPL, name: Dimension Door, opcodes: 141 124 
+SPWI927.SPL, name: Ethereal, opcodes: 50 20 
+SPWI928.SPL, name: Energy Drain, opcodes: 34 50 35 18 33 141 36 142 37 10 15 
+SPWI929.SPL, name: Charm Person, opcodes: 141 5 177 
+SPWI930.SPL, name: Charm Person, opcodes: 141 5 177 
+SPWI931.SPL, name: Teleport Without Error, opcodes: 50 141 124 
+SPWI932.SPL, name: null, opcodes: 151 
+SPWI933.SPL, name: null, opcodes: 153 
+SPWI934.SPL, name: null, opcodes: 184 12 
+SPWI935.SPL, name: null, opcodes: 67 
+SPWI936.SPL, name: null, opcodes: 67 
+SPWI937.SPL, name: null, opcodes: 67 
+SPWI938.SPL, name: Lightning, opcodes: 12 
+SPWI939.SPL, name: null, opcodes: 5 
+SPWI940.SPL, name: Agannazar's Scorcher, opcodes: 12 
+SPWI941.SPL, name: null, opcodes: 141 151 
+SPWI942.SPL, name: null, opcodes: 141 151 
+SPWI943.SPL, name: Dire Charm, opcodes: 141 174 5 177 
+SPWI944.SPL, name: null, opcodes: 141 151 
+SPWI945.SPL, name: null, opcodes: 141 151 
+SPWI946.SPL, name: null, opcodes: 141 151 
+SPWI947.SPL, name: null, opcodes: 141 151 
+SPWI948.SPL, name: null, opcodes: 141 151 
+SPWI949.SPL, name: null, opcodes: 141 151 
+SPWI951.SPL, name: null, opcodes: 141 67 151 
+SPWI952.SPL, name: Selûne's Blade, opcodes: 111 
+SPWI953.SPL, name: Selûne's Curse, opcodes: 12 
+SPWI954.SPL, name: Selûne's Blessing, opcodes: 0 102 155 174 8 
+SPWI955.SPL, name: Symbol, Pain, opcodes: 54 15 
+SPWI956.SPL, name: Symbol, Fear, opcodes: 24 
+SPWI957.SPL, name: Fireball, opcodes: 12 
+SPWI958.SPL, name: Power Word, Blind, opcodes: 139 142 74 
+SPWI959.SPL, name: Power Word, Stun, opcodes: 142 45 
+SPWI960.SPL, name: Power Word, Kill, opcodes: 12 
+SPWI961.SPL, name: null, opcodes: 141 151 
+SPWI962.SPL, name: null, opcodes: 141 151 
+SPWI963.SPL, name: null, opcodes: 141 151 
+SPWI964.SPL, name: null, opcodes: 141 151 
+SPWI965.SPL, name: null, opcodes: 141 151 
+SPWI979.SPL, name: Flame Strike, opcodes: 215 12 
+SPWI980.SPL, name: null, opcodes: 168 141 12 
+SPWI981.SPL, name: null, opcodes: 168 141 
+SPWI982.SPL, name: Dimension Door, opcodes: 141 67 
+SPWI983.SPL, name: null, opcodes: 141 151 
+SPWI984.SPL, name: null, opcodes: 168 141 
+SPWI985.SPL, name: null, opcodes: 168 
+SPWI986.SPL, name: null, opcodes: 67 
+SPWI987.SPL, name: null, opcodes: 141 151 
+SPWI988.SPL, name: null, opcodes: 141 151 
+SPWI989.SPL, name: Antichickenator, opcodes: 
+SPWI990.SPL, name: null, opcodes: 141 151 
+SPWI991.SPL, name: null, opcodes: 141 135 
+SPWI992.SPL, name: null, opcodes: 141 151 
+SPWI993.SPL, name: null, opcodes: 141 151 
+SPWI994.SPL, name: Dimension Door, opcodes: 141 124 
+SPWI995.SPL, name: Dimension Door, opcodes: 68 141 174 
+SPWI996.SPL, name: null, opcodes: 5 
+SPWI997.SPL, name: Lightning Bolt, opcodes: 12 
+SPWI998.SPL, name: Magic Missile, opcodes: 13 
+SPWI999.SPL, name: null, opcodes: 12 
+SPWISH10.SPL, name: Mass Raise Dead, opcodes: 17 304 172 215 
+SPWISH25.SPL, name: Slow, opcodes: 0 139 141 174 54 142 321 40 240 
+SPWM101.SPL, name: Repulse Undead, opcodes: 232 142 
+SPWM101D.SPL, name: Repulsion, opcodes: 177 
+SPWM102.SPL, name: Repulsion, caster, opcodes: 9 
+SPWM103.SPL, name: Repulsion, caster, opcodes: 67 
+SPWM104.SPL, name: Squirrels, opcodes: 190 189 215 
+SPWM105.SPL, name: Repulsion, caster, opcodes: 9 
+SPWM107.SPL, name: Squirrels, opcodes: 71 
+SPWM108.SPL, name: null, opcodes: 7 
+SPWM110.SPL, name: Repulsion, caster, opcodes: 170 141 
+SPWM111.SPL, name: Entangle, opcodes: 0 154 141 174 142 126 
+SPWM112.SPL, name: Repulsion, caster, opcodes: 40 
+SPWM113.SPL, name: Polymorph Other, opcodes: 141 174 112 144 111 135 
+SPWM114.SPL, name: Polymorph Other, opcodes: 185 141 174 
+SPWM115.SPL, name: Repulsion, caster, opcodes: 16 
+SPWM117.SPL, name: Repulsion, caster, opcodes: 139 105 
+SPWM118.SPL, name: Repulsion, caster, opcodes: 44 
+SPWM120.SPL, name: Repulsion, caster, opcodes: 126 
+SPWM122.SPL, name: Hold Person, opcodes: 175 174 177 
+SPWM123.SPL, name: Symbol, Fear, opcodes: 141 174 142 24 
+SPWM125.SPL, name: Minor Globe of Invulnerability, opcodes: 117 
+SPWM126.SPL, name: Minor Globe of Invulnerability, opcodes: 102 139 155 206 174 142 8 
+SPWM128.SPL, name: Repulsion, caster, opcodes: 139 54 142 60 
+SPWM130.SPL, name: Repulsion, caster, opcodes: 215 
+SPWM134.SPL, name: Repulsion, caster, opcodes: 67 
+SPWM136.SPL, name: Goodberry, opcodes: 174 122 
+SPWM140.SPL, name: Goodberry, opcodes: 215 243 
+SPWM141.SPL, name: Goodberry, opcodes: 215 122 
+SPWM142.SPL, name: Hold Person, opcodes: 54 73 
+SPWM143.SPL, name: Teleport Field, opcodes: 222 141 
+SPWM145.SPL, name: Polymorph Other, opcodes: 190 174 278 
+SPWM152.SPL, name: Polymorph Other, opcodes: 141 174 45 
+SPWM153.SPL, name: Repulsion, caster, opcodes: 18 
+SPWM154.SPL, name: Cacofiend, opcodes: 141 174 177 
+SPWM155.SPL, name: Cacofiend, opcodes: 174 
+SPWM157.SPL, name: Cacofiend, opcodes: 215 
+SPWM159.SPL, name: Cacofiend, opcodes: 9 
+SPWM162.SPL, name: Charm Person, opcodes: 225 
+SPWM164.SPL, name: Slow, opcodes: 0 139 141 174 54 142 321 40 
+SPWM167.SPL, name: Polymorph Other, opcodes: 141 174 44 
+SPWM168.SPL, name: Heal, opcodes: 17 50 139 81 77 215 79 11 240 75 164 
+SPWM178.SPL, name: Blindness, opcodes: 50 139 141 174 142 215 74 
+SPWM179.SPL, name: Polymorph Other, opcodes: 141 5 174 177 
+SPWM183.SPL, name: Polymorph Other, opcodes: 141 174 144 177 
+SPWM186.SPL, name: Charm Person, opcodes: 170 141 215 
+SPWM187.SPL, name: Stinking Cloud, opcodes: 39 142 177 
+SPWM188.SPL, name: Summon Cow, opcodes: 152 174 12 
+SPWM191.SPL, name: Polymorph Other, opcodes: 190 141 174 
+SPWM198.SPL, name: Polymorph Other, opcodes: 141 174 7 
+SPWM199.SPL, name: Repulsion, caster, opcodes: 139 105 
+SW1H01.SPL, name: null, opcodes: 139 112 122 
+SW1H04.SPL, name: null, opcodes: 139 112 122 
+SW1H07.SPL, name: null, opcodes: 139 112 122 
+SW1H12.SPL, name: null, opcodes: 139 112 122 
+SW1H17.SPL, name: null, opcodes: 139 112 122 
+SW1H20.SPL, name: null, opcodes: 139 112 122 
+SW1H21.SPL, name: null, opcodes: 139 112 122 
+SW2H01.SPL, name: null, opcodes: 139 112 122 
+SW2H01B.SPL, name: null, opcodes: 139 112 122 
+SW2H10DM.SPL, name: Dispel Magic, opcodes: 139 81 174 58 77 215 177 240 
+TASLOIIL.SPL, name: null, opcodes: 139 112 122 
+XVARTIL.SPL, name: null, opcodes: 139 112 122 
+SPWI950.SPL, name: Skull Trap, opcodes: 141 12 

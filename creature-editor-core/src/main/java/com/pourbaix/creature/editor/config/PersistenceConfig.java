@@ -6,8 +6,13 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.hibernate4.HibernateExceptionTranslator;
@@ -20,6 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("com.pourbaix.creature.editor.repository")
+@EnableCaching
 public class PersistenceConfig {
 
 	@Value("${dataSource.driverClassName}")
@@ -34,6 +40,8 @@ public class PersistenceConfig {
 	private String dialect;
 	@Value("${hibernate.hbm2ddl.auto}")
 	private String hbm2ddlAuto;
+	@Value("${hibernate.show_sql}")
+	private boolean showSql;
 
 	@Bean
 	public DataSource dataSource() {
@@ -52,9 +60,10 @@ public class PersistenceConfig {
 		Properties jpaProperties = new Properties();
 		jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
 		jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
+		jpaProperties.put(org.hibernate.cfg.Environment.SHOW_SQL, showSql);
 		jpaProperties.put("hibernate.cache.use_second_level_cache", "true");
-		jpaProperties.put("hibernate.cache.use_query_cache", "true");
 		jpaProperties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+		jpaProperties.put("hibernate.cache.use_query_cache", "true");
 
 		LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setJpaVendorAdapter(vendorAdapter);
@@ -64,6 +73,22 @@ public class PersistenceConfig {
 		entityManagerFactoryBean.afterPropertiesSet();
 
 		return entityManagerFactoryBean.getObject();
+	}
+
+	@Bean
+	public CacheManager cacheManager() {
+		EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+		cacheManager.setCacheManager(ehCacheManagerFactoryBean().getObject());
+		return cacheManager;
+	}
+
+	@Bean
+	public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
+		EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
+		ehCacheManagerFactoryBean.setCacheManagerName("creatureCache");
+		ehCacheManagerFactoryBean.setShared(true);
+		ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+		return ehCacheManagerFactoryBean;
 	}
 
 	@Bean

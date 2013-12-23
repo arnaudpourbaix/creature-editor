@@ -2,10 +2,13 @@ package com.pourbaix.infinity.entity;
 
 import java.util.List;
 
+import org.springframework.util.CollectionUtils;
+
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
+import com.pourbaix.infinity.util.Constant;
 
 public class Spell {
 	private String resource;
@@ -23,7 +26,7 @@ public class Spell {
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("resource: ").append(resource);
+		sb.append(resource);
 		sb.append(", name: ").append(name);
 		sb.append(", level: ").append(level);
 		sb.append(", identifier: ").append(identifier);
@@ -32,6 +35,15 @@ public class Spell {
 		sb.append(", secondary type: ").append(secondaryType.getLabel());
 		sb.append(", flags: ").append(flags.toString());
 		sb.append(", exclusionFlags: ").append(exclusionFlags.toString());
+		if (!CollectionUtils.isEmpty(abilities)) {
+			for (Ability ability : abilities) {
+				if (ability.getEffects() != null) {
+					for (Effect effect : ability.getEffects()) {
+						sb.append(Constant.CARRIAGE_RETURN).append(effect.toString());
+					}
+				}
+			}
+		}
 		return sb.toString();
 	}
 

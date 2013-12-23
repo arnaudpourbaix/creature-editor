@@ -6,7 +6,7 @@ import com.pourbaix.infinity.datatype.TargetTypeEnum;
 import com.pourbaix.infinity.datatype.TimingEnum;
 
 public class Effect {
-
+	private int opcodeId;
 	private String opcode;
 	private EffectParameter param1 = new EffectParameter();
 	private EffectParameter param2 = new EffectParameter();
@@ -27,8 +27,12 @@ public class Effect {
 		StringBuffer sb = new StringBuffer();
 		sb.append("opcode: ").append(opcode);
 		sb.append(", target: ").append(target.getLabel());
-		sb.append(", param 1: ").append(param1.getName()).append("=").append(param1.getValue());
-		sb.append(", param 2: ").append(param2.getName()).append("=").append(param2.getValue());
+		if (param1.getName() != null) {
+			sb.append(", param 1: ").append(param1.getName()).append("=").append(param1.getValue());
+		}
+		if (param2.getName() != null) {
+			sb.append(", param 2: ").append(param2.getName()).append("=").append(param2.getValue());
+		}
 		sb.append(", power: ").append(power);
 		sb.append(", timing: ").append(timing.getLabel());
 		sb.append(", resistance: ").append(resistance.getLabel());
@@ -161,6 +165,14 @@ public class Effect {
 
 	public void setParam2(EffectParameter param2) {
 		this.param2 = param2;
+	}
+
+	public int getOpcodeId() {
+		return opcodeId;
+	}
+
+	public void setOpcodeId(int opcodeId) {
+		this.opcodeId = opcodeId;
 	}
 
 }
