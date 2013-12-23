@@ -77,6 +77,7 @@ public class EffectFactory {
 		int opcodeId = (int) DynamicArray.getShort(buffer, offset);
 		effect.setOpcodeId(opcodeId);
 		Opcode opcode = opcodeRepository.findOpcodeById(opcodeId);
+		Opcode opcode2 = opcodeRepository.findOne(opcodeId);
 		if (opcode == null) {
 			return;
 		}

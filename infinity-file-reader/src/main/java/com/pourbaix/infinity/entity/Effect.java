@@ -25,13 +25,13 @@ public class Effect {
 
 	public String toString() {
 		StringBuffer sb = new StringBuffer();
-		sb.append("opcode: ").append(opcode);
+		sb.append("opcode: ").append(opcodeId).append(" ").append(opcode);
 		sb.append(", target: ").append(target.getLabel());
 		if (param1.getName() != null) {
-			sb.append(", param 1: ").append(param1.getName()).append("=").append(param1.getValue());
+			sb.append(", ").append(param1.getName()).append(": ").append(param1.getValue());
 		}
 		if (param2.getName() != null) {
-			sb.append(", param 2: ").append(param2.getName()).append("=").append(param2.getValue());
+			sb.append(", ").append(param2.getName()).append(": ").append(param2.getValue());
 		}
 		sb.append(", power: ").append(power);
 		sb.append(", timing: ").append(timing.getLabel());
