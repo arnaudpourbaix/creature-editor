@@ -12,13 +12,12 @@ import com.pourbaix.infinity.datatype.AbilityLocationEnum;
 import com.pourbaix.infinity.datatype.AbilityTargetEnum;
 import com.pourbaix.infinity.datatype.AbilityTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
-import com.pourbaix.infinity.entity.Ability;
+import com.pourbaix.infinity.domain.Ability;
 import com.pourbaix.infinity.util.DynamicArray;
 
 @Service
 public class AbilityFactory {
 
-	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(AbilityFactory.class);
 
 	@Autowired
@@ -47,7 +46,6 @@ public class AbilityFactory {
 			ability.setRange(DynamicArray.getShort(buffer, offset + 14));
 			ability.setLevel((byte) DynamicArray.getShort(buffer, offset + 16));
 			ability.setCastingTime((byte) DynamicArray.getShort(buffer, offset + 18));
-			// logger.debug(ability.toString());
 			fetchProjectile(ability, buffer, offset);
 			fetchEffects(ability, buffer, offset, globalEffectOffset);
 		} catch (UnknownValueException e) {

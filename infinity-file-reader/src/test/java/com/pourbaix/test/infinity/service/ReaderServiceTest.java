@@ -13,8 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pourbaix.infinity.config.RootConfig;
-import com.pourbaix.infinity.entity.IdentifierEntry;
-import com.pourbaix.infinity.entity.Spell;
+import com.pourbaix.infinity.domain.IdentifierEntry;
+import com.pourbaix.infinity.domain.Spell;
 import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -176,11 +176,19 @@ public class ReaderServiceTest {
 		}
 	}
 
-	@Test
+	// @Test
 	public void spellSelection() {
 		try {
-			readerService.getSpell("SPCL521.SPL");
-			readerService.getSpell("SPCL521D.SPL");
+			readerService.getSpell("SPIN869.SPL");
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void creatureKahrk() {
+		try {
+			readerService.getCreature("KAHRK.CRE");
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}

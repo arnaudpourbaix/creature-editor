@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import com.pourbaix.creature.editor.domain.Opcode;
-import com.pourbaix.creature.editor.domain.OpcodeParameter;
-import com.pourbaix.creature.editor.domain.OpcodeParameterLink;
-import com.pourbaix.creature.editor.domain.OpcodeParameterValue;
-import com.pourbaix.creature.editor.repository.OpcodeRepository;
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.ResistanceEnum;
 import com.pourbaix.infinity.datatype.TargetTypeEnum;
 import com.pourbaix.infinity.datatype.TimingEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
-import com.pourbaix.infinity.entity.Effect;
-import com.pourbaix.infinity.entity.EffectParameter;
+import com.pourbaix.infinity.domain.Effect;
+import com.pourbaix.infinity.domain.EffectParameter;
+import com.pourbaix.infinity.domain.Opcode;
+import com.pourbaix.infinity.domain.OpcodeParameter;
+import com.pourbaix.infinity.domain.OpcodeParameterLink;
+import com.pourbaix.infinity.domain.OpcodeParameterValue;
+import com.pourbaix.infinity.repository.OpcodeRepository;
 import com.pourbaix.infinity.util.DynamicArray;
 
 @Service
@@ -38,8 +38,8 @@ public class EffectFactory {
 	@Autowired
 	private IdentifierFactory identifierFactory;
 
-	static final String[] SAVE_TYPES = { "No save", "Spell", "Breath weapon", "Paralyze/Poison/Death", "Rod/Staff/Wand", "Petrify/Polymorph", "", "", "", "",
-			"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Ex: bypass mirror image", "EE: ignore difficulty" };
+	private static final String[] SAVE_TYPES = { "No save", "Spell", "Breath weapon", "Paralyze/Poison/Death", "Rod/Staff/Wand", "Petrify/Polymorph", "", "",
+			"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Ex: bypass mirror image", "EE: ignore difficulty" };
 
 	public List<Effect> getEffects(byte buffer[], int offset, int count) throws FactoryException {
 		List<Effect> effects = new ArrayList<>(count);
@@ -77,7 +77,6 @@ public class EffectFactory {
 		int opcodeId = (int) DynamicArray.getShort(buffer, offset);
 		effect.setOpcodeId(opcodeId);
 		Opcode opcode = opcodeRepository.findOpcodeById(opcodeId);
-		Opcode opcode2 = opcodeRepository.findOne(opcodeId);
 		if (opcode == null) {
 			return;
 		}
@@ -89,21 +88,8 @@ public class EffectFactory {
 	}
 
 	private void fetchResource(Effect effect, byte buffer[], int offset) throws FactoryException {
-		// new ResourceRef(buffer, offset, "Resource", resourceType.split(":"));
-		byte[] res = Arrays.copyOfRange(buffer, offset + 20, offset + 28);
-		// effect.setResource(new String());
-
-		// if (resourceType == null) {
-		// if (effectType == 0x13F && param2 == 11) {
-		// s.add(new TextString(buffer, offset, 8, "Script name"));
-		// } else {
-		// s.add(new Unknown(buffer, offset, 8, "Unused"));
-		// }
-		// } else if (resourceType.equalsIgnoreCase("String")) {
-		// s.add(new TextString(buffer, offset, 8, "String"));
-		// } else {
-		// s.add(new ResourceRef(buffer, offset, "Resource", resourceType.split(":")));
-		// }
+		byte[] resource = Arrays.copyOfRange(buffer, offset + 20, offset + 28);
+		effect.setResource(DynamicArray.getString(resource, 0, resource.length));
 	}
 
 	private void fetchParameter(Effect effect, Opcode opcode, EffectParameter effectParameter, int order, int paramValue) throws FactoryException {

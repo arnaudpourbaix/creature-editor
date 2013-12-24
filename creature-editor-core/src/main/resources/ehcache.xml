@@ -22,15 +22,4 @@
 		<persistence strategy="localTempSwap"/>
 	</cache>
 
-	<cache name="com.pourbaix.creature.editor.domain.Opcode" maxElementsInMemory="500" eternal="true" overflowToDisk="false" />
-	<cache name="com.pourbaix.creature.editor.domain.Opcode.parameters" maxEntriesLocalHeap="1000" eternal="false" timeToLiveSeconds="600">
-    	<persistence strategy="localTempSwap"/>
-	</cache>
-	<cache name="com.pourbaix.creature.editor.domain.OpcodeParameter" maxElementsInMemory="1000" eternal="true" overflowToDisk="false" />
-	<cache name="com.pourbaix.creature.editor.domain.OpcodeParameter.values" maxEntriesLocalHeap="10000" eternal="false" timeToLiveSeconds="600">
-    	<persistence strategy="localTempSwap"/>
-	</cache>
-	<cache name="com.pourbaix.creature.editor.domain.OpcodeParameterValue" maxElementsInMemory="10000" eternal="true" overflowToDisk="false" />
-	<cache name="com.pourbaix.creature.editor.domain.OpcodeParameterLink" maxElementsInMemory="1000" eternal="true" overflowToDisk="false" />
-
 </ehcache>

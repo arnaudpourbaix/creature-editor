@@ -12,8 +12,8 @@ import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
-import com.pourbaix.infinity.entity.IdentifierEntry;
-import com.pourbaix.infinity.entity.Spell;
+import com.pourbaix.infinity.domain.IdentifierEntry;
+import com.pourbaix.infinity.domain.Spell;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -35,9 +35,9 @@ public class SpellFactory {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(SpellFactory.class);
 
-	private static final String[] s_spellflag = { "None", "", "", "", "", "", "", "", "", "", "", "Hostile/Breaks Invisibility", "No LOS required",
-			"Allow spotting", "Outdoors only", "Non-magical ability", "Trigger/Contingency", "Non-combat ability", "", "", "", "", "", "", "",
-			"Ex: can target invisible", "Ex: castable when silenced" };
+	private static final String[] FLAGS = { "None", "", "", "", "", "", "", "", "", "", "", "Hostile/Breaks Invisibility", "No LOS required", "Allow spotting",
+			"Outdoors only", "Non-magical ability", "Trigger/Contingency", "Non-combat ability", "", "", "", "", "", "", "", "Ex: can target invisible",
+			"Ex: castable when silenced" };
 	private static final String[] s_exclude = { "None", "Chaotic", "Evil", "Good", "... Neutral", "Lawful", "Neutral ...", "Abjurer", "Conjurer", "Diviner",
 			"Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf", "Half-elf",
 			"Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
@@ -56,7 +56,7 @@ public class SpellFactory {
 			spell.setResource(entry.getResourceName());
 			byte buffer[] = entry.getResourceData();
 			spell.setName(StringResource.getInstance().getStringRef(buffer, 8));
-			spell.setFlags(new Flag((long) DynamicArray.getInt(buffer, 24), 4, s_spellflag));
+			spell.setFlags(new Flag((long) DynamicArray.getInt(buffer, 24), 4, FLAGS));
 			spell.setExclusionFlags(new Flag((long) DynamicArray.getInt(buffer, 30), 4, s_exclude));
 			spell.setType(SpellTypeEnum.valueOf(DynamicArray.getShort(buffer, 28)));
 			spell.setSchool(SchoolEnum.valueOf(DynamicArray.getByte(buffer, 37)));
@@ -70,7 +70,6 @@ public class SpellFactory {
 			int effectOffset = DynamicArray.getInt(buffer, 106);
 			fetchSpellAbilities(spell, buffer, effectOffset);
 			fetchSpellEffects(spell, buffer, effectOffset);
-			logger.debug(spell.toString());
 			return spell;
 		} catch (UnknownValueException | IOException | StringResourceException e) {
 			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());

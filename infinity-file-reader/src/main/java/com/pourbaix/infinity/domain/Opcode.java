@@ -1,4 +1,4 @@
-package com.pourbaix.creature.editor.domain;
+package com.pourbaix.infinity.domain;
 
 import java.util.HashSet;
 import java.util.Set;

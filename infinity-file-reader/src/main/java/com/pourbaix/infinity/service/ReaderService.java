@@ -12,8 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.context.GlobalContext;
-import com.pourbaix.infinity.entity.IdentifierFile;
-import com.pourbaix.infinity.entity.Spell;
+import com.pourbaix.infinity.domain.Creature;
+import com.pourbaix.infinity.domain.IdentifierFile;
+import com.pourbaix.infinity.domain.Spell;
+import com.pourbaix.infinity.factory.CreatureFactory;
 import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.factory.SpellFactory;
@@ -34,6 +36,9 @@ public class ReaderService {
 
 	@Autowired
 	private SpellFactory spellFactory;
+
+	@Autowired
+	private CreatureFactory creatureFactory;
 
 	@Autowired
 	private IdentifierFactory identifierFactory;
@@ -67,6 +72,28 @@ public class ReaderService {
 		try {
 			Spell spell = spellFactory.getSpell(resource);
 			return spell;
+		} catch (FactoryException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	public List<Creature> getCreatures() throws ServiceException {
+		try {
+			List<Creature> creatures = new ArrayList<>();
+			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("cre")) {
+				Creature creature = creatureFactory.getCreature(entry);
+				creatures.add(creature);
+			}
+			return creatures;
+		} catch (FactoryException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	public Creature getCreature(String resource) throws ServiceException {
+		try {
+			Creature creature = creatureFactory.getCreature(resource);
+			return creature;
 		} catch (FactoryException e) {
 			throw new ServiceException(e);
 		}

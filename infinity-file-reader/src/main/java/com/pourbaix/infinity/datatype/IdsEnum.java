@@ -1,7 +1,7 @@
 package com.pourbaix.infinity.datatype;
 
 public enum IdsEnum {
-	Spell("spell.ids"), Projectile("projectl.ids");
+	Spell("spell.ids"), Projectile("projectl.ids"), State("state.ids"), Animation("animate.ids");
 
 	private String resource;
 

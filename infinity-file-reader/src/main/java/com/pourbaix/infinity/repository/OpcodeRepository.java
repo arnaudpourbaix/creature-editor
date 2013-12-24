@@ -1,4 +1,4 @@
-package com.pourbaix.creature.editor.repository;
+package com.pourbaix.infinity.repository;
 
 import javax.persistence.QueryHint;
 
@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.data.repository.query.Param;
 
-import com.pourbaix.creature.editor.domain.Opcode;
+import com.pourbaix.infinity.domain.Opcode;
 
 public interface OpcodeRepository extends JpaRepository<Opcode, Integer> {
 

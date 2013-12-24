@@ -1,4 +1,4 @@
-package com.pourbaix.infinity.entity;
+package com.pourbaix.infinity.domain;
 
 import java.util.List;
 
