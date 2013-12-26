@@ -11,13 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pourbaix.creature.script.config.RootConfig;
+import com.pourbaix.creature.editor.spring.CoreConfig;
 import com.pourbaix.creature.script.instruction.GeneratedInstruction;
 import com.pourbaix.creature.script.instruction.InstructionException;
 import com.pourbaix.creature.script.instruction.InstructionService;
+import com.pourbaix.creature.script.spring.ScriptConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = RootConfig.class)
+@ContextConfiguration(classes = { CoreConfig.class, ScriptConfig.class })
+//@ContextConfiguration(classes = { ScriptConfig.class })
 public class ParseGeneratedInstructionTest {
 
 	@InjectMocks

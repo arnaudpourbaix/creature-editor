@@ -7,22 +7,6 @@
         					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 	<changeSet author="apourbaix" id="editor-001">
-		<createTable tableName="account">
-			<column name="id" type="int">
-				<constraints primaryKey="true" />
-			</column>
-			<column name="email" type="VARCHAR2(100)">
-				<constraints nullable="false"/>
-			</column>
-			<column name="password" type="VARCHAR2(200)">
-				<constraints nullable="false"/>
-			</column>
-			<column name="role" type="VARCHAR2(50)">
-				<constraints nullable="false"/>
-			</column>
-		</createTable>
-		<createSequence sequenceName="account_id_seq" />
-
 		<createTable tableName="game">
 			<column name="id" type="int" autoIncrement="true" >
 				<constraints primaryKey="true" />
@@ -132,11 +116,19 @@
 			<column name="level" type="int">
 				<constraints nullable="false"/>
 			</column>
-			<column name="range" type="int" />
-			<column name="school" type="VARCHAR2(15)" />
-			<column name="hurt_ally" type="BOOLEAN">
+			<column name="type" type="int">
 				<constraints nullable="false"/>
 			</column>
+			<column name="secondaryType" type="int">
+				<constraints nullable="false"/>
+			</column>
+			<column name="exclusionFlags" type="int" />
+			<column name="range" type="int" />
+			<column name="school" type="VARCHAR2(15)" />
+			<column name="hurt_allies" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
+			<column name="effects" type="int" />
 			<column name="mod_id" type="int">
 				<constraints nullable="false"/>
 			</column>

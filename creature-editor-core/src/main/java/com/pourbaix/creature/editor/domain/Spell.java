@@ -1,11 +1,10 @@
 package com.pourbaix.creature.editor.domain;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -43,36 +42,58 @@ public class Spell implements java.io.Serializable {
 	@Column(name = "LEVEL", nullable = false)
 	private int level;
 
+	@Column(name = "TYPE", nullable = false)
+	private int type;
+
+	@Column(name = "SECONDARYTYPE", nullable = false)
+	private int secondarytype;
+
+	@Column(name = "EXCLUSIONFLAGS")
+	private Integer exclusionflags;
+
 	@Column(name = "RANGE")
 	private Integer range;
 
 	@Column(name = "SCHOOL", length = 15)
 	private String school;
 
-	@Column(name = "HURT_ALLY", nullable = false)
-	private boolean hurtAlly;
+	@Column(name = "HURT_ALLIES", nullable = false)
+	private boolean hurtAllies;
+
+	@Column(name = "EFFECTS")
+	private Integer effects;
 
 	public Spell() {
 	}
 
-	public Spell(Mod mod, String resource, String name, int level, boolean hurtAlly) {
+	public Spell(Mod mod, String resource, String name, int level, int type,
+			int secondarytype, boolean hurtAllies) {
 		this.mod = mod;
 		this.resource = resource;
 		this.name = name;
 		this.level = level;
-		this.hurtAlly = hurtAlly;
+		this.type = type;
+		this.secondarytype = secondarytype;
+		this.hurtAllies = hurtAllies;
 	}
 
-	public Spell(Mod mod, String resource, String name, String identifier, String description, int level, Integer range, String school, boolean hurtAlly) {
+	public Spell(Mod mod, String resource, String name, String identifier,
+			String description, int level, int type, int secondarytype,
+			Integer exclusionflags, Integer range, String school,
+			boolean hurtAllies, Integer effects) {
 		this.mod = mod;
 		this.resource = resource;
 		this.name = name;
 		this.identifier = identifier;
 		this.description = description;
 		this.level = level;
+		this.type = type;
+		this.secondarytype = secondarytype;
+		this.exclusionflags = exclusionflags;
 		this.range = range;
 		this.school = school;
-		this.hurtAlly = hurtAlly;
+		this.hurtAllies = hurtAllies;
+		this.effects = effects;
 	}
 
 	public Integer getId() {
@@ -131,6 +152,30 @@ public class Spell implements java.io.Serializable {
 		this.level = level;
 	}
 
+	public int getType() {
+		return this.type;
+	}
+
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	public int getSecondarytype() {
+		return this.secondarytype;
+	}
+
+	public void setSecondarytype(int secondarytype) {
+		this.secondarytype = secondarytype;
+	}
+
+	public Integer getExclusionflags() {
+		return this.exclusionflags;
+	}
+
+	public void setExclusionflags(Integer exclusionflags) {
+		this.exclusionflags = exclusionflags;
+	}
+
 	public Integer getRange() {
 		return this.range;
 	}
@@ -147,12 +192,20 @@ public class Spell implements java.io.Serializable {
 		this.school = school;
 	}
 
-	public boolean isHurtAlly() {
-		return this.hurtAlly;
+	public boolean isHurtAllies() {
+		return this.hurtAllies;
 	}
 
-	public void setHurtAlly(boolean hurtAlly) {
-		this.hurtAlly = hurtAlly;
+	public void setHurtAllies(boolean hurtAllies) {
+		this.hurtAllies = hurtAllies;
+	}
+
+	public Integer getEffects() {
+		return this.effects;
+	}
+
+	public void setEffects(Integer effects) {
+		this.effects = effects;
 	}
 
 }

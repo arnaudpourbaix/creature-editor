@@ -62,7 +62,7 @@ module.exports = {
 				'vendor/angular-ui-router/release/angular-ui-router.min.js',
 				'vendor/angular-ui-utils/modules/route/route.js',
 				'vendor/jqwidgets/jqx-all.js' ],
-		css : [ 'vendor/jqwidgets/styles/jqx.base.css' ],
+		css : [ /*'vendor/jqwidgets/styles/jqx.base.css'*/ ],
 		assets : []
 
 	}

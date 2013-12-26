@@ -47,13 +47,13 @@ module.exports = function(grunt) {
 		connect : {
 			proxies : [ { // redirect /rest calls to web application server
 				// (tomcat)
-				context : '/rest',
+				context : '/',
 				host : 'localhost',
 				port : 8090,
 				https : false,
 				changeOrigin : false,
 				rewrite : {
-					'/rest' : '/editor/rest'
+					'/' : '/editor/'
 				}
 			} ],
 			options : {
@@ -137,23 +137,27 @@ module.exports = function(grunt) {
 		 * `build_dir`, and then to copy the assets to `compile_dir`.
 		 */
 		copy : {
-			build_assets : {
-				files : [ {
-					src : [ '**' ],
-					dest : '<%= build_dir %>/assets/',
-					cwd : 'src/assets',
-					expand : true
-				} ]
-			},
-			build_vendor_assets : {
-				files : [ {
-					src : [ '<%= vendor_files.assets %>' ],
-					dest : '<%= build_dir %>/assets/',
-					cwd : '.',
-					expand : true,
-					flatten : true
-				} ]
-			},
+			build_app_assets: {
+		        files: [
+		          { 
+		            src: [ '**' ],
+		            dest: '<%= build_dir %>/assets/',
+		            cwd: 'src/assets',
+		            expand: true
+		          }
+		       ]   
+		      },
+		      build_vendor_assets: {
+		        files: [
+		          { 
+		            src: [ '<%= vendor_files.assets %>' ],
+		            dest: '<%= build_dir %>/assets/',
+		            cwd: '.',
+		            expand: true,
+		            flatten: true
+		          }
+		       ]   
+		      },			
 			build_appjs : {
 				files : [ {
 					src : [ '<%= app_files.js %>' ],
@@ -279,7 +283,7 @@ module.exports = function(grunt) {
 		jshint : {
 			src : [ '<%= app_files.js %>' ],
 			test : [ '<%= app_files.jsunit %>' ],
-			gruntfile : [ 'Gruntfile.js' ],
+			//gruntfile : [ 'Gruntfile.js' ],
 			options : {
 				jshintrc : '.jshintrc'
 			},

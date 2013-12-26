@@ -1,22 +1,26 @@
-angular.module( 'creatureEditor', [
+var app = angular.module('creatureEditor', [
   'templates-app',
   'templates-common',
-  'creatureEditor.home',
   'creatureEditor.category',
+  'creatureEditor.spell',
+  'creatureEditor.mod',
   'ui.state',
   'ui.route'
-])
+]);
 
-.config( function myAppConfig ( $stateProvider, $urlRouterProvider ) { 'use strict';
-  $urlRouterProvider.otherwise( '/home' );
-})
+app.config(function myAppConfig($stateProvider, $urlRouterProvider) { 'use strict';
+  $urlRouterProvider.otherwise('/mod');
+});
 
-.run( function run () { 'use strict';
+/*app.factory('UserFactory', function($resource){
+    return $resource('Users/users.json');
+});*/
+
+app.controller('AppCtrl', function($scope, $location) { 'use strict';
+	$scope.text = 'Hello World!';
+	console.log('AppCtrl', $scope.text);
+});
+
+app.run(function run() { 'use strict';
 	
-})
-
-.controller( 'AppCtrl', function AppCtrl ( $scope, $location ) { 'use strict';
-})
-
-;
-
+});
