@@ -1,6 +1,6 @@
-angular.module('creatureEditor.mod', [ 'ui.state', 'ngResource' ])
+var mod = angular.module('creatureEditor.mod', [ 'ui.state', 'ngResource' ]);
 
-.config(function config($stateProvider) { 'use strict';
+mod.config(function config($stateProvider) { 'use strict';
 	$stateProvider.state('mod', {
 		url : '/mod',
 		views : {
@@ -10,36 +10,17 @@ angular.module('creatureEditor.mod', [ 'ui.state', 'ngResource' ])
 			}
 		}
 	});
-})
+});
 
-.factory('Mod', function ($resource) { 'use strict';
-	return $resource('mod/:id', {}, {
+mod.factory('Mod', function ($resource) { 'use strict';
+	return $resource('rest/mod/:id', {}, {
 		'save': {method:'PUT'}
 	});
-})
+});
 
-.controller('ModListController', function ModListController($scope, $location, Mod) { 'use strict';
+mod.controller('ModListController', function ModListController($scope, $location, Mod) { 'use strict';
+	$scope.title = 'Hello';
 	$scope.mods = Mod.query();
-	/*Mod.query().$promise.then(function(res) {
-		var list = res, source = {
-			datatype : "json",
-			datafields : [ {
-				name : 'id'
-			}, {
-				name : 'name'
-			}, {
-				name : 'parentId'
-			} ],
-			id : 'id',
-			localdata : list
-		}, dataAdapter = new $.jqx.dataAdapter(source, {
-			autoBind : true
-		});
-		$scope.mods = dataAdapter.getRecordsHierarchy('id', 'parentId', null, [ {
-			name : 'name',
-			map : 'label'
-		} ]);
-	});*/
 
 	$scope.gotoModNewPage = function() {
 		$location.path("/mod/new");

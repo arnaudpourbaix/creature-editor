@@ -1,7 +1,8 @@
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet, proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest, mountFolder = function(
-		connect, dir) {
-	return connect.static(require('path').resolve(dir));
-};
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet, 
+	proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest, 
+	mountFolder = function(connect, dir) {
+		return connect.static(require('path').resolve(dir));
+	};
 
 module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-connect');
@@ -45,21 +46,19 @@ module.exports = function(grunt) {
 		pkg : grunt.file.readJSON("package.json"),
 
 		connect : {
-			proxies : [ { // redirect /rest calls to web application server
-				// (tomcat)
-				context : '/',
+			proxies : [ { // redirect /rest calls to web application server (tomcat)
+				context : '/rest',
 				host : 'localhost',
 				port : 8090,
 				https : false,
 				changeOrigin : false,
-				rewrite : {
-					'/' : '/editor/'
-				}
+				rewrite : {	'rest' : 'editor/' }
 			} ],
 			options : {
+				base: 'build',
+				//keepalive: true,
 				port : 9000,
-				hostname : 'localhost' // Change this to '0.0.0.0' to access
-			// the server from outside.
+				hostname : 'localhost' // Change this to '0.0.0.0' to access the server from outside.
 			},
 			livereload : {
 				options : {
@@ -414,13 +413,13 @@ module.exports = function(grunt) {
 			/**
 			 * When a JavaScript unit test file changes, we only want to lint it and run the unit tests. We don't want to do any live reloading.
 			 */
-			jsunit : {
+			/*jsunit : {
 				files : [ '<%= app_files.jsunit %>' ],
 				tasks : [ 'jshint:test', 'karma:unit:run' ],
 				options : {
 					livereload : false
 				}
-			}
+			}*/
 		}
 	};
 
@@ -432,7 +431,9 @@ module.exports = function(grunt) {
 	 * for changes.
 	 */
 	grunt.renameTask('watch', 'delta');
-	grunt.registerTask('watch', [ 'build', 'karma:unit', 'delta' ]);
+	//grunt.registerTask('watch', [ 'build', 'karma:unit', 'delta' ]);
+	//grunt.registerTask('watch', [ 'build', 'delta' ]);
+	grunt.registerTask('watch', [ 'delta' ]);
 
 	/**
 	 * The default task is to build and compile.
@@ -450,7 +451,8 @@ module.exports = function(grunt) {
 	 */
 	grunt.registerTask('compile', [ 'recess:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile' ]);
 
-	grunt.registerTask('server', [ 'configureProxies', 'livereload-start', 'connect:livereload', 'open', 'watch' ]);
+	//grunt.registerTask('server', [ 'configureProxies', 'livereload-start', 'connect:livereload', 'open', 'watch' ]);
+	grunt.registerTask('server', [ 'configureProxies', 'connect:livereload', 'open', 'watch' ]);
 
 	/**
 	 * The index.html template includes the stylesheet and javascript sources based on dynamic names calculated in this Gruntfile. This task assembles the list

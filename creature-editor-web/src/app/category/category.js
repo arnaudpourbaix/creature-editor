@@ -1,6 +1,6 @@
-angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ])
+var category = angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ]);
 
-.config(function config($stateProvider) { 'use strict';
+category.config(function config($stateProvider) { 'use strict';
 	$stateProvider.state('category', {
 		url : '/category',
 		views : {
@@ -10,15 +10,15 @@ angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ])
 			}
 		}
 	});
-})
+});
 
-.factory('Category', function ($resource) { 'use strict';
-	return $resource('category/:id', {}, {
+category.factory('Category', function ($resource) { 'use strict';
+	return $resource('rest/category/:id', {}, {
 		'save': {method:'PUT'}
 	});
-})
+});
 
-.directive('jqxtree', function() { 'use strict';
+category.directive('jqxtree', function() { 'use strict';
 	return {
 		restrict: 'A',
 		scope : {
@@ -31,10 +31,9 @@ angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ])
 		}
 
 	};
-})
+});
 
-
-.controller('CategoryListController', function CategoryListController($scope, $location, Category) { 'use strict';
+category.controller('CategoryListController', function CategoryListController($scope, $location, Category) { 'use strict';
 	$scope.categories = Category.query();
 	/*Category.query().$promise.then(function(res) {
 		var list = res, source = {
