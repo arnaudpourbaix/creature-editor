@@ -13,7 +13,7 @@ angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ])
 })
 
 .factory('Category', function ($resource) { 'use strict';
-	return $resource('rest/category/:id', {}, {
+	return $resource('category/:id', {}, {
 		'save': {method:'PUT'}
 	});
 })
@@ -35,7 +35,8 @@ angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ])
 
 
 .controller('CategoryListController', function CategoryListController($scope, $location, Category) { 'use strict';
-	Category.query().$promise.then(function(res) {
+	$scope.categories = Category.query();
+	/*Category.query().$promise.then(function(res) {
 		var list = res, source = {
 			datatype : "json",
 			datafields : [ {
@@ -57,7 +58,7 @@ angular.module('creatureEditor.category', [ 'ui.state', 'ngResource' ])
 	});
 	$scope.dragEnd = function(dragItem, dropItem, args, dropPosition, tree) {
 		console.debug('dragEnd', dragItem, dropItem);
-	};
+	};*/
 
 	$scope.gotoCategoryNewPage = function() {
 		$location.path("/category/new");

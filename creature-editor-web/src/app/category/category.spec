@@ -5,7 +5,7 @@
 describe('category section', function() {
    beforeEach(module('creatureEditor.category'));
 
-   it('should have a dummy test', inject(function() {
+   /*it('should have a dummy test', inject(function() {
       expect(true).toBeTruthy();
-   }));
+   }));*/
 });

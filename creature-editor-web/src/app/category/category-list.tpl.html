@@ -1,11 +1,14 @@
 <div id="categoryList">
 
-    <h2>Liste des categories</h2>
-    
-    <div jqxtree="categories"></div>
+	<h2>Category list</h2>
 
-	<hr/>
+    <!--div jqxtree="categories"></div-->
+	<ul>
+		<li ng-repeat="category in categories">{{category.name}}</li>
+	</ul>
 
-    <button data-ng-click="gotoCategoryNewPage()" class="button">Ajouter</button>
+	<hr />
+
+	<button data-ng-click="gotoCategoryNewPage()" class="button">Add</button>
 
 </div>

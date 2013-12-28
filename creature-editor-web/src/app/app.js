@@ -17,10 +17,9 @@ app.config(function myAppConfig($stateProvider, $urlRouterProvider) { 'use stric
 });*/
 
 app.controller('AppCtrl', function($scope, $location) { 'use strict';
-	$scope.text = 'Hello World!';
-	console.log('AppCtrl', $scope.text);
+
 });
 
 app.run(function run() { 'use strict';
-	
+
 });

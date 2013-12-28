@@ -9,17 +9,8 @@
     <!-- compiled CSS --><% styles.forEach(function(file) { %>
     <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
 
-    <!--[if IE 7>
-    <link rel="stylesheet" href="assets/font-awesome-ie7.min.css />
-    <![endif]-->
-
     <!-- Javascripts --><% scripts.forEach(function(file) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
-
-    <!-- it's stupid to have to load it here, but this is for the +1 button -->
-    <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
-      { "parsetags": "explicit" }
-    </script>
   </head>
   <body>
     <div class="container">
@@ -30,16 +21,19 @@
           <div class="navbar-inner">
             <div class="container">
               <ul class="nav">
-                <li ui-route="/home" ng-class="{active:$uiRoute}">
-                  <a href="#/home">
-                    <i class="icon-home"></i>
-                    Home
-                  </a>
-                </li>
                 <li ui-route="/category" ng-class="{active:$uiRoute}">
                   <a href="#/category">
-                    <i class="icon-info-sign"></i>
                     Categories
+                  </a>
+                </li>
+                <li ui-route="/mod" ng-class="{active:$uiRoute}">
+                  <a href="#/mod">
+                    Mods
+                  </a>
+                </li>
+                <li ui-route="/spell" ng-class="{active:$uiRoute}">
+                  <a href="#/spell">
+                    Spells
                   </a>
                 </li>
               </ul>
