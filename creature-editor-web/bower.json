@@ -11,13 +11,14 @@
         "underscore": ">=1.4.4",
         "i18next": ">=1.6.0",
         "requirejs": ">=2.1.5",
-        "angular": "~1.0.7",
-        "angular-resource": "~1.0.7",
-        "angular-cookies": "~1.0.7",
-    	"angular-mocks": "~1.0.7",
-		"angular-scenario": "~1.0.7",
-    	"angular-bootstrap": "~0.3.0",
-    	"angular-ui-router": "~0.0.1",
-    	"angular-ui-utils": "~0.0.3"
+        "angular": ">=1.2.7",
+        "angular-resource": ">=1.2.7",
+        "angular-route": ">=1.2.7",
+        "angular-cookies": ">=1.2.7",
+    	"angular-mocks": ">=1.2.7",
+		"angular-scenario": ">=1.2.7",
+    	"angular-bootstrap": ">=0.3.0",
+    	"angular-ui-router": ">=0.2.7",
+    	"angular-ui-utils": ">=0.1.0"
     }
 }

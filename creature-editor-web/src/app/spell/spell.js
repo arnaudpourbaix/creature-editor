@@ -1,6 +1,7 @@
-var spell = angular.module('creatureEditor.spell', [ 'ui.state', 'ngResource' ]);
+var spell = angular.module('creatureEditor.spell', [ 'ui.router', 'ngRoute', 'ngResource' ]);
 
-spell.config(function config($stateProvider) { 'use strict';
+spell.config(function config($stateProvider) {
+	'use strict';
 	$stateProvider.state('spell', {
 		url : '/spell',
 		views : {
@@ -12,13 +13,17 @@ spell.config(function config($stateProvider) { 'use strict';
 	});
 });
 
-spell.factory('Spell', function ($resource) { 'use strict';
+spell.factory('Spell', function($resource) {
+	'use strict';
 	return $resource('spell/:id', {}, {
-		'save': {method:'PUT'}
+		'save' : {
+			method : 'PUT'
+		}
 	});
 });
 
-spell.controller('SpellListController', function SpellListController($scope, $location, Spell) { 'use strict';
+spell.controller('SpellListController', function SpellListController($scope, $location, Spell) {
+	'use strict';
 	$scope.mods = Spell.query();
 
 	$scope.gotoSpellNewPage = function() {

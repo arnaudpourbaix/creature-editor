@@ -17,6 +17,12 @@
 	"globals": {
     	"jquery": true,
     	"$": true,
-    	"angular": true
+    	"angular": true,
+    	"describe": true,
+    	"beforeEach": true,
+    	"it": true,
+    	"expect": true,
+    	"require": true,
+    	"module": true
 	}	
 }

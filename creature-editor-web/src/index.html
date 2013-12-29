@@ -15,26 +15,26 @@
   <body>
     <div class="container">
       <div class="masthead">
-        <h3 class="muted">creature-editor <small><a
+        <h3 class="muted">Creature Editor <small><a
               href="https://github.com/aigleborgne/CreatureEditor/blob/master/CHANGELOG.md">v<%= version %></a></small></h3>
         <div class="navbar">
           <div class="navbar-inner">
             <div class="container">
               <ul class="nav">
                 <li ui-route="/category" ng-class="{active:$uiRoute}">
-                  <a href="#/category">
-                    Categories
-                  </a>
+                	<a href="#/category">
+                    	Categories
+					</a>
                 </li>
                 <li ui-route="/mod" ng-class="{active:$uiRoute}">
-                  <a href="#/mod">
-                    Mods
-                  </a>
+                	<a ui-sref="mod.list">
+                    	Mods
+                    </a>
                 </li>
                 <li ui-route="/spell" ng-class="{active:$uiRoute}">
-                  <a href="#/spell">
-                    Spells
-                  </a>
+                	<a ui-sref="spell.list">
+                    	Spells
+                    </a>
                 </li>
               </ul>
             </div>
@@ -43,7 +43,7 @@
       </div>
     </div>
 
-    <div class="container" ui-view="main"></div>
+    <div class="container" ui-view></div>
 
   </body>
 </html>

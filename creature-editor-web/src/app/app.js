@@ -1,25 +1,20 @@
-var app = angular.module('creatureEditor', [
-  'templates-app',
-  'templates-common',
-  'creatureEditor.category',
-  'creatureEditor.spell',
-  'creatureEditor.mod',
-  'ui.state',
-  'ui.route'
-]);
+var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod',
+		'ngRoute', 'ui.router' ]);
 
-app.config(function myAppConfig($stateProvider, $urlRouterProvider) { 'use strict';
-  $urlRouterProvider.otherwise('/mod');
+app.config(function($stateProvider, $urlRouterProvider) {
+	'use strict';
+	// $urlRouterProvider.otherwise('/mod');
 });
 
-/*app.factory('UserFactory', function($resource){
-    return $resource('Users/users.json');
-});*/
-
-app.controller('AppCtrl', function($scope, $location) { 'use strict';
-
+app.controller('AppCtrl', function($scope, $location) {
+	'use strict';
+	/*
+	 * $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { if (angular.isDefined(toState.data.pageTitle)) {
+	 * $scope.pageTitle = toState.data.pageTitle + ' | ngBoilerplate'; } });
+	 */
 });
 
-app.run(function run() { 'use strict';
-
+app.run(function run($rootScope, $state) {
+	'use strict';
+	$rootScope.$state = $state;
 });

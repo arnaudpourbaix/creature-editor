@@ -1,10 +1,11 @@
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet, 
-	proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest, 
-	mountFolder = function(connect, dir) {
-		return connect.static(require('path').resolve(dir));
-	};
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet, proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest, mountFolder = function(
+		connect, dir) {
+	"use strict";
+	return connect.static(require('path').resolve(dir));
+};
 
 module.exports = function(grunt) {
+	"use strict";
 	grunt.loadNpmTasks('grunt-contrib-connect');
 	grunt.loadNpmTasks('grunt-connect-proxy');
 	grunt.loadNpmTasks('grunt-contrib-livereload');
@@ -52,18 +53,19 @@ module.exports = function(grunt) {
 				port : 8090,
 				https : false,
 				changeOrigin : false,
-				rewrite : {	'rest' : 'editor/' }
+				rewrite : {
+					'rest' : 'editor'
+				}
 			} ],
 			options : {
-				base: 'build',
-				//keepalive: true,
+				base : 'build',
 				port : 9000,
 				hostname : 'localhost' // Change this to '0.0.0.0' to access the server from outside.
 			},
 			livereload : {
 				options : {
 					middleware : function(connect) {
-						return [ proxySnippet, lrSnippet, mountFolder(connect, 'build'), ];
+						return [ proxySnippet, lrSnippet, mountFolder(connect, 'build') ];
 					}
 				}
 			},
@@ -87,8 +89,8 @@ module.exports = function(grunt) {
 		 * evaluated based on this very configuration object.
 		 */
 		meta : {
-			banner : '/**\n' + ' * <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n' + ' *\n'
-					+ ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' + ' */\n'
+			banner : '/**\n * <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n *\n * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n'
+					+ ' */\n'
 		},
 
 		/**
@@ -128,7 +130,7 @@ module.exports = function(grunt) {
 		 * then to copy the assets to `compile_dir`.
 		 */
 		copy : {
-			build_app_assets : {
+			buildAppAssets : {
 				files : [ {
 					src : [ '**' ],
 					dest : '<%= build_dir %>/assets/',
@@ -136,7 +138,7 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
-			build_vendor_assets : {
+			buildVendorAssets : {
 				files : [ {
 					src : [ '<%= vendor_files.assets %>' ],
 					dest : '<%= build_dir %>/assets/',
@@ -145,7 +147,7 @@ module.exports = function(grunt) {
 					flatten : true
 				} ]
 			},
-			build_appjs : {
+			buildAppjs : {
 				files : [ {
 					src : [ '<%= app_files.js %>' ],
 					dest : '<%= build_dir %>/',
@@ -153,7 +155,7 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
-			build_vendorjs : {
+			buildVendorjs : {
 				files : [ {
 					src : [ '<%= vendor_files.js %>' ],
 					dest : '<%= build_dir %>/',
@@ -161,7 +163,7 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
-			compile_assets : {
+			compileAssets : {
 				files : [ {
 					src : [ '**' ],
 					dest : '<%= compile_dir %>/assets',
@@ -176,16 +178,16 @@ module.exports = function(grunt) {
 		 */
 		concat : {
 			/**
-			 * The `build_css` target concatenates compiled CSS and vendor CSS together.
+			 * The `buildCss` target concatenates compiled CSS and vendor CSS together.
 			 */
-			build_css : {
+			buildCss : {
 				src : [ '<%= vendor_files.css %>', '<%= recess.build.dest %>' ],
 				dest : '<%= recess.build.dest %>'
 			},
 			/**
-			 * The `compile_js` target is the concatenation of our application source code and all specified vendor source code into a single file.
+			 * The `compileJs` target is the concatenation of our application source code and all specified vendor source code into a single file.
 			 */
-			compile_js : {
+			compileJs : {
 				options : {
 					banner : '<%= meta.banner %>'
 				},
@@ -218,7 +220,7 @@ module.exports = function(grunt) {
 					banner : '<%= meta.banner %>'
 				},
 				files : {
-					'<%= concat.compile_js.dest %>' : '<%= concat.compile_js.dest %>'
+					'<%= concat.compileJs.dest %>' : '<%= concat.compileJs.dest %>'
 				}
 			}
 		},
@@ -263,8 +265,7 @@ module.exports = function(grunt) {
 			// gruntfile : [ 'Gruntfile.js' ],
 			options : {
 				jshintrc : '.jshintrc'
-			},
-			globals : {}
+			}
 		},
 
 		/**
@@ -330,7 +331,7 @@ module.exports = function(grunt) {
 			 */
 			compile : {
 				dir : '<%= compile_dir %>',
-				src : [ '<%= concat.compile_js.dest %>', '<%= vendor_files.css %>', '<%= recess.compile.dest %>' ]
+				src : [ '<%= concat.compileJs.dest %>', '<%= vendor_files.css %>', '<%= recess.compile.dest %>' ]
 			}
 		},
 
@@ -375,7 +376,7 @@ module.exports = function(grunt) {
 			 */
 			jssrc : {
 				files : [ '<%= app_files.js %>' ],
-				tasks : [ 'jshint:src', 'karma:unit:run', 'copy:build_appjs' ]
+				tasks : [ 'jshint:src', 'copy:buildAppjs' ]
 			},
 
 			/**
@@ -413,13 +414,13 @@ module.exports = function(grunt) {
 			/**
 			 * When a JavaScript unit test file changes, we only want to lint it and run the unit tests. We don't want to do any live reloading.
 			 */
-			/*jsunit : {
+			jsunit : {
 				files : [ '<%= app_files.jsunit %>' ],
 				tasks : [ 'jshint:test', 'karma:unit:run' ],
 				options : {
 					livereload : false
 				}
-			}*/
+			}
 		}
 	};
 
@@ -431,9 +432,7 @@ module.exports = function(grunt) {
 	 * for changes.
 	 */
 	grunt.renameTask('watch', 'delta');
-	//grunt.registerTask('watch', [ 'build', 'karma:unit', 'delta' ]);
-	//grunt.registerTask('watch', [ 'build', 'delta' ]);
-	grunt.registerTask('watch', [ 'delta' ]);
+	grunt.registerTask('watch', [ 'build', 'karma:unit', 'delta' ]);
 
 	/**
 	 * The default task is to build and compile.
@@ -443,15 +442,14 @@ module.exports = function(grunt) {
 	/**
 	 * The `build` task gets your app ready to run for development and testing.
 	 */
-	grunt.registerTask('build', [ 'clean', 'html2js', 'jshint', 'recess:build', 'concat:build_css', 'copy:build_app_assets', 'copy:build_vendor_assets',
-			'copy:build_appjs', 'copy:build_vendorjs', 'index:build', 'karmaconfig', 'karma:continuous' ]);
+	grunt.registerTask('build', [ 'clean', 'html2js', 'jshint', 'recess:build', 'concat:buildCss', 'copy:buildAppAssets', 'copy:buildVendorAssets',
+			'copy:buildAppjs', 'copy:buildVendorjs', 'index:build', 'karmaconfig', 'karma:continuous' ]);
 
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.
 	 */
-	grunt.registerTask('compile', [ 'recess:compile', 'copy:compile_assets', 'ngmin', 'concat:compile_js', 'uglify', 'index:compile' ]);
+	grunt.registerTask('compile', [ 'recess:compile', 'copy:compileAssets', 'ngmin', 'concat:compileJs', 'uglify', 'index:compile' ]);
 
-	//grunt.registerTask('server', [ 'configureProxies', 'livereload-start', 'connect:livereload', 'open', 'watch' ]);
 	grunt.registerTask('server', [ 'configureProxies', 'connect:livereload', 'open', 'watch' ]);
 
 	/**
