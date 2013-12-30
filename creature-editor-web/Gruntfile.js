@@ -155,9 +155,17 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
-			buildVendorjs : {
+			buildVendorJs : {
 				files : [ {
 					src : [ '<%= vendor_files.js %>' ],
+					dest : '<%= build_dir %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			buildVendorCss : {
+				files : [ {
+					src : [ '<%= vendor_files.css %>' ],
 					dest : '<%= build_dir %>/',
 					cwd : '.',
 					expand : true
@@ -181,7 +189,7 @@ module.exports = function(grunt) {
 			 * The `buildCss` target concatenates compiled CSS and vendor CSS together.
 			 */
 			buildCss : {
-				src : [ '<%= vendor_files.css %>', '<%= recess.build.dest %>' ],
+				src : [ '<%= recess.build.dest %>' ],
 				dest : '<%= recess.build.dest %>'
 			},
 			/**
@@ -384,7 +392,7 @@ module.exports = function(grunt) {
 			 */
 			assets : {
 				files : [ 'src/assets/**/*' ],
-				tasks : [ 'copy:build_assets' ]
+				tasks : [ 'copy:buildAssets' ]
 			},
 
 			/**
@@ -443,7 +451,7 @@ module.exports = function(grunt) {
 	 * The `build` task gets your app ready to run for development and testing.
 	 */
 	grunt.registerTask('build', [ 'clean', 'html2js', 'jshint', 'recess:build', 'concat:buildCss', 'copy:buildAppAssets', 'copy:buildVendorAssets',
-			'copy:buildAppjs', 'copy:buildVendorjs', 'index:build', 'karmaconfig', 'karma:continuous' ]);
+			'copy:buildAppjs', 'copy:buildVendorJs', 'copy:buildVendorCss', 'index:build', 'karmaconfig', 'karma:continuous' ]);
 
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.
@@ -464,7 +472,6 @@ module.exports = function(grunt) {
 		var cssFiles = filterForCSS(this.filesSrc).map(function(file) {
 			return file.replace(dirRE, '');
 		});
-
 		grunt.file.copy('src/index.html', this.data.dir + '/index.html', {
 			process : function(contents, path) {
 				return grunt.template.process(contents, {
