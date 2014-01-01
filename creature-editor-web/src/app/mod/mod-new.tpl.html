@@ -1,0 +1,18 @@
+<div id="new-modal">
+	<div class="modal-header">
+		<h3>New Mod</h3>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="formField">
+				<label for="mod.title">Name</label> <input id="mod.title"
+					type="text" data-ng-model="mod.name" />
+			</div>
+			<hr />
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-warning" ng-click="$close()">Cancel</button>
+		<button class="btn btn-primary" ng-click="create()">Create</button>
+	</div>
+</div>

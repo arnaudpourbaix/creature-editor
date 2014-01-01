@@ -1,9 +1,6 @@
 <div id="modList">
 	<h2>Mods list</h2>
-	<ul>
-		<li ng-repeat="mod in mods">{{mod.name}}</li>
-	</ul>
+	<div class="gridStyle" ng-grid="gridOptions"></div>
 	<hr />
-	<button data-ng-click="newMod()" class="button">Add</button>
-	<div class="container" ui-view="modal"></div>
+	<button data-ng-click="$state.go('mod.new')" class="button">Add</button>
 </div>

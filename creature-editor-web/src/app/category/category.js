@@ -70,7 +70,6 @@ category.controller('CategoryListController', function CategoryListController($s
 			name : 'name',
 			map : 'label'
 		} ]);
-		console.debug($scope.categories);
 	});
 	$scope.dragEnd = function(dragItem, dropItem, args, dropPosition, tree) {
 		console.debug('dragEnd', dragItem, dropItem);

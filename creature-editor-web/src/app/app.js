@@ -1,9 +1,9 @@
 var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod',
-		'ngRoute', 'ui.router' ]);
+		'ngRoute', 'ui.router', 'ngGrid', 'ui.bootstrap' ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	'use strict';
-	// $urlRouterProvider.otherwise('/mod');
+	$urlRouterProvider.otherwise('/mod/list');
 });
 
 app.controller('AppCtrl', function($scope, $location) {
