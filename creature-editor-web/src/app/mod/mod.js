@@ -38,7 +38,6 @@ mod.factory('modService', [ '$http', function($http) {
 
 	modFactory.checkUniqueValue = function(name) {
 		return $http.get(serviceBase + 'checkUnique/' + name).then(function(results) {
-			console.debug('server return:', results.data);
 			return results.data === 'true';
 		});
 	};
@@ -49,23 +48,33 @@ mod.factory('modService', [ '$http', function($http) {
 
 mod.directive('ensureUnique', [ 'modService', function(modService) {
 	'use strict';
+	function checkUnique(scope, element, attrs, ngModel) {
+		if (!ngModel || !element.val()) {
+			return;
+		}
+		var currentValue = element.val();
+		modService.checkUniqueValue(currentValue).then(function(unique) {
+			// Ensure value that being checked hasn't changed since the Ajax call was made
+			console.debug('checkUnique', currentValue, element.val(), unique);
+			if (currentValue === element.val()) {
+				ngModel.$setValidity('unique', unique);
+			}
+		}, function() {
+			ngModel.$setValidity('unique', false);
+		});
+	}
+
 	return {
 		restrict : 'A',
 		require : 'ngModel',
 		link : function(scope, element, attrs, ngModel) {
-			element.bind('blur', function(e) {
-				if (!ngModel || !element.val()) {
-					return;
+			element.bind('change', function(event) {
+				checkUnique(scope, element, attrs, ngModel);
+			});
+			element.bind('keydown', function(event) {
+				if (event.which === 13) {
+					checkUnique(scope, element, attrs, ngModel);
 				}
-				var currentValue = element.val();
-				modService.checkUniqueValue(currentValue).then(function(unique) {
-					// Ensure value that being checked hasn't changed since the Ajax call was made
-					if (currentValue === element.val()) {
-						ngModel.$setValidity('unique', unique);
-					}
-				}, function() {
-					ngModel.$setValidity('unique', false);
-				});
 			});
 		}
 	};
@@ -98,7 +107,7 @@ mod.controller('ModListController', function ModListController($scope, $state, $
 			enableCellEdit : false,
 			cellClass : 'deleteColumn',
 			width : '80px',
-			cellTemplate : '<button ng-click="deleteEntity(row)">Delete</button>'
+			cellTemplate : '<button class="btn btn-danger btn-xs" ng-click="deleteEntity(row)">Delete</button>'
 		} ]
 	};
 

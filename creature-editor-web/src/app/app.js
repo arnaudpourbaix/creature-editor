@@ -27,6 +27,29 @@ app.directive('focusMe', function($timeout) {
 	};
 });
 
+app.directive('validateSubmit', [ '$parse', function($parse) {
+	'use strict';
+	return {
+		restrict : 'A',
+		require : 'form',
+		link : function(scope, formElement, attributes, formController) {
+			var fn = $parse(attributes.validateSubmit);
+			formElement.bind('submit', function(event) {
+				console.debug('validateSubmit');
+				// if form is not valid cancel it.
+				if (!formController.$valid) {
+					return false;
+				}
+				scope.$apply(function() {
+					fn(scope, {
+						$event : event
+					});
+				});
+			});
+		}
+	};
+} ]);
+
 app.run(function run($rootScope, $state) {
 	'use strict';
 	$rootScope.$state = $state;
