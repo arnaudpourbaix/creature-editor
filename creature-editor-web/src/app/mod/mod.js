@@ -32,6 +32,45 @@ mod.factory('Mod', function($resource) {
 	});
 });
 
+mod.factory('modService', [ '$http', function($http) {
+	'use strict';
+	var serviceBase = 'rest/mod/', modFactory = {};
+
+	modFactory.checkUniqueValue = function(name) {
+		return $http.get(serviceBase + 'checkUnique/' + name).then(function(results) {
+			console.debug('server return:', results.data);
+			return results.data === 'true';
+		});
+	};
+
+	return modFactory;
+
+} ]);
+
+mod.directive('ensureUnique', [ 'modService', function(modService) {
+	'use strict';
+	return {
+		restrict : 'A',
+		require : 'ngModel',
+		link : function(scope, element, attrs, ngModel) {
+			element.bind('blur', function(e) {
+				if (!ngModel || !element.val()) {
+					return;
+				}
+				var currentValue = element.val();
+				modService.checkUniqueValue(currentValue).then(function(unique) {
+					// Ensure value that being checked hasn't changed since the Ajax call was made
+					if (currentValue === element.val()) {
+						ngModel.$setValidity('unique', unique);
+					}
+				}, function() {
+					ngModel.$setValidity('unique', false);
+				});
+			});
+		}
+	};
+} ]);
+
 mod.controller('ModListController', function ModListController($scope, $state, $timeout, Mod) {
 	'use strict';
 
@@ -67,21 +106,13 @@ mod.controller('ModListController', function ModListController($scope, $state, $
 		if ($scope.save.pending) {
 			return;
 		}
-		if (row.entity.id == null) {
-			if (row.entity.name.trim().length === 0) {
-				$scope.mods.splice(row.rowIndex, 1);
-			}
-		}
-		console.debug(row);
-		// var mod = $scope.mods[$scope.save.row];
-		// $scope.save.pending = true;
-		// $scope.save.row = row.rowIndex;
-		// $scope.save.promise = $timeout(function() {
-		// $scope.mods[$scope.save.row].$save();
-		// // console.log("Here you'd save your record to the server, we're updating row: " + $scope.save.row + " to be: " +
-		// // $scope.mods[$scope.save.row].name);
-		// $scope.save.pending = false;
-		// }, 500);
+		var mod = $scope.mods[$scope.save.row];
+		$scope.save.pending = true;
+		$scope.save.row = row.rowIndex;
+		$scope.save.promise = $timeout(function() {
+			$scope.mods[$scope.save.row].$save();
+			$scope.save.pending = false;
+		}, 500);
 	};
 
 	$scope.deleteEntity = function(row) {

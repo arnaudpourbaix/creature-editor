@@ -14,6 +14,19 @@ app.controller('AppCtrl', function($scope, $location) {
 	 */
 });
 
+app.directive('focusMe', function($timeout) {
+	'use strict';
+	return function(scope, element, attrs) {
+		scope.$watch(attrs.focusMe, function(value) {
+			if (value) {
+				$timeout(function() {
+					element.focus();
+				}, 700);
+			}
+		});
+	};
+});
+
 app.run(function run($rootScope, $state) {
 	'use strict';
 	$rootScope.$state = $state;

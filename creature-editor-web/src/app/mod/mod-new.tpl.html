@@ -3,16 +3,18 @@
 		<h3>New Mod</h3>
 	</div>
 	<div class="modal-body">
-		<form>
+		<form name="form" novalidate>
 			<div class="formField">
-				<label for="mod.title">Name</label> <input id="mod.title"
-					type="text" data-ng-model="mod.name" />
+				<label for="mod.title">Name</label> 
+				<input id="mod.title" type="text" name="name" data-ng-model="mod.name" ng-trim="true" focus-me="true" required ensure-unique />
+				<div class="error" ng-show="form.name.$dirty && form.name.$error.required">You must specify a name.</div>
+				<div class="error" ng-show="form.name.$dirty && form.name.$error.unique">Name already exists.</div>
 			</div>
 			<hr />
 		</form>
 	</div>
 	<div class="modal-footer">
 		<button class="btn btn-warning" ng-click="$close()">Cancel</button>
-		<button class="btn btn-primary" ng-click="create()">Create</button>
+		<button class="btn btn-primary" ng-click="create()" ng-disabled="form.$invalid">Create</button>
 	</div>
 </div>
