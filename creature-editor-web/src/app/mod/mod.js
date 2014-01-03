@@ -2,22 +2,30 @@ var mod = angular.module('creatureEditor.mod', [ 'ui.router', 'ngRoute', 'ngReso
 
 mod.config(function config($stateProvider) {
 	'use strict';
-	$stateProvider.state('mod', {
-		abstact : true,
-		url : '/mod',
-		template : '<ui-view/>'
-	}).state('mod.list', {
-		url : '/list',
+	$stateProvider.state('mods', {
+		abstract : true,
+		url : '/mods',
+		template : '<ui-view>Gestion des mods<br/></ui-view>'
+	}).state('mods.list', {
+		url : '',
+		resolve : {
+			mods : [ 'Mod', function(Mod) {
+				return Mod.query();
+			} ]
+		},
 		controller : 'ModListController',
 		templateUrl : 'mod/mod-list.tpl.html'
-	}).state('mod.new', {
-		url : "/new",
+	}).state('mods.new', {
+		url : '',
 		onEnter : function($stateParams, $state, $modal, $resource) {
-			$modal.open({
+			var result = $modal.open({
 				templateUrl : "mod/mod-new.tpl.html",
 				controller : 'ModNewController'
-			}).result.then(function(result) {
-				return $state.transitionTo("mod.list");
+			}).result;
+			result.then(function(result) {
+				
+			}).finally(function() {
+				$state.transitionTo("mods.list");
 			});
 		}
 	});
@@ -55,7 +63,7 @@ mod.directive('ensureUnique', [ 'modService', function(modService) {
 		var currentValue = element.val();
 		modService.checkUniqueValue(currentValue).then(function(unique) {
 			// Ensure value that being checked hasn't changed since the Ajax call was made
-			console.debug('checkUnique', currentValue, element.val(), unique);
+			console.debug('checkUnique', unique, currentValue, element.val());
 			if (currentValue === element.val()) {
 				ngModel.$setValidity('unique', unique);
 			}
@@ -80,7 +88,7 @@ mod.directive('ensureUnique', [ 'modService', function(modService) {
 	};
 } ]);
 
-mod.controller('ModListController', function ModListController($scope, $state, $timeout, Mod) {
+mod.controller('ModListController', function ModListController($scope, $state, $timeout, mods) {
 	'use strict';
 
 	$scope.save = {
@@ -89,7 +97,7 @@ mod.controller('ModListController', function ModListController($scope, $state, $
 		row : null
 	};
 
-	$scope.mods = Mod.query();
+	$scope.mods = mods;
 
 	$scope.gridOptions = {
 		data : 'mods',
@@ -108,6 +116,7 @@ mod.controller('ModListController', function ModListController($scope, $state, $
 			cellClass : 'deleteColumn',
 			width : '80px',
 			cellTemplate : '<button class="btn btn-danger btn-xs" ng-click="deleteEntity(row)">Delete</button>'
+			// cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteEntity(row)"></span>'
 		} ]
 	};
 
@@ -152,12 +161,9 @@ mod.controller('ModNewController', function ModNewController($scope, $modalInsta
 	});
 
 	$scope.create = function() {
-		if ($scope.mod.name.trim() === '') {
-			// TODO empty name message
-			return;
-		}
+		console.log('saving', $scope.mod);
 		$scope.mod.$save(function() {
-			$modalInstance.close($scope.mod);
+			$modalInstance.close();
 		});
 	};
 });

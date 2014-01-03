@@ -1,6 +1,9 @@
-<div id="modList">
-	<h2>Mods list</h2>
-	<div class="gridStyle" ng-grid="gridOptions"></div>
-	<hr />
-	<button data-ng-click="$state.go('mod.new')" class="btn btn-primary">Add</button>
+<div class="panel panel-primary">
+	<div class="panel-heading">Mods</div>
+	<div class="panel-body">
+		<div class="gridStyle" ng-grid="gridOptions"></div>
+	</div>
+	<div class="panel-footer">
+		<button data-ng-click="$state.go('mods.new')" class="btn btn-primary">Add</button>
+	</div>
 </div>

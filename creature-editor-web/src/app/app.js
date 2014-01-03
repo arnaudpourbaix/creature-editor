@@ -3,7 +3,7 @@ var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common'
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	'use strict';
-	$urlRouterProvider.otherwise('/mod/list');
+	$urlRouterProvider.otherwise('/');
 });
 
 app.controller('AppCtrl', function($scope, $location) {
@@ -50,7 +50,8 @@ app.directive('validateSubmit', [ '$parse', function($parse) {
 	};
 } ]);
 
-app.run(function run($rootScope, $state) {
+app.run(function run($rootScope, $state, $stateParams) {
 	'use strict';
 	$rootScope.$state = $state;
+	$rootScope.$stateParams = $stateParams;
 });
