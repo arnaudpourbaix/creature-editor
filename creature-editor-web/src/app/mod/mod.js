@@ -3,11 +3,7 @@ var mod = angular.module('creatureEditor.mod', [ 'ui.router', 'ngRoute', 'ngReso
 mod.config(function config($stateProvider) {
 	'use strict';
 	$stateProvider.state('mods', {
-		abstract : true,
 		url : '/mods',
-		template : '<ui-view>Gestion des mods<br/></ui-view>'
-	}).state('mods.list', {
-		url : '',
 		resolve : {
 			mods : [ 'Mod', function(Mod) {
 				return Mod.query();
@@ -15,17 +11,32 @@ mod.config(function config($stateProvider) {
 		},
 		controller : 'ModListController',
 		templateUrl : 'mod/mod-list.tpl.html'
-	}).state('mods.new', {
-		url : '',
-		onEnter : function($stateParams, $state, $modal, $resource) {
-			var result = $modal.open({
-				templateUrl : "mod/mod-new.tpl.html",
-				controller : 'ModNewController'
-			}).result;
-			result.then(function(result) {
+	}).state('mods.detail', {
+		url : '/:modId',
+		onEnter : function($state, $stateParams, $modal, $timeout, Mod) {
+			var modal = $modal.open({
+				templateUrl : "mod/mod-detail.tpl.html",
+				controller : 'ModDetailController',
+				backdrop: false,
+				resolve: { mod: function(Mod) {
+					if ($stateParams.modId !== '-1') {
+						return Mod.get({ id: $stateParams.modId });
+					} else {
+						return new Mod({ id : null, name : '' });
+					}
+				} }
+			});
+			modal.opened.then(function() {
+				$timeout(function() {
+					$(".modal-dialog").draggable({
+						handle : $(".modal-content")
+					});
+				});
+			});
+			modal.result.then(function(result) {
 				
 			}).finally(function() {
-				$state.transitionTo("mods.list");
+				$state.go('^');
 			});
 		}
 	});
@@ -54,35 +65,26 @@ mod.factory('modService', [ '$http', function($http) {
 
 } ]);
 
-mod.directive('ensureUnique', [ 'modService', function(modService) {
+mod.directive('uniqueName', [ 'modService', function(modService) {
 	'use strict';
-	function checkUnique(scope, element, attrs, ngModel) {
-		if (!ngModel || !element.val()) {
-			return;
-		}
-		var currentValue = element.val();
-		modService.checkUniqueValue(currentValue).then(function(unique) {
-			// Ensure value that being checked hasn't changed since the Ajax call was made
-			console.debug('checkUnique', unique, currentValue, element.val());
-			if (currentValue === element.val()) {
-				ngModel.$setValidity('unique', unique);
-			}
-		}, function() {
-			ngModel.$setValidity('unique', false);
-		});
-	}
-
+	var toId = null;
 	return {
-		restrict : 'A',
-		require : 'ngModel',
-		link : function(scope, element, attrs, ngModel) {
-			element.bind('change', function(event) {
-				checkUnique(scope, element, attrs, ngModel);
-			});
-			element.bind('keydown', function(event) {
-				if (event.which === 13) {
-					checkUnique(scope, element, attrs, ngModel);
+		restrict: 'A',
+		require: 'ngModel',
+		link: function(scope, elem, attr, ctrl) {
+			scope.$watch(attr.ngModel, function(value) { // when the scope changes, check the mod.
+				if (angular.isString(value) && value.length === 0) {
+					return;
 				}
+				if(toId) { // if there was a previous attempt, stop it.
+					clearTimeout(toId);
+				}
+				toId = setTimeout(function(){
+					modService.checkUniqueValue(value).then(function(unique) {
+						console.debug('uniqueName', unique);
+						ctrl.$setValidity('unique', unique);
+					});
+				}, 300);
 			});
 		}
 	};
@@ -91,48 +93,31 @@ mod.directive('ensureUnique', [ 'modService', function(modService) {
 mod.controller('ModListController', function ModListController($scope, $state, $timeout, mods) {
 	'use strict';
 
-	$scope.save = {
-		promise : null,
-		pending : false,
-		row : null
-	};
-
+	console.log(mods.$resolved, mods.length);
 	$scope.mods = mods;
 
 	$scope.gridOptions = {
 		data : 'mods',
 		enableCellSelection : false,
 		enableRowSelection : false,
-		enableCellEditOnFocus : true,
 		columnDefs : [ {
 			field : 'name',
-			displayName : 'Name',
-			enableCellEdit : true,
-			editableCellTemplate : '<input ng-class="\'colt\' + col.index" ng-input="COL_FIELD" ng-model="COL_FIELD" ng-blur="updateEntity(row)" />'
+			displayName : 'Name'
 		}, {
 			field : '',
 			sortable : false,
 			enableCellEdit : false,
-			cellClass : 'deleteColumn',
-			width : '80px',
-			cellTemplate : '<button class="btn btn-danger btn-xs" ng-click="deleteEntity(row)">Delete</button>'
+			cellClass : 'actionColumn',
+			width : '120px',
+			cellTemplate : '<button class="btn btn-info btn-xs" ng-click="editEntity(row)">Edit</button>&nbsp;&nbsp;<button class="btn btn-danger btn-xs" ng-click="deleteEntity(row)">Delete</button>'
 			// cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteEntity(row)"></span>'
 		} ]
 	};
 
-	$scope.updateEntity = function(row) {
-		if ($scope.save.pending) {
-			return;
-		}
-		var mod = $scope.mods[$scope.save.row];
-		$scope.save.pending = true;
-		$scope.save.row = row.rowIndex;
-		$scope.save.promise = $timeout(function() {
-			$scope.mods[$scope.save.row].$save();
-			$scope.save.pending = false;
-		}, 500);
+	$scope.editEntity = function(row) {
+		$state.go('.detail', { modId: row.entity.id });
 	};
-
+	
 	$scope.deleteEntity = function(row) {
 		row.entity.$delete({
 			id : row.entity.id
@@ -153,12 +138,9 @@ mod.controller('ModListController', function ModListController($scope, $state, $
 
 });
 
-mod.controller('ModNewController', function ModNewController($scope, $modalInstance, Mod) {
+mod.controller('ModDetailController', function ModDetailController($scope, $modalInstance, mod) {
 	'use strict';
-
-	$scope.mod = new Mod({
-		name : ''
-	});
+	$scope.mod = mod;
 
 	$scope.create = function() {
 		console.log('saving', $scope.mod);

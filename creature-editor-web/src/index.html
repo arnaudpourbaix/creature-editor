@@ -30,7 +30,7 @@
 				</p>
 				<ul class="nav navbar-nav">
 					<li ng-class="{active:$state.includes('category')}"><a ui-sref="category.list">Categories</a></li>
-					<li ng-class="{active:$state.includes('mods')}"><a ui-sref="mods.list">Mods</a></li>
+					<li ng-class="{active:$state.includes('mods')}"><a ui-sref="mods">Mods</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuration <b class="caret"></b></a>
 						<ul class="dropdown-menu">
 							<li><a ui-sref="category.list">Categories</a></li>
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 
-	<pre ng-show="false">
+	<pre>
       $state = {{$state.current.name}}
       $stateParams = {{$stateParams}}
       $state full url = {{ $state.$current.url.source }}
@@ -52,4 +52,17 @@
 	<div class="container" ui-view></div>
 
 </body>
+<script>
+//document.body.addEventListener("DOMNodeInserted", function(event) {
+$(document).bind('DOMNodeInserted', function(event) {
+	'use strict';
+	console.log('DOM modified');
+	var $elementJustAdded = $(event.target);
+	if ($elementJustAdded.hasClass('modal-dialog')) {
+		$elementJustAdded.draggable({
+			handle : $(".modal-content", $elementJustAdded)
+		});
+	}
+}, false);
+</script>
 </html>

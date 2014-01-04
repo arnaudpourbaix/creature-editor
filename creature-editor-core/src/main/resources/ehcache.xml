@@ -21,6 +21,8 @@
 	<cache name="org.hibernate.cache.UpdateTimestampsCache" maxEntriesLocalHeap="5000" eternal="true">
 		<persistence strategy="localTempSwap"/>
 	</cache>
+	
+	<cache name="com.pourbaix.creature.editor.domain.Mod" maxElementsInMemory="50" eternal="true" overflowToDisk="false" />
 
 	<cache name="com.pourbaix.infinity.domain.Opcode" maxElementsInMemory="500" eternal="true" overflowToDisk="false" />
 	<cache name="com.pourbaix.infinity.domain.Opcode.parameters" maxEntriesLocalHeap="1000" eternal="false" timeToLiveSeconds="600">

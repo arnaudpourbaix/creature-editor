@@ -40,13 +40,14 @@ module.exports = {
 	 */
 	vendor_files : {
 		/*
-		 * js : [ 'vendor/jquery/jquery.min.js', 'vendor/angular/angular.min.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
-		 * 'vendor/angular-cookies/angular-cookies.min.js', 'vendor/angular-resource/angular-resource.min.js', 'vendor/bootstrap/dist/js/bootstrap.min.js',
-		 * 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
+		 * js : [ 'vendor/jquery/jquery.min.js', 'vendor/jquery-ui/ui/jquery-ui.js', 'vendor/angular/angular.min.js',
+		 * 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js', 'vendor/angular-cookies/angular-cookies.min.js',
+		 * 'vendor/angular-resource/angular-resource.min.js', 'vendor/bootstrap/dist/js/bootstrap.min.js', 'vendor/html5shiv/dist/html5shiv.js',
+		 * 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js',
 		 * 'vendor/angular-ui-router/release/angular-ui-router.min.js', 'vendor/angular-ui-utils/modules/route/route.js',
 		 * 'vendor/angular-route/angular-route.min.js', 'vendor/ng-grid/ng-grid-2.0.7.min.js' ],
 		 */
-		js : [ 'vendor/jquery/jquery.js', 'vendor/angular/angular.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
+		js : [ 'vendor/jquery/jquery.js', 'vendor/jquery-ui/ui/jquery-ui.js', 'vendor/angular/angular.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
 				'vendor/angular-cookies/angular-cookies.js', 'vendor/angular-resource/angular-resource.js', 'vendor/bootstrap/dist/js/bootstrap.js',
 				'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js',
 				'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js', 'vendor/angular-ui-router/release/angular-ui-router.js',
