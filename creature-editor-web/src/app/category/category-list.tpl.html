@@ -1,11 +1,9 @@
-<div id="categoryList">
-
-	<h2>Categories list</h2>
-
-    <div jqxtree="categories"></div>
-
-	<hr />
-
-	<button data-ng-click="gotoCategoryNewPage()" class="button">Add</button>
-
-</div>
+<widget-panel>
+	<div widget-panel-header>Categories</div>
+	<div widget-panel-body>
+		<div jqxtree="categories"></div>
+	</div>
+	<div widget-panel-footer>
+		<button data-ng-click="gotoCategoryNewPage()" class="button">Add</button>
+	</div>
+</widget-panel>

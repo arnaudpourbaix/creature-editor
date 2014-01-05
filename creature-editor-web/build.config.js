@@ -52,9 +52,10 @@ module.exports = {
 				'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js',
 				'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js', 'vendor/angular-ui-router/release/angular-ui-router.js',
 				'vendor/angular-ui-utils/modules/route/route.js', 'vendor/angular-route/angular-route.js', 'vendor/ng-grid/ng-grid-2.0.7.debug.js' ],
-		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/bootstrap/dist/css/bootstrap.min.css', 'vendor/bootstrap/dist/css/bootstrap-theme.min.css' ],
-		assets : [ 'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.woff', 'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.ttf',
-				'vendor/bootstrap/dist/fonts/glyphicons-halflings-regular.svg' ]
+		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/bootstrap/dist/css/bootstrap.min.css', 'vendor/bootstrap/dist/css/bootstrap-theme.min.css',
+				'vendor/jquery-ui/themes/base/*.css' ],
+		font : [ 'vendor/bootstrap/dist/fonts/*' ],
+		assets : []
 
 	}
 };

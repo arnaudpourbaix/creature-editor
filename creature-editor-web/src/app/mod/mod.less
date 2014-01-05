@@ -1,25 +1,26 @@
 /* Mod CSS */
 
-.gridStyle {
+.modPanel {
+	width: 535px;
+}
+
+.modPanel .gridStyle {
     border: 1px solid rgb(212,212,212);
     width: 500px;
     height: 300px;
 }
 
-.actionColumn {
+.modPanel .actionColumn {
 	text-align: center;
 }
 
-.actionColumn button {
-	margin-top: 3px;
+.modPanel .actionColumn span {
+	display: inline-block;
+	margin-right: 10px;
+	cursor: pointer;
 }
 
-.help-block {
-	display: inline-block;
-	padding: 0.375em 0.25em;
-	margin-top: -1.3125em;
-	margin-bottom: 1em;
-	font-size: 0.75em;
-	font-weight: bold;
-	color: red;
+.modPanel .ngCanvas .cellName:hover {
+	background-color: #CEECF5;
+	cursor: pointer;
 }

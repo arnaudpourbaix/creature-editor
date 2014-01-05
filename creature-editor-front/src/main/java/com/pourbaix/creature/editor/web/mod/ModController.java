@@ -50,11 +50,11 @@ public class ModController {
 		modRepository.delete(id);
 	}
 
-	@RequestMapping(value = "/mod/checkUnique/{name}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/mod/checkUnique/{name}/{id}", method = RequestMethod.GET, produces = "application/json")
 	public @ResponseBody
-	boolean checkUnique(@PathVariable String name) {
+	boolean checkUnique(@PathVariable String name, @PathVariable Integer id) {
 		Mod mod = modRepository.findByName(name);
-		return mod == null;
+		return mod == null || mod.getId().equals(id);
 	}
 
 }

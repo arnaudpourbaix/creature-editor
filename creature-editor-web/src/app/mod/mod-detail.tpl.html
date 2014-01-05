@@ -1,21 +1,23 @@
-<div id="detail-modal">
-	<div class="modal-header">
-		<h4>Mod details</h4>
-	</div>
-	<form role="form" name="modForm" class="form-horizontal" novalidate validate-submit="create()">
-		<div class="modal-body">
-			<div class="form-group">
-				<label for="mod.title" class="col-sm-2 control-label">Name</label>
-				<div class="col-sm-10" ng-class="{'has-error': modForm.name.$invalid}">
-					<input id="mod.title" class="form-control" type="text" placeholder="Name" name="name" ng-model="mod.name" ng-trim="true" focus-me="true" required unique-name />
-					<span class="help-block" ng-show="modForm.name.$error.required">Required</span> 
-					<span class="help-block" ng-show="modForm.name.$dirty && modForm.name.$error.unique">Already exists.</span>
-				</div>
-			</div>
-		</div>
-		<div class="modal-footer">
-			<button class="btn btn-warning" ng-click="$dismiss()">Cancel</button>
-			<button class="btn btn-primary" ng-disabled="modForm.$invalid">Save</button>
-		</div>
-	</form>
+<div widget-modal-header>
+	<h4>Mod details</h4>
 </div>
+<form role="form" name="modForm" class="form-horizontal" novalidate data-validate-submit="create()">
+<div data-widget-modal-body>
+	<div class="form-group">
+		<label for="mod.title" class="col-sm-2 control-label">Name</label>
+		<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
+			<input id="mod.title" class="form-control" type="text"
+				placeholder="Name" name="name" data-ng-model="mod.name" data-ng-trim="true"
+				data-focus-me="true" required data-unique-name="{ id: mod.id }" /> <span
+				class="help-block" data-ng-show="modForm.name.$error.required">Required</span>
+			<span class="help-block"
+				data-ng-show="modForm.name.$dirty && modForm.name.$error.unique">Already
+				exists.</span>
+		</div>
+	</div>
+</div>
+<div data-widget-modal-footer>
+	<button class="btn btn-warning" type="button" data-ng-click="$dismiss()">Cancel</button>
+	<button class="btn btn-primary" data-ng-disabled="modForm.$invalid">Save</button>
+</div>
+</form>

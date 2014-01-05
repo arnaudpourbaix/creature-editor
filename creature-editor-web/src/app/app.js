@@ -1,5 +1,5 @@
 var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod',
-		'ngRoute', 'ui.router', 'ngGrid', 'ui.bootstrap' ]);
+		'ngRoute', 'ui.router', 'ngGrid', 'ui.bootstrap', 'ui-components' ]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 	'use strict';
@@ -8,10 +8,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 app.controller('AppCtrl', function($scope, $location) {
 	'use strict';
-	/*
-	 * $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { if (angular.isDefined(toState.data.pageTitle)) {
-	 * $scope.pageTitle = toState.data.pageTitle + ' | ngBoilerplate'; } });
-	 */
 });
 
 app.directive('focusMe', function($timeout) {
@@ -35,7 +31,6 @@ app.directive('validateSubmit', [ '$parse', function($parse) {
 		link : function(scope, formElement, attributes, formController) {
 			var fn = $parse(attributes.validateSubmit);
 			formElement.bind('submit', function(event) {
-				console.debug('validateSubmit');
 				// if form is not valid cancel it.
 				if (!formController.$valid) {
 					return false;

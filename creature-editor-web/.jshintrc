@@ -8,6 +8,7 @@
 	"unused": false,
 	"trailing": true,
 	"strict": true,
+	"laxbreak": true,
 	
 	"eqnull": true,
 	

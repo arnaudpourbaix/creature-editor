@@ -1,9 +1,9 @@
-<div class="panel panel-primary">
-	<div class="panel-heading">Mods</div>
-	<div class="panel-body">
-		<div class="gridStyle" ng-grid="gridOptions"></div>
+<widget-panel class="modPanel">
+	<div data-widget-panel-header>Mods</div>
+	<div data-widget-panel-body>
+		<div class="gridStyle" data-ng-grid="gridOptions"></div>
 	</div>
-	<div class="panel-footer">
-		<button ui-sref=".detail({ modId: -1 })" class="btn btn-primary">Add</button>
+	<div data-widget-panel-footer>
+		<button data-ui-sref=".detail({ modId: -1 })" class="btn btn-primary">Add</button>
 	</div>
-</div>
+</widget-panel>

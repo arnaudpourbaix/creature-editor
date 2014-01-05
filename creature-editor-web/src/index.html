@@ -43,7 +43,7 @@
 		</div>
 	</div>
 
-	<pre>
+	<pre ng-show="false">
       $state = {{$state.current.name}}
       $stateParams = {{$stateParams}}
       $state full url = {{ $state.$current.url.source }}
@@ -52,17 +52,4 @@
 	<div class="container" ui-view></div>
 
 </body>
-<script>
-//document.body.addEventListener("DOMNodeInserted", function(event) {
-$(document).bind('DOMNodeInserted', function(event) {
-	'use strict';
-	console.log('DOM modified');
-	var $elementJustAdded = $(event.target);
-	if ($elementJustAdded.hasClass('modal-dialog')) {
-		$elementJustAdded.draggable({
-			handle : $(".modal-content", $elementJustAdded)
-		});
-	}
-}, false);
-</script>
 </html>

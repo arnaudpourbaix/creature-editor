@@ -171,6 +171,14 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
+			buildVendorFont : {
+				files : [ {
+					src : [ '<%= vendor_files.font %>' ],
+					dest : '<%= build_dir %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
 			compileAssets : {
 				files : [ {
 					src : [ '**' ],
@@ -451,7 +459,7 @@ module.exports = function(grunt) {
 	 * The `build` task gets your app ready to run for development and testing.
 	 */
 	grunt.registerTask('build', [ 'clean', 'html2js', 'jshint', 'recess:build', 'concat:buildCss', 'copy:buildAppAssets', 'copy:buildVendorAssets',
-			'copy:buildAppjs', 'copy:buildVendorJs', 'copy:buildVendorCss', 'index:build', 'karmaconfig', 'karma:continuous' ]);
+			'copy:buildAppjs', 'copy:buildVendorJs', 'copy:buildVendorCss', 'copy:buildVendorFont', 'index:build', 'karmaconfig', 'karma:continuous' ]);
 
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.
