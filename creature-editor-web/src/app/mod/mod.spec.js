@@ -5,24 +5,29 @@ describe('mod section', function() {
 	var stateProvider, locationProvider, templateParams, ctrlName;
 
 	beforeEach(function() {
-		// angular.mock.module('ui.router', []);
-		// angular.mock.module('ngRoute', []);
-		// angular.mock.module('ngResource', []);
-		// angular.mock.module('creatureEditor', []);
-		// angular.mock.module('creatureEditor.mod', [ 'ui.router', 'ngRoute', 'ngResource' ]);
+		angular.mock.module('ui.router');
+		angular.mock.module('ngRoute');
+		angular.mock.module('ngResource');
+		angular.mock.module('creatureEditor');
 		angular.mock.module('creatureEditor.mod');
 	});
 
-	beforeEach(angular.mock.inject(function($rootScope, $controller){
-		scope = $rootScope.new();
+	beforeEach(angular.mock.inject(function($rootScope, $controller, Mod) {
+		scope = $rootScope.$new();
 		modListController = $controller('ModListController', {
-			$scope: scope,
+			$scope : scope,
+			mods : [ 'mod1', 'mod2', 'mod3' ]
+		// mods : Mod.query()
 		});
 	}));
 
 	it('should have a dummy test', angular.mock.inject(function() {
 		expect(true).toBeTruthy();
 	}));
+
+	it('should have 3 mods', function() {
+		expect(scope.mods.length).toBe(3);
+	});
 
 	// it('should have an empty events array', function(){
 	// console.log(scope);
@@ -68,10 +73,4 @@ describe('mod section', function() {
 	// expect(ModListController).toBeTruthy();
 	// }));
 
-	// it('should create "phones" model with 3 phones', function() {
-	// expect(true).toBeTruthy();
-	// var scope = {},
-	// ctrl = new PhoneListCtrl(scope);
-	// expect(scope.phones.length).toBe(3);
-	// });
 });

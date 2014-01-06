@@ -96,7 +96,6 @@ mod.directive('uniqueName', [ 'modService', function(modService) {
 mod.controller('ModListController', function ModListController($scope, $state, $timeout, mods) {
 	'use strict';
 
-	console.log(mods.$resolved, mods.length);
 	$scope.mods = mods;
 
 	$scope.gridOptions = {
