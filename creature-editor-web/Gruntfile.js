@@ -171,9 +171,17 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
-			buildVendorFont : {
+			buildVendorFonts : {
 				files : [ {
-					src : [ '<%= vendor_files.font %>' ],
+					src : [ '<%= vendor_files.fonts %>' ],
+					dest : '<%= build_dir %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			buildVendorImages : {
+				files : [ {
+					src : [ '<%= vendor_files.images %>' ],
 					dest : '<%= build_dir %>/',
 					cwd : '.',
 					expand : true
@@ -459,7 +467,8 @@ module.exports = function(grunt) {
 	 * The `build` task gets your app ready to run for development and testing.
 	 */
 	grunt.registerTask('build', [ 'clean', 'html2js', 'jshint', 'recess:build', 'concat:buildCss', 'copy:buildAppAssets', 'copy:buildVendorAssets',
-			'copy:buildAppjs', 'copy:buildVendorJs', 'copy:buildVendorCss', 'copy:buildVendorFont', 'index:build', 'karmaconfig', 'karma:continuous' ]);
+			'copy:buildAppjs', 'copy:buildVendorJs', 'copy:buildVendorCss', 'copy:buildVendorFonts', 'copy:buildVendorImages', 'index:build', 'karmaconfig',
+			'karma:continuous' ]);
 
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.

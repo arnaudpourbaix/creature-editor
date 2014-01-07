@@ -1,76 +1,97 @@
+/* global jasmine */
+
 describe('mod section', function() {
 	"use strict";
 
-	var modListController, location, scope, state;
-	var stateProvider, locationProvider, templateParams, ctrlName;
+	var mods = [ {
+		id : 1,
+		name : 'mod1'
+	}, {
+		id : 2,
+		name : 'mod2'
+	}, {
+		id : 3,
+		name : 'mod3'
+	} ];
 
-	beforeEach(function() {
-		angular.mock.module('ui.router');
-		angular.mock.module('ngRoute');
-		angular.mock.module('ngResource');
-		angular.mock.module('creatureEditor');
-		angular.mock.module('creatureEditor.mod');
-	});
+	describe('uniqueName directive', function() {
+		var mod, $scope, form;
 
-	beforeEach(angular.mock.inject(function($rootScope, $controller, Mod) {
-		scope = $rootScope.$new();
-		modListController = $controller('ModListController', {
-			$scope : scope,
-			mods : [ 'mod1', 'mod2', 'mod3' ]
-		// mods : Mod.query()
+		function setTestValue(value) {
+			$scope.model.testValue = value;
+			$scope.$digest();
+		}
+
+		beforeEach(module('creatureEditor.mod'));
+
+		beforeEach(function(Mod) {
+			mod = Mod.get({
+				id : 2
+			});
+			// Mockup Mod resource
+			angular.module('mock-Mod', []).factory('Mod', function() {
+				mods = jasmine.createSpyObj('Mod', [ 'query' ]);
+				return mods;
+			});
 		});
-	}));
+		console.log(mod);
+		it('should have a dummy test', angular.mock.inject(function() {
+			expect(mod).toBeDefined();
+		}));
 
-	it('should have a dummy test', angular.mock.inject(function() {
-		expect(true).toBeTruthy();
-	}));
-
-	it('should have 3 mods', function() {
-		expect(scope.mods.length).toBe(3);
+		// beforeEach(inject(function($compile, $rootScope) {
+		// $scope = $rootScope;
+		// var element = angular.element('<form name="form"><input name="testInput" ng-model="model.testValue" unique-email></form>');
+		// $scope.model = {
+		// testValue : null
+		// };
+		// $compile(element)($scope);
+		// $scope.$digest();
+		// form = $scope.form;
+		// }));
+		// it('should be valid initially', function() {
+		// expect(form.testInput.$valid).toBe(true);
+		// });
+		// it('should not call Users.query when the model changes', function() {
+		// setTestValue('different');
+		// expect(Users.query).not.toHaveBeenCalled();
+		// });
+		// it('should call Users.query when the view changes', function() {
+		// form.testInput.$setViewValue('different');
+		// expect(Users.query).toHaveBeenCalled();
+		// });
+		// it('should set model to invalid if the Users callback contains users', function() {
+		// Users.query.andCallFake(function(query, callback) {
+		// callback([ 'someUser' ]);
+		// });
+		// form.testInput.$setViewValue('different');
+		// expect(form.testInput.$valid).toBe(false);
+		// });
+		// it('should set model to valid if the Users callback contains no users', function() {
+		// Users.query.andCallFake(function(query, callback) {
+		// callback([]);
+		// });
+		// form.testInput.$setViewValue('different');
+		// expect(form.testInput.$valid).toBe(true);
+		// });
 	});
 
-	// it('should have an empty events array', function(){
-	// console.log(scope);
-	// expect(scope.mods).toBe([]);
-	// });
+	describe('Mod list controller', function() {
+		var location, scope, state;
 
-	// beforeEach(angular.mock.inject(function($state, $rootScope) {
-	// $rootScope.$apply(function() {
-	// $state.go("mods");
-	// state = $state;
-	// });
-	// }));
+		beforeEach(module('creatureEditor.mod'));
 
-	// beforeEach(angular.mock.inject(function($controller, $location, $rootScope) {
-	// location = $location;
-	// scope = $rootScope.$new();
-	// ModListController = $controller('ModListController', {
-	// $location : location,
-	// $scope : scope
-	// });
-	// }));
+		beforeEach(angular.mock.inject(function($rootScope, $controller, Mod) {
+			scope = $rootScope.$new();
+			$controller('ModListController', {
+				$scope : scope,
+				mods : mods
+			});
+		}));
 
-	// beforeEach(angular.mock.inject(function($controller, $rootScope, $state, $stateParams) {
-	// scope = $rootScope.$new();
-	// ModListController = function() {
-	// $state.transitionTo('mods', {});
-	// $rootScope.$digest();
-	// return $controller('ModListController', {
-	// $scope : scope,
-	// $state : $state
-	// });
-	// };
-	// }));
-
-	// it('should have title for about set', angular.mock.inject(function() {
-	// var controller = createController();
-	// expect(scope.mods).toBeTruthy();
-	// }));
-
-	// it('state should be mods', angular.mock.inject(function() {
-	// expect(state.current.name).to.equal("mods");
-	// expect(true).toBeTruthy();
-	// expect(ModListController).toBeTruthy();
-	// }));
+		it('should have 3 mods', function() {
+			expect(scope.mods.length).toBe(3);
+		});
+	});
 
 });
