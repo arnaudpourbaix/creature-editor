@@ -1,24 +1,20 @@
-var mod = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
-
-mod.factory('Mod', function($resource) {
+(function() {
 	'use strict';
-	return $resource('rest/mod/:id', {}, {
-		'save' : {
-			method : 'PUT'
-		}
-	});
-});
 
-mod.factory('modService', [ '$http', function($http) {
-	'use strict';
-	var serviceBase = 'rest/mod/', modFactory = {};
+	var mod = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
 
-	modFactory.checkUniqueValue = function(id, name) {
-		var idParam = id == null ? -1 : id;
-		return $http.get(serviceBase + 'checkUnique/' + name + '/' + idParam).then(function(results) {
-			return results.data === 'true';
+	mod.factory('Mod', function($resource) {
+		var baseUrl = 'rest/mod/';
+
+		return $resource(baseUrl + ':id', {}, {
+			'save' : {
+				method : 'PUT'
+			},
+			'getByName' : {
+				url : baseUrl + 'name/:name',
+				method : 'GET'
+			}
 		});
-	};
+	});
 
-	return modFactory;
-} ]);
+})();

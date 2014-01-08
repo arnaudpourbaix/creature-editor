@@ -400,7 +400,7 @@ module.exports = function(grunt) {
 			 */
 			jssrc : {
 				files : [ '<%= app_files.js %>' ],
-				tasks : [ 'jshint:src', 'copy:buildAppjs' ]
+				tasks : [ 'jshint:src', 'copy:buildAppjs', 'karma:unit:run' ]
 			},
 
 			/**

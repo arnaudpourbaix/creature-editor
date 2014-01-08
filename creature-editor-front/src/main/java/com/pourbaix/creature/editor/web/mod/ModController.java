@@ -38,6 +38,13 @@ public class ModController {
 		return modRepository.findOne(id);
 	}
 
+	@RequestMapping(value = "/mod/name/{name}", method = RequestMethod.GET, produces = "application/json")
+	public @ResponseBody
+	Mod getByName(@PathVariable String name) {
+		Mod mod = modRepository.findByName(name);
+		return mod;
+	}
+
 	@RequestMapping(value = "/mod", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void save(@RequestBody Mod mod) {
@@ -48,13 +55,6 @@ public class ModController {
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
 		modRepository.delete(id);
-	}
-
-	@RequestMapping(value = "/mod/checkUnique/{name}/{id}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	boolean checkUnique(@PathVariable String name, @PathVariable Integer id) {
-		Mod mod = modRepository.findByName(name);
-		return mod == null || mod.getId().equals(id);
 	}
 
 }
