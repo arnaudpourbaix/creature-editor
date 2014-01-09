@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var notification = angular.module('notification.i18n', [ 'notification.services', 'i18n.services' ]);
+	var notification = angular.module('notification.i18n', [ 'notification.services', 'notification.localizedMessages' ]);
 
 	notification.factory('i18nNotifications', [ 'localizedMessages', 'notifications', function(localizedMessages, notifications) {
 

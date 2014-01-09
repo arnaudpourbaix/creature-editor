@@ -8,6 +8,7 @@
         "jquery": ">=1.9.1",
         "jquery-ui": ">=1.9.2",
 		"bootstrap": ">=3.0.0",
+		"font-awesome": ">=4.0.0",
         "underscore": ">=1.4.4",
         "i18next": ">=1.6.0",
         "requirejs": ">=2.1.5",

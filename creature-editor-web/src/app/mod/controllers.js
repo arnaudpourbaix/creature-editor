@@ -1,15 +1,11 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'notification.i18n' ]);
+	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', /* 'notification.i18n' */]);
 
-	mod.controller('ModListController', function ModListController($scope, $state, i18nNotifications, mods) {
+	mod.controller('ModListController', function ModListController($scope, $state, mods, i18nNotifications) {
 
 		$scope.mods = mods;
-
-		i18nNotifications.pushForCurrentRoute('crud.user.remove.success', 'success', {
-			id : 5
-		});
 
 		$scope.gridOptions = {
 			data : 'mods',
@@ -41,6 +37,9 @@
 				id : row.entity.id
 			}).then(function(response) {
 				remove($scope.mods, 'id', row.entity.id);
+				i18nNotifications.pushForCurrentRoute('crud.mod.remove.success', 'success', {
+					name : row.entity.name
+				});
 			});
 		};
 
@@ -54,12 +53,15 @@
 
 	});
 
-	mod.controller('ModDetailController', function ModDetailController($scope, $modalInstance, mod) {
+	mod.controller('ModDetailController', function ModDetailController($scope, $modalInstance, mod, i18nNotifications) {
 
 		$scope.mod = mod;
 
 		$scope.create = function() {
 			$scope.mod.$save(function() {
+				i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
+					name : $scope.mod.name
+				});
 				$modalInstance.close();
 			});
 		};

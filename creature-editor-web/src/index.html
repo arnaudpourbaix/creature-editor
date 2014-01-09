@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html ng-app="creatureEditor" ng-controller="AppCtrl">
+<html data-ng-app="creatureEditor" data-ng-controller="AppCtrl">
 <head>
 <title>Editor</title>
 
-<!-- font awesome from BootstrapCDN -->
-<link href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+<meta name="description" content="Creature Editor v<%= version %>">
 
 <!-- compiled CSS -->
 <% styles.forEach(function(file) { %>
@@ -22,34 +21,16 @@
 
 </head>
 <body>
-	<div class="container">
-		<div class="masthead">
-			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
-				<p class="navbar-text navbar-right">
-					Creature Editor <small><a href="https://github.com/aigleborgne/CreatureEditor/blob/master/CHANGELOG.md">v<%= version %></a></small>
-				</p>
-				<ul class="nav navbar-nav">
-					<li ng-class="{active:$state.includes('categories')}"><a ui-sref="categories">Categories</a></li>
-					<li ng-class="{active:$state.includes('mods')}"><a ui-sref="mods">Mods</a></li>
-					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuration <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a ui-sref="categories">Categories</a></li>
-							<li class="divider"></li>
-							<li><a ui-sref="mods">Mods</a></li>
-						</ul></li>
-				</ul>
-			</nav>
+  <div data-ng-include="'header.tpl.html'"></div>
+  <div data-ng-include="'notification/notifications.tpl.html'" class="container" data-ng-show="notifications.getCurrent().length"></div>
 
-		</div>
-	</div>
-
-	<pre ng-show="true">
+	<pre data-ng-show="false">
       $state = {{$state.current.name}}
       $stateParams = {{$stateParams}}
       $state full url = {{ $state.$current.url.source }}
     </pre>
 
-	<div class="container" ui-view></div>
+	<div data-ui-view class="container"></div>
 
 </body>
 </html>

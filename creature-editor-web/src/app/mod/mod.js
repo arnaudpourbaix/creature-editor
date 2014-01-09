@@ -2,7 +2,15 @@
 	'use strict';
 
 	var mod = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers',
-			'ui.router', 'ngRoute' ]);
+			'ui.router', 'ngRoute', 'notification.i18n' ]);
+
+	mod.constant('I18N.MESSAGES', {
+		'errors.route.changeError' : 'Route change error',
+		'crud.mod.save.success' : "Mod '{{name}}' was saved successfully.",
+		'crud.mod.remove.success' : "Mod '{{name}}' was removed successfully.",
+		'crud.mod.remove.error' : "Error when removing mod '{{name}}'.",
+		'crud.mod.save.error' : "Error when saving a mod..."
+	});
 
 	mod.config(function config($stateProvider) {
 

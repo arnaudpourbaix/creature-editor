@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var i18n = angular.module('i18n.services', []);
+	var i18n = angular.module('notification.localizedMessages', []);
 
 	i18n.factory('localizedMessages', [ '$interpolate', 'I18N.MESSAGES', function($interpolate, i18nmessages) {
 

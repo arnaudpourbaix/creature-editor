@@ -53,7 +53,7 @@ module.exports = {
 				'vendor/placeholders/angular-placeholders-0.0.1-SNAPSHOT.min.js', 'vendor/angular-ui-router/release/angular-ui-router.js',
 				'vendor/angular-ui-utils/modules/route/route.js', 'vendor/angular-route/angular-route.js', 'vendor/ng-grid/ng-grid-2.0.7.debug.js' ],
 		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/bootstrap/dist/css/bootstrap.min.css', 'vendor/bootstrap/dist/css/bootstrap-theme.min.css',
-				'vendor/jquery-ui/themes/base/*.css' ],
+				'vendor/jquery-ui/themes/base/*.css', 'vendor/font-awesome/css/font-awesome.min.css' ],
 		images : [ 'vendor/jquery-ui/themes/base/images/*' ],
 		fonts : [ 'vendor/bootstrap/dist/fonts/*' ],
 		assets : []
