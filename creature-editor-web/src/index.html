@@ -29,13 +29,13 @@
 					Creature Editor <small><a href="https://github.com/aigleborgne/CreatureEditor/blob/master/CHANGELOG.md">v<%= version %></a></small>
 				</p>
 				<ul class="nav navbar-nav">
-					<li ng-class="{active:$state.includes('category')}"><a ui-sref="category.list">Categories</a></li>
+					<li ng-class="{active:$state.includes('categories')}"><a ui-sref="categories">Categories</a></li>
 					<li ng-class="{active:$state.includes('mods')}"><a ui-sref="mods">Mods</a></li>
 					<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuration <b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a ui-sref="category.list">Categories</a></li>
+							<li><a ui-sref="categories">Categories</a></li>
 							<li class="divider"></li>
-							<li><a ui-sref="mods.list">Mods</a></li>
+							<li><a ui-sref="mods">Mods</a></li>
 						</ul></li>
 				</ul>
 			</nav>
@@ -43,7 +43,7 @@
 		</div>
 	</div>
 
-	<pre ng-show="false">
+	<pre ng-show="true">
       $state = {{$state.current.name}}
       $stateParams = {{$stateParams}}
       $state full url = {{ $state.$current.url.source }}

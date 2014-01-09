@@ -1,11 +1,15 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource' ]);
+	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'notification.i18n' ]);
 
-	mod.controller('ModListController', function ModListController($scope, $state, mods) {
+	mod.controller('ModListController', function ModListController($scope, $state, i18nNotifications, mods) {
 
 		$scope.mods = mods;
+
+		i18nNotifications.pushForCurrentRoute('crud.user.remove.success', 'success', {
+			id : 5
+		});
 
 		$scope.gridOptions = {
 			data : 'mods',

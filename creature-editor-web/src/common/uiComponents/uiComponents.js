@@ -1,4 +1,4 @@
-var app = angular.module('ui-components', [ 'templates-app', 'templates-common', 'ngGrid', 'ui.bootstrap' ]);
+var app = angular.module('ui-components', [ 'ngGrid', 'ui.bootstrap' ]);
 
 app.factory('uiService', function() {
 	'use strict';
@@ -52,7 +52,7 @@ app.directive('widgetPanel', [ 'uiService', function(uiService) {
 		restrict : 'E',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetPanel.tpl.html',
+		template : '<div class="panel panel-primary" data-ng-transclude></div>',
 		link : function(scope, element, attributes) {
 			uiService.draggable(element, {
 				handle : $('.panel-heading', element),
@@ -69,7 +69,7 @@ app.directive('widgetPanelHeader', function() {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetPanelHeader.tpl.html'
+		template : '<div class="panel-heading" data-ng-transclude></div>'
 	};
 });
 
@@ -79,7 +79,7 @@ app.directive('widgetPanelBody', function() {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetPanelBody.tpl.html'
+		template : '<div class="panel-body" data-ng-transclude></div>'
 	};
 });
 
@@ -89,7 +89,7 @@ app.directive('widgetPanelFooter', function() {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetPanelFooter.tpl.html'
+		template : '<div class="panel-footer" data-ng-transclude></div>'
 	};
 });
 
@@ -126,7 +126,7 @@ app.directive('widgetModalHeader', function() {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetModalHeader.tpl.html'
+		template : '<div class="modal-header" data-ng-transclude></div>'
 	};
 });
 
@@ -136,7 +136,7 @@ app.directive('widgetModalBody', function() {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetModalBody.tpl.html'
+		template : '<div class="modal-body" data-ng-transclude></div>'
 	};
 });
 
@@ -146,6 +146,6 @@ app.directive('widgetModalFooter', function() {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		templateUrl : 'uiComponents/widgetModalFooter.tpl.html'
+		template : '<div class="modal-footer" data-ng-transclude></div>'
 	};
 });

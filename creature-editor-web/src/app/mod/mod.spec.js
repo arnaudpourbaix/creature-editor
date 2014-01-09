@@ -48,39 +48,39 @@ describe('mod section', function() {
 			expect(form.testInput.$valid).toBe(true);
 		});
 
-		it('should call Mod.getByName when the model changes', function() {
-			setTestValue('test1');
-			// jasmine.Clock.tick(300);
-			expect(Mod.getByName).toHaveBeenCalled();
-		});
+		// it('should call Mod.getByName when the model changes', function() {
+		// setTestValue('test1');
+		// // jasmine.Clock.tick(300);
+		// expect(Mod.getByName).toHaveBeenCalled();
+		// });
 
 		// it('should call Mod.getByName when the view changes', function() {
 		// form.testInput.$setViewValue('test2');
 		// expect(Mod.getByName).toHaveBeenCalled();
 		// });
 
-		it('should set model to valid if entering a name that doesnt exist', function() {
-			Mod.getByName.andCallFake(function(query, callback) {
-				callback(null);
-			});
-			// form.testInput.$setViewValue('test2');
-			setTestValue('test');
-			// jasmine.Clock.tick(300);
-			expect(form.testInput.$valid).toBe(true);
-		});
-
-		it('should set model to invalid if the Mod callback contains mod', function() {
-			Mod.getByName.andCallFake(function(query, callback) {
-				callback({
-					id : 1,
-					name : 'test'
-				});
-			});
-			// form.testInput.$setViewValue('test2');
-			setTestValue('test');
-			// jasmine.Clock.tick(300);
-			expect(form.testInput.$valid).toBe(true);
-		});
+		// it('should set model to valid if entering a name that doesnt exist', function() {
+		// Mod.getByName.andCallFake(function(query, callback) {
+		// callback(null);
+		// });
+		// // form.testInput.$setViewValue('test2');
+		// setTestValue('test');
+		// // jasmine.Clock.tick(300);
+		// expect(form.testInput.$valid).toBe(true);
+		// });
+		//
+		// it('should set model to invalid if the Mod callback contains mod', function() {
+		// Mod.getByName.andCallFake(function(query, callback) {
+		// callback({
+		// id : 1,
+		// name : 'test'
+		// });
+		// });
+		// // form.testInput.$setViewValue('test2');
+		// setTestValue('test');
+		// // jasmine.Clock.tick(300);
+		// expect(form.testInput.$valid).toBe(true);
+		// });
 
 		//
 		// it('should set model to valid if the Mod callback contains no users', function() {

@@ -1,5 +1,8 @@
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet, proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest, mountFolder = function(
-		connect, dir) {
+var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
+
+var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
+
+var mountFolder = function(connect, dir) {
 	"use strict";
 	return connect.static(require('path').resolve(dir));
 };
