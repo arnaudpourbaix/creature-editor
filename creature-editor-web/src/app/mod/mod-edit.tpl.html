@@ -1,7 +1,7 @@
-<div widget-modal-header>
+<div widget-modal-header data-close-button="true">
 	<h4>Mod details</h4>
 </div>
-<form role="form" name="modForm" class="form-horizontal" novalidate data-validate-submit="create()">
+<form role="form" name="modForm" class="form-horizontal" novalidate crud-edit="mod">
 <div data-widget-modal-body>
 	<div class="form-group">
 		<label for="mod.title" class="col-sm-2 control-label">Name</label>
@@ -17,7 +17,9 @@
 	</div>
 </div>
 <div data-widget-modal-footer>
-	<button class="btn btn-warning" type="button" data-ng-click="$dismiss()">Cancel</button>
+	<!-- 
 	<button class="btn btn-primary" data-ng-disabled="modForm.$invalid">Save</button>
+	 -->
+	<crud-buttons></crud-buttons>
 </div>
 </form>

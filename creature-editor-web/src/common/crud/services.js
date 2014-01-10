@@ -4,9 +4,7 @@
 	var crud = angular.module('crud.services', [ 'crud.routeProvider' ]);
 
 	crud.factory('crudEditMethods', function() {
-
 		return function(itemName, item, formName, successcb, errorcb) {
-
 			var mixin = {};
 
 			mixin[itemName] = item;
@@ -73,7 +71,6 @@
 	});
 
 	crud.factory('crudListMethods', [ '$location', function($location) {
-
 		return function(pathPrefix) {
 			var mixin = {
 				'new' : function() {
@@ -81,6 +78,13 @@
 				},
 				'edit' : function(itemId) {
 					$location.path(pathPrefix + '/' + itemId);
+				},
+				'removeFromList' : function(array, property, value) {
+					angular.forEach(array, function(item, index) {
+						if (item[property] === value) {
+							array.splice(index, 1);
+						}
+					});
 				}
 			};
 			return mixin;

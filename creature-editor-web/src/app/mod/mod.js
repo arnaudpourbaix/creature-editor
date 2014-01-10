@@ -25,16 +25,16 @@
 			templateUrl : 'mod/mod-list.tpl.html'
 		});
 
-		$stateProvider.state('mods.detail', {
+		$stateProvider.state('mods.edit', {
 			url : '/:modId',
 			onEnter : function($state, $stateParams, $modal, $timeout, Mod) {
 				var modal = $modal.open({
-					templateUrl : "mod/mod-detail.tpl.html",
-					controller : 'ModDetailController',
+					templateUrl : "mod/mod-edit.tpl.html",
+					controller : 'ModEditController',
 					backdrop : false,
 					resolve : {
 						mod : function(Mod) {
-							if ($stateParams.modId !== '-1') {
+							if ($stateParams.modId !== 'new') {
 								return Mod.get({
 									id : $stateParams.modId
 								}).$promise;

@@ -120,13 +120,23 @@ app.directive('widgetModal', [ 'uiService', function(uiService) {
 	};
 } ]);
 
-app.directive('widgetModalHeader', function() {
+app.directive('widgetModalHeader', function($compile) {
 	'use strict';
 	return {
 		restrict : 'AE',
 		transclude : true,
 		replace : true,
-		template : '<div class="modal-header" data-ng-transclude></div>'
+		priority : 2,
+		template : '<div class="modal-header" data-ng-transclude></div>',
+		compile : function compile(tElement, tAttrs, transclude) {
+			return {
+				post : function postLink(scope, iElement, iAttrs, controller) {
+					if (iAttrs.closeButton) {
+						$(iElement).prepend($compile('<button type="button" class="close" data-ng-click="$dismiss()" aria-hidden="true">x</button>')(scope));
+					}
+				}
+			};
+		}
 	};
 });
 

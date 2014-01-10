@@ -1,9 +1,11 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', /* 'notification.i18n' */]);
+	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
 
-	mod.controller('ModListController', function ModListController($scope, $state, mods, i18nNotifications) {
+	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications) {
+
+		angular.extend($scope, crudListMethods('/mods'));
 
 		$scope.mods = mods;
 
@@ -16,54 +18,57 @@
 				field : 'name',
 				displayName : 'Name',
 				cellClass : 'cellName',
-				cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="editEntity(row)"><span>{{row.getProperty(col.field)}}</span></div>'
+				cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="edit(row.entity.id)"><span>{{row.getProperty(col.field)}}</span></div>'
 			}, {
-				field : '',
 				sortable : false,
 				cellClass : 'actionColumn',
 				width : '60px',
-				cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="deleteEntity(row)" />'
+				cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" />'
 			} ]
 		};
 
-		$scope.editEntity = function(row) {
-			$state.go('.detail', {
-				modId : row.entity.id
-			});
-		};
-
-		$scope.deleteEntity = function(row) {
-			row.entity.$delete({
-				id : row.entity.id
+		$scope.remove = function(mod) {
+			mod.$delete({
+				id : mod.id
 			}).then(function(response) {
-				remove($scope.mods, 'id', row.entity.id);
+				$scope.removeFromList($scope.mods, 'id', mod.id);
 				i18nNotifications.pushForCurrentRoute('crud.mod.remove.success', 'success', {
-					name : row.entity.name
+					name : mod.name
 				});
 			});
 		};
-
-		function remove(array, property, value) {
-			$.each(array, function(index, result) {
-				if (result[property] === value) {
-					array.splice(index, 1);
-				}
-			});
-		}
 
 	});
 
-	mod.controller('ModDetailController', function ModDetailController($scope, $modalInstance, mod, i18nNotifications) {
+	mod.controller('ModEditController', function ModEditController($scope, $modalInstance, mod, i18nNotifications) {
 
 		$scope.mod = mod;
 
-		$scope.create = function() {
-			$scope.mod.$save(function() {
-				i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
-					name : $scope.mod.name
-				});
-				$modalInstance.close();
+		// $scope.create = function() {
+		// $scope.mod.$save(function() {
+		// i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
+		// name : $scope.mod.name
+		// });
+		// $modalInstance.close();
+		// });
+		// };
+
+		$scope.onSave = function(mod) {
+			i18nNotifications.pushForNextRoute('crud.mod.save.success', 'success', {
+				name : mod.name
 			});
+			$modalInstance.close();
+		};
+
+		$scope.onError = function() {
+			i18nNotifications.pushForCurrentRoute('crud.user.save.error', 'error');
+		};
+
+		$scope.onRemove = function(mod) {
+			i18nNotifications.pushForNextRoute('crud.mod.remove.success', 'success', {
+				name : mod.name
+			});
+			$modalInstance.close();
 		};
 	});
 

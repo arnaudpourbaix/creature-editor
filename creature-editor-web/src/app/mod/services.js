@@ -13,6 +13,9 @@
 			'getByName' : {
 				url : baseUrl + 'name/:name',
 				method : 'GET'
+			},
+			'id' : function() {
+				return this.id;
 			}
 		});
 	});

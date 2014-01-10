@@ -7,14 +7,12 @@
 		return {
 			restrict : 'E',
 			replace : true,
-			template : '<div>' + '  <button type="button" class="btn btn-primary save" ng-disabled="!canSave()" ng-click="save()">Save</button>'
-					+ '  <button type="button" class="btn btn-warning revert" ng-click="revertChanges()" ng-disabled="!canRevert()">Revert changes</button>'
-					+ '  <button type="button" class="btn btn-danger remove" ng-click="remove()" ng-show="canRemove()">Remove</button>' + '</div>'
+			templateUrl : 'crud/crud-buttons.tpl.html'
 		};
 	});
 
 	// Apply this directive to an element at or below a form that will manage CRUD operations on a resource.
-	// - The resource must expose the following instance methods: $saveOrUpdate(), $id() and $remove()
+	// - The resource must expose the following instance methods: $save(), $id() and $remove()
 	crud.directive('crudEdit', [ '$parse', function($parse) {
 		return {
 			// We ask this directive to create a new child scope so that when we add helper methods to the scope
@@ -39,7 +37,7 @@
 						throw new Error('crudEdit directive: The resource must expose the ' + methodName + '() instance method');
 					}
 				};
-				checkResourceMethod('$saveOrUpdate');
+				checkResourceMethod('$save');
 				checkResourceMethod('$id');
 				checkResourceMethod('$remove');
 
@@ -67,7 +65,7 @@
 				// The following functions should be triggered by elements on the form
 				// - e.g. ng-click="save()"
 				scope.save = function() {
-					resource.$saveOrUpdate(onSave, onSave, onError, onError);
+					resource.$save(onSave, onSave, onError, onError);
 				};
 				scope.revertChanges = function() {
 					resource = angular.copy(original);
