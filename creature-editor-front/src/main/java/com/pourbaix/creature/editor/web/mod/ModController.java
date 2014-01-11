@@ -45,10 +45,11 @@ public class ModController {
 		return mod;
 	}
 
-	@RequestMapping(value = "/mod", method = RequestMethod.PUT)
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void save(@RequestBody Mod mod) {
+	@RequestMapping(value = "/mod", method = RequestMethod.PUT, produces = "application/json")
+	public @ResponseBody
+	Mod save(@RequestBody Mod mod) {
 		modRepository.save(mod);
+		return mod;
 	}
 
 	@RequestMapping(value = "/mod/{id}", method = RequestMethod.DELETE)

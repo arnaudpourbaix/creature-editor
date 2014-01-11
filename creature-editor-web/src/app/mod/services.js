@@ -6,18 +6,26 @@
 	mod.factory('Mod', function($resource) {
 		var baseUrl = 'rest/mod/';
 
-		return $resource(baseUrl + ':id', {}, {
+		var res = $resource(baseUrl + ':id', {}, {
 			'save' : {
 				method : 'PUT'
+			},
+			'delete' : {
+				method : 'DELETE',
+				params : {
+					id : '@id'
+				}
 			},
 			'getByName' : {
 				url : baseUrl + 'name/:name',
 				method : 'GET'
-			},
-			'id' : function() {
-				return this.id;
 			}
 		});
+		res.prototype.$id = function() {
+			return this.id;
+		};
+
+		return res;
 	});
 
 })();

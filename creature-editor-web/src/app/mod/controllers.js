@@ -28,9 +28,7 @@
 		};
 
 		$scope.remove = function(mod) {
-			mod.$delete({
-				id : mod.id
-			}).then(function(response) {
+			mod.$delete().then(function(response) {
 				$scope.removeFromList($scope.mods, 'id', mod.id);
 				i18nNotifications.pushForCurrentRoute('crud.mod.remove.success', 'success', {
 					name : mod.name
@@ -40,32 +38,23 @@
 
 	});
 
-	mod.controller('ModEditController', function ModEditController($scope, $modalInstance, mod, i18nNotifications) {
+	mod.controller('ModEditController', function ModEditController($scope, $location, $modalInstance, mod, i18nNotifications) {
 
 		$scope.mod = mod;
 
-		// $scope.create = function() {
-		// $scope.mod.$save(function() {
-		// i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
-		// name : $scope.mod.name
-		// });
-		// $modalInstance.close();
-		// });
-		// };
-
 		$scope.onSave = function(mod) {
-			i18nNotifications.pushForNextRoute('crud.mod.save.success', 'success', {
+			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
 				name : mod.name
 			});
 			$modalInstance.close();
 		};
 
 		$scope.onError = function() {
-			i18nNotifications.pushForCurrentRoute('crud.user.save.error', 'error');
+			i18nNotifications.pushForCurrentRoute('crud.mod.save.error', 'danger');
 		};
 
 		$scope.onRemove = function(mod) {
-			i18nNotifications.pushForNextRoute('crud.mod.remove.success', 'success', {
+			i18nNotifications.pushForCurrentRoute('crud.mod.remove.success', 'success', {
 				name : mod.name
 			});
 			$modalInstance.close();

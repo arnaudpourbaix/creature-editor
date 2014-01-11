@@ -1,25 +1,18 @@
-<div widget-modal-header data-close-button="true">
+<div data-widget-modal-header data-close-button="false">
 	<h4>Mod details</h4>
 </div>
-<form role="form" name="modForm" class="form-horizontal" novalidate crud-edit="mod">
-<div data-widget-modal-body>
-	<div class="form-group">
-		<label for="mod.title" class="col-sm-2 control-label">Name</label>
-		<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
-			<input id="mod.title" class="form-control" type="text"
-				placeholder="Name" name="name" data-ng-model="mod.name" data-ng-trim="true"
-				data-focus-me="true" required data-unique-name="{ id: mod.id }" /> <span
-				class="help-block" data-ng-show="modForm.name.$error.required">Required</span>
-			<span class="help-block"
-				data-ng-show="modForm.name.$dirty && modForm.name.$error.unique">Already
-				exists.</span>
+<form role="form" name="modForm" class="form-horizontal" novalidate data-crud-edit="mod">
+	<div data-widget-modal-body>
+		<div class="form-group">
+			<label for="mod.title" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
+				<input id="mod.title" class="form-control" type="text" placeholder="Name" name="name" data-ng-model="mod.name" data-ng-trim="true" data-focus-me="true"
+					required data-unique-name="{ id: mod.id }" /> <span class="help-block" data-ng-show="modForm.name.$error.required">Required</span> <span
+					class="help-block" data-ng-show="modForm.name.$dirty && modForm.name.$error.unique">Already exists.</span>
+			</div>
 		</div>
 	</div>
-</div>
-<div data-widget-modal-footer>
-	<!-- 
-	<button class="btn btn-primary" data-ng-disabled="modForm.$invalid">Save</button>
-	 -->
-	<crud-buttons></crud-buttons>
-</div>
+	<div data-widget-modal-footer>
+		<crud-buttons />
+	</div>
 </form>

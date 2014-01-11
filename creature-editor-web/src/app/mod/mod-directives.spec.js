@@ -1,20 +1,9 @@
-/* global jasmine, inject */
+/* global jasmine, inject, xdescribe */
 
-describe('mod section', function() {
+xdescribe('Mod directives', function() {
 	"use strict";
 
-	var mods = [ {
-		id : 1,
-		name : 'mod1'
-	}, {
-		id : 2,
-		name : 'mod2'
-	}, {
-		id : 3,
-		name : 'mod3'
-	} ];
-
-	describe('uniqueName directive', function() {
+	describe('uniqueName', function() {
 		var Mod, $scope, form;
 
 		function setTestValue(value) {
@@ -103,31 +92,6 @@ describe('mod section', function() {
 		// form.testInput.$setViewValue('different');
 		// expect(form.testInput.$valid).toBe(true);
 		// });
-	});
-
-	describe('Mod list controller', function() {
-		var location, scope, state;
-
-		beforeEach(module('creatureEditor.mod'));
-		// beforeEach(module('notification.i18n'));
-		// beforeEach(module('i18n.services'));
-
-		beforeEach(inject(function($rootScope, $controller, Mod/* , i18nNotifications */) {
-			scope = $rootScope.$new();
-			$controller('ModListController', {
-				$scope : scope,
-				mods : mods
-			// ,i18nNotifications : i18nNotifications
-			});
-		}));
-
-		// it('should have 3 mods', function() {
-		// expect(scope.mods.length).toBe(3);
-		// });
-		it('should have a dummy test', inject(function() {
-			expect(true).toBeTruthy();
-		}));
-
 	});
 
 });
