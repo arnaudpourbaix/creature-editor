@@ -38,7 +38,7 @@
 
 	});
 
-	mod.controller('ModEditController', function ModEditController($scope, $location, $modalInstance, mod, i18nNotifications) {
+	mod.controller('ModEditController', function ModEditController($scope, $modalInstance, mod, i18nNotifications) {
 
 		$scope.mod = mod;
 

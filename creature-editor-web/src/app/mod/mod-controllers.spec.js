@@ -5,89 +5,106 @@ describe('Mod controllers', function() {
 
 	describe('list', function() {
 
+		var Mod, $rootScope, createController, i18nNotifications = jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]), crudListMethods = jasmine
+				.createSpy('crudListMethods');
+
 		beforeEach(function() {
 			angular.module('I18N-mock', []).value('I18N.MESSAGES', {});
 		});
-		beforeEach(module('creatureEditor.mod.controllers', 'I18N-mock'));
+		beforeEach(module('creatureEditor.mod.controllers', 'creatureEditor.mod.services', 'I18N-mock'));
 
-		it('should set up the scope correctly', inject(function($controller) {
-			var locals = {
-				$scope : {},
-				crudListMethods : jasmine.createSpy('crudListMethods'),
-				i18nNotifications : jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]),
-				mods : [ {
-					id : 1,
-					name : 'mod1'
-				}, {
-					id : 2,
-					name : 'mod2'
-				}, {
-					id : 3,
-					name : 'mod3'
-				} ]
+		beforeEach(inject(function($injector) {
+			Mod = $injector.get('Mod');
+			Mod.query = jasmine.createSpy("query spy").andReturn([ {
+				id : 1,
+				name : 'mod1'
+			}, {
+				id : 2,
+				name : 'mod2'
+			}, {
+				id : 3,
+				name : 'mod3'
+			} ]);
+		}));
+
+		beforeEach(inject(function($injector) {
+			$rootScope = $injector.get('$rootScope');
+			var $controller = $injector.get('$controller');
+			createController = function() {
+				return $controller('ModListController', {
+					$scope : $rootScope,
+					i18nNotifications : i18nNotifications,
+					crudListMethods : crudListMethods,
+					mods : Mod.query()
+				});
 			};
-			$controller('ModListController', locals);
-			expect(locals.$scope.mods).toBe(locals.mods);
-			expect(locals.crudListMethods).toHaveBeenCalled();
-			expect(locals.$scope.mods.length).toBe(3);
+		}));
+
+		it('should set up the scope', inject(function($controller) {
+			createController();
+			expect(crudListMethods).toHaveBeenCalled();
+			expect($rootScope.mods.length).toBe(3);
 		}));
 
 	});
 
 	describe('edit', function() {
 
+		var Mod, $rootScope, i18nNotifications = jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]), $modalInstance = jasmine.createSpyObj('$modalInstance',
+				[ 'close' ]), form, createController;
+
 		beforeEach(function() {
 			angular.module('I18N-mock', []).value('I18N.MESSAGES', {});
 		});
-		beforeEach(module('creatureEditor.mod.controllers', 'I18N-mock'));
+		beforeEach(module('creatureEditor.mod.controllers', 'creatureEditor.mod.services', 'I18N-mock'));
 
-		describe('ModEditController', function() {
-			function createLocals() {
-				return {
-					$scope : {},
-					$location : jasmine.createSpyObj('$location', [ 'path' ]),
-					$modalInstance : jasmine.createSpyObj('$modalInstance', [ 'close' ]),
-					i18nNotifications : jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]),
-					mod : {
-						$id : jasmine.createSpy('$id'),
-						$name : 'Test'
-					}
-				};
-			}
-			function runController(locals) {
-				inject(function($controller) {
-					$controller('ModEditController', locals);
+		beforeEach(inject(function($injector) {
+			Mod = $injector.get('Mod');
+			Mod.get = jasmine.createSpy("get spy").andReturn({
+				id : 1,
+				name : 'BGT'
+			});
+		}));
+
+		beforeEach(inject(function($injector) {
+			$rootScope = $injector.get('$rootScope');
+			var $controller = $injector.get('$controller');
+			createController = function() {
+				return $controller('ModEditController', {
+					$scope : $rootScope,
+					$modalInstance : $modalInstance,
+					i18nNotifications : i18nNotifications,
+					mod : Mod.get()
 				});
-			}
+			};
+		}));
 
-			xit('should set up the scope correctly', function() {
-				var locals = createLocals();
-				runController(locals);
-				expect(locals.$scope.mod.id).toBe(1);
-				expect(locals.$scope.mod.name).toBe('Test');
-			});
-
-			xit('should call $location & i18nNotifications services when $scope.onSave() is called', function() {
-				var locals = createLocals();
-				runController(locals);
-
-				locals.$scope.onSave({
-					$id : angular.noop
-				});
-
-				expect(locals.i18nNotifications.pushForCurrentRoute).toHaveBeenCalled();
-				expect(locals.$location.path).toHaveBeenCalled();
-			});
-
-			xit('should set updateError in onError', function() {
-				var locals = createLocals();
-				runController(locals);
-
-				locals.$scope.onError();
-				expect(locals.i18nNotifications.pushForCurrentRoute).toHaveBeenCalled();
-			});
+		it('should set up the scope correctly', function() {
+			createController();
+			expect($rootScope.mod.id).toBe(1);
+			expect($rootScope.mod.name).toBe('BGT');
 		});
 
+		it('should call i18nNotifications services and close modal when $scope.onSave() is called', function() {
+			createController();
+			$rootScope.onSave($rootScope.mod);
+			expect(i18nNotifications.pushForCurrentRoute).toHaveBeenCalled();
+			expect($modalInstance.close).toHaveBeenCalled();
+		});
+
+		it('should call i18nNotifications services and close modal when $scope.onRemove() is called', function() {
+			createController();
+			$rootScope.onRemove($rootScope.mod);
+			expect(i18nNotifications.pushForCurrentRoute).toHaveBeenCalled();
+			expect($modalInstance.close).toHaveBeenCalled();
+		});
+
+		xit('should set updateError in onError', function() {
+			createController();
+			$rootScope.onError($rootScope.mod);
+			expect(i18nNotifications.pushForCurrentRoute).toHaveBeenCalled();
+			expect($modalInstance.close).not.toHaveBeenCalled();
+		});
 	});
 
 });

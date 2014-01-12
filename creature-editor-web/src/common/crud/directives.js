@@ -27,7 +27,6 @@
 		// This function helps us extract the callback functions from the directive attributes
 		function makeFn(scope, attrs, attrName) {
 			var fn = scope.$eval(attrs[attrName]);
-			console.log('check', attrName);
 			if (!angular.isFunction(fn)) {
 				throw new Error('crudEdit directive: attribute "' + attrName + '" must evaluate to a function');
 			}
@@ -76,7 +75,7 @@
 				};
 				scope.remove = function() {
 					if (resource.$id()) {
-						resource.$delete(onRemove, onError);
+						resource.$remove(onRemove, onError);
 					} else {
 						onRemove();
 					}
