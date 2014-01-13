@@ -5,11 +5,17 @@
 
 <meta name="description" content="Creature Editor v<%= version %>">
 
+<!-- jQuery-UI -->
+<link rel="stylesheet" type="text/css" href="assets/jquery-ui/themes/base/jquery.ui.all.css" />
+
+<!-- Bootstrap -->
+<link rel="stylesheet" type="text/css" href="assets/bootstrap/dist/css/bootstrap.min.css" />
+<link rel="stylesheet" type="text/css" href="assets/bootstrap/dist/css/bootstrap-theme.min.css" />
+
 <!-- compiled CSS -->
 <% styles.forEach(function(file) { %>
 <link rel="stylesheet" type="text/css" href="<%= file %>" />
 <% }); %>
-
 <!-- Javascripts -->
 <% scripts.forEach(function(file) { %>
 <script type="text/javascript" src="<%= file %>"></script>
