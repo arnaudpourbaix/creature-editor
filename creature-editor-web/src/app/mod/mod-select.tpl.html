@@ -1,6 +1,6 @@
-<select class="mod-select" data-ui-select2="select2Options" data-ng-options="mod.id as mod.name for mod in mods" data-ng-model="modId" data-placeholder="Select a mod">
+<select class="mod-select" data-ui-select2="select2Options" data-ng-model="modId" data-placeholder="Select a mod">
 	<option value=""></option>
-	<option data-ng-repeat="mod in mods" value="{{mod.id}}" ng-selected="{{mod.id == modId}}">
+	<option data-ng-repeat="mod in mods" value="{{mod.id}}" data-ng-selected="{{mod.id == modId}}">
 		{{mod.name}}
 	</option>
 </select>

@@ -27,4 +27,23 @@
 		};
 	} ]);
 
+	mod.directive('selectMod', function(Mod) {
+		return {
+			restrict : 'E',
+			transclude : true,
+			replace : true,
+			scope : true,
+			templateUrl : 'mod/mod-select.tpl.html',
+			controller : function($scope, $element, $attrs, $transclude) {
+				$scope.mods = Mod.query();
+
+				$scope.modId = null;
+
+				$scope.select2Options = {
+				// allowClear : true,
+				};
+			}
+		};
+	});
+
 })();

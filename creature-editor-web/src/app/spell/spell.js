@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers',
-			'ui.router', 'ngRoute', 'notification.i18n' ]);
+	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'ui.router',
+			'ngRoute', 'notification.i18n' ]);
 
 	spell.constant('I18N.MESSAGES', {
 		'errors.route.changeError' : 'Route change error',

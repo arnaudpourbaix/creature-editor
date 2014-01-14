@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers',
-			'ui.router', 'ngRoute', 'notification.i18n' ]);
+	var mod = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers', 'ui.router', 'ngRoute',
+			'notification.i18n' ]);
 
 	mod.constant('I18N.MESSAGES', {
 		'errors.route.changeError' : 'Route change error',
@@ -55,17 +55,6 @@
 					$state.go('^');
 				});
 			}
-		});
-
-		$stateProvider.state('modSelect', {
-			url : '/modSelect',
-			resolve : {
-				mods : [ 'Mod', function(Mod) {
-					return Mod.query().$promise;
-				} ]
-			},
-			controller : 'ModSelectController',
-			templateUrl : 'mod/mod-select.tpl.html'
 		});
 	});
 
