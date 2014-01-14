@@ -56,6 +56,17 @@
 				});
 			}
 		});
+
+		$stateProvider.state('modSelect', {
+			url : '/modSelect',
+			resolve : {
+				mods : [ 'Mod', function(Mod) {
+					return Mod.query().$promise;
+				} ]
+			},
+			controller : 'ModSelectController',
+			templateUrl : 'mod/mod-select.tpl.html'
+		});
 	});
 
 })();

@@ -1,13 +1,9 @@
-<div id="spellList">
-
-	<h2>Spell list</h2>
-
-	<ul>
-		<li ng-repeat="spell in spells">{{spell.name}}</li>
-	</ul>
-
-	<hr />
-
-	<button data-ng-click="gotoSpellNewPage()" class="button">Add</button>
-
-</div>
+<widget-panel class="spellPanel">
+	<div data-widget-panel-header>Spells</div>
+	<div data-widget-panel-body>
+		<div class="gridStyle" data-ng-grid="gridOptions"></div>
+	</div>
+	<div data-widget-panel-footer>
+		<button data-ng-click="new()" class="btn btn-primary">Add</button>
+	</div>
+</widget-panel>

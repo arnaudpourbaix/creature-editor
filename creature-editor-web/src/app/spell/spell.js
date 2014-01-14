@@ -1,39 +1,61 @@
-var spell = angular.module('creatureEditor.spell', [ 'ui.router', 'ngRoute', 'ngResource' ]);
-
-spell.config(function config($stateProvider) {
+(function() {
 	'use strict';
-	$stateProvider.state('spell', {
-		url : '/spell',
-		views : {
-			"main" : {
-				controller : 'SpellListController',
-				templateUrl : 'spell/spell-list.tpl.html'
-			}
-		}
+
+	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers',
+			'ui.router', 'ngRoute', 'notification.i18n' ]);
+
+	spell.constant('I18N.MESSAGES', {
+		'errors.route.changeError' : 'Route change error',
+		'crud.spell.save.success' : "Spell '{{name}}' was saved successfully.",
+		'crud.spell.remove.success' : "Spell '{{name}}' was removed successfully.",
+		'crud.spell.remove.error' : "Error when removing spell '{{name}}'.",
+		'crud.spell.save.error' : "Error when saving a spell..."
 	});
-});
 
-spell.factory('Spell', function($resource) {
-	'use strict';
-	return $resource('spell/:id', {}, {
-		'save' : {
-			method : 'PUT'
-		}
-	});
-});
+	spell.config(function config($stateProvider) {
 
-spell.controller('SpellListController', function SpellListController($scope, $location, Spell) {
-	'use strict';
-	$scope.mods = Spell.query();
-
-	$scope.gotoSpellNewPage = function() {
-		$location.path("/spell/new");
-	};
-	$scope.deleteSpell = function(spell) {
-		spell.$delete({
-			'id' : spell.id
-		}, function() {
-			$location.path('/');
+		$stateProvider.state('spells', {
+			url : '/spells',
+			resolve : {
+				spells : [ 'Spell', function(Spell) {
+					return Spell.query().$promise;
+				} ]
+			},
+			controller : 'SpellListController',
+			templateUrl : 'spell/spell-list.tpl.html'
 		});
-	};
-});
+
+		$stateProvider.state('spells.edit', {
+			url : '/:spellId',
+			onEnter : function($state, $stateParams, $modal, $timeout, Spell) {
+				var modal = $modal.open({
+					templateUrl : "spell/spell-edit.tpl.html",
+					controller : 'SpellEditController',
+					backdrop : false,
+					resolve : {
+						spell : function(Spell) {
+							if ($stateParams.spellId !== 'new') {
+								return Spell.get({
+									id : $stateParams.spellId
+								}).$promise;
+							} else {
+								return new Spell({
+									id : null,
+									name : ''
+								});
+							}
+						}
+					}
+				});
+				modal.result.then(function(result) {
+					$state.go('^', {}, {
+						reload : true
+					});
+				}, function() {
+					$state.go('^');
+				});
+			}
+		});
+	});
+
+})();

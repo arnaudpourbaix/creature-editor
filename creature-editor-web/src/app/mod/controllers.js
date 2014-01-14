@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
+	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services', 'ui.select2' ]);
 
 	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications) {
 
@@ -59,6 +59,22 @@
 			});
 			$modalInstance.close();
 		};
+	});
+
+	mod.controller('ModSelectController', function ModSelectController($scope, $state, mods) {
+
+		$scope.mods = mods;
+
+		$scope.modId = 3;
+		$scope.$watch($scope.modId, function() {
+			console.log('mod id=', $scope.modId);
+		}, true);
+
+		$scope.select2Options = {
+			allowClear : true,
+			width : 'element'
+		};
+
 	});
 
 })();
