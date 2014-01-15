@@ -26,15 +26,15 @@ public class ModController {
 	private ModRepository modRepository;
 
 	@RequestMapping(value = "/mod", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	List<Mod> list() {
+	@ResponseBody
+	public List<Mod> list() {
 		List<Mod> mods = modRepository.findAll();
 		return mods;
 	}
 
 	@RequestMapping(value = "/mod/{id}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	Mod getById(@PathVariable Integer id) {
+	@ResponseBody
+	public Mod getById(@PathVariable Integer id) {
 		return modRepository.findOne(id);
 	}
 
@@ -46,8 +46,8 @@ public class ModController {
 	}
 
 	@RequestMapping(value = "/mod", method = RequestMethod.PUT, produces = "application/json")
-	public @ResponseBody
-	Mod save(@RequestBody Mod mod) {
+	@ResponseBody
+	public Mod save(@RequestBody Mod mod) {
 		modRepository.save(mod);
 		return mod;
 	}

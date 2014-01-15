@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'ui.router',
-			'ngRoute', 'notification.i18n' ]);
+	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers',
+			'ui.router', 'ngRoute', 'notification.i18n' ]);
 
 	spell.constant('I18N.MESSAGES', {
 		'errors.route.changeError' : 'Route change error',
@@ -25,8 +25,26 @@
 			templateUrl : 'spell/spell-list.tpl.html'
 		});
 
+		$stateProvider.state('spells.import', {
+			url : '/import',
+			onEnter : function($state, $stateParams, $modal, $timeout) {
+				var modal = $modal.open({
+					templateUrl : "spell/spell-import.tpl.html",
+					controller : 'SpellImportController',
+					backdrop : false
+				});
+				modal.result.then(function(result) {
+					$state.go('^', {}, {
+						reload : true
+					});
+				}, function() {
+					$state.go('^');
+				});
+			}
+		});
+
 		$stateProvider.state('spells.edit', {
-			url : '/:spellId',
+			url : 'edit/:spellId',
 			onEnter : function($state, $stateParams, $modal, $timeout, Spell) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-edit.tpl.html",

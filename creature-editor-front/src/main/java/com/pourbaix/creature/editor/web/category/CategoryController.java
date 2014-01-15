@@ -34,8 +34,8 @@ public class CategoryController {
 	// }
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	List<CategoryDTO> list() {
+	@ResponseBody
+	public List<CategoryDTO> list() {
 		List<Category> categories = categoryRepository.findAllFetchParent();
 		List<CategoryDTO> result = Lists.transform(categories, new Function<Category, CategoryDTO>() {
 			@Override
@@ -47,23 +47,23 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	Category getById(@PathVariable Integer id) {
+	@ResponseBody
+	public Category getById(@PathVariable Integer id) {
 		return categoryRepository.findOne(id);
 	}
 
 	@RequestMapping(value = "/category", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void create(@RequestBody Category category) {
-		//		long id = categoryRepository.incrementAndGet();
-		//		category.setId(id);
-		//		categoryRepository.put(1L, category);
+		// long id = categoryRepository.incrementAndGet();
+		// category.setId(id);
+		// categoryRepository.put(1L, category);
 	}
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable long id) {
-		//		categoryRepository.remove(id);
+		// categoryRepository.remove(id);
 	}
 
 }

@@ -27,6 +27,12 @@
 			} ]
 		};
 
+		$scope.$on('selectedMod', function(e, mod) {
+			console.log('SpellListController', 'selectedMod', mod);
+			$scope.mod = mod;
+			e.stopPropagation();
+		});
+
 		$scope.remove = function(spell) {
 			spell.$delete().then(function(response) {
 				$scope.removeFromList($scope.spells, 'id', spell.id);
@@ -34,6 +40,22 @@
 					name : spell.name
 				});
 			});
+		};
+
+	});
+
+	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, i18nNotifications) {
+
+		$scope.mod = null;
+
+		$scope.$on('selectedMod', function(e, mod) {
+			console.log('SpellImportController', 'selectedMod', mod);
+			$scope.mod = mod;
+			e.stopPropagation();
+		});
+
+		$scope.import = function() {
+			$scope.progressValue = 0;
 		};
 
 	});

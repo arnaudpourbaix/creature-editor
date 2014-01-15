@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.repository.SpellRepository;
@@ -26,6 +27,14 @@ public class SpellController {
 	List<Spell> list() {
 		List<Spell> spells = spellRepository.findAllFetchMod();
 		return spells;
+	}
+
+	@RequestMapping(value = "/spell", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public DeferredResult importSpells() {
+		final DeferredResult<String> deferredResult = new DeferredResult<>();
+		// runInOtherThread(deferredResult);
+		return deferredResult;
 	}
 
 }

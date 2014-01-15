@@ -1,3 +1,4 @@
+/* global _ */
 (function() {
 	'use strict';
 
@@ -10,7 +11,7 @@
 		return {
 			require : 'ngModel',
 			restrict : 'A',
-			link : function(scope, el, attrs, ctrl) {
+			link : function(scope, element, attrs, ctrl) {
 				// using push() here to run it as the last parser, after we are sure that other validators were run
 				ctrl.$parsers.push(function(viewValue) {
 					if (viewValue) {
@@ -27,6 +28,10 @@
 		};
 	} ]);
 
+	/**
+	 * Create a select2 component for a mod<br>
+	 * Emit 'selectedMod' event on change with mod parameter.
+	 */
 	mod.directive('selectMod', function(Mod) {
 		return {
 			restrict : 'E',
@@ -40,8 +45,18 @@
 				$scope.modId = null;
 
 				$scope.select2Options = {
-				// allowClear : true,
+					allowClear : $attrs.allowClear === 'true'
 				};
+
+				$scope.$watch('modId', function(newValue, oldValue) {
+					if (newValue === oldValue) {
+						return;
+					}
+					var mod = _.find($scope.mods, function(mod) {
+						return mod.id === parseInt($scope.modId, 10);
+					});
+					$scope.$emit('selectedMod', mod);
+				});
 			}
 		};
 	});

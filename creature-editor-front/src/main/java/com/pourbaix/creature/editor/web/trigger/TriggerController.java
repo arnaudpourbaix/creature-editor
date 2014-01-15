@@ -24,15 +24,15 @@ public class TriggerController {
 	private TriggerRepository triggerRepository;
 
 	@RequestMapping(value = "/trigger", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	List<Trigger> list() {
+	@ResponseBody
+	public List<Trigger> list() {
 		List<Trigger> triggers = triggerRepository.findAll();
 		return triggers;
 	}
 
 	@RequestMapping(value = "/triggers", method = RequestMethod.GET, produces = "application/json")
-	public @ResponseBody
-	List<String> listString() {
+	@ResponseBody
+	public List<String> listString() {
 		List<Trigger> triggers = triggerRepository.findAll();
 		return Lists.transform(triggers, new Function<Trigger, String>() {
 			@Override
@@ -41,12 +41,5 @@ public class TriggerController {
 			}
 		});
 	}
-
-	// @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	// @ExceptionHandler({ HttpMessageNotWritableException.class })
-	// public void handleLazyLoadingError2(HttpMessageNotWritableException exception) {
-	// LOG.error(exception.getMessage());
-	// // method called when a security exception occurs
-	// }
 
 }
