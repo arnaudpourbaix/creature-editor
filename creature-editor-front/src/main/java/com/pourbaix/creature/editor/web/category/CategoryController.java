@@ -22,7 +22,7 @@ import com.pourbaix.creature.editor.repository.CategoryRepository;
 @Controller
 public class CategoryController {
 
-	static final Logger LOG = LoggerFactory.getLogger(CategoryController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
 
 	@Autowired
 	private CategoryRepository categoryRepository;

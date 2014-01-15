@@ -20,7 +20,7 @@ import com.pourbaix.creature.editor.repository.ModRepository;
 @Controller
 public class ModController {
 
-	static final Logger LOG = LoggerFactory.getLogger(ModController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ModController.class);
 
 	@Autowired
 	private ModRepository modRepository;

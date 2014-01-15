@@ -241,6 +241,12 @@
 			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${servlet-api.version}</version>
+			<scope>provided</scope>
+		</dependency>
 		<!-- javax.validation (JSR-303) -->
 		<dependency>
 			<groupId>javax.validation</groupId>

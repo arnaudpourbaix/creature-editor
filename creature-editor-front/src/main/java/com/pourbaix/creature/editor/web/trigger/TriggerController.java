@@ -18,7 +18,7 @@ import com.pourbaix.creature.editor.repository.TriggerRepository;
 @Controller
 public class TriggerController {
 
-	static final Logger LOG = LoggerFactory.getLogger(TriggerController.class);
+	private static final Logger logger = LoggerFactory.getLogger(TriggerController.class);
 
 	@Autowired
 	private TriggerRepository triggerRepository;

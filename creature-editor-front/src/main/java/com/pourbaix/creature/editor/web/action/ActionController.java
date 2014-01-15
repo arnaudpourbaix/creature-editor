@@ -16,7 +16,7 @@ import com.pourbaix.creature.editor.repository.ActionRepository;
 @Controller
 public class ActionController {
 
-	static final Logger LOG = LoggerFactory.getLogger(ActionController.class);
+	private static final Logger logger = LoggerFactory.getLogger(ActionController.class);
 
 	@Autowired
 	private ActionRepository actionRepository;
