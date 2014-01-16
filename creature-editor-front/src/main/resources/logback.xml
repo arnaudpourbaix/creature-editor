@@ -11,16 +11,16 @@
 	</appender>
 
 	<jmxConfigurator />
-	<root level="ALL">
+	<root level="WARN">
 		<appender-ref ref="STDOUT" />
 	</root>
 
-	<logger name="org.springframework.samples" level="DEBUG" />
-	<logger name="org.springframework.core" level="DEBUG" />
-	<logger name="org.springframework.beans" level="DEBUG" />
-	<logger name="org.springframework.context" level="DEBUG" />
-	<logger name="org.springframework.http" level="DEBUG" />
-	<logger name="org.springframework.web" level="DEBUG" />
+	<logger name="org.springframework.samples" level="WARN" />
+	<logger name="org.springframework.core" level="WARN" />
+	<logger name="org.springframework.beans" level="WARN" />
+	<logger name="org.springframework.context" level="WARN" />
+	<logger name="org.springframework.http" level="WARN" />
+	<logger name="org.springframework.web" level="WARN" />
 	
 	<logger name="com.pourbaix.creature" level="ALL" />
 </configuration>

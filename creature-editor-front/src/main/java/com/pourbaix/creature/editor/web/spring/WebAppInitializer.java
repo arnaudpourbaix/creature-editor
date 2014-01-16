@@ -1,7 +1,6 @@
 package com.pourbaix.creature.editor.web.spring;
 
 import java.util.EnumSet;
-import java.util.Set;
 
 import javax.servlet.DispatcherType;
 import javax.servlet.FilterRegistration;
@@ -41,12 +40,12 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		ServletRegistration.Dynamic appServlet = servletContext.addServlet("appServlet", servlet);
 		appServlet.setLoadOnStartup(1);
 		appServlet.setAsyncSupported(true);
-		appServlet.addMapping("/*");
+		appServlet.addMapping("/");
 
-		Set<String> mappingConflicts = appServlet.addMapping("/");
-		if (!mappingConflicts.isEmpty()) {
-			throw new IllegalStateException("'appServlet' cannot be mapped to '/' under Tomcat versions <= 7.0.14");
-		}
+		//		Set<String> mappingConflicts = appServlet.addMapping("/");
+		//		if (!mappingConflicts.isEmpty()) {
+		//			throw new IllegalStateException("'appServlet' cannot be mapped to '/' under Tomcat versions <= 7.0.14");
+		//		}
 	}
 
 }

@@ -17,19 +17,18 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 
 	@Override
 	public RequestMappingHandlerMapping requestMappingHandlerMapping() {
-		RequestMappingHandlerMapping requestMappingHandlerMapping = super
-				.requestMappingHandlerMapping();
+		RequestMappingHandlerMapping requestMappingHandlerMapping = super.requestMappingHandlerMapping();
 		requestMappingHandlerMapping.setUseSuffixPatternMatch(false);
 		requestMappingHandlerMapping.setUseTrailingSlashMatch(false);
 		return requestMappingHandlerMapping;
 	}
 
+	@Override
 	@Bean
 	public RequestMappingHandlerAdapter requestMappingHandlerAdapter() {
 		MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
 		converter.setObjectMapper(new HibernateAwareObjectMapper());
-		RequestMappingHandlerAdapter handlerAdapter = super
-				.requestMappingHandlerAdapter();
+		RequestMappingHandlerAdapter handlerAdapter = super.requestMappingHandlerAdapter();
 		handlerAdapter.getMessageConverters().add(0, converter);
 		return handlerAdapter;
 	}
@@ -40,18 +39,18 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		viewResolver.setViewClass(JstlView.class);
 		viewResolver.setPrefix("/");
 		viewResolver.setSuffix("");
+		viewResolver.setPrefix("/WEB-INF/views/");
+		viewResolver.setSuffix(".jsp");
 		return viewResolver;
 	}
 
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		registry.addResourceHandler("/resources/**").addResourceLocations(
-				"/resources/");
+		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
 	}
 
 	@Override
-	public void configureDefaultServletHandling(
-			DefaultServletHandlerConfigurer configurer) {
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 		configurer.enable();
 	}
 }

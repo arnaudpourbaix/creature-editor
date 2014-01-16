@@ -171,4 +171,19 @@ public class SpellController {
 		return "Handled exception: " + ex.getMessage();
 	}
 
+	@RequestMapping(value = "/matchupdate/begin" + "", method = RequestMethod.GET)
+	@ResponseBody
+	public String start2() {
+		updateService.subscribe();
+		return "OK";
+	}
+
+	@RequestMapping("/matchupdate/deferred")
+	@ResponseBody
+	public DeferredResult<Message> getUpdate2() {
+		final DeferredResult<Message> result = new DeferredResult<Message>();
+		updateService.getUpdate(result);
+		return result;
+	}
+
 }
