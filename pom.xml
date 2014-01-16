@@ -26,14 +26,15 @@
 		<ehcache-spring-annotations.version>1.2.0</ehcache-spring-annotations.version>
 		<slf4j.version>1.7.5</slf4j.version>
 		<logback.version>1.0.13</logback.version>
-		<jackson.version>1.9.13</jackson.version>
-		<jackson-datatype-hibernate4.version>2.2.3</jackson-datatype-hibernate4.version>
 		<google.guava.version>13.0.1</google.guava.version>
 		<commons-lang.version>3.1</commons-lang.version>
 		<hsqldb.version>2.3.1</hsqldb.version>
 		<poi.version>3.9</poi.version>
+		<json-path.version>0.9.1</json-path.version>
+		<jackson-datatype-hibernate4.version>2.2.3</jackson-datatype-hibernate4.version>
+		<jackson.version>2.3.0</jackson.version>
 
-		<org.aspectj-version>1.7.3</org.aspectj-version>
+		<aspectj-version>1.7.3</aspectj-version>
 		<liquibase.version>3.0.7</liquibase.version>
 		<servlet-api.version>3.0.1</servlet-api.version>
 		<javax-validation.version>1.1.0.Final</javax-validation.version>
@@ -193,25 +194,85 @@
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>${slf4j.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 			<version>${slf4j.version}</version>
 			<scope>runtime</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>${slf4j.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+<!-- 		<dependency>
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<!-- JSON -->
+ -->		
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-core-asl</artifactId>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.15</version>
+			<exclusions>
+				<exclusion>
+					<groupId>javax.mail</groupId>
+					<artifactId>mail</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>javax.jms</groupId>
+					<artifactId>jms</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jdmk</groupId>
+					<artifactId>jmxtools</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.sun.jmx</groupId>
+					<artifactId>jmxri</artifactId>
+				</exclusion>
+			</exclusions>
+			<scope>runtime</scope>
+		</dependency>
+ 		<!-- JSON -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-core</artifactId>
 			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.codehaus.jackson</groupId>
-			<artifactId>jackson-mapper-asl</artifactId>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jayway.jsonpath</groupId>
+			<artifactId>json-path</artifactId>
+			<version>${json-path.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
@@ -235,13 +296,13 @@
 			<version>${poi.version}</version>
 		</dependency>
 		<!-- Servlet -->
-		<dependency>
+<!-- 		<dependency>
 			<groupId>org.apache.geronimo.specs</groupId>
 			<artifactId>geronimo-servlet_3.0_spec</artifactId>
 			<version>1.0</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
+ -->		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>${servlet-api.version}</version>
@@ -262,7 +323,7 @@
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjrt</artifactId>
-			<version>${org.aspectj-version}</version>
+			<version>${aspectj-version}</version>
 		</dependency>
 		<!-- Test -->
 		<dependency>

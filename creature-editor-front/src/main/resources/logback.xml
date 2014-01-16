@@ -16,5 +16,5 @@
 	</root>
 
 	<logger name="org.springframework.web" level="DEBUG" />
-	<logger name="com.pourbaix.creature.editor" level="ALL" />
+	<logger name="com.pourbaix.creature" level="ALL" />
 </configuration>
