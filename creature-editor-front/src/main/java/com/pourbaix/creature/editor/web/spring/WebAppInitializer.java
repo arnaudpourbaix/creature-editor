@@ -9,12 +9,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ConfigurableWebApplicationContext;
 import org.springframework.web.context.ContextLoaderListener;
@@ -29,7 +24,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext servletContext) throws ServletException {
 
 		ConfigurableWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.setConfigLocations(new String[] {"com.pourbaix.creature.editor.web.spring", "com.pourbaix.creature.editor.spring"});
+		context.setConfigLocations(new String[] { "com.pourbaix.creature.editor.web.spring", "com.pourbaix.creature.editor.spring" });
 
 		FilterRegistration.Dynamic characterEncodingFilter = servletContext.addFilter("characterEncodingFilter", new CharacterEncodingFilter());
 		characterEncodingFilter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
