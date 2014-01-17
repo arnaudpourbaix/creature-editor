@@ -34,4 +34,51 @@
 		return res;
 	});
 
+	spell.service('SpellService', function(Spell, $http, $interval) {
+		var methods = {};
+
+		methods.startImportSpells = function(modId) {
+			$http({
+				method : 'GET',
+				url : 'rest/spellImp/begin'
+			// params : {
+			// modId : $scope.mod.id
+			// },
+			}).then(function(response) {
+				console.log("Deferred data", response.data);
+				// stop = $interval(function() {
+				// $scope.getUpdate();
+				// }, 2000);
+			}, function(error) {
+				console.log('Deferred error', error);
+			});
+		};
+
+		methods.importSpellsUpdate = function() {
+			// if (request) {
+			// request.abort(); // abort any pending request
+			// }
+			// fire off the request to MatchUpdateController
+			// var request = $http({
+			$http({
+				method : 'GET',
+				url : 'rest/spell/deferred'
+			}).then(function(message) {
+				console.log("Received a message", message.messageText);
+				// var update = getUpdate(message);
+				// $(update).insertAfter('#first_row');
+			}, function(data) {
+				// log the error to the console
+				console.log("Polling - the following error occured: ", data);
+			});
+
+			// callback handler that will be called regardless if the request failed or succeeded
+			// request.always(function() {
+			// allow = true;
+			// });
+		};
+
+		return methods;
+	});
+
 })();
