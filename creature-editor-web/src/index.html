@@ -43,13 +43,9 @@
 		<div class="container" data-ui-view></div>
 		<div id="push"></div>
 	</div>
-	
 	<div id="footer">
 		<div class="container">
 			<div data-ng-include="'notification/notifications.tpl.html'" class="container" data-ng-show="notifications.getCurrent().length"></div>
-		      $state = {{$state.current.name}}
-		      $stateParams = {{$stateParams}}
-		      $state full url = {{ $state.$current.url.source }}
 		</div>
 	</div>
 </body>

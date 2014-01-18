@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.pourbaix.infinity.config.RootConfig;
 import com.pourbaix.infinity.domain.IdentifierEntry;
 import com.pourbaix.infinity.domain.Spell;
 import com.pourbaix.infinity.factory.FactoryException;
@@ -22,6 +21,7 @@ import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.resource.spl.SplResource;
 import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
+import com.pourbaix.infinity.spring.RootConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = RootConfig.class)

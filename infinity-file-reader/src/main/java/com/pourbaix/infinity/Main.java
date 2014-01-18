@@ -6,10 +6,10 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
-import com.pourbaix.infinity.config.RootConfig;
 import com.pourbaix.infinity.datatype.GameVersionEnum;
 import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
+import com.pourbaix.infinity.spring.RootConfig;
 
 public class Main {
 

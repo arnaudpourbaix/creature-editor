@@ -43,7 +43,7 @@
 
 	});
 
-	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellService, i18nNotifications) {
+	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellService, i18nNotifications, $http, $interval) {
 
 		$scope.mod = null;
 
@@ -54,7 +54,30 @@
 
 		$scope.import = function() {
 			$scope.progressValue = 0;
-			SpellService.startImportSpells($scope.mod.id);
+			// SpellService.startImportSpells($scope.mod.id);
+			$http({
+				method : 'GET',
+				url : 'rest/spell/import',
+				params : {
+					modId : $scope.mod.id
+				}
+			}).then(function(response) {
+				if (response.data !== 'true') {
+					i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'danger');
+					return;
+				}
+				$scope.progressPromise = $interval(function() {
+					$http({
+						method : 'GET',
+						url : 'rest/spell/import/progress'
+					}).then(function(response) {
+						$scope.progressValue = parseInt(response.data, 10);
+						if ($scope.progressValue === 100) {
+							$interval.cancel($scope.progressPromise);
+						}
+					});
+				}, 2000);
+			});
 		};
 
 	});

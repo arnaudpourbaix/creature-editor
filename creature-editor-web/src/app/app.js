@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod',
-			'ngRoute', 'ui.router', 'ngGrid', 'ui.bootstrap', 'ui-components', 'notification.i18n', 'crud.directives' ]);
+	var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod', 'ngRoute',
+			'ui.router', 'ngGrid', 'ui.bootstrap', 'ui-components', 'notification.i18n', 'crud.directives' ]);
 
 	app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		// $locationProvider.html5Mode(true);
@@ -34,27 +34,6 @@
 			});
 		};
 	});
-
-	app.directive('validateSubmit', [ '$parse', function($parse) {
-		return {
-			restrict : 'A',
-			require : 'form',
-			link : function(scope, formElement, attributes, formController) {
-				var fn = $parse(attributes.validateSubmit);
-				formElement.bind('submit', function(event) {
-					// if form is not valid cancel it.
-					if (!formController.$valid) {
-						return false;
-					}
-					scope.$apply(function() {
-						fn(scope, {
-							$event : event
-						});
-					});
-				});
-			}
-		};
-	} ]);
 
 	app.run(function run($rootScope, $state, $stateParams) {
 		$rootScope.$state = $state;

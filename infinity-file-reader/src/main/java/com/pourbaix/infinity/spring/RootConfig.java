@@ -1,4 +1,4 @@
-package com.pourbaix.infinity.config;
+package com.pourbaix.infinity.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

@@ -40,17 +40,26 @@
 		methods.startImportSpells = function(modId) {
 			$http({
 				method : 'GET',
-				url : 'rest/spellImp/begin'
-			// params : {
-			// modId : $scope.mod.id
-			// },
+				url : 'rest/spell/import',
+				params : {
+					modId : modId
+				}
 			}).then(function(response) {
-				console.log("Deferred data", response.data);
-				// stop = $interval(function() {
-				// $scope.getUpdate();
-				// }, 2000);
-			}, function(error) {
-				console.log('Deferred error', error);
+				var result = response.data === 'true';
+				if (!result) {
+					console.log('already running!');
+					return;
+				}
+				$interval(function() {
+					$http({
+						method : 'GET',
+						url : 'rest/spell/import/progress'
+					}).then(function(response) {
+						console.log("progress", response.data);
+					}, function(data) {
+						console.log("Polling - the following error occured: ", data);
+					});
+				}, 500);
 			});
 		};
 

@@ -48,11 +48,8 @@ public class ReaderService {
 		gameService.openGame();
 	}
 
-	public void process(final String[] args) throws ServiceException {
-		// if (args.length == 0) {
-		// logger.error("you must provide a file or directory parameter !");
-		// return;
-		// }
+	public List<ResourceEntry> getSpellResources() {
+		return Keyfile.getInstance().getResourceEntriesByExtension("spl");
 	}
 
 	public List<Spell> getSpells() throws ServiceException {
@@ -63,6 +60,15 @@ public class ReaderService {
 				spells.add(spell);
 			}
 			return spells;
+		} catch (FactoryException e) {
+			throw new ServiceException(e);
+		}
+	}
+
+	public Spell getSpell(ResourceEntry entry) throws ServiceException {
+		try {
+			Spell spell = spellFactory.getSpell(entry);
+			return spell;
 		} catch (FactoryException e) {
 			throw new ServiceException(e);
 		}

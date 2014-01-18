@@ -109,7 +109,7 @@
 				uiService.draggable(element, {
 					handle : $('.modal-header', element)
 				});
-				uiService.resizable(element);
+				// uiService.resizable(element);
 			}
 		};
 	} ]);

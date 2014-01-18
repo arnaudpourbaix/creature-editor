@@ -8,4 +8,11 @@
 	</parent>
 	<groupId>com.pourbaix.infinity</groupId>
 	<artifactId>infinity-file-reader</artifactId>
+	<dependencies>
+		<dependency>
+			<groupId>com.pourbaix.editor.creature</groupId>
+			<artifactId>creature-editor-core</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+	</dependencies>
 </project>

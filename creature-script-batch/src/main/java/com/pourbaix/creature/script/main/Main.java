@@ -6,6 +6,7 @@ import org.springframework.beans.factory.BeanCreationException;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 
+import com.pourbaix.creature.editor.spring.CoreConfig;
 import com.pourbaix.creature.script.generator.GeneratorService;
 import com.pourbaix.creature.script.spring.ScriptConfig;
 
@@ -15,7 +16,7 @@ public class Main {
 
 	public static void main(final String[] args) {
 		try {
-			AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(ScriptConfig.class);
+			AbstractApplicationContext ctx = new AnnotationConfigApplicationContext(CoreConfig.class, ScriptConfig.class);
 			GeneratorService generatorService = ctx.getBean(GeneratorService.class);
 			generatorService.generate(args);
 			ctx.close();
