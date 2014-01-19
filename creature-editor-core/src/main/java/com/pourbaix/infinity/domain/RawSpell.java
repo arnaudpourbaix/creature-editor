@@ -10,7 +10,7 @@ import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.util.Constant;
 
-public class Spell {
+public class RawSpell {
 	private String resource;
 	private String identifier;
 	private String name;

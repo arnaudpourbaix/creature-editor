@@ -6,7 +6,9 @@
 
 	spell.constant('I18N.MESSAGES', {
 		'errors.route.changeError' : 'Route change error',
-		'spell.import.running' : "Spell import is already running.",
+		'spell.import.error.running' : "Spell import is already running.",
+		'spell.import.error.halted' : "Spell import has encountered an unknown error.",
+		'spell.import.cancel' : "Spell import has been cancelled.",
 		'crud.spell.save.success' : "Spell '{{name}}' was saved successfully.",
 		'crud.spell.remove.success' : "Spell '{{name}}' was removed successfully.",
 		'crud.spell.remove.error' : "Error when removing spell '{{name}}'.",
@@ -17,11 +19,6 @@
 
 		$stateProvider.state('spells', {
 			url : '/spells',
-			resolve : {
-				spells : [ 'Spell', function(Spell) {
-					return Spell.query().$promise;
-				} ]
-			},
 			controller : 'SpellListController',
 			templateUrl : 'spell/spell-list.tpl.html'
 		});

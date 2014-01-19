@@ -34,10 +34,26 @@
 		return res;
 	});
 
-	spell.service('SpellService', function(Spell, $http, $interval) {
-		var methods = {};
+	spell.service('SpellImportService', function(Spell, $http, $interval, $rootScope, i18nNotifications) {
+		var service = {}, running = false, container;
 
-		methods.startImportSpells = function(modId) {
+		service.isRunning = function() {
+			return running;
+		};
+
+		service.getModId = function() {
+			return container.modId;
+		};
+
+		service.getSpells = function() {
+			return container ? container.spells : [];
+		};
+
+		service.getProgressValue = function() {
+			return running ? 100 / container.spellCount * container.spells : 0;
+		};
+
+		service.startImport = function(modId) {
 			$http({
 				method : 'GET',
 				url : 'rest/spell/import',
@@ -45,49 +61,52 @@
 					modId : modId
 				}
 			}).then(function(response) {
-				var result = response.data === 'true';
-				if (!result) {
-					console.log('already running!');
+				container = {
+					spells : [],
+					spellCount : parseInt(response.data, 10),
+					modId : modId,
+					interval : null
+				};
+				if (container.spellCount === -1) {
+					i18nNotifications.pushForCurrentRoute('spell.import.error.running', 'danger');
 					return;
 				}
-				$interval(function() {
-					$http({
-						method : 'GET',
-						url : 'rest/spell/import/progress'
-					}).then(function(response) {
-						console.log("progress", response.data);
-					}, function(data) {
-						console.log("Polling - the following error occured: ", data);
-					});
-				}, 500);
+				running = true;
+				container.interval = $interval(service.gatherImportedSpells, 2000);
 			});
 		};
 
-		methods.importSpellsUpdate = function() {
-			// if (request) {
-			// request.abort(); // abort any pending request
-			// }
-			// fire off the request to MatchUpdateController
-			// var request = $http({
+		service.gatherImportedSpells = function() {
 			$http({
 				method : 'GET',
-				url : 'rest/spell/deferred'
-			}).then(function(message) {
-				console.log("Received a message", message.messageText);
-				// var update = getUpdate(message);
-				// $(update).insertAfter('#first_row');
-			}, function(data) {
-				// log the error to the console
-				console.log("Polling - the following error occured: ", data);
+				url : 'rest/spell/import/gather'
+			}).then(function(response) {
+				container.spells = container.spells.concat(response.data);
+				if (container.spells.length === container.spellCount) {
+					$interval.cancel(container.interval);
+				}
+				console.log(container.spells);
+				// $rootScope.$apply();
+			}, function() {
+				service.cancelImport();
 			});
-
-			// callback handler that will be called regardless if the request failed or succeeded
-			// request.always(function() {
-			// allow = true;
-			// });
 		};
 
-		return methods;
+		service.cancelImport = function() {
+			if (!running) {
+				return;
+			}
+			$http({
+				method : 'GET',
+				url : 'rest/spell/import/cancel'
+			}).then(function(response) {
+				running = false;
+				$interval.cancel(container.interval);
+				i18nNotifications.pushForCurrentRoute('spell.import.cancel', 'warning');
+			});
+		};
+
+		return service;
 	});
 
 })();

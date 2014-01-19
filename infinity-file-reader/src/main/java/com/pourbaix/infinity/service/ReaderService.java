@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.pourbaix.infinity.context.GlobalContext;
 import com.pourbaix.infinity.domain.Creature;
 import com.pourbaix.infinity.domain.IdentifierFile;
-import com.pourbaix.infinity.domain.Spell;
+import com.pourbaix.infinity.domain.RawSpell;
 import com.pourbaix.infinity.factory.CreatureFactory;
 import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
@@ -55,11 +55,11 @@ public class ReaderService {
 		// }
 	}
 
-	public List<Spell> getSpells() throws ServiceException {
+	public List<RawSpell> getSpells() throws ServiceException {
 		try {
-			List<Spell> spells = new ArrayList<>();
+			List<RawSpell> spells = new ArrayList<>();
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("spl")) {
-				Spell spell = spellFactory.getSpell(entry);
+				RawSpell spell = spellFactory.getSpell(entry);
 				spells.add(spell);
 			}
 			return spells;
@@ -68,9 +68,9 @@ public class ReaderService {
 		}
 	}
 
-	public Spell getSpell(String resource) throws ServiceException {
+	public RawSpell getSpell(String resource) throws ServiceException {
 		try {
-			Spell spell = spellFactory.getSpell(resource);
+			RawSpell spell = spellFactory.getSpell(resource);
 			return spell;
 		} catch (FactoryException e) {
 			throw new ServiceException(e);

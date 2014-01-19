@@ -3,11 +3,9 @@
 
 	var spell = angular.module('creatureEditor.spell.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
 
-	spell.controller('SpellListController', function SpellListController($scope, $state, spells, crudListMethods, i18nNotifications) {
+	spell.controller('SpellListController', function SpellListController($scope, $state, Spell, SpellImportService, crudListMethods, i18nNotifications) {
 
 		angular.extend($scope, crudListMethods('/spells'));
-
-		$scope.spells = spells;
 
 		$scope.gridOptions = {
 			data : 'spells',
@@ -27,8 +25,21 @@
 			} ]
 		};
 
+		$scope.isImportRunning = SpellImportService.isRunning;
+		$scope.cancelImport = SpellImportService.cancelImport;
+		$scope.progressValue = SpellImportService.getProgressValue();
+
 		$scope.$on('selectedMod', function(e, mod) {
 			$scope.mod = mod;
+			if (SpellImportService.isRunning() && mod.id === SpellImportService.getModId()) {
+				$scope.spells = SpellImportService.getSpells();
+			} else {
+				$scope.spells = Spell.query();
+				$scope.$watchCollection("SpellImportService.getSpells()", function() {
+					console.log('update spells scope');
+					$scope.spells = SpellImportService.getSpells();
+				});
+			}
 			e.stopPropagation();
 		});
 
@@ -43,7 +54,7 @@
 
 	});
 
-	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellService, i18nNotifications, $http, $interval) {
+	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellImportService, i18nNotifications) {
 
 		$scope.mod = null;
 
@@ -53,31 +64,8 @@
 		});
 
 		$scope.import = function() {
-			$scope.progressValue = 0;
-			// SpellService.startImportSpells($scope.mod.id);
-			$http({
-				method : 'GET',
-				url : 'rest/spell/import',
-				params : {
-					modId : $scope.mod.id
-				}
-			}).then(function(response) {
-				if (response.data !== 'true') {
-					i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'danger');
-					return;
-				}
-				$scope.progressPromise = $interval(function() {
-					$http({
-						method : 'GET',
-						url : 'rest/spell/import/progress'
-					}).then(function(response) {
-						$scope.progressValue = parseInt(response.data, 10);
-						if ($scope.progressValue === 100) {
-							$interval.cancel($scope.progressPromise);
-						}
-					});
-				}, 2000);
-			});
+			SpellImportService.startImport($scope.mod.id);
+			$modalInstance.close();
 		};
 
 	});

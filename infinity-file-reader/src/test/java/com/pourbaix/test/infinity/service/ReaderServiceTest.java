@@ -13,7 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pourbaix.infinity.domain.IdentifierEntry;
-import com.pourbaix.infinity.domain.Spell;
+import com.pourbaix.infinity.domain.RawSpell;
 import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -78,7 +78,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellFireBall() {
 		try {
-			Spell spell = readerService.getSpell("spwi304.spl");
+			RawSpell spell = readerService.getSpell("spwi304.spl");
 			assertEquals(3, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -88,7 +88,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellSlow() {
 		try {
-			Spell spell = readerService.getSpell("spwi312.spl");
+			RawSpell spell = readerService.getSpell("spwi312.spl");
 			assertEquals(3, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -98,7 +98,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellDireCharm() {
 		try {
-			Spell spell = readerService.getSpell("spwi316.spl");
+			RawSpell spell = readerService.getSpell("spwi316.spl");
 			assertEquals(3, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -108,7 +108,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellImprovedInvisibility() {
 		try {
-			Spell spell = readerService.getSpell("spwi405.spl");
+			RawSpell spell = readerService.getSpell("spwi405.spl");
 			assertEquals(4, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -129,7 +129,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellConeOfCold() {
 		try {
-			Spell spell = readerService.getSpell("spwi503.spl");
+			RawSpell spell = readerService.getSpell("spwi503.spl");
 			assertEquals(5, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -139,7 +139,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellMagicMissile() {
 		try {
-			Spell spell = readerService.getSpell("spwi112.spl");
+			RawSpell spell = readerService.getSpell("spwi112.spl");
 			assertEquals(1, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -149,7 +149,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellDrawUponHolyMight() {
 		try {
-			Spell spell = readerService.getSpell("SPPR214.spl");
+			RawSpell spell = readerService.getSpell("SPPR214.spl");
 			assertEquals(1, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -159,7 +159,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellBerserkerRage() {
 		try {
-			Spell spell = readerService.getSpell("SPCL321.spl");
+			RawSpell spell = readerService.getSpell("SPCL321.spl");
 			assertEquals(1, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
@@ -169,7 +169,7 @@ public class ReaderServiceTest {
 	// @Test
 	public void spellTarss() {
 		try {
-			Spell spell = readerService.getSpell("1TARSS.SPL");
+			RawSpell spell = readerService.getSpell("1TARSS.SPL");
 			assertEquals(4, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());

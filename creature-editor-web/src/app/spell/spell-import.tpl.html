@@ -13,9 +13,6 @@
 		</div>
 		<alert data-ng-show="mod != null" type="'danger'">It will replace all existing spells of mod <strong>{{ mod.name }}</strong></alert>
 	</div>
-	<div class="spell-import-progress" data-ng-show="progressValue != null">
-		<progressbar animate="false" value="progressValue" type="success"><b>{{progressValue}}%</b></progressbar>
-	</div>
 	<div data-widget-modal-footer>
 		<button type="button" class="btn btn-primary save" data-ng-disabled="mod == null" data-ng-click="import()">Import</button>
 	</div>

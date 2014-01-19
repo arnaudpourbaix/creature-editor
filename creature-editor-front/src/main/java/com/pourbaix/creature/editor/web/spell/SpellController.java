@@ -35,16 +35,25 @@ public class SpellController {
 
 	@RequestMapping(value = "/spell/import", params = "modId", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public boolean importSpells(Integer modId) {
-		return spellImport.startImport(modId);
+	public DeferredResult<Integer> importSpells(Integer modId) {
+		final DeferredResult<Integer> result = new DeferredResult<>();
+		spellImport.startImport(result, modId);
+		return result;
 	}
 
-	@RequestMapping("/spell/import/progress")
+	@RequestMapping("/spell/import/gather")
 	@ResponseBody
-	public DeferredResult<Integer> getImportProgress() {
-		final DeferredResult<Integer> result = new DeferredResult<Integer>();
-		result.setResult(spellImport.getProgress());
+	public DeferredResult<List<Spell>> getImportedSpells() {
+		final DeferredResult<List<Spell>> result = new DeferredResult<>();
+		spellImport.getSpellsInQueue(result);
 		return result;
+
+	}
+
+	@RequestMapping("/spell/import/cancel")
+	@ResponseBody
+	public void cancelImport() {
+		spellImport.cancelImport();
 	}
 
 }

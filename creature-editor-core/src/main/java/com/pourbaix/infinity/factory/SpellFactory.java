@@ -7,13 +7,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.domain.IdentifierEntry;
-import com.pourbaix.infinity.domain.Spell;
+import com.pourbaix.infinity.domain.RawSpell;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -52,7 +53,7 @@ public class SpellFactory {
 
 	public Spell getSpell(ResourceEntry entry) throws FactoryException {
 		try {
-			Spell spell = new Spell();
+			RawSpell spell = new RawSpell();
 			spell.setResource(entry.getResourceName());
 			byte buffer[] = entry.getResourceData();
 			spell.setName(StringResource.getInstance().getStringRef(buffer, 8));
@@ -70,19 +71,28 @@ public class SpellFactory {
 			int effectOffset = DynamicArray.getInt(buffer, 106);
 			fetchSpellAbilities(spell, buffer, effectOffset);
 			fetchSpellEffects(spell, buffer, effectOffset);
-			return spell;
+			return getSpell(spell);
 		} catch (UnknownValueException | IOException | StringResourceException e) {
 			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
 		}
 	}
 
-	private void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
+	private Spell getSpell(RawSpell rawSpell) {
+		Spell spell = new Spell();
+		spell.setResource(rawSpell.getResource());
+		spell.setName(rawSpell.getName());
+		spell.setLevel(rawSpell.getLevel());
+		spell.setDescription(rawSpell.getDescription());
+		return spell;
+	}
+
+	private void fetchSpellAbilities(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
 		spell.setAbilities(abilityFactory.getAbilities(buffer, offset, count, effectOffset));
 	}
 
-	private void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
+	private void fetchSpellEffects(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int count = DynamicArray.getShort(buffer, 112);
 		spell.setGlobalEffects(effectFactory.getEffects(buffer, effectOffset, count));
 	}

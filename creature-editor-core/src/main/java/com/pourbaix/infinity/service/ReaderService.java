@@ -11,10 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.infinity.context.ReaderContext;
 import com.pourbaix.infinity.domain.Creature;
 import com.pourbaix.infinity.domain.IdentifierFile;
-import com.pourbaix.infinity.domain.Spell;
 import com.pourbaix.infinity.factory.CreatureFactory;
 import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;

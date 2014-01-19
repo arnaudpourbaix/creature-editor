@@ -13,7 +13,7 @@ import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.domain.IdentifierEntry;
-import com.pourbaix.infinity.domain.Spell;
+import com.pourbaix.infinity.domain.RawSpell;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -42,7 +42,7 @@ public class SpellFactory {
 			"Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf", "Half-elf",
 			"Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
 
-	public Spell getSpell(String entryName) throws FactoryException {
+	public RawSpell getSpell(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
 			throw new FactoryException("Entry doesn't exist: " + entryName);
@@ -50,9 +50,9 @@ public class SpellFactory {
 		return getSpell(entry);
 	}
 
-	public Spell getSpell(ResourceEntry entry) throws FactoryException {
+	public RawSpell getSpell(ResourceEntry entry) throws FactoryException {
 		try {
-			Spell spell = new Spell();
+			RawSpell spell = new RawSpell();
 			spell.setResource(entry.getResourceName());
 			byte buffer[] = entry.getResourceData();
 			spell.setName(StringResource.getInstance().getStringRef(buffer, 8));
@@ -76,13 +76,13 @@ public class SpellFactory {
 		}
 	}
 
-	private void fetchSpellAbilities(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
+	private void fetchSpellAbilities(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
 		spell.setAbilities(abilityFactory.getAbilities(buffer, offset, count, effectOffset));
 	}
 
-	private void fetchSpellEffects(Spell spell, byte buffer[], int effectOffset) throws FactoryException {
+	private void fetchSpellEffects(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int count = DynamicArray.getShort(buffer, 112);
 		spell.setGlobalEffects(effectFactory.getEffects(buffer, effectOffset, count));
 	}

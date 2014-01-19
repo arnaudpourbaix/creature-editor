@@ -5,7 +5,11 @@
 		<br />
 		<div class="gridStyle" data-ng-grid="gridOptions"></div>
 	</div>
+	<div class="spell-import-progress" data-ng-show="isImportRunning()">
+		<progressbar animate="false" value="progressValue" type="success"><b>{{progressValue}}%</b></progressbar>
+	</div>
 	<div data-widget-panel-footer>
-		<button data-ui-sref=".import" class="btn btn-primary">Import</button>
+		<button data-ui-sref=".import" class="btn btn-primary" data-ng-disabled="isImportRunning()">Import</button>
+		<button type="button" class="btn btn-danger cancel" data-ng-disabled="!isImportRunning()" data-ng-click="cancelImport()">Cancel</button>
 	</div>
 </widget-panel>

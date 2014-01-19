@@ -1,16 +1,20 @@
 package com.pourbaix.creature.editor.spell;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.async.DeferredResult;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.pourbaix.infinity.domain.Spell;
+import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
@@ -24,26 +28,22 @@ public class SpellImport implements Runnable {
 	private ReaderService readerService;
 
 	private volatile boolean running = false;
-	private int progress;
 	private Thread thread;
+	private LinkedBlockingQueue<Spell> spells;
+	private Integer modId;
+	private List<ResourceEntry> resources;
+	private final BlockingQueue<DeferredResult<Spell>> resultQueue = new LinkedBlockingQueue<>();
 
 	public void run() {
-		progress = 0;
-		List<ResourceEntry> resources = readerService.getSpellResources();
-		List<ResourceEntry> lst = Lists.newArrayList(Iterables.filter(resources, new Predicate<ResourceEntry>() {
-			public boolean apply(ResourceEntry resource) {
-				return resource.getResourceName().startsWith("SPWI1");
+		spells = new LinkedBlockingQueue<>();
+		for (ResourceEntry resource : resources) {
+			if (!running) { // process has been cancelled
+				break;
 			}
-
-		}));
-		int i = 1;
-		int count = lst.size();
-		logger.debug("reading spell count: " + count);
-		for (ResourceEntry resource : lst) {
+			logger.debug("reading " + resource.getResourceName());
 			try {
-				logger.debug("reading: " + resource.getResourceName() + ", progress: " + progress);
 				Spell spell = readerService.getSpell(resource);
-				progress = 100 * i++ / count;
+				spells.add(spell);
 			} catch (ServiceException e) {
 				logger.error(e.getMessage());
 			}
@@ -51,15 +51,41 @@ public class SpellImport implements Runnable {
 		running = false;
 	}
 
-	public boolean startImport(Integer modId) {
+	public void startImport(DeferredResult<Integer> deferredResult, Integer modId) {
 		if (running) {
-			return false;
+			deferredResult.setResult(-1);
+			return;
 		}
-		logger.debug("startImport for mod " + modId);
 		running = true;
+		this.modId = modId;
+		resources = readerService.getSpellResources();
+		resources = Lists.newArrayList(Iterables.filter(resources, new Predicate<ResourceEntry>() {
+			public boolean apply(ResourceEntry resource) {
+				return resource.getResourceName().startsWith("SPWI1");
+			}
+		}));
+		deferredResult.setResult(resources.size());
+
 		thread = new Thread(this);
 		thread.start();
-		return true;
+	}
+
+	public void getSpellsInQueue(DeferredResult<List<Spell>> deferredResult) {
+		List<Spell> resultSpells = new ArrayList<>();
+		try {
+			while (!spells.isEmpty()) {
+				resultSpells.add(spells.take());
+			}
+			deferredResult.setResult(resultSpells);
+		} catch (InterruptedException e) {
+			logger.error(e.getMessage());
+		}
+	}
+
+	public void cancelImport() {
+		if (running) {
+			running = false;
+		}
 	}
 
 	public boolean isRunning() {
@@ -68,14 +94,6 @@ public class SpellImport implements Runnable {
 
 	public void setRunning(boolean running) {
 		this.running = running;
-	}
-
-	public int getProgress() {
-		return progress;
-	}
-
-	public void setProgress(int progress) {
-		this.progress = progress;
 	}
 
 }

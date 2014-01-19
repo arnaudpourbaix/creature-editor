@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.spring.CoreConfig;
 import com.pourbaix.infinity.domain.IdentifierEntry;
-import com.pourbaix.infinity.domain.Spell;
 import com.pourbaix.infinity.factory.FactoryException;
 import com.pourbaix.infinity.factory.IdentifierFactory;
 import com.pourbaix.infinity.service.ReaderService;
