@@ -35,75 +35,67 @@
 	});
 
 	spell.service('SpellImportService', function(Spell, $http, $interval, $rootScope, i18nNotifications) {
-		var service = {}, running = false, container;
+		var service = {
+			running : false,
+			spells : [],
+			mod : null,
+			progressValue : 0,
+			interval : null,
 
-		service.isRunning = function() {
-			return running;
-		};
+			startImport : function(mod) {
+				$http({
+					method : 'GET',
+					url : 'rest/spell/import',
+					params : {
+						modId : mod.id
+					}
+				}).then(function(response) {
+					service.mod = mod;
+					service.spells = [];
+					service.spellCount = parseInt(response.data, 10);
+					if (service.spellCount === -1) {
+						i18nNotifications.pushForCurrentRoute('spell.import.error.running', 'danger');
+						return;
+					}
+					service.running = true;
+					service.interval = $interval(service.gatherImportedSpells, 2000);
+				});
+			},
 
-		service.getModId = function() {
-			return container.modId;
-		};
+			endImport : function() {
+				$interval.cancel(service.interval);
+				service.running = false;
+			},
 
-		service.getSpells = function() {
-			return container ? container.spells : [];
-		};
+			gatherImportedSpells : function() {
+				$http({
+					method : 'GET',
+					url : 'rest/spell/import/gather'
+				}).then(function(response) {
+					angular.forEach(response.data, function(value, index) {
+						service.spells.push(value);
+					});
+					service.progressValue = parseInt(100 / service.spellCount * service.spells.length, 10);
+					if (service.spells.length === service.spellCount) {
+						service.endImport();
+					}
+				}, function() {
+					service.cancelImport();
+				});
+			},
 
-		service.getProgressValue = function() {
-			return running ? 100 / container.spellCount * container.spells : 0;
-		};
-
-		service.startImport = function(modId) {
-			$http({
-				method : 'GET',
-				url : 'rest/spell/import',
-				params : {
-					modId : modId
-				}
-			}).then(function(response) {
-				container = {
-					spells : [],
-					spellCount : parseInt(response.data, 10),
-					modId : modId,
-					interval : null
-				};
-				if (container.spellCount === -1) {
-					i18nNotifications.pushForCurrentRoute('spell.import.error.running', 'danger');
+			cancelImport : function() {
+				if (!service.running) {
 					return;
 				}
-				running = true;
-				container.interval = $interval(service.gatherImportedSpells, 2000);
-			});
-		};
-
-		service.gatherImportedSpells = function() {
-			$http({
-				method : 'GET',
-				url : 'rest/spell/import/gather'
-			}).then(function(response) {
-				container.spells = container.spells.concat(response.data);
-				if (container.spells.length === container.spellCount) {
-					$interval.cancel(container.interval);
-				}
-				console.log(container.spells);
-				// $rootScope.$apply();
-			}, function() {
-				service.cancelImport();
-			});
-		};
-
-		service.cancelImport = function() {
-			if (!running) {
-				return;
+				$http({
+					method : 'GET',
+					url : 'rest/spell/import/cancel'
+				}).then(function(response) {
+					service.endImport();
+					i18nNotifications.pushForCurrentRoute('spell.import.cancel', 'warning');
+				});
 			}
-			$http({
-				method : 'GET',
-				url : 'rest/spell/import/cancel'
-			}).then(function(response) {
-				running = false;
-				$interval.cancel(container.interval);
-				i18nNotifications.pushForCurrentRoute('spell.import.cancel', 'warning');
-			});
 		};
 
 		return service;

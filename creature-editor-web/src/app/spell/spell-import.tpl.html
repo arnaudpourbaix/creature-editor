@@ -1,9 +1,8 @@
 <div data-widget-modal-header data-close-button="true">
-	<h4>Spells import</h4>
+	<h4>Import spells</h4>
 </div>
 <form role="form" name="spellImportForm" class="form-horizontal" novalidate>
 	<div data-widget-modal-body>
-		<alert>This operation will take several minutes !</alert>
 		<div class="form-group">
 			<label for="mod" class="col-sm-2 control-label">Mod</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
@@ -14,6 +13,6 @@
 		<alert data-ng-show="mod != null" type="'danger'">It will replace all existing spells of mod <strong>{{ mod.name }}</strong></alert>
 	</div>
 	<div data-widget-modal-footer>
-		<button type="button" class="btn btn-primary save" data-ng-disabled="mod == null" data-ng-click="import()">Import</button>
+		<button type="button" class="btn btn-primary" data-ng-disabled="mod == null" data-ng-click="import()">Confirm</button>
 	</div>
 </form>

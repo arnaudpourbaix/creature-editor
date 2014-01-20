@@ -1,15 +1,32 @@
 <widget-panel class="spellPanel">
 	<div data-widget-panel-header>Spells</div>
+	
 	<div data-widget-panel-body>
-		<select-Mod />
-		<br />
+		<select-Mod></select-Mod>
+		
 		<div class="gridStyle" data-ng-grid="gridOptions"></div>
+		
+		<div class="row spell-import-progress" data-ng-show="!importService.running">
+			<div class="col-md-4 text-right">Importing <strong>{{importService.mod.name}}</strong></div>
+			<div class="col-md-6">
+				<progressbar animate="false" value="importService.progressValue" type="success"><b>{{importService.progressValue}}%</b></progressbar>		  
+			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-danger btn-xs" data-ng-click="importService.cancelImport()">Cancel</button>			
+			</div>
+		</div>
 	</div>
-	<div class="spell-import-progress" data-ng-show="isImportRunning()">
-		<progressbar animate="false" value="progressValue" type="success"><b>{{progressValue}}%</b></progressbar>
-	</div>
+	
 	<div data-widget-panel-footer>
-		<button data-ui-sref=".import" class="btn btn-primary" data-ng-disabled="isImportRunning()">Import</button>
-		<button type="button" class="btn btn-danger cancel" data-ng-disabled="!isImportRunning()" data-ng-click="cancelImport()">Cancel</button>
+		<button data-ui-sref=".import" class="btn btn-primary pull-right" data-ng-disabled="importService.running" data-ng-show="!importService.running">Import</button>
+		<div class="row spell-import-progress" data-ng-show="importService.running">
+			<div class="col-md-4 text-right">Importing <strong>{{importService.mod.name}}</strong></div>
+			<div class="col-md-6">
+				<progressbar animate="false" value="importService.progressValue" type="success"><b>{{importService.progressValue}}%</b></progressbar>		  
+			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-danger btn-xs" data-ng-click="importService.cancelImport()">Cancel</button>			
+			</div>
+		</div>
 	</div>
 </widget-panel>

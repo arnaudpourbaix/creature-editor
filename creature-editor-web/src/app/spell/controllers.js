@@ -7,6 +7,8 @@
 
 		angular.extend($scope, crudListMethods('/spells'));
 
+		$scope.importService = SpellImportService;
+
 		$scope.gridOptions = {
 			data : 'spells',
 			enableRowSelection : false,
@@ -25,20 +27,12 @@
 			} ]
 		};
 
-		$scope.isImportRunning = SpellImportService.isRunning;
-		$scope.cancelImport = SpellImportService.cancelImport;
-		$scope.progressValue = SpellImportService.getProgressValue();
-
 		$scope.$on('selectedMod', function(e, mod) {
 			$scope.mod = mod;
-			if (SpellImportService.isRunning() && mod.id === SpellImportService.getModId()) {
-				$scope.spells = SpellImportService.getSpells();
+			if (SpellImportService.running && mod.id === SpellImportService.modId) {
+				$scope.spells = SpellImportService.spells;
 			} else {
 				$scope.spells = Spell.query();
-				$scope.$watchCollection("SpellImportService.getSpells()", function() {
-					console.log('update spells scope');
-					$scope.spells = SpellImportService.getSpells();
-				});
 			}
 			e.stopPropagation();
 		});
@@ -56,15 +50,13 @@
 
 	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellImportService, i18nNotifications) {
 
-		$scope.mod = null;
-
 		$scope.$on('selectedMod', function(e, mod) {
 			$scope.mod = mod;
 			e.stopPropagation();
 		});
 
 		$scope.import = function() {
-			SpellImportService.startImport($scope.mod.id);
+			SpellImportService.startImport($scope.mod);
 			$modalInstance.close();
 		};
 
