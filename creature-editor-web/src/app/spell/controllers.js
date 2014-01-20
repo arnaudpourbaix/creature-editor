@@ -15,10 +15,20 @@
 			enableColumnResize : true,
 			showFilter : true,
 			columnDefs : [ {
-				field : 'name',
-				displayName : 'Name',
+				field : 'resource',
+				displayName : 'Resource',
 				cellClass : 'cellName',
 				cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="edit(row.entity.id)"><span>{{row.getProperty(col.field)}}</span></div>'
+			}, {
+				field : 'name',
+				displayName : 'Name'
+			}, {
+				field : 'level',
+				displayName : 'Level',
+				width : '55px'
+			}, {
+				field : 'identifier',
+				displayName : 'Identifier'
 			}, {
 				sortable : false,
 				cellClass : 'actionColumn',
@@ -32,7 +42,9 @@
 			if (SpellImportService.running && mod.id === SpellImportService.modId) {
 				$scope.spells = SpellImportService.spells;
 			} else {
-				$scope.spells = Spell.query();
+				$scope.spells = Spell.query({
+					modId : mod.id
+				});
 			}
 			e.stopPropagation();
 		});
@@ -48,14 +60,10 @@
 
 	});
 
-	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellImportService, i18nNotifications) {
+	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellImportService, $stateParams, mod) {
+		console.log('mod', mod);
 
-		$scope.$on('selectedMod', function(e, mod) {
-			$scope.mod = mod;
-			e.stopPropagation();
-		});
-
-		$scope.import = function() {
+		$scope.confirm = function() {
 			SpellImportService.startImport($scope.mod);
 			$modalInstance.close();
 		};

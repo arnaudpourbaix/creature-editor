@@ -65,6 +65,7 @@
 			endImport : function() {
 				$interval.cancel(service.interval);
 				service.running = false;
+				service.progressValue = 0;
 			},
 
 			gatherImportedSpells : function() {
@@ -77,14 +78,19 @@
 					});
 					service.progressValue = parseInt(100 / service.spellCount * service.spells.length, 10);
 					if (service.spells.length === service.spellCount) {
+						i18nNotifications.pushForCurrentRoute('spell.import.success', 'success', {
+							name : service.mod.name
+						});
 						service.endImport();
 					}
 				}, function() {
-					service.cancelImport();
+					service.endImport();
+					i18nNotifications.pushForCurrentRoute('spell.import.error', 'danger');
 				});
 			},
 
 			cancelImport : function() {
+				console.log('cancel import');
 				if (!service.running) {
 					return;
 				}

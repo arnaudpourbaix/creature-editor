@@ -79,10 +79,11 @@ public class SpellFactory {
 
 	private Spell getSpell(RawSpell rawSpell) {
 		Spell spell = new Spell();
-		spell.setResource(rawSpell.getResource());
+		spell.setResource(rawSpell.getResource().replace(".SPL", ""));
 		spell.setName(rawSpell.getName());
 		spell.setLevel(rawSpell.getLevel());
 		spell.setDescription(rawSpell.getDescription());
+		spell.setIdentifier(rawSpell.getIdentifier());
 		return spell;
 	}
 

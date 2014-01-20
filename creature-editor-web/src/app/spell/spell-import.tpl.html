@@ -3,16 +3,9 @@
 </div>
 <form role="form" name="spellImportForm" class="form-horizontal" novalidate>
 	<div data-widget-modal-body>
-		<div class="form-group">
-			<label for="mod" class="col-sm-2 control-label">Mod</label>
-			<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
-				<select-Mod id="mod" name="mod" />
-				<span class="help-block" data-ng-show="spellImportForm.mod.$error.required">Required</span>
-			</div>
-		</div>
-		<alert data-ng-show="mod != null" type="'danger'">It will replace all existing spells of mod <strong>{{ mod.name }}</strong></alert>
+		<alert data-ng-show="mod != null" type="'danger'">It will replace all existing spells of mod <strong>{{mod.name}}</strong></alert>
 	</div>
 	<div data-widget-modal-footer>
-		<button type="button" class="btn btn-primary" data-ng-disabled="mod == null" data-ng-click="import()">Confirm</button>
+		<button type="button" class="btn btn-primary" data-ng-click="confirm()">Confirm</button>
 	</div>
 </form>

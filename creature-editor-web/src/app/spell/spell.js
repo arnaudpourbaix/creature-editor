@@ -6,8 +6,8 @@
 
 	spell.constant('I18N.MESSAGES', {
 		'errors.route.changeError' : 'Route change error',
-		'spell.import.error.running' : "Spell import is already running.",
-		'spell.import.error.halted' : "Spell import has encountered an unknown error.",
+		'spell.import.success' : "Spell import for mod {{name}} is done.",
+		'spell.import.error' : "Spell import has encountered an internal error.",
 		'spell.import.cancel' : "Spell import has been cancelled.",
 		'crud.spell.save.success' : "Spell '{{name}}' was saved successfully.",
 		'crud.spell.remove.success' : "Spell '{{name}}' was removed successfully.",
@@ -24,18 +24,20 @@
 		});
 
 		$stateProvider.state('spells.import', {
-			url : '/import',
+			url : '/import/:modId',
 			onEnter : function($state, $stateParams, $modal, $timeout) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-import.tpl.html",
 					controller : 'SpellImportController',
-					backdrop : false
+					backdrop : false,
+					resolve : {
+						mod: $scope.mod
+					}
 				});
-				modal.result.then(function(result) {
-					$state.go('^', {}, {
-						reload : true
-					});
-				}, function() {
+				modal.result.finally(function(result) {
+					// $state.go('^', {}, {
+					// reload : true
+					// });
 					$state.go('^');
 				});
 			}
