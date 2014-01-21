@@ -9,6 +9,20 @@
 		$urlRouterProvider.otherwise('/');
 	});
 
+	app.constant('I18N.MESSAGES', {
+		'crud.mod.save.success' : "Mod '{{name}}' was saved successfully.",
+		'crud.mod.remove.success' : "Mod '{{name}}' was removed successfully.",
+		'crud.mod.remove.error' : "Error when removing mod '{{name}}'.",
+		'crud.mod.save.error' : "Error when saving a mod...",
+		'spell.import.success' : "Spell import for mod {{name}} is done.",
+		'spell.import.error' : "Spell import has encountered an internal error.",
+		'spell.import.cancel' : "Spell import has been cancelled.",
+		'crud.spell.save.success' : "Spell '{{name}}' was saved successfully.",
+		'crud.spell.remove.success' : "Spell '{{name}}' was removed successfully.",
+		'crud.spell.remove.error' : "Error when removing spell '{{name}}'.",
+		'crud.spell.save.error' : "Error when saving a spell..."
+	});
+
 	app.controller('AppCtrl', [ '$scope', 'i18nNotifications', 'localizedMessages', function($scope, i18nNotifications) {
 		$scope.notifications = i18nNotifications;
 
@@ -32,6 +46,14 @@
 					}, 700);
 				}
 			});
+		};
+	});
+
+	app.filter('range', function() {
+		return function(input, total) {
+			total = parseInt(total, 10);
+			for (var i = 0; i < total; i++) {input.push(i);}
+			return input;
 		};
 	});
 

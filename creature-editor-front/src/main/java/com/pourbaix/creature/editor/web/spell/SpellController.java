@@ -41,7 +41,7 @@ public class SpellController {
 	@RequestMapping(value = "/spell/{id}", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public Spell getById(@PathVariable Integer id) {
-		return spellRepository.findOne(id);
+		return spellRepository.findById(id);
 	}
 
 	@RequestMapping(value = "/spell", method = RequestMethod.PUT, produces = "application/json")
