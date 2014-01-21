@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'ui.router',
+	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'creatureEditor.mod.services', 'ui.router',
 			'ngRoute', 'notification.i18n' ]);
 
 	spell.constant('I18N.MESSAGES', {
@@ -18,59 +18,63 @@
 	spell.config(function config($stateProvider) {
 
 		$stateProvider.state('spells', {
+         abstract: true,
 			url : '/spells',
-			controller : 'SpellListController',
-			templateUrl : 'spell/spell-list.tpl.html'
+			controller : 'SpellController',
+			templateUrl : 'spell/spell.tpl.html'
 		});
 
+		$stateProvider.state('spells.list', {
+			url : '/list',
+			controller : 'SpellListController',
+			template : ''
+			// ,templateUrl : 'spell/spell-list.tpl.html'
+		});
+		 
 		$stateProvider.state('spells.import', {
 			url : '/import/:modId',
 			onEnter : function($state, $stateParams, $modal, $timeout) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-import.tpl.html",
 					controller : 'SpellImportController',
-					backdrop : false,
 					resolve : {
-						mod: $scope.mod
+						mod : [ 'Mod', function(Mod) {
+							return Mod.get({
+								id : $stateParams.modId
+							}).$promise;
+						} ]
 					}
 				});
 				modal.result.finally(function(result) {
-					// $state.go('^', {}, {
-					// reload : true
-					// });
-					$state.go('^');
+					$state.go('spells.list');
 				});
 			}
 		});
 
 		$stateProvider.state('spells.edit', {
-			url : 'edit/:spellId',
+			url : '/:id',
 			onEnter : function($state, $stateParams, $modal, $timeout, Spell) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
 					backdrop : false,
+					windowClass : 'spell-modal',
 					resolve : {
 						spell : function(Spell) {
-							if ($stateParams.spellId !== 'new') {
-								return Spell.get({
-									id : $stateParams.spellId
-								}).$promise;
-							} else {
-								return new Spell({
-									id : null,
-									name : ''
-								});
-							}
+							return Spell.get({
+								id : $stateParams.id
+							}).$promise;
 						}
 					}
 				});
 				modal.result.then(function(result) {
-					$state.go('^', {}, {
-						reload : true
-					});
+// $state.go('^', {}, {
+// reload : true
+// });
+					$state.go('spells.list');
 				}, function() {
-					$state.go('^');
+					// $state.go('^');
+					$state.go('spells.list');
 				});
 			}
 		});

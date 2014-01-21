@@ -7,7 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -37,6 +38,25 @@ public class SpellController {
 		return spells;
 	}
 
+	@RequestMapping(value = "/spell/{id}", method = RequestMethod.GET, produces = "application/json")
+	@ResponseBody
+	public Spell getById(@PathVariable Integer id) {
+		return spellRepository.findOne(id);
+	}
+
+	@RequestMapping(value = "/spell", method = RequestMethod.PUT, produces = "application/json")
+	@ResponseBody
+	public Spell save(@RequestBody Spell spell) {
+		spellRepository.save(spell);
+		return spell;
+	}
+
+	@RequestMapping(value = "/spell/{id}", method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	public void delete(@PathVariable Integer id) {
+		spellRepository.delete(id);
+	}
+
 	@RequestMapping(value = "/spell/import", params = "modId", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public DeferredResult<Integer> importSpells(Integer modId) {
@@ -52,12 +72,6 @@ public class SpellController {
 		spellImport.getSpellsInQueue(result);
 		return result;
 
-	}
-
-	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler({ SpellImportException.class })
-	public void handleImportException(SpellImportException exception) {
-		logger.error(exception.getMessage());
 	}
 
 	@RequestMapping("/spell/import/cancel")

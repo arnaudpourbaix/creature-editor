@@ -90,7 +90,6 @@
 			},
 
 			cancelImport : function() {
-				console.log('cancel import');
 				if (!service.running) {
 					return;
 				}

@@ -1,14 +1,19 @@
-<div data-widget-modal-header data-close-button="false">
-	<h4>Mod details</h4>
+<div data-widget-modal-header data-close-button="true">
+	<h4>Spell details</h4>
 </div>
-<form role="form" name="modForm" class="form-horizontal" novalidate data-crud-edit="mod">
+<form role="form" name="editForm" class="form-horizontal" novalidate data-crud-edit="spell">
 	<div data-widget-modal-body>
 		<div class="form-group">
-			<label for="mod.name" class="col-sm-2 control-label">Name</label>
-			<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
-				<input id="mod.name" class="form-control" type="text" placeholder="Name" name="name" data-ng-model="mod.name" data-ng-trim="true" data-focus-me="true"
-					required data-unique-name="{ id: mod.id }" /> <span class="help-block" data-ng-show="modForm.name.$error.required">Required</span> <span
-					class="help-block" data-ng-show="modForm.name.$dirty && modForm.name.$error.unique">Already exists.</span>
+			<label for="spell.name" class="col-sm-2 control-label">Name</label>
+			<div class="col-sm-10" data-ng-class="{'has-error': spellForm.name.$invalid}">
+				<input id="spell.name" name="name" class="form-control" type="text" placeholder="Name" data-ng-model="spell.name" data-ng-trim="true" data-focus-me="true" />
+				<span class="help-block" data-ng-show="spellForm.name.$error.required">Required</span>
+			</div>
+		</div>
+		<div class="form-group">
+			<label for="spell.description" class="col-sm-2 control-label">Description</label>
+			<div class="col-sm-10" data-ng-class="{'has-error': spellForm.name.$invalid}">
+				<textarea name="description" rows="10" class="form-control" data-ng-model="spell.description" data-ng-maxlength="8000"></textarea>			
 			</div>
 		</div>
 	</div>
