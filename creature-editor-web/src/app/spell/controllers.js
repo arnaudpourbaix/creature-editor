@@ -3,12 +3,13 @@
 
 	var spell = angular.module('creatureEditor.spell.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
 
-	spell.controller('SpellController', function SpellController($scope, $state, mods, SpellImportService) {
+	spell.controller('SpellController', function SpellController($scope, SpellImportService, mods) {
 		$scope.importService = SpellImportService;
-
-		$scope.modId = null;
 		$scope.mods = mods;
-		console.debug('SpellController, modId=', $scope.modId);
+		$scope.modId = null;
+	});
+
+	spell.controller('SpellSelectModController', function SpellSelectModController($scope, $state) {
 
 		$scope.$on('selectedMod', function(e, mod) {
 			$scope.mod = mod;

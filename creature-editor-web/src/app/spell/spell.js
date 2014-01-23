@@ -7,14 +7,20 @@
 	spell.config(function config($stateProvider) {
 
 		$stateProvider.state('spells', {
+			abstract: true,
 			url : '/spells',
-			controller : 'SpellController',
+			controller: 'SpellController',
 			templateUrl : 'spell/spell.tpl.html',
 			resolve : {
 				mods : [ 'Mod', function(Mod) {
 					return Mod.query().$promise;
 				} ]
 			}
+		});
+
+		$stateProvider.state('spells.modSelect', {
+			url : '',
+			controller : 'SpellSelectModController'
 		});
 
 		$stateProvider.state('spells.list', {
