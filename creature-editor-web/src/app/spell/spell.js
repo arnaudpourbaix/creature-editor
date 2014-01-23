@@ -8,11 +8,18 @@
 
 		$stateProvider.state('spells', {
 			url : '/spells',
-			controller : 'SpellListController',
-			templateUrl : 'spell/spell-list.tpl.html'
+			controller : 'SpellController',
+			templateUrl : 'spell/spell.tpl.html'
 		});
 
-		$stateProvider.state('spells.edit', {
+		$stateProvider.state('spells.list', {
+			url : '/:modId',
+			controller : 'SpellListController'
+			// ,templateUrl : 'spell/spell-list.tpl.html'
+		});
+		
+		$stateProvider.state('spells-edit', {
+			parent: 'spells.list',
 			url : '/:id',
 			onEnter : function($state, $stateParams, $modal, $timeout, Spell) {
 				var modal = $modal.open({

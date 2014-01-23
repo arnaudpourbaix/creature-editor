@@ -1,0 +1,21 @@
+<widget-panel class="spellPanel">
+	<div data-widget-panel-header>Spells</div>
+	
+	<div data-widget-panel-body>
+		<select-Mod></select-Mod>
+		<ui-view />
+	</div>
+	
+	<div data-widget-panel-footer class="clearfix">
+		<button data-ui-sref="spells.import({modId: mod.id})" class="btn btn-primary pull-right" data-ng-disabled="mod == null" data-ng-show="!importService.running">Import</button>
+		<div class="row spell-import-progress" data-ng-show="importService.running">
+			<div class="col-md-4 text-right">Importing <strong>{{importService.mod.name}}</strong></div>
+			<div class="col-md-6">
+				<progressbar animate="false" value="importService.progressValue" type="success"><b>{{importService.progressValue}}%</b></progressbar>		  
+			</div>
+			<div class="col-md-2">
+				<button type="button" class="btn btn-danger btn-xs" data-ng-click="importService.cancelImport()">Cancel</button>			
+			</div>
+		</div>
+	</div>
+</widget-panel>

@@ -3,7 +3,34 @@
 
 	var spell = angular.module('creatureEditor.spell.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
 
-	spell.controller('SpellListController', function SpellListController($scope, $state, Spell, SpellImportService, crudListMethods, i18nNotifications) {
+	spell.controller('SpellController', function SpellController($scope, $state, Spell, SpellImportService, i18nNotifications) {
+
+		$scope.importService = SpellImportService;
+
+		$scope.$on('selectedMod', function(e, mod) {
+			$scope.mod = mod;
+			// if (SpellImportService.running && mod.id === SpellImportService.modId) {
+			// $scope.spells = SpellImportService.spells;
+			// } else {
+			// $scope.spells = Spell.query({
+			// modId : mod.id
+			// });
+			// }
+			$state.go('.list', {
+				modId : mod.id
+			});
+			e.stopPropagation();
+		});
+
+		$scope.$watch('importService.running', function() {
+			if ($scope.importService.running && $scope.importService.mod.id) {
+				$scope.spells = $scope.importService.spells;
+			}
+		});
+
+	});
+
+	spell.controller('SpellListController', function SpellListController($scope, Spell, SpellImportService, crudListMethods, i18nNotifications) {
 
 		angular.extend($scope, crudListMethods('/spells'));
 
@@ -37,24 +64,6 @@
 				cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" />'
 			} ]
 		};
-
-		$scope.$on('selectedMod', function(e, mod) {
-			$scope.mod = mod;
-			if (SpellImportService.running && mod.id === SpellImportService.modId) {
-				$scope.spells = SpellImportService.spells;
-			} else {
-				$scope.spells = Spell.query({
-					modId : mod.id
-				});
-			}
-			e.stopPropagation();
-		});
-
-		$scope.$watch('importService.running', function() {
-			if ($scope.importService.running && $scope.importService.mod.id) {
-				$scope.spells = $scope.importService.spells;
-			}
-		});
 
 		$scope.remove = function(spell) {
 			spell.$delete().then(function(response) {
