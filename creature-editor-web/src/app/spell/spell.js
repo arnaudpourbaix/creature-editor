@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'ui.router',
+	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.mod.services', 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'ui.router',
 			'ngRoute', 'notification.i18n' ]);
 
 	spell.config(function config($stateProvider) {
@@ -9,17 +9,21 @@
 		$stateProvider.state('spells', {
 			url : '/spells',
 			controller : 'SpellController',
-			templateUrl : 'spell/spell.tpl.html'
+			templateUrl : 'spell/spell.tpl.html',
+			resolve : {
+				mods : [ 'Mod', function(Mod) {
+					return Mod.query().$promise;
+				} ]
+			}
 		});
 
 		$stateProvider.state('spells.list', {
 			url : '/:modId',
-			controller : 'SpellListController'
-			// ,templateUrl : 'spell/spell-list.tpl.html'
+			controller : 'SpellListController',
+			templateUrl : 'spell/spell-list.tpl.html'
 		});
 		
-		$stateProvider.state('spells-edit', {
-			parent: 'spells.list',
+		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
 			onEnter : function($state, $stateParams, $modal, $timeout, Spell) {
 				var modal = $modal.open({
@@ -51,8 +55,7 @@
 			}
 		});
 
-		$stateProvider.state('spells.import', {
-			url : '/import/:modId',
+		$stateProvider.state('spells.list.import', {
 			onEnter : function($state, $stateParams, $modal, $timeout) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-import.tpl.html",

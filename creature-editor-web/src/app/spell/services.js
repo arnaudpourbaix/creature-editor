@@ -34,6 +34,22 @@
 		return res;
 	});
 
+	spell.service('SpellService', function(Spell, SpellImportService) {
+		var service = {
+			getSpells : function(modId) {
+				if (SpellImportService.running && modId === SpellImportService.modId) {
+					return SpellImportService.spells;
+				} else {
+					return Spell.query({
+						modId : modId
+					});
+				}
+			}
+		};
+
+		return service;
+	});
+
 	spell.service('SpellImportService', function(Spell, $http, $interval, $rootScope, i18nNotifications) {
 		var service = {
 			running : false,

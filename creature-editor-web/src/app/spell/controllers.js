@@ -3,38 +3,35 @@
 
 	var spell = angular.module('creatureEditor.spell.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
 
-	spell.controller('SpellController', function SpellController($scope, $state, Spell, SpellImportService, i18nNotifications) {
-
+	spell.controller('SpellController', function SpellController($scope, $state, mods, SpellImportService) {
 		$scope.importService = SpellImportService;
+
+		$scope.modId = null;
+		$scope.mods = mods;
+		console.debug('SpellController, modId=', $scope.modId);
 
 		$scope.$on('selectedMod', function(e, mod) {
 			$scope.mod = mod;
-			// if (SpellImportService.running && mod.id === SpellImportService.modId) {
-			// $scope.spells = SpellImportService.spells;
-			// } else {
-			// $scope.spells = Spell.query({
-			// modId : mod.id
-			// });
-			// }
-			$state.go('.list', {
+			$state.go('spells.list', {
 				modId : mod.id
 			});
 			e.stopPropagation();
 		});
+	});
+
+	spell.controller('SpellListController', function SpellListController($scope, $stateParams, $location, SpellService, crudListMethods, i18nNotifications) {
+		angular.extend($scope, crudListMethods($location.url()));
+
+		$scope.modId = parseInt($stateParams.modId, 10);
+		console.debug('SpellListController, modId=', $scope.modId);
+
+		$scope.spells = SpellService.getSpells($scope.modId);
 
 		$scope.$watch('importService.running', function() {
-			if ($scope.importService.running && $scope.importService.mod.id) {
+			if ($scope.importService.running && $scope.importService.mod.id === $scope.modId) {
 				$scope.spells = $scope.importService.spells;
 			}
 		});
-
-	});
-
-	spell.controller('SpellListController', function SpellListController($scope, Spell, SpellImportService, crudListMethods, i18nNotifications) {
-
-		angular.extend($scope, crudListMethods('/spells'));
-
-		$scope.importService = SpellImportService;
 
 		$scope.gridOptions = {
 			data : 'spells',
@@ -87,7 +84,6 @@
 	});
 
 	spell.controller('SpellEditController', function SpellEditController($scope, $modalInstance, spell, i18nNotifications) {
-
 		$scope.spell = spell;
 		$scope.onSave = function(spell) {
 			i18nNotifications.pushForCurrentRoute('crud.spell.save.success', 'success', {
