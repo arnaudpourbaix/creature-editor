@@ -1,4 +1,5 @@
-(function() {
+/* global jQuery */
+(function(window, $) {
 	'use strict';
 
 	var app = angular.module('ui-components', [ 'ngGrid', 'ui.bootstrap' ]);
@@ -151,4 +152,4 @@
 		};
 	});
 
-})();
+}(window, jQuery));

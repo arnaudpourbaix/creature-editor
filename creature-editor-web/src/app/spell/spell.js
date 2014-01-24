@@ -19,8 +19,7 @@
 		});
 
 		$stateProvider.state('spells.modSelect', {
-			url : '',
-			controller : 'SpellSelectModController'
+			url : ''
 		});
 
 		$stateProvider.state('spells.list', {
@@ -52,8 +51,9 @@
 					}
 				});
 				modal.result.then(function(result) {
+					console.log(result.spell);
 					$state.go('^', {}, {
-						reload : true
+						reload : false
 					});
 				}, function() {
 					$state.go('^');

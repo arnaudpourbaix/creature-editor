@@ -6,25 +6,12 @@
 	spell.controller('SpellController', function SpellController($scope, SpellImportService, mods) {
 		$scope.importService = SpellImportService;
 		$scope.mods = mods;
-		$scope.modId = null;
-	});
-
-	spell.controller('SpellSelectModController', function SpellSelectModController($scope, $state) {
-
-		$scope.$on('selectedMod', function(e, mod) {
-			$scope.mod = mod;
-			$state.go('spells.list', {
-				modId : mod.id
-			});
-			e.stopPropagation();
-		});
 	});
 
 	spell.controller('SpellListController', function SpellListController($scope, $stateParams, $location, SpellService, crudListMethods, i18nNotifications) {
 		angular.extend($scope, crudListMethods($location.url()));
 
 		$scope.modId = parseInt($stateParams.modId, 10);
-		console.debug('SpellListController, modId=', $scope.modId);
 
 		$scope.spells = SpellService.getSpells($scope.modId);
 
@@ -90,7 +77,9 @@
 			i18nNotifications.pushForCurrentRoute('crud.spell.save.success', 'success', {
 				name : spell.name
 			});
-			$modalInstance.close();
+			$modalInstance.close({
+				spell : spell
+			});
 		};
 
 		$scope.onError = function() {

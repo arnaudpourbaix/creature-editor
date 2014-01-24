@@ -1,10 +1,11 @@
 package com.pourbaix.creature.editor.domain;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -66,8 +67,7 @@ public class Spell implements java.io.Serializable {
 	public Spell() {
 	}
 
-	public Spell(Mod mod, String resource, String name, int level, int type,
-			int secondarytype, boolean hurtAllies) {
+	public Spell(Mod mod, String resource, String name, int level, int type, int secondarytype, boolean hurtAllies) {
 		this.mod = mod;
 		this.resource = resource;
 		this.name = name;
@@ -77,10 +77,8 @@ public class Spell implements java.io.Serializable {
 		this.hurtAllies = hurtAllies;
 	}
 
-	public Spell(Mod mod, String resource, String name, String identifier,
-			String description, int level, int type, int secondarytype,
-			Integer exclusionflags, Integer range, String school,
-			boolean hurtAllies, Integer effects) {
+	public Spell(Mod mod, String resource, String name, String identifier, String description, int level, int type, int secondarytype, Integer exclusionflags,
+			Integer range, String school, boolean hurtAllies, Integer effects) {
 		this.mod = mod;
 		this.resource = resource;
 		this.name = name;
@@ -94,6 +92,14 @@ public class Spell implements java.io.Serializable {
 		this.school = school;
 		this.hurtAllies = hurtAllies;
 		this.effects = effects;
+	}
+
+	public String toString() {
+		StringBuilder sb = new StringBuilder(resource);
+		sb.append(", name=").append(name);
+		sb.append(", level=").append(level);
+		sb.append(", identifier=").append(identifier);
+		return sb.toString();
 	}
 
 	public Integer getId() {

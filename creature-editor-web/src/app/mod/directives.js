@@ -7,7 +7,7 @@
 	/**
 	 * A validation directive to ensure that the model contains a unique name mod
 	 */
-	mod.directive('uniqueName', [ "Mod", function(Mod) {
+	mod.directive('uniqueName', function(Mod) {
 		return {
 			require : 'ngModel',
 			restrict : 'A',
@@ -26,7 +26,7 @@
 				});
 			}
 		};
-	} ]);
+	});
 
 	/**
 	 * Create a select2 component for a mod<br>

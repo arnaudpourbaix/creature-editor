@@ -74,7 +74,8 @@ public class SpellImport implements Runnable {
 		resources = readerService.getSpellResources();
 		resources = Lists.newArrayList(Iterables.filter(resources, new Predicate<ResourceEntry>() {
 			public boolean apply(ResourceEntry resource) {
-				return resource.getResourceName().startsWith("SPPR3");
+				return resource.getResourceName().startsWith("SPPR1") || resource.getResourceName().startsWith("SPPR2")
+						|| resource.getResourceName().startsWith("SPPR3");
 			}
 		}));
 		deferredResult.setResult(resources.size());

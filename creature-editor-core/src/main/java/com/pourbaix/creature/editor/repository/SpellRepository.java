@@ -15,7 +15,7 @@ public interface SpellRepository extends JpaRepository<Spell, Integer> {
 	@Query("SELECT s FROM Spell s JOIN FETCH s.mod WHERE s.id = :id")
 	public Spell findById(@Param("id") Integer id);
 
-	@Query("SELECT s FROM Spell s WHERE s.mod.id = :modId")
+	@Query("SELECT s FROM Spell s WHERE s.mod.id = :modId ORDER BY s.resource")
 	public List<Spell> findByModId(@Param("modId") Integer modId);
 
 	@Query("DELETE FROM Spell s WHERE s.mod.id = :modId")
