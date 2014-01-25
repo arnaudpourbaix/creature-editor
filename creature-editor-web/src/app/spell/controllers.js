@@ -8,12 +8,12 @@
 		$scope.mods = mods;
 	});
 
-	spell.controller('SpellListController', function SpellListController($scope, $stateParams, $location, SpellService, crudListMethods, i18nNotifications) {
+	spell.controller('SpellListController', function SpellListController($scope, $stateParams, $location, spells, crudListMethods, i18nNotifications) {
 		angular.extend($scope, crudListMethods($location.url()));
 
 		$scope.modId = parseInt($stateParams.modId, 10);
 
-		$scope.spells = SpellService.getSpells($scope.modId);
+		$scope.spells = spells;
 
 		$scope.$watch('importService.running', function() {
 			if ($scope.importService.running && $scope.importService.mod.id === $scope.modId) {
@@ -21,33 +21,76 @@
 			}
 		});
 
-		$scope.gridOptions = {
+		// $scope.gridOptions = {
+		// data : 'spells',
+		// enableRowSelection : false,
+		// enableColumnResize : true,
+		// showFilter : true,
+		// columnDefs : [ {
+		// field : 'resource',
+		// displayName : 'Resource',
+		// cellClass : 'cellName',
+		// width : '80px',
+		// cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="edit(row.entity.id)"><span>{{row.getProperty(col.field)}}</span></div>'
+		// }, {
+		// field : 'name',
+		// displayName : 'Name'
+		// }, {
+		// field : 'level',
+		// displayName : 'Level',
+		// width : '55px'
+		// }, {
+		// field : 'identifier',
+		// displayName : 'Identifier'
+		// }, {
+		// sortable : false,
+		// cellClass : 'actionColumn',
+		// width : '60px',
+		// cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" />'
+		// } ]
+		// };
+
+		$scope.spellTable = {
 			data : 'spells',
-			enableRowSelection : false,
-			enableColumnResize : true,
-			showFilter : true,
-			columnDefs : [ {
-				field : 'resource',
-				displayName : 'Resource',
-				cellClass : 'cellName',
-				width : '80px',
-				cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="edit(row.entity.id)"><span>{{row.getProperty(col.field)}}</span></div>'
+			columns : [ {
+				text : 'Id',
+				dataField : 'id',
+				type : 'number',
+				width : 30
 			}, {
-				field : 'name',
-				displayName : 'Name'
+				text : 'Resource',
+				dataField : 'resource',
+				type : 'string',
+				width : 80
 			}, {
-				field : 'level',
-				displayName : 'Level',
-				width : '55px'
+				text : 'Name',
+				dataField : 'name',
+				type : 'string',
+				width : 200
 			}, {
-				field : 'identifier',
-				displayName : 'Identifier'
+				text : 'Level',
+				dataField : 'level',
+				type : 'number',
+				width : 55
 			}, {
-				sortable : false,
-				cellClass : 'actionColumn',
-				width : '60px',
-				cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" />'
-			} ]
+				text : 'Identifier',
+				dataField : 'identifier',
+				type : 'string',
+				width : 200,
+				cellsAlign : 'right',
+				align : 'right'
+			} ],
+			options : {
+				width : 670,
+				pageable : true,
+				pagerButtonsCount : 10,
+				pageSize : 15
+			},
+			events : {
+				rowClick : function($scope, row) {
+					$scope.edit(row.id);
+				}
+			}
 		};
 
 		$scope.remove = function(spell) {

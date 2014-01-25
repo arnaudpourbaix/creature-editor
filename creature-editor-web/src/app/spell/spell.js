@@ -1,8 +1,7 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.mod.services', 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers', 'ui.router',
-			'ngRoute', 'notification.i18n' ]);
+	var spell = angular.module('creatureEditor.spell', [ 'creatureEditor.mod.services', 'creatureEditor.spell.services', 'creatureEditor.spell.directives', 'creatureEditor.spell.controllers' ]);
 
 	spell.config(function config($stateProvider) {
 
@@ -25,7 +24,13 @@
 		$stateProvider.state('spells.list', {
 			url : '/:modId',
 			controller : 'SpellListController',
-			templateUrl : 'spell/spell-list.tpl.html'
+			templateUrl : 'spell/spell-list.tpl.html',
+			resolve : {
+				spells : function(SpellService, $stateParams) {
+					var spells = SpellService.getSpells($stateParams.modId);
+					return angular.isDefined(spells.$promise) ? spells.$promise : spells;
+				}
+			}
 		});
 		
 		$stateProvider.state('spells.list.edit', {

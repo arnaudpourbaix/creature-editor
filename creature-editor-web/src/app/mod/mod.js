@@ -1,8 +1,7 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers', 'ui.router', 'ngRoute',
-			'notification.i18n' ]);
+	var mod = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers' ]);
 
 	mod.config(function config($stateProvider) {
 
