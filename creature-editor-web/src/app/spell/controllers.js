@@ -50,35 +50,44 @@
 		// } ]
 		// };
 
-		$scope.spellTable = {
+		$scope.spellGrid = {
 			data : 'spells',
 			columns : [ {
-				text : 'Id',
-				dataField : 'id',
-				type : 'number',
-				width : 30
-			}, {
 				text : 'Resource',
 				dataField : 'resource',
 				type : 'string',
+				align : 'center',
 				width : 80
 			}, {
 				text : 'Name',
 				dataField : 'name',
 				type : 'string',
+				align : 'center',
 				width : 200
 			}, {
 				text : 'Level',
 				dataField : 'level',
+				cellsalign : 'center',
 				type : 'number',
+				align : 'center',
 				width : 55
 			}, {
 				text : 'Identifier',
 				dataField : 'identifier',
 				type : 'string',
-				width : 200,
-				cellsAlign : 'right',
-				align : 'right'
+				align : 'center',
+				width : 200
+			}, {
+				text : 'Actions',
+				type : 'string',
+				width : 60,
+				align : 'center',
+				cellsalign : 'center',
+				filterable : false,
+				sortable : false,
+				cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+					return '<div class="text-center"><span class="pointer glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" /></div>';
+				}
 			} ],
 			options : {
 				width : 670,
@@ -133,7 +142,9 @@
 			i18nNotifications.pushForCurrentRoute('crud.spell.remove.success', 'success', {
 				name : spell.name
 			});
-			$modalInstance.close();
+			$modalInstance.close({
+				spell : spell
+			});
 		};
 	});
 

@@ -2,7 +2,7 @@
 	'use strict';
 
 	var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod', 'ngRoute',
-			'ui.router', 'ngGrid', 'ui.bootstrap', 'ui-components', 'notification.i18n', 'crud.directives' ]);
+			'ui.router', 'ngGrid', 'ui.bootstrap', 'ui-components', 'notification.i18n', 'crud.directives', 'jqwidgets' ]);
 
 	app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		// $locationProvider.html5Mode(true);
@@ -52,7 +52,9 @@
 	app.filter('range', function() {
 		return function(input, total) {
 			total = parseInt(total, 10);
-			for (var i = 0; i < total; i++) {input.push(i);}
+			for (var i = 0; i < total; i++) {
+				input.push(i);
+			}
 			return input;
 		};
 	});

@@ -39,7 +39,6 @@
 				var modal = $modal.open({
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
-					backdrop : false,
 					resolve : {
 						spell : function(Spell) {
 							if ($stateParams.spellId !== 'new') {
@@ -58,7 +57,7 @@
 				modal.result.then(function(result) {
 					console.log(result.spell);
 					$state.go('^', {}, {
-						reload : false
+						reload : true
 					});
 				}, function() {
 					$state.go('^');
