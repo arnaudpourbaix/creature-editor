@@ -59,3 +59,31 @@ html, body {
 .pointer {
 	cursor: pointer;
 }
+
+/*
+.alert.ng-enter {
+  -webkit-transition:0.5s linear all;
+  transition:0.5s linear all;
+
+  background:red;
+}
+
+.alert.ng-enter.ng-enter-active {
+  background:blue;
+}
+*/
+
+.alert.ng-enter {
+  -webkit-animation:0.5s red-to-blue;
+  animation:0.5s red-to-blue;
+}
+
+@keyframes red-to-blue {
+  from { background:red; }
+  to { background:blue; }
+}
+
+@-webkit-keyframes red-to-blue {
+  from { background:red; }
+  to { background:blue; }
+}

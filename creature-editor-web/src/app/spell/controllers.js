@@ -18,6 +18,7 @@
 		$scope.$watch('importService.running', function() {
 			if ($scope.importService.running && $scope.importService.mod.id === $scope.modId) {
 				$scope.spells = $scope.importService.spells;
+				$scope.$emit('jqGrid-new-data');
 			}
 		});
 
@@ -86,18 +87,23 @@
 				filterable : false,
 				sortable : false,
 				cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
-					return '<div class="text-center"><span class="pointer glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" /></div>';
+					return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
 				}
 			} ],
 			options : {
 				width : 670,
+				height : 400,
 				pageable : true,
 				pagerButtonsCount : 10,
 				pageSize : 15
 			},
 			events : {
-				rowClick : function($scope, row) {
-					$scope.edit(row.id);
+				cellClick : function($scope, spell, column) {
+					if (column === 4) {
+						$scope.remove(spell);
+					} else {
+						$scope.edit(spell.id);
+					}
 				}
 			}
 		};

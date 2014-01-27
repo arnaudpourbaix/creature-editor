@@ -32,40 +32,48 @@
 		element.jqxDataTable(angular.extend(params, options));
 	};
 
-	jq.directive('jqDataTable', [ '$compile', '$filter', '$templateCache', '$sortService', '$domUtilityService', '$utilityService', '$timeout', '$parse', '$http', '$q',
-			function($compile, $filter, $templateCache, sortService, domUtilityService, $utils, $timeout, $parse, $http, $q) {
+	jq.directive('jqDataTable', [ '$compile', function($compile) {
+		return {
+			restrict : 'AE',
+			replace : true,
+			scope : true,
+			compile : function() {
 				return {
-					scope : true,
-					compile : function() {
-						return {
-							pre : function($scope, iElement, iAttrs) {
-								var $element = $(iElement);
-								var params = $scope.$eval(iAttrs.jqDataTable);
-								$scope.data = $scope[params.data];
-								createDataTable($element, params.columns, $scope.data, params.options, params.events);
-								if (params.events.rowClick) {
-									$element.on('rowClick', function(event) {
-										console.log('click');
-										event.stopPropagation();
-										$scope.$apply(function() {
-											params.events.rowClick($scope, event.args.row);
-										});
-									});
-								}
-								$scope.$watchCollection('data', function() {
-									createDataTable($element, params.columns, $scope.data, params.options);
+					pre : function($scope, iElement, iAttrs) {
+						var params = $scope.$eval(iAttrs.jqDataTable);
+						if (params.events.rowClick) {
+							iElement.on('rowClick', function(event) {
+								event.stopPropagation();
+								$scope.$apply(function() {
+									var spell = $scope[params.data][event.args.rowindex];
+									params.events.rowClick($scope, spell);
 								});
-							},
-							post : function postLink($scope, iElement, iAttrs) {
-								var $element = $(iElement);
-								$compile($element)($scope);
-							}
-						};
+							});
+						}
+						if (params.events.cellClick) {
+							iElement.on("cellClick", function(event) {
+								event.stopPropagation();
+								$scope.$apply(function() {
+									var spell = $scope[params.data][event.args.rowindex];
+									params.events.cellClick($scope.$parent, spell, event.args.columnindex);
+								});
+							});
+						}
+						createDataTable(iElement, params.columns, $scope[params.data], params.options, params.events);
+						$scope.$parent.$on('jqDataTable-new-data', function() {
+							createDataTable(iElement, params.columns, $scope[params.data], params.options, params.events);
+						});
+						$scope.$parent.$watchCollection(params.data + '.length', function() {
+							iElement.jqxGrid('updatebounddata');
+						});
 					}
 				};
-			} ]);
+			}
+		};
+	} ]);
 
 	var createGrid = function(element, columns, data, options, events) {
+		console.log('create grid');
 		var dataFields = [];
 		angular.forEach(columns, function(column, index) {
 			if (column.dataField) {
@@ -97,44 +105,44 @@
 		element.jqxGrid(angular.extend(params, options));
 	};
 
-	jq.directive('jqGrid', [ '$compile', '$filter', '$templateCache', '$sortService', '$domUtilityService', '$utilityService', '$timeout', '$parse', '$http', '$q',
-			function($compile, $filter, $templateCache, sortService, domUtilityService, $utils, $timeout, $parse, $http, $q) {
+	jq.directive('jqGrid', [ '$compile', function($compile) {
+		return {
+			restrict : 'AE',
+			replace : true,
+			scope : true,
+			compile : function() {
 				return {
-					scope : true,
-					compile : function() {
-						return {
-							pre : function($scope, iElement, iAttrs) {
-								var $element = $(iElement);
-								var params = $scope.$eval(iAttrs.jqGrid);
-								$scope.data = $scope[params.data];
-								$element.on('initialized', function() {
-									$compile(iElement)($scope);
+					pre : function($scope, iElement, iAttrs) {
+						var params = $scope.$eval(iAttrs.jqGrid);
+						if (params.events.rowClick) {
+							iElement.on('rowClick', function(event) {
+								event.stopPropagation();
+								$scope.$apply(function() {
+									var spell = $scope[params.data][event.args.rowindex];
+									params.events.rowClick($scope, spell);
 								});
-								if (params.events.rowClick) {
-									$element.on('rowClick', function(event) {
-										event.stopPropagation();
-										$scope.$apply(function() {
-											var spell = $scope.data[event.args.rowindex];
-											params.events.rowClick($scope, spell);
-										});
-									});
-								}
-								if (params.events.cellClick) {
-									$element.on("cellClick", function(event) {
-										var column = event.args.column;
-										var rowindex = event.args.rowindex;
-										var columnindex = event.args.columnindex;
-										console.log(column, rowindex, columnindex);
-									});
-								}
-								createGrid($element, params.columns, $scope.data, params.options, params.events);
-								$scope.$watchCollection('data', function() {
-									createGrid($element, params.columns, $scope.data, params.options);
+							});
+						}
+						if (params.events.cellClick) {
+							iElement.on("cellClick", function(event) {
+								event.stopPropagation();
+								$scope.$apply(function() {
+									var spell = $scope[params.data][event.args.rowindex];
+									params.events.cellClick($scope.$parent, spell, event.args.columnindex);
 								});
-							}
-						};
+							});
+						}
+						createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
+						$scope.$parent.$on('jqGrid-new-data', function() {
+							createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
+						});
+						$scope.$parent.$watchCollection(params.data + '.length', function() {
+							iElement.jqxGrid('updatebounddata');
+						});
 					}
 				};
-			} ]);
+			}
+		};
+	} ]);
 
 }(window, jQuery));

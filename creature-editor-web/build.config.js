@@ -39,19 +39,11 @@ module.exports = {
 	 * and minified with our project source files. The `vendor_files.css` property holds any CSS files to be automatically included in our app.
 	 */
 	vendor_files : {
-		/*
-		 * js : [ 'vendor/jquery/jquery.min.js', 'vendor/jquery-ui/ui/jquery-ui.js', 'vendor/angular/angular.min.js',
-		 * 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js', 'vendor/angular-cookies/angular-cookies.min.js',
-		 * 'vendor/angular-resource/angular-resource.min.js', 'vendor/bootstrap/dist/js/bootstrap.min.js', 'vendor/html5shiv/dist/html5shiv.js',
-		 * 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/angular-ui-utils/ui-utils.min.js', 'vendor/angular-ui-router/release/angular-ui-router.min.js',
-		 * 'vendor/angular-route/angular-route.min.js', 'vendor/ng-grid/ng-grid-2.0.7.min.js', 'vendor/select2/select2.min.js',
-		 * 'vendor/angular-ui-select2/src/select2.js', 'vendor/underscore/underscore.js' ],
-		 */
 		js : [ 'vendor/jquery/jquery.js', 'vendor/jquery-ui/ui/jquery-ui.js', 'vendor/angular/angular.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
-				'vendor/angular-cookies/angular-cookies.js', 'vendor/angular-resource/angular-resource.js', 'vendor/bootstrap/dist/js/bootstrap.js',
-				'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/angular-ui-utils/ui-utils.js',
-				'vendor/angular-ui-router/release/angular-ui-router.js', 'vendor/angular-route/angular-route.js', 'vendor/ng-grid/ng-grid-2.0.7.debug.js',
-				'vendor/select2/select2.js', 'vendor/angular-ui-select2/src/select2.js', 'vendor/underscore/underscore.js' ],
+				'vendor/angular-cookies/angular-cookies.js', 'vendor/angular-resource/angular-resource.js', 'vendor/angular-animate/angular-animate.js',
+				'vendor/bootstrap/dist/js/bootstrap.js', 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js',
+				'vendor/angular-ui-utils/ui-utils.js', 'vendor/angular-ui-router/release/angular-ui-router.js', 'vendor/angular-route/angular-route.js',
+				'vendor/ng-grid/ng-grid-2.0.7.debug.js', 'vendor/select2/select2.js', 'vendor/angular-ui-select2/src/select2.js', 'vendor/underscore/underscore.js' ],
 		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/font-awesome/css/font-awesome.min.css' ],
 		assets : [ 'jquery-ui/themes/base/**/*', 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css',
 				'roboto-fontface/*.css', 'roboto-fontface/fonts/*', 'select2/*.css', 'select2/*.png', 'select2/*.gif' ]
