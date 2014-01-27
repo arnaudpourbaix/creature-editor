@@ -1,9 +1,10 @@
-<widget-panel class="modPanel">
+<widget-panel class="mod-panel">
 	<div data-widget-panel-header>Mods</div>
 	<div data-widget-panel-body>
-		<div class="gridStyle" data-ng-grid="gridOptions"></div>
+		<div class="mod-list" data-jq-grid="modGrid"></div>
 	</div>
 	<div data-widget-panel-footer>
 		<button data-ng-click="new()" class="btn btn-primary">Add</button>
+		<button class="btn btn-primary pull-right testanim" data-ng-click="testAnim()">Anim</button>
 	</div>
 </widget-panel>

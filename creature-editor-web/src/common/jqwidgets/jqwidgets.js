@@ -73,7 +73,6 @@
 	} ]);
 
 	var createGrid = function(element, columns, data, options, events) {
-		console.log('create grid');
 		var dataFields = [];
 		angular.forEach(columns, function(column, index) {
 			if (column.dataField) {

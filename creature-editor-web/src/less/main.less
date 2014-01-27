@@ -60,30 +60,34 @@ html, body {
 	cursor: pointer;
 }
 
+testanim.ng-enter {
+	animation: shake 3s;
+}
+
+.testanim.ng-leave {
+	animation: bounce 1s;
+}
+
+.alert.ng-enter {
+	animation: shake 1s;
+}
+
+.alert.ng-leave {
+	animation: bounce 1s;
+}
+
 /*
-.alert.ng-enter {
-  -webkit-transition:0.5s linear all;
-  transition:0.5s linear all;
-
-  background:red;
-}
-
-.alert.ng-enter.ng-enter-active {
-  background:blue;
-}
+ &.ng-enter {
+    -webkit-animation: shake 3s;
+    -moz-animation: shake 3s;
+    -ms-animation: shake 3s;
+    animation: shake 3s;
+  }
+  
+  &.ng-leave {
+    -webkit-animation: bounceOut 1s;
+    -moz-animation: bounceOut 1s;
+    -ms-animation: bounceOut 1s;
+    animation: bounceOut 1s;
+  }
 */
-
-.alert.ng-enter {
-  -webkit-animation:0.5s red-to-blue;
-  animation:0.5s red-to-blue;
-}
-
-@keyframes red-to-blue {
-  from { background:red; }
-  to { background:blue; }
-}
-
-@-webkit-keyframes red-to-blue {
-  from { background:red; }
-  to { background:blue; }
-}

@@ -1,15 +1,13 @@
-<widget-panel class="spellPanel">
+<widget-panel class="spell-panel">
 	<div data-widget-panel-header>Spells</div>
-	
 	<div data-widget-panel-body>
 		<ul id="mod-tabs" class="nav nav-tabs">
 		  <li ng-repeat="mod in mods" ng-class="{ active: $state.includes('spells.list') && $stateParams.modId == mod.id }">
-		  	<a ui-sref="spells.list({modId: mod.id})">{{mod.name}}</a>
+		  	<a ui-sref="spells.list({modId: mod.id})" class="effeckt-tab">{{mod.name}}</a>
 		  </li>
-		</ul>	 
-		<div data-ui-view></div>
+		</ul>
+		<div data-ui-view></div>	 
 	</div>
-	
 	<div data-widget-panel-footer class="clearfix">
 		<button data-ui-sref="spells.list.import" class="btn btn-primary pull-right" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running">Import</button>
 		<div class="row spell-import-progress" data-ng-show="importService.running">

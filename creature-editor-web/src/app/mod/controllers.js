@@ -9,22 +9,45 @@
 
 		$scope.mods = mods;
 
-		$scope.gridOptions = {
+		$scope.testAnim = function() {
+			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
+				name : mod.name
+			});
+		};
+
+		$scope.modGrid = {
 			data : 'mods',
-			enableRowSelection : false,
-			enableColumnResize : true,
-			showFilter : true,
-			columnDefs : [ {
-				field : 'name',
-				displayName : 'Name',
-				cellClass : 'cellName',
-				cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="edit(row.entity.id)"><span>{{row.getProperty(col.field)}}</span></div>'
+			columns : [ {
+				text : 'Name',
+				dataField : 'name',
+				type : 'string',
+				align : 'center',
+				width : 200
 			}, {
+				text : 'Actions',
+				type : 'string',
+				width : 60,
+				align : 'center',
+				cellsalign : 'center',
+				filterable : false,
 				sortable : false,
-				cellClass : 'actionColumn',
-				width : '60px',
-				cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" />'
-			} ]
+				cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+					return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
+				}
+			} ],
+			options : {
+				width : 260,
+				height : 400
+			},
+			events : {
+				cellClick : function($scope, mod, column) {
+					if (column === 1) {
+						$scope.remove(mod);
+					} else {
+						$scope.edit(mod.id);
+					}
+				}
+			}
 		};
 
 		$scope.remove = function(mod) {

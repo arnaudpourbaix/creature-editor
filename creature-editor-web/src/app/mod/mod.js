@@ -22,7 +22,6 @@
 				var modal = $modal.open({
 					templateUrl : "mod/mod-edit.tpl.html",
 					controller : 'ModEditController',
-					backdrop : false,
 					resolve : {
 						mod : function(Mod) {
 							if ($stateParams.modId !== 'new') {
