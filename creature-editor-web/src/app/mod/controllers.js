@@ -10,10 +10,13 @@
 		$scope.mods = mods;
 
 		$scope.testAnim = function() {
-			// i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
-			// name : mod.name
-			// });
-			notify('Test de message');
+			notify("Mod Creatures was saved successfully.");
+		};
+
+		$scope.testAnim2 = function() {
+			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'warning', {
+				name : 'Creatures'
+			});
 		};
 
 		$scope.modGrid = {

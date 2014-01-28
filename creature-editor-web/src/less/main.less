@@ -72,13 +72,24 @@ html, body {
 	.lh-animation(bounce 1s)
 }
 
-.alert.ng-enter {
+.notifications {
+	width: 50%;
+	height: 50%;
+	.alert {
+		width: 50%;
+		margin-top: 7px;
+		margin-bottom: 0;
+		padding: 7px;
+	}    
+}
+
+.notifications .alert.ng-enter {
 	.lh-animation(slideInLeft 1s);
 }
 
-.alert.ng-leave {
+/*.alert.ng-leave {
 	.lh-animation(slideOutRight 1s);
-}
+}*/
 
 /*
  &.ng-enter {

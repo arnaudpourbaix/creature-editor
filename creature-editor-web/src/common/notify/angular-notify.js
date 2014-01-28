@@ -21,7 +21,7 @@
 			args.template = args.template ? args.template : 'angular-notify.tpl.html';
 
 			// var template = $templateCache.get('notify/angular-notify.tpl.html');
-			var template = $templateCache.get('notify/angular-notify-bootstrap.tpl.html');
+			var template = $templateCache.get('notify/angular-notify.tpl.html');
 
 			// $http.get(args.template, {
 			// cache : $templateCache
