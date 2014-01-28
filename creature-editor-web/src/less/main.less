@@ -1,3 +1,6 @@
+/*@import '../../vendor/bootstrap/less/bootstrap.less';*/
+@import '../../vendor/lesshat/build/lesshat-prefixed.less';
+
 /**
  * Typography
  */
@@ -42,6 +45,7 @@ html, body {
  * Now that all app-wide styles have been applied, we can load the styles for
  * all the submodules and components we are using. 
  */
+@import '../common/notify/angular-notify.less';
 @import '../app/category/category.less';
 @import '../app/mod/mod.less';
 @import '../app/spell/spell.less';
@@ -60,20 +64,20 @@ html, body {
 	cursor: pointer;
 }
 
-testanim.ng-enter {
-	animation: shake 3s;
+.testanim.ng-enter {
+	.lh-animation(shake 3s);
 }
 
 .testanim.ng-leave {
-	animation: bounce 1s;
+	.lh-animation(bounce 1s)
 }
 
 .alert.ng-enter {
-	animation: shake 1s;
+	.lh-animation(slideInLeft 1s);
 }
 
 .alert.ng-leave {
-	animation: bounce 1s;
+	.lh-animation(slideOutRight 1s);
 }
 
 /*

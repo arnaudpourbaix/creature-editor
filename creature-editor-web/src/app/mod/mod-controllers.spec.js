@@ -5,8 +5,10 @@ describe('Mod controllers', function() {
 
 	describe('list', function() {
 
-		var Mod, $rootScope, createController, i18nNotifications = jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]), crudListMethods = jasmine
-				.createSpy('crudListMethods');
+		var Mod, $rootScope, createController;
+		var i18nNotifications = jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]);
+		var crudListMethods = jasmine.createSpy('crudListMethods');
+		var notify = jasmine.createSpy('notify');
 
 		beforeEach(function() {
 			angular.module('I18N-mock', []).value('I18N.MESSAGES', {});
@@ -34,6 +36,7 @@ describe('Mod controllers', function() {
 				return $controller('ModListController', {
 					$scope : $rootScope,
 					i18nNotifications : i18nNotifications,
+					notify : notify,
 					crudListMethods : crudListMethods,
 					mods : Mod.query()
 				});
@@ -50,8 +53,8 @@ describe('Mod controllers', function() {
 
 	describe('edit', function() {
 
-		var Mod, $rootScope, i18nNotifications = jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]), $modalInstance = jasmine.createSpyObj('$modalInstance',
-				[ 'close' ]), form, createController;
+		var Mod, $rootScope, i18nNotifications = jasmine.createSpyObj('i18nNotifications', [ 'pushForCurrentRoute' ]), $modalInstance = jasmine.createSpyObj(
+				'$modalInstance', [ 'close' ]), form, createController;
 
 		beforeEach(function() {
 			angular.module('I18N-mock', []).value('I18N.MESSAGES', {});

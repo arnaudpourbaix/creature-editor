@@ -1,18 +1,19 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services', 'ui.select2' ]);
+	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services', 'ui.select2', 'cgNotify' ]);
 
-	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications) {
+	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications, notify) {
 
 		angular.extend($scope, crudListMethods('/mods'));
 
 		$scope.mods = mods;
 
 		$scope.testAnim = function() {
-			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
-				name : mod.name
-			});
+			// i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
+			// name : mod.name
+			// });
+			notify('Test de message');
 		};
 
 		$scope.modGrid = {
