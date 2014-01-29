@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var crud = angular.module('crud.directives', []);
+	var module = angular.module('crud.directives', []);
 
-	crud.directive('crudButtons', function() {
+	module.directive('crudButtons', function() {
 		return {
 			restrict : 'E',
 			replace : true,
@@ -13,7 +13,7 @@
 
 	// Apply this directive to an element at or below a form that will manage CRUD operations on a resource.
 	// The resource must expose the following instance methods: $save(), $id() and $remove()
-	crud.directive('crudEdit', [ '$parse', function($parse) {
+	module.directive('crudEdit', [ '$parse', function($parse) {
 
 		// This function controls that resource has all required methods
 		function checkResourceMethods(resource, methods) {

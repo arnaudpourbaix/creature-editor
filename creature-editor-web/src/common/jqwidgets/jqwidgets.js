@@ -2,7 +2,7 @@
 (function(window, $) {
 	'use strict';
 
-	var jq = angular.module('jqwidgets', []);
+	var module = angular.module('jqwidgets', []);
 
 	var createDataTable = function(element, columns, data, options, events) {
 		var dataFields = [];
@@ -32,7 +32,7 @@
 		element.jqxDataTable(angular.extend(params, options));
 	};
 
-	jq.directive('jqDataTable', [ '$compile', function($compile) {
+	module.directive('jqDataTable', [ '$compile', function($compile) {
 		return {
 			restrict : 'AE',
 			replace : true,
@@ -104,7 +104,7 @@
 		element.jqxGrid(angular.extend(params, options));
 	};
 
-	jq.directive('jqGrid', [ '$compile', function($compile) {
+	module.directive('jqGrid', [ '$compile', function($compile) {
 		return {
 			restrict : 'AE',
 			replace : true,

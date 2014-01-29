@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
+	var module = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
 
-	mod.factory('Mod', function($resource) {
+	module.factory('Mod', function($resource) {
 		var baseUrl = 'rest/mod/';
 
 		var res = $resource(baseUrl + ':id', {}, {
@@ -27,6 +27,7 @@
 				method : 'GET'
 			}
 		});
+
 		res.prototype.$id = function() {
 			return this.id;
 		};

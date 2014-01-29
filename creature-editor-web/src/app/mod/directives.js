@@ -1,13 +1,13 @@
 /* global _ */
-(function() {
+(function(_) {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.directives', [ 'creatureEditor.mod.services' ]);
+	var module = angular.module('creatureEditor.mod.directives', [ 'creatureEditor.mod.services' ]);
 
 	/**
 	 * A validation directive to ensure that the model contains a unique name mod
 	 */
-	mod.directive('uniqueName', function(Mod) {
+	module.directive('uniqueName', function(Mod) {
 		return {
 			require : 'ngModel',
 			restrict : 'A',
@@ -32,7 +32,7 @@
 	 * Create a select2 component for a mod<br>
 	 * Emit 'selectedMod' event on change with mod parameter.
 	 */
-	mod.directive('selectMod', function(Mod) {
+	module.directive('selectMod', function(Mod) {
 		return {
 			restrict : 'E',
 			transclude : true,
@@ -61,4 +61,4 @@
 		};
 	});
 
-})();
+})(_);

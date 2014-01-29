@@ -1,25 +1,15 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services', 'ui.select2', 'cgNotify' ]);
+	var module = angular.module('creatureEditor.mod.controllers', []);
 
-	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications, notify, alertMessageService) {
+	module.controller('ModListController', function ModListController($scope, mods, crudListMethods, alertMessageService) {
 
 		angular.extend($scope, crudListMethods('/mods'));
 
 		$scope.mods = mods;
 
 		$scope.testAnim = function() {
-			notify("Mod Creatures was saved successfully.");
-		};
-
-		$scope.testAnim2 = function() {
-			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'warning', {
-				name : 'Creatures'
-			});
-		};
-
-		$scope.testAnim3 = function() {
 			alertMessageService.push('crud.mod.save.success', 'warning', {
 				name : 'Creatures'
 			});
@@ -63,7 +53,7 @@
 		$scope.remove = function(mod) {
 			mod.$delete().then(function(response) {
 				$scope.removeFromList($scope.mods, 'id', mod.id);
-				i18nNotifications.pushForCurrentRoute('crud.mod.remove.success', 'success', {
+				alertMessageService.push('crud.mod.remove.success', 'success', {
 					name : mod.name
 				});
 			});
@@ -71,23 +61,23 @@
 
 	});
 
-	mod.controller('ModEditController', function ModEditController($scope, $modalInstance, mod, i18nNotifications) {
+	module.controller('ModEditController', function ModEditController($scope, $modalInstance, mod, alertMessageService) {
 
 		$scope.mod = mod;
 
 		$scope.onSave = function(mod) {
-			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'success', {
+			alertMessageService.push('crud.mod.save.success', 'success', {
 				name : mod.name
 			});
 			$modalInstance.close();
 		};
 
 		$scope.onError = function() {
-			i18nNotifications.pushForCurrentRoute('crud.mod.save.error', 'danger');
+			alertMessageService.push('crud.mod.save.error', 'danger');
 		};
 
 		$scope.onRemove = function(mod) {
-			i18nNotifications.pushForCurrentRoute('crud.mod.remove.success', 'success', {
+			alertMessageService.push('crud.mod.remove.success', 'success', {
 				name : mod.name
 			});
 			$modalInstance.close();

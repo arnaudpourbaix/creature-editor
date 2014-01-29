@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var mod = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers' ]);
+	var module = angular.module('creatureEditor.mod', [ 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers' ]);
 
-	mod.config(function config($stateProvider) {
+	module.config(function config($stateProvider) {
 
 		$stateProvider.state('mods', {
 			url : '/mods',

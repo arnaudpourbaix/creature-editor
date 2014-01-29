@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var category = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives' ]);
+	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives' ]);
 
-	category.controller('CategoryListController', function CategoryListController($scope, $location, categories) {
+	module.controller('CategoryListController', function CategoryListController($scope, $location, categories) {
 		var source = {
 			datatype : "json",
 			datafields : [ {

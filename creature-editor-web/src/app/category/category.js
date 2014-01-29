@@ -1,10 +1,10 @@
 (function() {
 	'use strict';
 
-	var category = angular.module('creatureEditor.category', [ 'creatureEditor.category.services', 'creatureEditor.category.directives',
-			'creatureEditor.category.controllers', 'ui.router', 'ngRoute' ]);
+	var module = angular.module('creatureEditor.category', [ 'creatureEditor.category.services', 'creatureEditor.category.directives', 'creatureEditor.category.controllers',
+			'ui.router', 'ngRoute' ]);
 
-	category.config(function config($stateProvider) {
+	module.config(function config($stateProvider) {
 		$stateProvider.state('categories', {
 			url : '/categories',
 			resolve : {

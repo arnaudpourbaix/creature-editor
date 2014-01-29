@@ -1,6 +1,6 @@
 /* global jasmine, inject, xdescribe, xit */
 
-describe('notifications', function() {
+xdescribe('notifications', function() {
 	"use strict";
 
 	var $scope, notifications;

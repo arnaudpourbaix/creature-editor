@@ -1,14 +1,14 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services' ]);
+	var module = angular.module('creatureEditor.spell.controllers', []);
 
-	spell.controller('SpellController', function SpellController($scope, SpellImportService, mods) {
+	module.controller('SpellController', function SpellController($scope, SpellImportService, mods) {
 		$scope.importService = SpellImportService;
 		$scope.mods = mods;
 	});
 
-	spell.controller('SpellListController', function SpellListController($scope, $stateParams, $location, spells, crudListMethods, i18nNotifications) {
+	module.controller('SpellListController', function SpellListController($scope, $stateParams, $location, spells, crudListMethods, alertMessageService) {
 		angular.extend($scope, crudListMethods($location.url()));
 
 		$scope.modId = parseInt($stateParams.modId, 10);
@@ -21,35 +21,6 @@
 				$scope.$emit('jqGrid-new-data');
 			}
 		});
-
-		// $scope.gridOptions = {
-		// data : 'spells',
-		// enableRowSelection : false,
-		// enableColumnResize : true,
-		// showFilter : true,
-		// columnDefs : [ {
-		// field : 'resource',
-		// displayName : 'Resource',
-		// cellClass : 'cellName',
-		// width : '80px',
-		// cellTemplate : '<div class="ngCellText" ng-class="col.colIndex()" ng-click="edit(row.entity.id)"><span>{{row.getProperty(col.field)}}</span></div>'
-		// }, {
-		// field : 'name',
-		// displayName : 'Name'
-		// }, {
-		// field : 'level',
-		// displayName : 'Level',
-		// width : '55px'
-		// }, {
-		// field : 'identifier',
-		// displayName : 'Identifier'
-		// }, {
-		// sortable : false,
-		// cellClass : 'actionColumn',
-		// width : '60px',
-		// cellTemplate : '<span class="glyphicon glyphicon-trash" title="Delete" ng-click="remove(row.entity)" />'
-		// } ]
-		// };
 
 		$scope.spellGrid = {
 			data : 'spells',
@@ -111,7 +82,7 @@
 		$scope.remove = function(spell) {
 			spell.$delete().then(function(response) {
 				$scope.removeFromList($scope.spells, 'id', spell.id);
-				i18nNotifications.pushForCurrentRoute('crud.spell.remove.success', 'success', {
+				alertMessageService.push('crud.spell.remove.success', 'success', {
 					name : spell.name
 				});
 			});
@@ -119,7 +90,7 @@
 
 	});
 
-	spell.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellImportService, mod) {
+	module.controller('SpellImportController', function SpellImportController($scope, $modalInstance, SpellImportService, mod) {
 		$scope.mod = mod;
 
 		$scope.confirm = function() {
@@ -129,10 +100,10 @@
 
 	});
 
-	spell.controller('SpellEditController', function SpellEditController($scope, $modalInstance, spell, i18nNotifications) {
+	module.controller('SpellEditController', function SpellEditController($scope, $modalInstance, spell, alertMessageService) {
 		$scope.spell = spell;
 		$scope.onSave = function(spell) {
-			i18nNotifications.pushForCurrentRoute('crud.spell.save.success', 'success', {
+			alertMessageService.push('crud.spell.save.success', 'success', {
 				name : spell.name
 			});
 			$modalInstance.close({
@@ -141,11 +112,11 @@
 		};
 
 		$scope.onError = function() {
-			i18nNotifications.pushForCurrentRoute('crud.spell.save.error', 'danger');
+			alertMessageService.push('crud.spell.save.error', 'danger');
 		};
 
 		$scope.onRemove = function(spell) {
-			i18nNotifications.pushForCurrentRoute('crud.spell.remove.success', 'success', {
+			alertMessageService.push('crud.spell.remove.success', 'success', {
 				name : spell.name
 			});
 			$modalInstance.close({

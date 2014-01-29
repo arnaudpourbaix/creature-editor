@@ -41,11 +41,8 @@
 			return service.messages.length > 0 ? service.messages[0] : null;
 		};
 
-		service.remove = function(message) {
-			var idx = service.messages.indexOf(message);
-			if (idx > -1) {
-				service.messages.splice(idx, 1);
-			}
+		service.remove = function() {
+			service.messages.splice(0, 1);
 		};
 
 		service.removeAll = function() {

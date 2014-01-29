@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var category = angular.module('creatureEditor.category.directives', [ 'creatureEditor.category.services' ]);
+	var module = angular.module('creatureEditor.category.directives', [ 'creatureEditor.category.services' ]);
 
-	category.directive('jqxtree', function() {
+	module.directive('jqxtree', function() {
 		return {
 			restrict : 'A',
 			scope : {

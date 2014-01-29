@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
+	var module = angular.module('creatureEditor.spell.services', []);
 
-	spell.factory('Spell', function($resource) {
+	module.factory('Spell', function($resource) {
 		var baseUrl = 'rest/spell/';
 
 		var res = $resource(baseUrl + ':id', {}, {
@@ -27,6 +27,7 @@
 				method : 'GET'
 			}
 		});
+
 		res.prototype.$id = function() {
 			return this.id;
 		};
@@ -34,7 +35,7 @@
 		return res;
 	});
 
-	spell.service('SpellService', function(Spell, SpellImportService) {
+	module.service('SpellService', function(Spell, SpellImportService) {
 		var service = {
 			getSpells : function(modId) {
 				if (SpellImportService.running && modId === SpellImportService.modId) {
@@ -50,7 +51,7 @@
 		return service;
 	});
 
-	spell.service('SpellImportService', function(Spell, $http, $interval, $rootScope, i18nNotifications) {
+	module.service('SpellImportService', function(Spell, $http, $interval, alertMessageService) {
 		var service = {
 			running : false,
 			spells : [],
@@ -70,7 +71,7 @@
 					service.spells = [];
 					service.spellCount = parseInt(response.data, 10);
 					if (service.spellCount === -1) {
-						i18nNotifications.pushForCurrentRoute('spell.import.error.running', 'danger');
+						alertMessageService.push('spell.import.error.running', 'danger');
 						return;
 					}
 					service.running = true;
@@ -94,14 +95,14 @@
 					});
 					service.progressValue = parseInt(100 / service.spellCount * service.spells.length, 10);
 					if (service.spells.length === service.spellCount) {
-						i18nNotifications.pushForCurrentRoute('spell.import.success', 'success', {
+						alertMessageService.push('spell.import.success', 'success', {
 							name : service.mod.name
 						});
 						service.endImport();
 					}
 				}, function() {
 					service.endImport();
-					i18nNotifications.pushForCurrentRoute('spell.import.error', 'danger');
+					alertMessageService.push('spell.import.error', 'danger');
 				});
 			},
 
@@ -114,7 +115,7 @@
 					url : 'rest/spell/import/cancel'
 				}).then(function(response) {
 					service.endImport();
-					i18nNotifications.pushForCurrentRoute('spell.import.cancel', 'warning');
+					alertMessageService.push('spell.import.cancel', 'warning');
 				});
 			}
 		};

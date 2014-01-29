@@ -2,9 +2,9 @@
 (function(window, $) {
 	'use strict';
 
-	var app = angular.module('ui-components', [ 'ngGrid', 'ui.bootstrap' ]);
+	var module = angular.module('ui-components', [ 'ngGrid', 'ui.bootstrap' ]);
 
-	app.factory('uiService', function() {
+	module.factory('uiService', function() {
 		var uiService = {};
 
 		uiService.draggable = function(element, options) {
@@ -29,7 +29,7 @@
 
 	});
 
-	app.directive('draggable', [ 'uiService', function(uiService) {
+	module.directive('draggable', [ 'uiService', function(uiService) {
 		return {
 			restrict : 'A',
 			link : function(scope, element, attributes) {
@@ -38,7 +38,7 @@
 		};
 	} ]);
 
-	app.directive('resizable', [ 'uiService', function(uiService) {
+	module.directive('resizable', [ 'uiService', function(uiService) {
 		return {
 			restrict : 'A',
 			link : function(scope, element, attributes) {
@@ -47,7 +47,7 @@
 		};
 	} ]);
 
-	app.directive('widgetPanel', [ 'uiService', function(uiService) {
+	module.directive('widgetPanel', [ 'uiService', function(uiService) {
 		return {
 			restrict : 'E',
 			transclude : true,
@@ -63,7 +63,7 @@
 		};
 	} ]);
 
-	app.directive('widgetPanelHeader', function() {
+	module.directive('widgetPanelHeader', function() {
 		return {
 			restrict : 'AE',
 			transclude : true,
@@ -72,7 +72,7 @@
 		};
 	});
 
-	app.directive('widgetPanelBody', function() {
+	module.directive('widgetPanelBody', function() {
 		return {
 			restrict : 'AE',
 			transclude : true,
@@ -81,7 +81,7 @@
 		};
 	});
 
-	app.directive('widgetPanelFooter', function() {
+	module.directive('widgetPanelFooter', function() {
 		return {
 			restrict : 'AE',
 			transclude : true,
@@ -103,7 +103,7 @@
 														+ "    <div class=\"modal-dialog\"><div class=\"modal-content\" ng-transclude></div></div>\n" + "</div>");
 							} ]);
 
-	app.directive('widgetModal', [ 'uiService', function(uiService) {
+	module.directive('widgetModal', [ 'uiService', function(uiService) {
 		return {
 			restrict : 'A',
 			link : function(scope, element, attributes) {
@@ -115,7 +115,7 @@
 		};
 	} ]);
 
-	app.directive('widgetModalHeader', function($compile) {
+	module.directive('widgetModalHeader', function($compile) {
 		return {
 			restrict : 'AE',
 			transclude : true,
@@ -134,7 +134,7 @@
 		};
 	});
 
-	app.directive('widgetModalBody', function() {
+	module.directive('widgetModalBody', function() {
 		return {
 			restrict : 'AE',
 			transclude : true,
@@ -143,7 +143,7 @@
 		};
 	});
 
-	app.directive('widgetModalFooter', function() {
+	module.directive('widgetModalFooter', function() {
 		return {
 			restrict : 'AE',
 			transclude : true,

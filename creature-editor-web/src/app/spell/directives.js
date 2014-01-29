@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
 
-	var spell = angular.module('creatureEditor.spell.directives', [ 'creatureEditor.spell.services' ]);
+	var module = angular.module('creatureEditor.spell.directives', [ 'creatureEditor.spell.services' ]);
 
 })();

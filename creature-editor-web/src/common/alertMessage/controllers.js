@@ -12,13 +12,12 @@
 			}
 			$scope.message = alertMessageService.pop();
 			console.log('show message', $scope.message);
-			$timeout($scope.remove, 5000);
+			$timeout($scope.clear, 4000);
 		});
 
-		$scope.remove = function() {
-			var msg = $scope.message;
+		$scope.clear = function() {
 			$scope.message = null;
-			alertMessageService.remove(msg);
+			$timeout(alertMessageService.remove, 500);
 		};
 
 	});
