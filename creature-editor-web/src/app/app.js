@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var app = angular.module('creatureEditor',
-			[ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod', 'ngRoute', 'ui.router', 'ngAnimate',
-					'ngAnimate-animate.css', 'ngGrid', 'ui.bootstrap', 'ui-components', 'notification.i18n', 'alertMessage.services', 'crud.directives', 'jqwidgets' ]);
+	var app = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'creatureEditor.category', 'creatureEditor.spell', 'creatureEditor.mod',
+			'ngRoute', 'ui.router', 'ngAnimate', 'ngAnimate-animate.css', 'ngGrid', 'ui.bootstrap', 'ui-components', 'notification.i18n', 'alertMessage',
+			'crud.directives', 'jqwidgets' ]);
 
 	app.config(function($stateProvider, $urlRouterProvider, $locationProvider) {
 		// $locationProvider.html5Mode(true);

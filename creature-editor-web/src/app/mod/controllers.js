@@ -3,7 +3,7 @@
 
 	var mod = angular.module('creatureEditor.mod.controllers', [ 'ui.router', 'ngRoute', 'ngResource', 'crud.services', 'ui.select2', 'cgNotify' ]);
 
-	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications, notify) {
+	mod.controller('ModListController', function ModListController($scope, $state, mods, crudListMethods, i18nNotifications, notify, alertMessageService) {
 
 		angular.extend($scope, crudListMethods('/mods'));
 
@@ -15,6 +15,12 @@
 
 		$scope.testAnim2 = function() {
 			i18nNotifications.pushForCurrentRoute('crud.mod.save.success', 'warning', {
+				name : 'Creatures'
+			});
+		};
+
+		$scope.testAnim3 = function() {
+			alertMessageService.push('crud.mod.save.success', 'warning', {
 				name : 'Creatures'
 			});
 		};

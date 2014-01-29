@@ -45,6 +45,7 @@ html, body {
  * Now that all app-wide styles have been applied, we can load the styles for
  * all the submodules and components we are using. 
  */
+@import '../common/alertMessage/alertMessage.less';
 @import '../common/notify/angular-notify.less';
 @import '../app/category/category.less';
 @import '../app/mod/mod.less';
@@ -71,38 +72,3 @@ html, body {
 .testanim.ng-leave {
 	.lh-animation(bounce 1s)
 }
-
-.notifications {
-	width: 50%;
-	height: 50%;
-	.alert {
-		width: 50%;
-		margin-top: 7px;
-		margin-bottom: 0;
-		padding: 7px;
-	}    
-}
-
-.notifications .alert.ng-enter {
-	.lh-animation(slideInLeft 1s);
-}
-
-/*.alert.ng-leave {
-	.lh-animation(slideOutRight 1s);
-}*/
-
-/*
- &.ng-enter {
-    -webkit-animation: shake 3s;
-    -moz-animation: shake 3s;
-    -ms-animation: shake 3s;
-    animation: shake 3s;
-  }
-  
-  &.ng-leave {
-    -webkit-animation: bounceOut 1s;
-    -moz-animation: bounceOut 1s;
-    -ms-animation: bounceOut 1s;
-    animation: bounceOut 1s;
-  }
-*/

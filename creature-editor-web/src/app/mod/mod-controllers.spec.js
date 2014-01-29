@@ -1,6 +1,6 @@
 /* global jasmine, inject, xdescribe, xit */
 
-describe('Mod controllers', function() {
+xdescribe('Mod controllers', function() {
 	"use strict";
 
 	describe('list', function() {

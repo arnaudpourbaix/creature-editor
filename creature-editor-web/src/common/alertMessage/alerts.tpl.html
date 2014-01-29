@@ -1,3 +1,5 @@
-<alert type="notification.type" data-ng-repeat="notification in notifications.getCurrent()">
-	{{notification.message}}
-</alert>
+<div class="center-block alert-messages" data-ng-controller="AlertMessageController">
+	<alert type="notification.type" data-ng-show="message != null">
+		{{message.text}}
+	</alert>
+</div>
