@@ -9,12 +9,6 @@
 
 		$scope.mods = mods;
 
-		$scope.testAnim = function() {
-			alertMessageService.push('mod.save.success', 'success', {
-				name : 'Creatures'
-			});
-		};
-
 		$scope.modGrid = {
 			data : 'mods',
 			columns : [ {

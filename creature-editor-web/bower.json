@@ -7,8 +7,8 @@
     "jquery-ui": ">=1.10.3",
     "bootstrap": ">=3.0.0",
     "font-awesome": ">=4.0.0",
-    "underscore": ">=1.4.4",
     "i18next": ">=1.6.0",
+    "lodash": ">=2.4.1",
     "angular": ">=1.2.10",
     "angular-resource": ">=1.2.10",
     "angular-route": ">=1.2.10",
@@ -27,6 +27,6 @@
     "animate.css": ">=2.1.0",
     "ng-grid": ">=2.0.7",
     "lesshat": ">=2.0.14",
-    "roboto-fontface": "0.1.2"
+    "roboto-fontface": ">=0.1.2"
   }
 }

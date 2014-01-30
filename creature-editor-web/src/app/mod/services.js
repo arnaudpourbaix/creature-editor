@@ -1,9 +1,19 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
+	var module = angular.module('creatureEditor.mod.services', [ 'ngResource', 'restangular' ]);
 
-	module.factory('Mod', function($resource) {
+	module.factory('Mod', function(Restangular) {
+		var resource = Restangular.all('mod'), factory = {};
+
+		factory.getList = function() {
+			return resource.getList();
+		};
+
+		return factory;
+	});
+
+	module.factory('OldMod', function($resource) {
 		var baseUrl = 'rest/mod/';
 
 		var res = $resource(baseUrl + ':id', {}, {

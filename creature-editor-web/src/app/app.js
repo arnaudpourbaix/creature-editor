@@ -1,13 +1,11 @@
 (function() {
 	'use strict';
 
-	// var app = angular.module('creatureEditor', [ 'ngRoute', 'ui.router', 'ngAnimate', 'ngAnimate-animate.css', 'ngGrid', 'ui.bootstrap', 'ui-components',
-	// 'jqwidgets' ]);
-
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'alertMessage', 'creatureEditor.mod', 'creatureEditor.spell',
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'alertMessage', 'restangular', 'creatureEditor.mod', 'creatureEditor.spell',
 			'creatureEditor.category' ]);
 
-	module.config(function($urlRouterProvider, $locationProvider) {
+	module.config(function($urlRouterProvider, $locationProvider, RestangularProvider) {
+		RestangularProvider.setBaseUrl('/rest');
 		// $locationProvider.html5Mode(true);
 		$urlRouterProvider.otherwise('/');
 	});
