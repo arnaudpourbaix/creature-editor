@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Cacheable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class Mod implements java.io.Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 100)
 	private String name;
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mod")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mod", cascade = CascadeType.REMOVE)
 	private Set<Spell> spells = new HashSet<Spell>(0);
 
 	public Mod() {

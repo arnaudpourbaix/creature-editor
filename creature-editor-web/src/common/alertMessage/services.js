@@ -3,25 +3,21 @@
 
 	var module = angular.module('alertMessage.services', []);
 
-	module.factory('i18nMessages', [ '$interpolate', 'I18N.MESSAGES', function($interpolate, i18nmessages) {
-		return {
-			get : function(msgKey, interpolateParams) {
-				var msg = i18nmessages[msgKey];
-				return msg ? $interpolate(msg)(interpolateParams) : '?' + msgKey + '?';
-			}
-		};
-	} ]);
+	module.factory('alertMessageService', [ '$interpolate', function($interpolate) {
+		function getMessage(key, params) {
+			var msg = i18nmessages[key];
+			return msg ? $interpolate(msg)(params) : '?' + key + '?';
+		}
 
-	module.factory('alertMessageService', [ '$rootScope', 'i18nMessages', function($rootScope, i18nMessages) {
-		var addMessage = function(messageObj) {
+		function addMessage(messageObj) {
 			if (!angular.isObject(messageObj)) {
 				throw new Error("Only object can be added to the alertMessages service");
 			}
 			service.messages.push(messageObj);
 			return messageObj;
-		};
+		}
 
-		var service = {};
+		var i18nmessages = [], service = {};
 
 		service.messages = [];
 
@@ -29,11 +25,11 @@
 			return service.messages.length === 0;
 		};
 
-		service.push = function(msgKey, type, interpolateParams, otherProperties) {
-			var message = angular.extend({
-				text : i18nMessages.get(msgKey, interpolateParams),
+		service.push = function(key, type, params) {
+			var message = {
+				text : getMessage(key, params),
 				type : type
-			}, otherProperties);
+			};
 			return addMessage(message);
 		};
 
@@ -47,6 +43,10 @@
 
 		service.removeAll = function() {
 			service.messages = [];
+		};
+
+		service.addConfig = function(msgs) {
+			angular.extend(i18nmessages, msgs);
 		};
 
 		return service;

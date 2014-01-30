@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.services', []);
+	var module = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
 
 	module.factory('Spell', function($resource) {
 		var baseUrl = 'rest/spell/';

@@ -3,7 +3,7 @@
 
 	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives' ]);
 
-	module.controller('CategoryListController', function CategoryListController($scope, $location, categories) {
+	module.controller('CategoryListController', function CategoryListController($scope, categories) {
 		var source = {
 			datatype : "json",
 			datafields : [ {
@@ -28,16 +28,6 @@
 			console.debug('dragEnd', dragItem, dropItem);
 		};
 
-		$scope.gotoCategoryNewPage = function() {
-			$location.path("/category/new");
-		};
-		$scope.deleteCategory = function(category) {
-			category.$delete({
-				'id' : category.id
-			}, function() {
-				$location.path('/');
-			});
-		};
 	});
 
 })();

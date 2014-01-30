@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.controllers', []);
+	var module = angular.module('creatureEditor.mod.controllers', [ 'alertMessage', 'crud', 'ui.bootstrap' ]);
 
 	module.controller('ModListController', function ModListController($scope, mods, crudListMethods, alertMessageService) {
 
@@ -10,7 +10,7 @@
 		$scope.mods = mods;
 
 		$scope.testAnim = function() {
-			alertMessageService.push('crud.mod.save.success', 'warning', {
+			alertMessageService.push('mod.save.success', 'success', {
 				name : 'Creatures'
 			});
 		};
@@ -53,7 +53,11 @@
 		$scope.remove = function(mod) {
 			mod.$delete().then(function(response) {
 				$scope.removeFromList($scope.mods, 'id', mod.id);
-				alertMessageService.push('crud.mod.remove.success', 'success', {
+				alertMessageService.push('mod.remove.success', 'success', {
+					name : mod.name
+				});
+			}, function() {
+				alertMessageService.push('mod.remove.error', 'danger', {
 					name : mod.name
 				});
 			});
@@ -66,22 +70,27 @@
 		$scope.mod = mod;
 
 		$scope.onSave = function(mod) {
-			alertMessageService.push('crud.mod.save.success', 'success', {
+			alertMessageService.push('mod.save.success', 'success', {
 				name : mod.name
 			});
 			$modalInstance.close();
 		};
 
-		$scope.onError = function() {
-			alertMessageService.push('crud.mod.save.error', 'danger');
+		$scope.onSaveError = function() {
+			alertMessageService.push('mod.save.error', 'danger');
 		};
 
 		$scope.onRemove = function(mod) {
-			alertMessageService.push('crud.mod.remove.success', 'success', {
+			alertMessageService.push('mod.remove.success', 'success', {
 				name : mod.name
 			});
 			$modalInstance.close();
 		};
+
+		$scope.onRemoveError = function() {
+			alertMessageService.push('mod.remove.error', 'danger');
+		};
+
 	});
 
 })();

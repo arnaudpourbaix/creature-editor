@@ -41,7 +41,8 @@
 			require : '^form',
 			restrict : 'A',
 			link : function(scope, element, attrs, form) {
-				// We extract the value of the crudEdit attribute, it should be an assignable expression evaluating to the model (resource) that is going to be edited
+				// We extract the value of the crudEdit attribute, it should be an assignable expression evaluating to the model (resource) that is going to be
+				// edited
 				var resourceGetter = $parse(attrs.crudEdit);
 				var resourceSetter = resourceGetter.assign;
 				// Store the resource object for easy access
@@ -52,21 +53,19 @@
 				checkResourceMethods(resource, [ '$save', '$id', '$remove' ]);
 
 				// Set up callbacks with fallback
-				// onSave attribute -> onSave scope -> noop
 				var userOnSave = attrs.onSave ? makeFn(scope, attrs, 'onSave') : (scope.onSave || angular.noop);
 				var onSave = function(result, status, headers, config) {
 					// Reset the original to help with reverting and pristine checks
 					original = result;
 					userOnSave(result, status, headers, config);
 				};
-				// onRemove attribute -> onRemove scope -> onSave attribute -> onSave scope -> noop
-				var onRemove = attrs.onRemove ? makeFn(scope, attrs, 'onRemove') : (scope.onRemove || onSave);
-				// onError attribute -> onError scope -> noop
-				var onError = attrs.onError ? makeFn(scope, attrs, 'onError') : (scope.onError || angular.noop);
+				var onSaveError = attrs.onSaveError ? makeFn(scope, attrs, 'onSaveError') : (scope.onSaveError || angular.noop);
+				var onRemove = attrs.onRemove ? makeFn(scope, attrs, 'onRemove') : (scope.onRemove || angular.noop);
+				var onRemoveError = attrs.onRemoveError ? makeFn(scope, attrs, 'onRemoveError') : (scope.onRemoveError || angular.noop);
 
 				// The following functions should be triggered by elements on the form
 				scope.save = function() {
-					resource.$save(onSave, onError);
+					resource.$save(onSave, onSaveError);
 				};
 				scope.revertChanges = function() {
 					resource = angular.copy(original);
@@ -75,7 +74,7 @@
 				};
 				scope.remove = function() {
 					if (resource.$id()) {
-						resource.$remove(onRemove, onError);
+						resource.$remove(onRemove, onRemoveError);
 					} else {
 						onRemove();
 					}

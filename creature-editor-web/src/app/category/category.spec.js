@@ -1,10 +1,10 @@
-/* global jasmine, inject */
+/* global jasmine, inject, xdescribe */
 
-describe('category section', function() {
+xdescribe('category section', function() {
 	"use strict";
 
 	describe('Category list controller', function() {
-		var location, scope, state, categories;
+		var scope, state, categories;
 
 		beforeEach(module('creatureEditor.category'));
 

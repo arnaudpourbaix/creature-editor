@@ -2,7 +2,7 @@
 (function(window, $) {
 	'use strict';
 
-	var module = angular.module('ui-components', [ 'ngGrid', 'ui.bootstrap' ]);
+	var module = angular.module('ui.components', [ 'ui.bootstrap' ]);
 
 	module.factory('uiService', function() {
 		var uiService = {};

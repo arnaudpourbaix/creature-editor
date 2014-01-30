@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.controllers', []);
+	var module = angular.module('creatureEditor.spell.controllers', [ 'creatureEditor.spell.services', 'alertMessage', 'crud', 'ui.bootstrap' ]);
 
 	module.controller('SpellController', function SpellController($scope, SpellImportService, mods) {
 		$scope.importService = SpellImportService;
@@ -82,7 +82,7 @@
 		$scope.remove = function(spell) {
 			spell.$delete().then(function(response) {
 				$scope.removeFromList($scope.spells, 'id', spell.id);
-				alertMessageService.push('crud.spell.remove.success', 'success', {
+				alertMessageService.push('spell.remove.success', 'success', {
 					name : spell.name
 				});
 			});
@@ -103,7 +103,7 @@
 	module.controller('SpellEditController', function SpellEditController($scope, $modalInstance, spell, alertMessageService) {
 		$scope.spell = spell;
 		$scope.onSave = function(spell) {
-			alertMessageService.push('crud.spell.save.success', 'success', {
+			alertMessageService.push('spell.save.success', 'success', {
 				name : spell.name
 			});
 			$modalInstance.close({
@@ -111,17 +111,21 @@
 			});
 		};
 
-		$scope.onError = function() {
-			alertMessageService.push('crud.spell.save.error', 'danger');
+		$scope.onSaveError = function() {
+			alertMessageService.push('spell.save.error', 'danger');
 		};
 
 		$scope.onRemove = function(spell) {
-			alertMessageService.push('crud.spell.remove.success', 'success', {
+			alertMessageService.push('spell.remove.success', 'success', {
 				name : spell.name
 			});
 			$modalInstance.close({
 				spell : spell
 			});
+		};
+
+		$scope.onRemoveError = function() {
+			alertMessageService.push('spell.remove.error', 'danger');
 		};
 	});
 

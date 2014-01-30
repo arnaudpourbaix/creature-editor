@@ -44,7 +44,7 @@ module.exports = {
 				'vendor/bootstrap/dist/js/bootstrap.js', 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js',
 				'vendor/angular-ui-utils/ui-utils.js', 'vendor/angular-ui-router/release/angular-ui-router.js', 'vendor/angular-route/angular-route.js',
 				'vendor/ng-grid/ng-grid-2.0.7.debug.js', 'vendor/select2/select2.js', 'vendor/angular-ui-select2/src/select2.js',
-				'vendor/underscore/underscore.js', 'vendor/ngAnimate-animate.css/animate.js' ],
+				'vendor/underscore/underscore.js', 'vendor/ngAnimate-animate.css/animate.js', 'vendor/restangular/dist/restangular.js' ],
 		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/font-awesome/css/font-awesome.min.css', 'vendor/animate.css/animate.min.css' ],
 		assets : [ 'jquery-ui/themes/base/**/*', 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css',
 				'roboto-fontface/*.css', 'roboto-fontface/fonts/*', 'select2/*.css', 'select2/*.png', 'select2/*.gif' ]
