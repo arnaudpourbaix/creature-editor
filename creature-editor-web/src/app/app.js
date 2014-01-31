@@ -1,13 +1,17 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'alertMessage', 'restangular', 'creatureEditor.mod', 'creatureEditor.spell',
-			'creatureEditor.category' ]);
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'pascalprecht.translate', 'alertMessage', 'restangular',
+			'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
 
 	module.config(function($urlRouterProvider, $locationProvider, RestangularProvider) {
 		RestangularProvider.setBaseUrl('/rest');
 		// $locationProvider.html5Mode(true);
 		$urlRouterProvider.otherwise('/');
+	});
+
+	module.constant('appSettings', {
+		restBaseUrl : 'rest/'
 	});
 
 	module.controller('AppCtrl', [ '$scope', function($scope) {

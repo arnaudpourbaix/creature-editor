@@ -3,8 +3,8 @@
 
 	var module = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
 
-	module.factory('Spell', function($resource) {
-		var baseUrl = 'rest/spell/';
+	module.factory('Spell', function($resource, appSettings) {
+		var baseUrl = appSettings.restBaseUrl + 'spell/';
 
 		var res = $resource(baseUrl + ':id', {}, {
 			'save' : {

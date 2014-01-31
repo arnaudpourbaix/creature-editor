@@ -17,8 +17,8 @@
 		$stateProvider.state('mods', {
 			url : '/mods',
 			resolve : {
-				mods : [ 'Restangular', function(Restangular) {
-					return Restangular.all('mod').getList();
+				mods : [ 'Mod', function(Mod) {
+					return Mod.query().$promise;
 				} ]
 			},
 			controller : 'ModListController',
@@ -32,14 +32,16 @@
 					templateUrl : "mod/mod-edit.tpl.html",
 					controller : 'ModEditController',
 					resolve : {
-						mod : function(Restangular) {
+						mod : function(Mod) {
 							if ($stateParams.modId !== 'new') {
-								return Restangular.one('mod', $stateParams.modId).get();
+								return Mod.get({
+									id : $stateParams.modId
+								}).$promise;
 							} else {
-								return {
+								return new Mod({
 									id : null,
 									name : ''
-								};
+								});
 							}
 						}
 					}

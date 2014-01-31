@@ -3,18 +3,8 @@
 
 	var module = angular.module('creatureEditor.mod.services', [ 'ngResource', 'restangular' ]);
 
-	module.factory('Mod', function(Restangular) {
-		var resource = Restangular.all('mod'), factory = {};
-
-		factory.getList = function() {
-			return resource.getList();
-		};
-
-		return factory;
-	});
-
-	module.factory('OldMod', function($resource) {
-		var baseUrl = 'rest/mod/';
+	module.factory('Mod', function($resource, appSettings) {
+		var baseUrl = appSettings.restBaseUrl + 'mod/';
 
 		var res = $resource(baseUrl + ':id', {}, {
 			'save' : {
