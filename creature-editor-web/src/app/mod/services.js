@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.services', [ 'ngResource', 'restangular' ]);
+	var module = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
 
-	module.factory('Mod', function($resource, appSettings) {
+	module.factory('Mod', [ '$resource', 'appSettings', function($resource, appSettings) {
 		var baseUrl = appSettings.restBaseUrl + 'mod/';
 
 		var res = $resource(baseUrl + ':id', {}, {
@@ -33,6 +33,6 @@
 		};
 
 		return res;
-	});
+	} ]);
 
 })();

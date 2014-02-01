@@ -1,16 +1,15 @@
 <nav id="menu-nav" class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<p class="navbar-text navbar-right">
-		Creature Editor
-	</p>
+	<p class="navbar-text navbar-right" data-translate>APP_NAME</p>
 	<ul class="nav navbar-nav">
-		<li data-ng-class="{active:$state.includes('mods')}"><a data-ui-sref="mods">Mods</a></li>
-		<li data-ng-class="{active:$state.includes('spells')}"><a data-ui-sref="spells.modSelect">Spells</a></li>
-		<li data-ng-class="{active:$state.includes('categories')}"><a data-ui-sref="categories">Categories</a></li>
-		<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Configuration <b class="caret"></b></a>
+		<li data-ng-class="{active:$state.includes('mods')}"><a data-ui-sref="mods" data-translate>MENU.MODS</a></li>
+		<li data-ng-class="{active:$state.includes('spells')}"><a data-ui-sref="spells.modSelect" data-translate>MENU.SPELLS</a></li>
+		<li data-ng-class="{active:$state.includes('categories')}"><a data-ui-sref="categories" data-translate>MENU.CATEGORIES</a></li>
+		<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" data-translate>MENU.CONFIGURATION <b class="caret"></b></a>
 			<ul class="dropdown-menu">
-				<li><a data-ui-sref="categories">Categories</a></li>
+				<li><a data-ui-sref="categories" data-translate>MENU.CATEGORIES</a></li>
 				<li class="divider"></li>
-				<li><a data-ui-sref="mods">Mods</a></li>
+				<li><a data-ui-sref="mods" data-translate>MENU.MODS</a></li>
+				<li><a data-ui-sref="spells" data-translate>MENU.SPELLS</a></li>
 			</ul>
 		</li>
 	</ul>

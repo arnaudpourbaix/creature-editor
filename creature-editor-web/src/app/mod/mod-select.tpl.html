@@ -1,4 +1,4 @@
-<select class="mod-select" data-ui-select2="select2Options" data-ng-model="modId" data-placeholder="Select a mod">
+<select class="mod-select" data-ui-select2="select2Options" data-ng-model="modId" data-placeholder="{{'MOD.SELECT_MOD' | translate}}">
 	<option value=""></option>
 	<option data-ng-repeat="mod in mods" value="{{mod.id}}" data-ng-selected="{{mod.id == modId}}">
 		{{mod.name}}

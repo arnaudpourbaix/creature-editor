@@ -1,13 +1,9 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('alertMessage.services', []);
+	var module = angular.module('alertMessage.services', [ 'pascalprecht.translate' ]);
 
-	module.factory('alertMessageService', [ '$interpolate', function($interpolate) {
-		function getMessage(key, params) {
-			var msg = i18nmessages[key];
-			return msg ? $interpolate(msg)(params) : '?' + key + '?';
-		}
+	module.factory('alertMessageService', [ '$interpolate', '$translate', function($interpolate, $translate) {
 
 		function addMessage(messageObj) {
 			if (!angular.isObject(messageObj)) {
@@ -27,7 +23,7 @@
 
 		service.push = function(key, type, params) {
 			var message = {
-				text : getMessage(key, params),
+				text : $translate(key, params),
 				type : type
 			};
 			return addMessage(message);

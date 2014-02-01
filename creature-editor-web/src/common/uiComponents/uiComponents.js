@@ -115,7 +115,7 @@
 		};
 	} ]);
 
-	module.directive('widgetModalHeader', function($compile) {
+	module.directive('widgetModalHeader', [ '$compile', function($compile) {
 		return {
 			restrict : 'AE',
 			transclude : true,
@@ -132,7 +132,7 @@
 				};
 			}
 		};
-	});
+	} ]);
 
 	module.directive('widgetModalBody', function() {
 		return {

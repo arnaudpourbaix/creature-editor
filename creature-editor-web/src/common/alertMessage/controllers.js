@@ -3,7 +3,7 @@
 
 	var module = angular.module('alertMessage.controllers', [ 'alertMessage.services', 'ui.bootstrap', 'ngAnimate' ]);
 
-	module.controller('AlertMessageController', function AlertMessageController($scope, $timeout, alertMessageService) {
+	module.controller('AlertMessageController', [ '$scope', '$timeout', 'alertMessageService', function AlertMessageController($scope, $timeout, alertMessageService) {
 		$scope.show = false;
 		$scope.messages = alertMessageService.messages;
 
@@ -21,6 +21,6 @@
 			$timeout(alertMessageService.remove, 100);
 		};
 
-	});
+	} ]);
 
 })();

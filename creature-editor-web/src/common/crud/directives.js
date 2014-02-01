@@ -1,7 +1,15 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('crud.directives', []);
+	var module = angular.module('crud.directives', [ 'pascalprecht.translate', 'alertMessage' ]);
+
+	module.directive('crudAddButton', function() {
+		return {
+			restrict : 'E',
+			replace : true,
+			templateUrl : 'crud/crud-add-button.tpl.html'
+		};
+	});
 
 	module.directive('crudButtons', function() {
 		return {
@@ -13,7 +21,7 @@
 
 	// Apply this directive to an element at or below a form that will manage CRUD operations on a resource.
 	// The resource must expose the following instance methods: $save(), $id() and $remove()
-	module.directive('crudEdit', [ '$parse', function($parse) {
+	module.directive('crudEdit', [ '$parse', '$translate', 'alertMessageService', function($parse, $translate, alertMessageService) {
 
 		// This function controls that resource has all required methods
 		function checkResourceMethods(resource, methods) {
@@ -33,6 +41,13 @@
 			return fn;
 		}
 
+		function sendNotification(key, type, notification, resource) {
+			alertMessageService.push(key, type, {
+				entity : $translate(notification.entity),
+				name : resource[notification.name]
+			});
+		}
+
 		return {
 			// We ask this directive to create a new child scope so that when we add helper methods to the scope. It doesn't make a mess of the parent scope.
 			// Be aware that if you write to the scope from within the form then you must remember that there is a child scope at the point
@@ -50,18 +65,42 @@
 				// Store a copy for reverting the changes
 				var original = angular.copy(resource);
 
+				var notification = scope.$eval(attrs.notification);
+
 				checkResourceMethods(resource, [ '$save', '$id', '$remove' ]);
 
 				// Set up callbacks with fallback
 				var userOnSave = attrs.onSave ? makeFn(scope, attrs, 'onSave') : (scope.onSave || angular.noop);
+				var userOnSaveError = attrs.onSaveError ? makeFn(scope, attrs, 'onSaveError') : (scope.onSaveError || angular.noop);
+				var userOnRemove = attrs.onRemove ? makeFn(scope, attrs, 'onRemove') : (scope.onRemove || angular.noop);
+				var userOnRemoveError = attrs.onRemoveError ? makeFn(scope, attrs, 'onRemoveError') : (scope.onRemoveError || angular.noop);
+
 				var onSave = function(result, status, headers, config) {
 					// Reset the original to help with reverting and pristine checks
 					original = result;
+					if (notification) {
+						sendNotification('CRUD.SAVE_SUCCESS', 'success', notification, result);
+					}
 					userOnSave(result, status, headers, config);
 				};
-				var onSaveError = attrs.onSaveError ? makeFn(scope, attrs, 'onSaveError') : (scope.onSaveError || angular.noop);
-				var onRemove = attrs.onRemove ? makeFn(scope, attrs, 'onRemove') : (scope.onRemove || angular.noop);
-				var onRemoveError = attrs.onRemoveError ? makeFn(scope, attrs, 'onRemoveError') : (scope.onRemoveError || angular.noop);
+				var onSaveError = function(result, status, headers, config) {
+					if (notification) {
+						sendNotification('CRUD.SAVE_ERROR', 'danger', notification, result);
+					}
+					userOnSaveError(result, status, headers, config);
+				};
+				var onRemove = function(result, status, headers, config) {
+					if (notification) {
+						sendNotification('CRUD.REMOVE_SUCCESS', 'success', notification, result);
+					}
+					userOnRemove(result, status, headers, config);
+				};
+				var onRemoveError = function(result, status, headers, config) {
+					if (notification) {
+						sendNotification('CRUD.REMOVE_ERROR', 'danger', notification, result);
+					}
+					userOnRemoveError(result, status, headers, config);
+				};
 
 				// The following functions should be triggered by elements on the form
 				scope.save = function() {
