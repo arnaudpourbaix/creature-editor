@@ -1,21 +1,14 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'ui.router', 'ui.bootstrap', 'alertMessage' ]);
+	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
-	module.run(function run(alertMessageService) {
-		alertMessageService.addConfig({
-			'spell.save.success' : "Spell '{{name}}' was saved successfully.",
-			'spell.save.error' : "Error when saving a spell...",
-			'spell.remove.success' : "Spell '{{name}}' was removed successfully.",
-			'spell.remove.error' : "Error when removing spell '{{name}}'.",
-			'spell.import.success' : "Spell import for mod {{name}} is done.",
-			'spell.import.error' : "Spell import has encountered an internal error.",
-			'spell.import.cancel' : "Spell import has been cancelled."
-		});
-	});
+	module.run([ '$translate', '$translatePartialLoader', function run($translate, $translatePartialLoader) {
+		$translatePartialLoader.addPart('app/spell');
+		$translate.refresh();
+	} ]);
 	
-	module.config(function config($stateProvider) {
+	module.config(['$stateProvider', function config($stateProvider) {
 
 		$stateProvider.state('spells', {
 			abstract: true,
@@ -38,21 +31,21 @@
 			controller : 'SpellListController',
 			templateUrl : 'spell/spell-list.tpl.html',
 			resolve : {
-				spells : function(SpellService, $stateParams) {
+				spells : [ 'SpellService', '$stateParams', function(SpellService, $stateParams) {
 					var spells = SpellService.getSpells($stateParams.modId);
 					return angular.isDefined(spells.$promise) ? spells.$promise : spells;
-				}
+				} ]
 			}
 		});
 		
 		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
-			onEnter : function($state, $stateParams, $modal, $timeout, Spell) {
+			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', function($state, $stateParams, $modal, Spell) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
 					resolve : {
-						spell : function(Spell) {
+						spell : ['Spell', function(Spell) {
 							if ($stateParams.spellId !== 'new') {
 								return Spell.get({
 									id : $stateParams.id
@@ -63,26 +56,24 @@
 									name : ''
 								});
 							}
-						}
+						}]
 					}
 				});
 				modal.result.then(function(result) {
-					console.log(result.spell);
 					$state.go('^', {}, {
 						reload : true
 					});
 				}, function() {
 					$state.go('^');
 				});
-			}
+			} ]
 		});
 
 		$stateProvider.state('spells.list.import', {
-			onEnter : function($state, $stateParams, $modal, $timeout) {
+			onEnter : [ '$state', '$stateParams', '$modal', function($state, $stateParams, $modal) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-import.tpl.html",
 					controller : 'SpellImportController',
-					backdrop : false,
 					resolve : {
 						mod : [ 'Mod', function(Mod) {
 							return Mod.get({
@@ -94,8 +85,8 @@
 				modal.result.finally(function(result) {
 					$state.go('^');
 				});
-			}
+			}]
 		});
-	});
+	}]);
 
 })();

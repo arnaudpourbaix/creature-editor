@@ -3,7 +3,7 @@
 
 	var module = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
 
-	module.factory('Spell', function($resource, appSettings) {
+	module.factory('Spell', [ '$resource', 'appSettings', function($resource, appSettings) {
 		var baseUrl = appSettings.restBaseUrl + 'spell/';
 
 		var res = $resource(baseUrl + ':id', {}, {
@@ -33,9 +33,9 @@
 		};
 
 		return res;
-	});
+	} ]);
 
-	module.service('SpellService', function(Spell, SpellImportService) {
+	module.service('SpellService', [ 'Spell', 'SpellImportService', function(Spell, SpellImportService) {
 		var service = {
 			getSpells : function(modId) {
 				if (SpellImportService.running && modId === SpellImportService.modId) {
@@ -49,9 +49,9 @@
 		};
 
 		return service;
-	});
+	} ]);
 
-	module.service('SpellImportService', function(Spell, $http, $interval, alertMessageService) {
+	module.service('SpellImportService', [ '$http', '$interval', 'alertMessageService', function($http, $interval, alertMessageService) {
 		var service = {
 			running : false,
 			spells : [],
@@ -71,7 +71,7 @@
 					service.spells = [];
 					service.spellCount = parseInt(response.data, 10);
 					if (service.spellCount === -1) {
-						alertMessageService.push('spell.import.error.running', 'danger');
+						alertMessageService.push('SPELL.IMPORT_ERROR_RUNNING', 'danger');
 						return;
 					}
 					service.running = true;
@@ -95,14 +95,14 @@
 					});
 					service.progressValue = parseInt(100 / service.spellCount * service.spells.length, 10);
 					if (service.spells.length === service.spellCount) {
-						alertMessageService.push('spell.import.success', 'success', {
+						alertMessageService.push('SPELL.IMPORT_SUCCESS', 'success', {
 							name : service.mod.name
 						});
 						service.endImport();
 					}
 				}, function() {
 					service.endImport();
-					alertMessageService.push('spell.import.error', 'danger');
+					alertMessageService.push('SPELL.IMPORT_ERROR', 'danger');
 				});
 			},
 
@@ -115,12 +115,12 @@
 					url : 'rest/spell/import/cancel'
 				}).then(function(response) {
 					service.endImport();
-					alertMessageService.push('spell.import.cancel', 'warning');
+					alertMessageService.push('SPELL.IMPORT_CANCEL', 'warning');
 				});
 			}
 		};
 
 		return service;
-	});
+	} ]);
 
 })();

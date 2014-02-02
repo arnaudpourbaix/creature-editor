@@ -5,6 +5,8 @@
 
 	module.factory('alertMessageService', [ '$interpolate', '$translate', function($interpolate, $translate) {
 
+		var service = {};
+
 		function addMessage(messageObj) {
 			if (!angular.isObject(messageObj)) {
 				throw new Error("Only object can be added to the alertMessages service");
@@ -12,8 +14,6 @@
 			service.messages.push(messageObj);
 			return messageObj;
 		}
-
-		var i18nmessages = [], service = {};
 
 		service.messages = [];
 
@@ -39,10 +39,6 @@
 
 		service.removeAll = function() {
 			service.messages = [];
-		};
-
-		service.addConfig = function(msgs) {
-			angular.extend(i18nmessages, msgs);
 		};
 
 		return service;

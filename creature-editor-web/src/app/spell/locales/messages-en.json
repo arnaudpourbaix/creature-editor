@@ -1,0 +1,23 @@
+{
+	"SPELL" : {
+		"LABEL" : "Mod",
+		"LIST_TITLE" : "Spells",
+		"RESOURCE_FIELD" : "Resource",
+		"NAME_FIELD" : "Name",
+		"DESCRIPTION_FIELD" : "Description",
+		"LEVEL_FIELD" : "Level",
+		"IDENTIFIER_FIELD" : "Identifier",
+		"ACTION_COLUMN" : "Actions",
+		"IMPORT_BUTTON" : "Import",
+		"IMPORT_CANCEL_BUTTON" : "Cancel",
+		"IMPORT_PROGRESS_MESSAGE" : "Importing <strong>{{name}}</strong>",
+		"IMPORT_TITLE" : "Import spells",
+		"IMPORT_WARNING_MESSAGE" : "It will replace all existing spells of mod <strong>{{name}}</strong>",
+		"IMPORT_CONFIRM_BUTTON" : "Confirm",
+		"IMPORT_ERROR_RUNNING": "Spell import is already running",
+		"IMPORT_SUCCESS" : "Spell import for mod {{name}} is done.",
+		"IMPORT_ERROR" : "Spell import has encountered an internal error.",
+		"IMPORT_CANCEL" : "Spell import has been cancelled.",
+		"EDIT_TITLE" : "Spell details"
+	}
+}

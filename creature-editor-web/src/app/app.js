@@ -1,65 +1,21 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'pascalprecht.translate', 'alertMessage', 'restangular', 'creatureEditor.mod',
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'creatureEditor.mod',
 			'creatureEditor.spell', 'creatureEditor.category' ]);
 
-	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', 'RestangularProvider',
-			function($urlRouterProvider, $locationProvider, $translateProvider, RestangularProvider) {
+	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
+			function($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
 				RestangularProvider.setBaseUrl('/rest');
 				// $locationProvider.html5Mode(true);
 				$urlRouterProvider.otherwise('/');
-				var translations = {
-					'APP_TITLE' : 'Editor',
-					'APP_NAME' : 'Creature Editor',
-					'LANGUAGE' : {
-						'EN' : 'English',
-						'FR' : 'French'
-					},
-					'MENU' : {
-						'MODS' : 'Mods',
-						'SPELLS' : 'Spells',
-						'CATEGORIES' : 'Categories',
-						'CONFIGURATION' : 'Configuration',
-					},
-					'CONTROLS' : {
-						'REQUIRED' : 'Required',
-						'EXISTS' : 'Already exists'
-					},
-					'CRUD' : {
-						'ADD_BUTTON' : 'Add',
-						'SAVE_BUTTON' : 'Save',
-						'REMOVE_BUTTON' : 'Remove',
-						'REVERT_BUTTON' : 'Revert changes',
-						'SAVE_SUCCESS' : "{{entity}} '{{name}}' was saved successfully.",
-						'SAVE_ERROR' : "{{entity}} '{{name}}' was not saved, an error occured.",
-						'REMOVE_SUCCESS' : "{{entity}} '{{name}}' was removed successfully.",
-						'REMOVE_ERROR' : "{{entity}} '{{name}}' was not removed, an error occured."
-					},
-					'MOD' : {
-						'LABEL' : 'Mod',
-						'SELECT_MOD' : 'Select a mod',
-						'LIST_TITLE' : 'Mods',
-						'EDIT_TITLE' : 'Mod details',
-						'NAME' : 'Name'
-					}
-				};
-				var translationsFr = {
-					'MENU' : {
-						'MODS' : 'Mods',
-						'SPELLS' : 'Sorts',
-						'CATEGORIES' : 'Catégories',
-						'CONFIGURATION' : 'Configuration',
-					},
-					'CONTROLS' : {
-						'REQUIRED' : 'Requis',
-						'EXISTS' : 'Existe déjà'
-					}
-				};
+				$translateProvider.useLocalStorage();
+				$translatePartialLoaderProvider.addPart('app/main');
+				$translateProvider.useLoader('$translatePartialLoader', {
+					urlTemplate : 'src/{part}/locales/messages-{lang}.json'
+				});
 				$translateProvider.preferredLanguage('fr');
 				$translateProvider.fallbackLanguage('en');
-				$translateProvider.translations('en', translations);
-				$translateProvider.translations('fr', translationsFr);
 			} ]);
 
 	module.constant('appSettings', {

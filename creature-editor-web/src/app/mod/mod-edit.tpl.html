@@ -4,7 +4,7 @@
 <form role="form" name="modForm" class="form-horizontal" novalidate data-crud-edit="mod" data-notification="{ entity: 'MOD.LABEL', name: 'name' }">
 	<div data-widget-modal-body>
 		<div class="form-group">
-			<label for="mod.name" class="col-sm-2 control-label" data-translate>MOD.NAME</label>
+			<label for="mod.name" class="col-sm-2 control-label" data-translate>MOD.NAME_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
 				<input id="mod.name" class="form-control" type="text" placeholder="{{ 'MOD.NAME' | translate }}" name="name" data-ng-model="mod.name" data-ng-trim="true" data-focus-me="true"
 					required data-unique-name="{ id: mod.id }" /> 

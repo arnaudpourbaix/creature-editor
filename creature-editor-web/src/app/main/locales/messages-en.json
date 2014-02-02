@@ -1,0 +1,18 @@
+{
+	"APP_TITLE" : "Editor",
+	"APP_NAME" : "Creature Editor",
+	"LANGUAGE" : {
+		"EN" : "English",
+		"FR" : "French"
+	},
+	"MENU" : {
+		"MODS" : "Mods",
+		"SPELLS" : "Spells",
+		"CATEGORIES" : "Categories",
+		"CONFIGURATION" : "Configuration"
+	},
+	"CONTROLS" : {
+		"REQUIRED" : "Required",
+		"EXISTS" : "Already exists"
+	}
+}

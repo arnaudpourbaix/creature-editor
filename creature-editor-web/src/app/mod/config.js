@@ -1,19 +1,14 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.config', [ 'creatureEditor.mod.services', 'ui.router', 'ui.bootstrap', 'alertMessage' ]);
+	var module = angular.module('creatureEditor.mod.config', [ 'creatureEditor.mod.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
-	module.run([ 'alertMessageService', function run(alertMessageService) {
-		alertMessageService.addConfig({
-			'mod.save.success' : "Mod '{{name}}' was saved successfully.",
-			'mod.save.error' : "Error when saving a mod",
-			'mod.remove.success' : "Mod '{{name}}' was removed successfully.",
-			'mod.remove.error' : "Error when removing mod '{{name}}'."
-		});
+	module.run([ '$translate', '$translatePartialLoader', function run($translate, $translatePartialLoader) {
+		$translatePartialLoader.addPart('app/mod');
+		$translate.refresh();
 	} ]);
 
 	module.config([ '$stateProvider', function config($stateProvider) {
-
 		$stateProvider.state('mods', {
 			url : '/mods',
 			resolve : {

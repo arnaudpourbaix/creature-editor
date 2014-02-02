@@ -4,21 +4,21 @@
 <form role="form" name="editForm" class="form-horizontal" novalidate data-crud-edit="spell">
 	<div data-widget-modal-body>
 		<div class="form-group">
-			<label for="spell.resource" class="col-sm-2 control-label">Resource</label>
+			<label for="spell.resource" class="col-sm-2 control-label" data-translate>SPELL.RESOURCE_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': spellForm.resource.$invalid}">
 				<input id="spell.resource" name="resource" class="form-control" type="text" placeholder="Resource" data-ng-model="spell.resource" data-ng-trim="true" data-focus-me="true" />
-				<span class="help-block" data-ng-show="spellForm.resource.$error.required">Required</span>
+				<span class="help-block" data-ng-show="spellForm.resource.$error.required" data-translate>CONTROLS.REQUIRED</span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="spell.name" class="col-sm-2 control-label">Name</label>
+			<label for="spell.name" class="col-sm-2 control-label" data-translate>SPELL.NAME_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': spellForm.name.$invalid}">
 				<input id="spell.name" name="name" class="form-control" type="text" placeholder="Name" data-ng-model="spell.name" data-ng-trim="true" />
-				<span class="help-block" data-ng-show="spellForm.name.$error.required">Required</span>
+				<span class="help-block" data-ng-show="spellForm.name.$error.required" data-translate>CONTROLS.REQUIRED</span>
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="spell.level" class="col-sm-2 control-label">Level</label>
+			<label for="spell.level" class="col-sm-2 control-label" data-translate>SPELL.LEVEL_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': spellForm.level.$invalid}">
 				<select class="form-control" data-ui-select2 data-ng-model="spell.level">
 					<option data-ng-repeat="i in [] | range:11" value="{{i}}" data-ng-selected="{{mod.level === i}}">
@@ -28,7 +28,7 @@
 			</div>
 		</div>
 		<div class="form-group">
-			<label for="spell.description" class="col-sm-2 control-label">Description</label>
+			<label for="spell.description" class="col-sm-2 control-label" data-translate>SPELL.DESCRIPTION_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': spellForm.description.$invalid}">
 				<textarea name="description" rows="10" class="form-control" data-ng-model="spell.description" data-ng-maxlength="8000"></textarea>			
 			</div>

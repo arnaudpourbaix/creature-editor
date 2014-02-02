@@ -1,0 +1,12 @@
+{
+	"CRUD" : {
+		"ADD_BUTTON" : "Ajouter",
+		"SAVE_BUTTON" : "Enregistrer",
+		"REMOVE_BUTTON" : "Supprimer",
+		"REVERT_BUTTON" : "Annuler les changements",
+		"SAVE_SUCCESS" : "{{entity}} '{{name}}' a été enregistré avec succès.",
+		"SAVE_ERROR" : "{{entity}} '{{name}}' n'a pas été enregistré, une erreur s'est produite.",
+		"REMOVE_SUCCESS" : "{{entity}} '{{name}}' a été supprimé avec succès.",
+		"REMOVE_ERROR" : "{{entity}} '{{name}}' n'a pas été supprimé, une erreur s'est produite."
+	}
+}

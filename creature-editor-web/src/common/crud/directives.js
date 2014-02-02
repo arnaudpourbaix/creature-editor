@@ -91,7 +91,7 @@
 				};
 				var onRemove = function(result, status, headers, config) {
 					if (notification) {
-						sendNotification('CRUD.REMOVE_SUCCESS', 'success', notification, result);
+						sendNotification('CRUD.REMOVE_SUCCESS', 'info', notification, result);
 					}
 					userOnRemove(result, status, headers, config);
 				};

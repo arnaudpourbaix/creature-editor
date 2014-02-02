@@ -3,9 +3,10 @@
 
 	var module = angular.module('creatureEditor.category.config', [ 'creatureEditor.category.services', 'ui.router' ]);
 
-	module.run(function run(alertMessageService) {
-		alertMessageService.addConfig({});
-	});
+	module.run([ '$translate', '$translatePartialLoader', function run($translate, $translatePartialLoader) {
+		$translatePartialLoader.addPart('app/category');
+		$translate.refresh();
+	} ]);
 
 	module.config(function config($stateProvider) {
 		$stateProvider.state('categories', {

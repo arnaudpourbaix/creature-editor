@@ -1,0 +1,10 @@
+{
+	"MOD" : {
+		"LABEL" : "Mod",
+		"SELECT_MOD" : "Sélectionner un mod",
+		"LIST_TITLE" : "Mods",
+		"NAME_FIELD" : "Libellé",
+		"ACTION_COLUMN" : "Actions",
+		"EDIT_TITLE" : "Détails d'un mod"
+	}
+}

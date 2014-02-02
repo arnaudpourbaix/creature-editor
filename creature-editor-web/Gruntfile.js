@@ -134,6 +134,14 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
+			buildAppJson : {
+				files : [ {
+					src : [ '<%= app_files.json %>' ],
+					dest : '<%= build_dir %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
 			buildVendorJs : {
 				files : [ {
 					src : [ '<%= vendor_files.js %>' ],
@@ -382,6 +390,11 @@ module.exports = function(grunt) {
 				tasks : [ 'jshint:src', 'copy:buildAppJs', 'karma:unit:run' ]
 			},
 
+			jsonsrc : {
+				files : [ '<%= app_files.json %>' ],
+				tasks : [ 'copy:buildAppJson' ]
+			},
+
 			/**
 			 * When assets are changed, copy them. Note that this will *not* copy new files, so this is probably not very useful.
 			 */
@@ -446,8 +459,8 @@ module.exports = function(grunt) {
 	 */
 	grunt.registerTask('build', [ 'buildnotest', 'karmaconfig', 'karma:continuous' ]);
 
-	grunt.registerTask('buildnotest', [ 'clean', 'html2js', 'jshint', 'recess:build', 'copy:buildAppAssets', 'copy:buildVendorAssets', 'copy:buildAppJs', 'copy:buildVendorJs',
-			'copy:buildVendorCss', 'index:build' ]);
+	grunt.registerTask('buildnotest', [ 'clean', 'html2js', 'jshint', 'recess:build', 'copy:buildAppAssets', 'copy:buildVendorAssets', 'copy:buildAppJs', 'copy:buildAppJson',
+			'copy:buildVendorJs', 'copy:buildVendorCss', 'index:build' ]);
 
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.

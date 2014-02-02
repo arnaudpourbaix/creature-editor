@@ -3,19 +3,19 @@
  */
 module.exports = {
 	/**
-	 * The `build_dir` folder is where our projects are compiled during development and the `compile_dir` folder is where our app resides once it's completely
-	 * built.
+	 * The `build_dir` folder is where our projects are compiled during development and the `compile_dir` folder is where our app resides once it's completely built.
 	 */
 	build_dir : 'build',
 	compile_dir : 'bin',
 
 	/**
-	 * This is a collection of file patterns that refer to our app code (the stuff in `src/`). These file paths are used in the configuration of build tasks.
-	 * `js` is all project javascript (except tests). `ctpl` contains our reusable components `src/common` template HTML files `atpl` contains the same, but for
-	 * our app's code. `html` is just our main HTML file, `less` is our main stylesheet `unit` contains our app's unit tests.
+	 * This is a collection of file patterns that refer to our app code (the stuff in `src/`). These file paths are used in the configuration of build tasks. `js` is all project
+	 * javascript (except tests). `ctpl` contains our reusable components `src/common` template HTML files `atpl` contains the same, but for our app's code. `html` is just our main
+	 * HTML file, `less` is our main stylesheet `unit` contains our app's unit tests.
 	 */
 	app_files : {
 		js : [ 'src/**/*.js', '!src/**/*.spec.js', '!src/webapp/**/*.js', '!src/assets/**/*.js' ],
+		json : [ 'src/**/*.json', '!src/webapp/**/*.json', '!src/assets/**/*.json' ],
 		jsunit : [ 'src/**/*.spec.js' ],
 
 		atpl : [ 'src/app/**/*.tpl.html' ],
@@ -33,19 +33,19 @@ module.exports = {
 	},
 
 	/**
-	 * This is the same as `app_files`, except it contains patterns that reference vendor code (`vendor/`) that we need to place into the build process
-	 * somewhere. While the `app_files` property ensures all standardized files are collected for compilation, it is the user's job to ensure non-standardized
-	 * (i.e. vendor-related) files are handled appropriately in `vendor_files.js`. The `vendor_files.js` property holds files to be automatically concatenated
-	 * and minified with our project source files. The `vendor_files.css` property holds any CSS files to be automatically included in our app.
+	 * This is the same as `app_files`, except it contains patterns that reference vendor code (`vendor/`) that we need to place into the build process somewhere. While the
+	 * `app_files` property ensures all standardized files are collected for compilation, it is the user's job to ensure non-standardized (i.e. vendor-related) files are handled
+	 * appropriately in `vendor_files.js`. The `vendor_files.js` property holds files to be automatically concatenated and minified with our project source files. The
+	 * `vendor_files.css` property holds any CSS files to be automatically included in our app.
 	 */
 	vendor_files : {
 		js : [ 'vendor/jquery/jquery.js', 'vendor/jquery-ui/ui/jquery-ui.js', 'vendor/angular/angular.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.js',
 				'vendor/angular-cookies/angular-cookies.js', 'vendor/angular-resource/angular-resource.js', 'vendor/angular-animate/angular-animate.js',
-				'vendor/bootstrap/dist/js/bootstrap.js', 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js',
-				'vendor/angular-ui-utils/ui-utils.js', 'vendor/angular-ui-router/release/angular-ui-router.js', 'vendor/angular-route/angular-route.js',
-				'vendor/angular-translate/angular-translate.js', 'vendor/ng-grid/ng-grid-2.0.7.debug.js', 'vendor/select2/select2.js',
-				'vendor/angular-ui-select2/src/select2.js', 'vendor/lodash/dist/lodash.js', 'vendor/ngAnimate-animate.css/animate.js',
-				'vendor/restangular/dist/restangular.js' ],
+				'vendor/bootstrap/dist/js/bootstrap.js', 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/angular-ui-utils/ui-utils.js',
+				'vendor/angular-ui-router/release/angular-ui-router.js', 'vendor/angular-route/angular-route.js', 'vendor/angular-translate/angular-translate.js',
+				'vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.js', 'vendor/angular-translate-storage-local/angular-translate-storage-local.js',
+				'vendor/angular-translate-loader-partial/angular-translate-loader-partial.js', 'vendor/ng-grid/ng-grid-2.0.7.debug.js', 'vendor/select2/select2.js',
+				'vendor/angular-ui-select2/src/select2.js', 'vendor/lodash/dist/lodash.js', 'vendor/ngAnimate-animate.css/animate.js', 'vendor/restangular/dist/restangular.js' ],
 		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/font-awesome/css/font-awesome.min.css', 'vendor/animate.css/animate.min.css' ],
 		assets : [ 'jquery-ui/themes/base/**/*', 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css',
 				'roboto-fontface/*.css', 'roboto-fontface/fonts/*', 'select2/*.css', 'select2/*.png', 'select2/*.gif' ]
