@@ -23,62 +23,69 @@
 					}
 				});
 
-				$scope.spellGrid = {
-					data : 'spells',
-					columns : [ {
-						text : $translate('SPELL.RESOURCE_FIELD'),
-						dataField : 'resource',
-						type : 'string',
-						align : 'center',
-						width : 80
-					}, {
-						text : $translate('SPELL.NAME_FIELD'),
-						dataField : 'name',
-						type : 'string',
-						align : 'center',
-						width : 200
-					}, {
-						text : $translate('SPELL.LEVEL_FIELD'),
-						dataField : 'level',
-						cellsalign : 'center',
-						type : 'number',
-						align : 'center',
-						width : 55
-					}, {
-						text : $translate('SPELL.IDENTIFIER_FIELD'),
-						dataField : 'identifier',
-						type : 'string',
-						align : 'center',
-						width : 200
-					}, {
-						text : $translate('SPELL.ACTION_COLUMN'),
-						type : 'string',
-						width : 60,
-						align : 'center',
-						cellsalign : 'center',
-						filterable : false,
-						sortable : false,
-						cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
-							return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
-						}
-					} ],
-					options : {
-						width : 670,
-						height : 400,
-						pageable : true,
-						pagerButtonsCount : 10,
-						pageSize : 15
-					},
-					events : {
-						cellClick : function($scope, spell, column) {
-							if (column === 4) {
-								$scope.remove(spell);
-							} else {
-								$scope.edit(spell.id);
+				var getSpellGrid = function() {
+					return {
+						data : 'spells',
+						columns : [ {
+							text : $translate('SPELL.RESOURCE_FIELD'),
+							dataField : 'resource',
+							type : 'string',
+							align : 'center',
+							width : 80
+						}, {
+							text : $translate('SPELL.NAME_FIELD'),
+							dataField : 'name',
+							type : 'string',
+							align : 'center',
+							width : 200
+						}, {
+							text : $translate('SPELL.LEVEL_FIELD'),
+							dataField : 'level',
+							cellsalign : 'center',
+							type : 'number',
+							align : 'center',
+							width : 55
+						}, {
+							text : $translate('SPELL.IDENTIFIER_FIELD'),
+							dataField : 'identifier',
+							type : 'string',
+							align : 'center',
+							width : 200
+						}, {
+							text : $translate('SPELL.ACTION_COLUMN'),
+							type : 'string',
+							width : 60,
+							align : 'center',
+							cellsalign : 'center',
+							filterable : false,
+							sortable : false,
+							cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+								return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
+							}
+						} ],
+						options : {
+							width : 670,
+							height : 400,
+							pageable : true,
+							pagerButtonsCount : 10,
+							pageSize : 15
+						},
+						events : {
+							cellClick : function($scope, spell, column) {
+								if (column === 4) {
+									$scope.remove(spell);
+								} else {
+									$scope.edit(spell.id);
+								}
 							}
 						}
-					}
+					};
 				};
+
+				$scope.spellGrid = getSpellGrid();
+				$scope.$on('$translateChangeSuccess', function() {
+					$scope.spellGrid = getSpellGrid();
+				});
 
 				$scope.remove = function(spell) {
 					spell.$delete().then(function(response) {

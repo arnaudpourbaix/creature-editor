@@ -3,9 +3,8 @@
 
 	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
-	module.run([ '$translate', '$translatePartialLoader', function run($translate, $translatePartialLoader) {
-		$translatePartialLoader.addPart('app/spell');
-		$translate.refresh();
+	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
+		$translatePartialLoaderProvider.addPart('app/spell');
 	} ]);
 	
 	module.config(['$stateProvider', function config($stateProvider) {

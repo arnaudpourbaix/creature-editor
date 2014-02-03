@@ -3,9 +3,8 @@
 
 	var module = angular.module('creatureEditor.category.config', [ 'creatureEditor.category.services', 'ui.router' ]);
 
-	module.run([ '$translate', '$translatePartialLoader', function run($translate, $translatePartialLoader) {
-		$translatePartialLoader.addPart('app/category');
-		$translate.refresh();
+	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
+		$translatePartialLoaderProvider.addPart('app/category');
 	} ]);
 
 	module.config(function config($stateProvider) {

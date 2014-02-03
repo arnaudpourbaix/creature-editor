@@ -5,45 +5,51 @@
 
 	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', 'alertMessageService',
 			function ModListController($scope, $translate, mods, crudListMethods, alertMessageService) {
-
 				angular.extend($scope, crudListMethods('/mods'));
 
 				$scope.mods = mods;
 
-				$scope.modGrid = {
-					data : 'mods',
-					columns : [ {
-						text : $translate('MOD.NAME_FIELD'),
-						dataField : 'name',
-						type : 'string',
-						align : 'center',
-						width : 200
-					}, {
-						text : $translate('MOD.ACTION_COLUMN'),
-						type : 'string',
-						width : 60,
-						align : 'center',
-						cellsalign : 'center',
-						filterable : false,
-						sortable : false,
-						cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
-							return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
-						}
-					} ],
-					options : {
-						width : 260,
-						height : 400
-					},
-					events : {
-						cellClick : function($scope, mod, column) {
-							if (column === 1) {
-								$scope.remove(mod);
-							} else {
-								$scope.edit(mod.id);
+				var getModGrid = function() {
+					return {
+						data : 'mods',
+						columns : [ {
+							text : $translate('MOD.NAME_FIELD'),
+							dataField : 'name',
+							type : 'string',
+							align : 'center',
+							width : 200
+						}, {
+							text : $translate('MOD.ACTION_COLUMN'),
+							type : 'string',
+							width : 60,
+							align : 'center',
+							cellsalign : 'center',
+							filterable : false,
+							sortable : false,
+							cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+								return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
+							}
+						} ],
+						options : {
+							width : 260,
+							height : 400
+						},
+						events : {
+							cellClick : function($scope, mod, column) {
+								if (column === 1) {
+									$scope.remove(mod);
+								} else {
+									$scope.edit(mod.id);
+								}
 							}
 						}
-					}
+					};
 				};
+
+				$scope.modGrid = getModGrid();
+				$scope.$on('$translateChangeSuccess', function() {
+					$scope.modGrid = getModGrid();
+				});
 
 				$scope.remove = function(mod) {
 					mod.$delete().then(function(response) {

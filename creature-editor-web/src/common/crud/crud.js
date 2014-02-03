@@ -3,9 +3,8 @@
 
 	var module = angular.module('crud', [ 'crud.directives', 'crud.services', 'pascalprecht.translate' ]);
 
-	module.run([ '$translate', '$translatePartialLoader', function run($translate, $translatePartialLoader) {
-		$translatePartialLoader.addPart('common/crud');
-		$translate.refresh();
+	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
+		$translatePartialLoaderProvider.addPart('common/crud');
 	} ]);
 
 })();

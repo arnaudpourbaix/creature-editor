@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'creatureEditor.mod',
-			'creatureEditor.spell', 'creatureEditor.category' ]);
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular',
+			'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
 			function($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
@@ -14,7 +14,7 @@
 				$translateProvider.useLoader('$translatePartialLoader', {
 					urlTemplate : 'src/{part}/locales/messages-{lang}.json'
 				});
-				$translateProvider.preferredLanguage('fr');
+				$translateProvider.preferredLanguage('en');
 				$translateProvider.fallbackLanguage('en');
 			} ]);
 
