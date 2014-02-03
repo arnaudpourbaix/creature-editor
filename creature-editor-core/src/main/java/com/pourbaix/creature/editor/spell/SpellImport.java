@@ -12,9 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.pourbaix.creature.editor.domain.Mod;
 import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.repository.ModRepository;
@@ -72,12 +69,6 @@ public class SpellImport implements Runnable {
 		running = true;
 		this.modId = modId;
 		resources = readerService.getSpellResources();
-		resources = Lists.newArrayList(Iterables.filter(resources, new Predicate<ResourceEntry>() {
-			public boolean apply(ResourceEntry resource) {
-				return resource.getResourceName().startsWith("SPPR1") || resource.getResourceName().startsWith("SPPR2")
-						|| resource.getResourceName().startsWith("SPPR3");
-			}
-		}));
 		deferredResult.setResult(resources.size());
 
 		thread = new Thread(this, "import");
