@@ -7,6 +7,22 @@
         					http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 	<changeSet author="apourbaix" id="editor-001">
+		<createTable tableName="parameter">
+			<column name="name" type="VARCHAR2(50)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="type_id" type="VARCHAR2(20)" />
+			<column name="value" type="VARCHAR2(500)" />
+			<column name="description" type="VARCHAR2(1000)" />
+		</createTable>
+
+		<createTable tableName="parameter_type">
+			<column name="id" type="VARCHAR2(20)">
+				<constraints primaryKey="true" />
+			</column>
+			<column name="label" type="VARCHAR2(100)" />
+		</createTable>
+	
 		<createTable tableName="game">
 			<column name="id" type="int" autoIncrement="true" >
 				<constraints primaryKey="true" />
@@ -135,6 +151,7 @@
 	</changeSet>
 	
 	<changeSet author="apourbaix" id="editor-002">
+		<addForeignKeyConstraint constraintName="fk_parameter__parameter_type" baseTableName="parameter" baseColumnNames="type_id" referencedTableName="parameter_type" referencedColumnNames="id" /> 
 		<addForeignKeyConstraint constraintName="fk_creature__game" baseTableName="creature" baseColumnNames="game_id" referencedTableName="game" referencedColumnNames="id" /> 
 		<addForeignKeyConstraint constraintName="fk_category__category" baseTableName="category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
 		<addForeignKeyConstraint constraintName="fk_attribute__attribute" baseTableName="attribute" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
