@@ -7,11 +7,17 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>creature-script-batch</artifactId>
+	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
 			<groupId>com.pourbaix.editor.creature</groupId>
 			<artifactId>creature-editor-core</artifactId>
 			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

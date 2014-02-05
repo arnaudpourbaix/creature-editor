@@ -19,7 +19,6 @@ import com.pourbaix.creature.script.spring.ScriptConfig;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { CoreConfig.class, ScriptConfig.class })
-//@ContextConfiguration(classes = { ScriptConfig.class })
 public class ParseGeneratedInstructionTest {
 
 	@InjectMocks
