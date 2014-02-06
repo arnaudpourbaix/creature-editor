@@ -1,11 +1,13 @@
+/* global jasmine, inject, xdescribe, xit */
+
 describe('AppCtrl', function() {
 	'use strict';
 	describe('isCurrentUrl', function() {
 		var AppCtrl, location, scope;
 
-		beforeEach(angular.mock.module('creatureEditor'));
+		beforeEach(module('creatureEditor'));
 
-		beforeEach(angular.mock.inject(function($controller, $location, $rootScope) {
+		beforeEach(inject(function($controller, $location, $rootScope) {
 			location = $location;
 			scope = $rootScope.$new();
 			AppCtrl = $controller('AppCtrl', {
@@ -14,7 +16,7 @@ describe('AppCtrl', function() {
 			});
 		}));
 
-		it('should pass a dummy test', angular.mock.inject(function() {
+		it('should pass a dummy test', inject(function() {
 			expect(AppCtrl).toBeTruthy();
 		}));
 	});

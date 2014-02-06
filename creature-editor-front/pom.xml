@@ -14,6 +14,12 @@
 			<artifactId>creature-editor-core</artifactId>
 			<version>0.0.1</version>
 		</dependency>
+		<dependency>
+			<groupId>com.pourbaix.editor.creature</groupId>
+			<artifactId>creature-editor-web</artifactId>
+			<type>war</type> 
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -21,6 +27,18 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+				  <overlays>
+					<overlay>
+					  <groupId>com.pourbaix.editor.creature</groupId>
+					  <artifactId>creature-editor-web</artifactId>
+					</overlay>
+				  </overlays>
+				</configuration>
+			</plugin>			
 		</plugins>
 	</build>
 </project>

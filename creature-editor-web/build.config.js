@@ -48,7 +48,7 @@ module.exports = {
 				'vendor/angular-translate-storage-local/angular-translate-storage-local.js',
 				'vendor/angular-translate-loader-partial/angular-translate-loader-partial.js', 'vendor/ng-grid/ng-grid-2.0.7.debug.js',
 				'vendor/select2/select2.js', 'vendor/angular-ui-select2/src/select2.js', 'vendor/lodash/dist/lodash.js', 'vendor/ngAnimate-animate.css/animate.js',
-				'vendor/restangular/dist/restangular.js', 'vendor/angular-kendo-ui/build/angular-kendo.js' ],
+				'vendor/restangular/dist/restangular.js' /* , 'vendor/angular-kendo-ui/build/angular-kendo.js' */],
 		css : [ 'vendor/ng-grid/ng-grid.min.css', 'vendor/font-awesome/css/font-awesome.min.css', 'vendor/animate.css/animate.min.css' ],
 		assets : [ 'jquery-ui/themes/base/**/*', 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css',
 				'roboto-fontface/*.css', 'roboto-fontface/fonts/*', 'select2/*.css', 'select2/*.png', 'select2/*.gif' ]

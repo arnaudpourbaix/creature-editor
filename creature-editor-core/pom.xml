@@ -202,7 +202,7 @@
 				<version>${liquibase.version}</version>
 				<configuration>
 					<driver>org.hsqldb.jdbcDriver</driver>
-					<url>jdbc:hsqldb:hsql://localhost:9001/creatureEditor</url>
+					<url>jdbc:hsqldb:file:src/main/resources/db/hsqldb/creatureEditor</url>
 					<username>sa</username>
 					<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 					<changeLogFile>db/changelog-master.xml</changeLogFile>
