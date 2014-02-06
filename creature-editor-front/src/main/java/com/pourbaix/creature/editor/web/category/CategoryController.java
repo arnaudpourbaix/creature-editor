@@ -6,20 +6,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pourbaix.creature.editor.domain.Category;
 import com.pourbaix.creature.editor.repository.CategoryRepository;
 
-@Controller
+@RestController
 public class CategoryController {
 
 	private static final Logger logger = LoggerFactory.getLogger(CategoryController.class);
@@ -28,13 +27,12 @@ public class CategoryController {
 	private CategoryRepository categoryRepository;
 
 	// @RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-	// public @ResponseBody List<Category> list() {
+	// public List<Category> list() {
 	// List<Category> categories = categoryService.getList();
 	// return categories;
 	// }
 
 	@RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
 	public List<CategoryDTO> list() {
 		List<Category> categories = categoryRepository.findAllFetchParent();
 		List<CategoryDTO> result = Lists.transform(categories, new Function<Category, CategoryDTO>() {
@@ -47,7 +45,6 @@ public class CategoryController {
 	}
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
-	@ResponseBody
 	public Category getById(@PathVariable Integer id) {
 		return categoryRepository.findOne(id);
 	}

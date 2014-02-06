@@ -12,6 +12,7 @@
 				<constraints primaryKey="true" />
 			</column>
 			<column name="type_id" type="VARCHAR2(20)" />
+			<column name="datatype" type="VARCHAR2(10)" />
 			<column name="value" type="VARCHAR2(500)" />
 			<column name="description" type="VARCHAR2(1000)" />
 		</createTable>
