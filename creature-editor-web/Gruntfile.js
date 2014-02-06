@@ -175,6 +175,14 @@ module.exports = function(grunt) {
 				// , flatten : true
 				} ]
 			},
+			compileAppJson : {
+				files : [ {
+					src : [ '**/*.json' ],
+					dest : '<%= compile_dir %>',
+					cwd : '<%= build_dir %>',
+					expand : true
+				} ]
+			},
 			compileAssets : {
 				files : [ {
 					src : [ '**' ],
@@ -468,7 +476,8 @@ module.exports = function(grunt) {
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.
 	 */
-	grunt.registerTask('compile', [ 'concat:compileCss', 'recess:compile', 'copy:compileAssets', 'ngmin', 'concat:compileJs', /* 'uglify', */'index:compile' ]);
+	grunt.registerTask('compile', [ 'concat:compileCss', 'recess:compile', 'copy:compileAssets', 'ngmin', 'copy:compileAppJson', 'concat:compileJs', /* 'uglify', */
+	'index:compile' ]);
 
 	grunt.registerTask('server', [ 'configureProxies', 'connect:livereload', 'open', 'watch' ]);
 

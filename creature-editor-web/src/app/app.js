@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'alertMessage',
-			'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router',
+			'alertMessage', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
 			function($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
@@ -10,7 +10,7 @@
 				// $locationProvider.html5Mode(true);
 				$urlRouterProvider.otherwise('/');
 				$translateProvider.useLocalStorage();
-				$translatePartialLoaderProvider.addPart('app/main');
+				$translatePartialLoaderProvider.addPart('app');
 				$translateProvider.useLoader('$translatePartialLoader', {
 					urlTemplate : 'src/{part}/locales/messages-{lang}.json'
 				});
