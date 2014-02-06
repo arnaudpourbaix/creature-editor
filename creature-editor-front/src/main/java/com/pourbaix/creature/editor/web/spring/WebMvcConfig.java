@@ -3,7 +3,6 @@ package com.pourbaix.creature.editor.web.spring;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter;
 
@@ -18,11 +17,6 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
 		RequestMappingHandlerAdapter handlerAdapter = super.requestMappingHandlerAdapter();
 		handlerAdapter.getMessageConverters().add(0, converter);
 		return handlerAdapter;
-	}
-
-	@Override
-	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-		configurer.enable();
 	}
 
 }
