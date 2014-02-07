@@ -113,3 +113,30 @@ border-color:#FBB34E; }
     background-repeat: no-repeat;
     background-position: center;
 }
+.jqx-icon-calendar-orange, .jqx-icon-calendar-hover-orange, .jqx-icon-calendar-pressed-orange {
+    background-image: url('images/icon-calendar-white.png');
+}
+.jqx-icon-delete-orange
+{
+    background-image: url('images/icon-delete-white.png');
+}
+.jqx-icon-edit-orange
+{
+    background-image: url('images/icon-edit-white.png');
+}
+.jqx-icon-save-orange
+{
+    background-image: url('images/icon-save-white.png');
+}
+.jqx-icon-cancel-orange
+{
+    background-image: url('images/icon-cancel-white.png');
+}
+.jqx-icon-search-orange
+{
+    background-image: url(images/search-white.png);
+}
+.jqx-icon-plus-orange
+{
+    background-image: url(images/plus_white.png);
+}

@@ -81,3 +81,30 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+.jqx-icon-calendar-shinyblack, .jqx-icon-calendar-hover-shinyblack, .jqx-icon-calendar-pressed-shinyblack {
+    background-image: url('images/icon-calendar-white.png');
+}
+.jqx-icon-delete-shinyblack
+{
+    background-image: url('images/icon-delete-white.png');
+}
+.jqx-icon-edit-shinyblack
+{
+    background-image: url('images/icon-edit-white.png');
+}
+.jqx-icon-save-shinyblack
+{
+    background-image: url('images/icon-save-white.png');
+}
+.jqx-icon-cancel-shinyblack
+{
+    background-image: url('images/icon-cancel-white.png');
+}
+.jqx-icon-search-shinyblack
+{
+    background-image: url(images/search-white.png);
+}
+.jqx-icon-plus-shinyblack
+{
+    background-image: url(images/plus_white.png);
+}
