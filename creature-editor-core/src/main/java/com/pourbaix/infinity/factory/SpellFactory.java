@@ -2,6 +2,7 @@ package com.pourbaix.infinity.factory;
 
 import java.io.IOException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +81,7 @@ public class SpellFactory {
 	private Spell getSpell(RawSpell rawSpell) {
 		Spell spell = new Spell();
 		spell.setResource(rawSpell.getResource().replace(".SPL", ""));
-		spell.setName(rawSpell.getName());
+		spell.setName(StringUtils.abbreviate(rawSpell.getName(), 100));
 		spell.setLevel(rawSpell.getLevel());
 		spell.setDescription(rawSpell.getDescription());
 		spell.setIdentifier(rawSpell.getIdentifier());

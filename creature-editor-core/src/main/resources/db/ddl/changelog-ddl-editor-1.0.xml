@@ -125,7 +125,7 @@
 			<column name="resource" type="VARCHAR2(8)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="name" type="VARCHAR2(50)" />
+			<column name="name" type="VARCHAR2(100)" />
 			<column name="identifier" type="VARCHAR2(50)" />
 			<column name="description" type="VARCHAR2(10000)" />
 			<column name="level" type="int">

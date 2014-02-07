@@ -6,6 +6,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import javax.persistence.PersistenceException;
 
+import org.hibernate.exception.DataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,13 +49,14 @@ public class SpellImport implements Runnable {
 			if (!running) { // process has been cancelled
 				break;
 			}
+			Spell spell = null;
 			try {
-				Spell spell = readerService.getSpell(resource);
+				spell = readerService.getSpell(resource);
 				spell.setMod(mod);
 				spellRepository.save(spell);
 				spells.add(spell);
-			} catch (ServiceException | PersistenceException e) {
-				logger.error(e.getMessage());
+			} catch (DataException | ServiceException | PersistenceException e) {
+				logger.error(resource.getResourceName(), e.getMessage());
 				running = false;
 			}
 		}
