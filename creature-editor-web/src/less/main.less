@@ -44,7 +44,8 @@ html, body {
  * Now that all app-wide styles have been applied, we can load the styles for
  * all the submodules and components we are using. 
  */
-@import '../common/alertMessage/alertMessage.less';
+@import '../common/alert-message/alertMessage.less';
+@import '../common/loading-animation/loading-animation.less';
 @import '../app/category/category.less';
 @import '../app/mod/mod.less';
 @import '../app/spell/spell.less';
@@ -61,4 +62,11 @@ html, body {
 
 .pointer {
 	cursor: pointer;
+}
+
+
+.absolute-center() {
+	margin: auto;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
 }

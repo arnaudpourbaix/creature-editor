@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('crud.directives', [ 'pascalprecht.translate', 'alertMessage' ]);
+	var module = angular.module('crud.directives', [ 'pascalprecht.translate', 'alert-message' ]);
 
 	module.directive('crudAddButton', function() {
 		return {

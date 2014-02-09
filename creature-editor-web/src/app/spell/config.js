@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
+	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ajoslin.promise-tracker' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/spell');

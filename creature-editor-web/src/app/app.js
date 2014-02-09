@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router',
-			'alertMessage', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'alert-message',
+			'loading-animation', 'ajoslin.promise-tracker', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
 			function($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
@@ -22,10 +22,23 @@
 		restBaseUrl : 'rest/'
 	});
 
-	module.controller('AppCtrl', [ '$scope', '$translate', function($scope, $translate) {
+	module.controller('AppCtrl', [ '$scope', '$translate', '$rootScope', function($scope, $translate, $rootScope) {
 		$scope.changeLanguage = function(langKey) {
 			$translate.uses(langKey);
 		};
+
+		$scope.loadingScreen = true;
+
+		// $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+		// console.debug('$stateChangeStart', event, toState, toParams, fromState, fromParams);
+		// $scope.loadingScreen = false;
+		// });
+		//
+		$rootScope.$on('$viewContentLoaded', function() {
+			console.debug('$viewContentLoaded');
+			// $scope.loadingScreen = false;
+		});
+
 	} ]);
 
 	module.directive('focusMe', [ '$timeout', function($timeout) {

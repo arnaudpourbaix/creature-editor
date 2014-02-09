@@ -44,8 +44,9 @@ module.exports = {
 				'vendor/angular-resource/angular-resource.min.js', 'vendor/angular-animate/angular-animate.min.js', 'vendor/angular-ui-utils/ui-utils.min.js',
 				'vendor/angular-ui-router/release/angular-ui-router.min.js', 'vendor/angular-route/angular-route.min.js', 'vendor/angular-translate/angular-translate.min.js',
 				'vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js', 'vendor/angular-translate-storage-local/angular-translate-storage-local.min.js',
-				'vendor/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 'vendor/select2/select2.min.js', 'vendor/angular-ui-select2/src/select2.js',
-				'vendor/lodash/dist/lodash.min.js', 'vendor/restangular/dist/restangular.min.js', 'src/assets/jqwidgets/jqx-all.js' ],
+				'vendor/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 'vendor/angular-promise-tracker/promise-tracker.min.js',
+				'vendor/select2/select2.min.js', 'vendor/angular-ui-select2/src/select2.js', 'vendor/lodash/dist/lodash.min.js', 'vendor/restangular/dist/restangular.min.js',
+				'src/assets/jqwidgets/jqx-all.js' ],
 		css : [ 'vendor/font-awesome/css/font-awesome.min.css', 'vendor/animate.css/animate.min.css' ],
 		assets : [ 'jquery-ui/themes/base/**/*', 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css',
 				'roboto-fontface/*.css', 'roboto-fontface/fonts/*', 'select2/*.css', 'select2/*.png', 'select2/*.gif' ]
