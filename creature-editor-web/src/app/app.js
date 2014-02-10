@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router',
-			'alert-message', 'loading-animation', 'ajoslin.promise-tracker', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'alert-message',
+			'loading-animation', 'ajoslin.promise-tracker', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
 			function AppConfig($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
@@ -19,7 +19,7 @@
 			} ]);
 
 	module.config([ '$loadingAnimationProvider', function LoadingAnimationConfig($loadingAnimationProvider) {
-		$loadingAnimationProvider.activationDelay(0);
+		$loadingAnimationProvider.activationDelay(0.5);
 		$loadingAnimationProvider.minDuration(1);
 	} ]);
 

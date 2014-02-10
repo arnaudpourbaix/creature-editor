@@ -9,7 +9,7 @@
 		<div data-ui-view></div>	 
 	</div>
 	<div data-widget-panel-footer class="clearfix">
-		<button data-ui-sref="spells.list.import" class="btn btn-primary pull-right" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT_BUTTON</button>
+		<button data-ui-sref="spells.list.import" class="btn btn-primary pull-right" data-effeckt-type="expand-right" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT_BUTTON</button>
 		<div class="row spell-import-progress" data-ng-show="importService.running">
 			<div class="col-md-4 text-right" data-translate data-translate-values="{ name : importService.mod.name }">SPELL.IMPORT_PROGRESS_MESSAGE</div>
 			<div class="col-md-6">

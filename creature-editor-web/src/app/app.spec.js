@@ -1,23 +1,23 @@
 /* global jasmine, inject, xdescribe, xit */
 
-describe('AppCtrl', function() {
+describe('AppController', function() {
 	'use strict';
 	describe('isCurrentUrl', function() {
-		var AppCtrl, location, scope;
+		var AppController, location, scope;
 
 		beforeEach(module('creatureEditor'));
 
 		beforeEach(inject(function($controller, $location, $rootScope) {
 			location = $location;
 			scope = $rootScope.$new();
-			AppCtrl = $controller('AppCtrl', {
+			AppController = $controller('AppController', {
 				$location : location,
 				$scope : scope
 			});
 		}));
 
 		it('should pass a dummy test', inject(function() {
-			expect(AppCtrl).toBeTruthy();
+			expect(AppController).toBeTruthy();
 		}));
 	});
 });

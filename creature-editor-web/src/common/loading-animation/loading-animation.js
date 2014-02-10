@@ -101,22 +101,21 @@
 		} ];
 	});
 
-	module.controller('LoadingAnimationController', [ '$scope', '$rootScope', '$loadingAnimation',
-			function LoadingAnimationController($scope, $rootScope, $loadingAnimation) {
-				$scope.loadingAnimation = $loadingAnimation;
+	module.controller('LoadingAnimationController', [ '$scope', '$rootScope', '$loadingAnimation', function LoadingAnimationController($scope, $rootScope, $loadingAnimation) {
+		$scope.loadingAnimation = $loadingAnimation;
 
-				$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-					$loadingAnimation.start();
-				});
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			$loadingAnimation.start();
+		});
 
-				$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-					$loadingAnimation.stop();
-				});
+		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+			$loadingAnimation.stop();
+		});
 
-				$rootScope.$on('$viewContentLoaded', function() {
-					$loadingAnimation.stop();
-				});
+		$rootScope.$on('$viewContentLoaded', function() {
+			$loadingAnimation.stop();
+		});
 
-			} ]);
+	} ]);
 
 })();
