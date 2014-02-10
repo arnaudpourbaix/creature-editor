@@ -80,7 +80,8 @@
 		var options = {
 			activationDelay : 0.75, // delay before animation is triggered (in seconds)
 			minDuration : 0, // minimum animation duration (in seconds)
-			maxDuration : 0, // maximum animation duration (in seconds)
+			maxDuration : 0
+		// maximum animation duration (in seconds)
 		};
 
 		this.activationDelay = function(value) {
