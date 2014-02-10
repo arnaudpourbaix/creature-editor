@@ -27,16 +27,16 @@
 			$translate.uses(langKey);
 		};
 
-		$scope.loadingScreen = true;
+		$scope.loadingScreen = false;
 
-		// $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-		// console.debug('$stateChangeStart', event, toState, toParams, fromState, fromParams);
-		// $scope.loadingScreen = false;
-		// });
-		//
+		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+			console.log("$stateChangeStart");
+			$scope.loadingScreen = true;
+		});
+
 		$rootScope.$on('$viewContentLoaded', function() {
-			console.debug('$viewContentLoaded');
-			// $scope.loadingScreen = false;
+			console.log("$viewContentLoaded");
+			$scope.loadingScreen = false;
 		});
 
 	} ]);

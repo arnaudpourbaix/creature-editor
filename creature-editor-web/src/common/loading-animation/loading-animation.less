@@ -1,4 +1,3 @@
-
 @wait-animation-color: #2E64FE; 
 @wait-animation-color-hover: #E45635;
  
@@ -23,17 +22,25 @@
 }
 
  .loading-animation-container {
-	margin: auto;
-	position: absolute;
+	position: fixed;
 	top: 0; left: 0; bottom: 0; right: 0;
+	background-color: #000000;
+	z-index: 1000;
+	opacity: 0.5;
+		
+	.loading-animation-outer {
+		margin: auto;
+		position: fixed;
+		top: 0; left: 0; bottom: 0; right: 0;
+	}
  
-	&, .loading-animation {
+	.loading-animation-outer, .loading-animation-inner {
 		width: 100px;
 		height: 100px;
 		border-radius: 100%;
 	}
 
-	.loading-animation {
+	.loading-animation-inner {
 		border: 2px solid transparent;
 		border-color: transparent @wait-animation-color transparent @wait-animation-color;
 		.lh-animation(loading-animation-rotate 1.5s linear 0s infinite normal);
@@ -55,6 +62,6 @@
 		width: 100px;
 	}
 	
-	&:hover .loading-animation { border-color: transparent @wait-animation-color-hover transparent @wait-animation-color-hover; }
-	&:hover .loading-animation, .loading-animation-container .loading-animation { .lh-transition(all 0.5s ease-in-out); }
+	.loading-animation-outer:hover .loading-animation-inner { border-color: transparent @wait-animation-color-hover transparent @wait-animation-color-hover; }
+	.loading-animation-outer:hover .loading-animation-inner { .lh-transition(all 0.5s ease-in-out); }
  }
