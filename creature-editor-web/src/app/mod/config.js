@@ -3,11 +3,11 @@
 
 	var module = angular.module('creatureEditor.mod.config', [ 'creatureEditor.mod.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
-	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
+	module.config([ '$translatePartialLoaderProvider', function ModTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/mod');
 	} ]);
 
-	module.config([ '$stateProvider', function config($stateProvider) {
+	module.config([ '$stateProvider', function ModStateConfig($stateProvider) {
 		$stateProvider.state('mods', {
 			url : '/mods',
 			resolve : {

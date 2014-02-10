@@ -36,7 +36,7 @@
 		element.jqxGrid(angular.extend(params, options));
 	};
 
-	module.directive('jqGrid', [ '$compile', function($compile) {
+	module.directive('jqGrid', [ '$compile', function JqGridDirective($compile) {
 		return {
 			restrict : 'AE',
 			replace : true,

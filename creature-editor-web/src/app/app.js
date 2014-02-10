@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'alert-message',
-			'loading-animation', 'ajoslin.promise-tracker', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
+	var module = angular.module('creatureEditor', [ 'templates-app', 'templates-common', 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router',
+			'alert-message', 'loading-animation', 'ajoslin.promise-tracker', 'creatureEditor.mod', 'creatureEditor.spell', 'creatureEditor.category' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
-			function($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
+			function AppConfig($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
 				RestangularProvider.setBaseUrl('/rest');
 				// $locationProvider.html5Mode(true);
 				$urlRouterProvider.otherwise('/');
@@ -18,30 +18,22 @@
 				$translateProvider.fallbackLanguage('en');
 			} ]);
 
+	module.config([ '$loadingAnimationProvider', function LoadingAnimationConfig($loadingAnimationProvider) {
+		$loadingAnimationProvider.activationDelay(0);
+		$loadingAnimationProvider.minDuration(1);
+	} ]);
+
 	module.constant('appSettings', {
 		restBaseUrl : 'rest/'
 	});
 
-	module.controller('AppCtrl', [ '$scope', '$translate', '$rootScope', function($scope, $translate, $rootScope) {
+	module.controller('AppController', [ '$scope', '$translate', '$rootScope', function AppController($scope, $translate, $rootScope) {
 		$scope.changeLanguage = function(langKey) {
 			$translate.uses(langKey);
 		};
-
-		$scope.loadingScreen = false;
-
-		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-			console.log("$stateChangeStart");
-			$scope.loadingScreen = true;
-		});
-
-		$rootScope.$on('$viewContentLoaded', function() {
-			console.log("$viewContentLoaded");
-			$scope.loadingScreen = false;
-		});
-
 	} ]);
 
-	module.directive('focusMe', [ '$timeout', function($timeout) {
+	module.directive('focusMe', [ '$timeout', function FocusMeDirective($timeout) {
 		return function(scope, element, attrs) {
 			scope.$watch(attrs.focusMe, function(value) {
 				if (value) {
@@ -53,7 +45,7 @@
 		};
 	} ]);
 
-	module.filter('range', function() {
+	module.filter('range', function RangeFilter() {
 		return function(input, total) {
 			total = parseInt(total, 10);
 			for (var i = 0; i < total; i++) {
@@ -63,7 +55,7 @@
 		};
 	});
 
-	module.run([ '$rootScope', '$state', '$stateParams', function run($rootScope, $state, $stateParams) {
+	module.run([ '$rootScope', '$state', '$stateParams', function AppRun($rootScope, $state, $stateParams) {
 		$rootScope.$state = $state;
 		$rootScope.$stateParams = $stateParams;
 	} ]);

@@ -3,7 +3,7 @@
 
 	var module = angular.module('alertMessage.services', [ 'pascalprecht.translate' ]);
 
-	module.factory('alertMessageService', [ '$interpolate', '$translate', function($interpolate, $translate) {
+	module.factory('alertMessageService', [ '$interpolate', '$translate', function AlertMessageService($interpolate, $translate) {
 
 		var service = {};
 

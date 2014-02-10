@@ -3,7 +3,7 @@
 
 	var module = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
 
-	module.factory('Spell', [ '$resource', 'appSettings', function($resource, appSettings) {
+	module.factory('Spell', [ '$resource', 'appSettings', function SpellFactory($resource, appSettings) {
 		var baseUrl = appSettings.restBaseUrl + 'spell/';
 
 		var res = $resource(baseUrl + ':id', {}, {
@@ -35,7 +35,7 @@
 		return res;
 	} ]);
 
-	module.service('SpellService', [ 'Spell', 'SpellImportService', function(Spell, SpellImportService) {
+	module.service('SpellService', [ 'Spell', 'SpellImportService', function SpellService(Spell, SpellImportService) {
 		var service = {
 			getSpells : function(modId) {
 				if (SpellImportService.running && modId === SpellImportService.modId) {
@@ -51,7 +51,7 @@
 		return service;
 	} ]);
 
-	module.service('SpellImportService', [ '$http', '$interval', 'alertMessageService', function($http, $interval, alertMessageService) {
+	module.service('SpellImportService', [ '$http', '$interval', 'alertMessageService', function SpellImportService($http, $interval, alertMessageService) {
 		var service = {
 			running : false,
 			spells : [],

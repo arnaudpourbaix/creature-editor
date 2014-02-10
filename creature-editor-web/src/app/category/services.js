@@ -3,7 +3,7 @@
 
 	var module = angular.module('creatureEditor.category.services', [ 'ngResource' ]);
 
-	module.factory('Category', [ '$resource', 'appSettings', function($resource, appSettings) {
+	module.factory('Category', [ '$resource', 'appSettings', function CategoryFactory($resource, appSettings) {
 		var baseUrl = appSettings.restBaseUrl + 'category/';
 		return $resource(baseUrl + ':id', {}, {
 			'save' : {

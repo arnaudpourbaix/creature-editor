@@ -7,7 +7,7 @@
 	/**
 	 * A validation directive to ensure that the model contains a unique name mod
 	 */
-	module.directive('uniqueName', [ 'Mod', function(Mod) {
+	module.directive('uniqueName', [ 'Mod', function UniqueNameDirective(Mod) {
 		return {
 			require : 'ngModel',
 			restrict : 'A',
@@ -32,7 +32,7 @@
 	 * Create a select2 component for a mod<br>
 	 * Emit 'selectedMod' event on change with mod parameter.
 	 */
-	module.directive('selectMod', [ 'Mod', function(Mod) {
+	module.directive('selectMod', [ 'Mod', function SelectModDirective(Mod) {
 		return {
 			restrict : 'E',
 			transclude : true,

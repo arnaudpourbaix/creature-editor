@@ -3,11 +3,11 @@
 
 	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ajoslin.promise-tracker' ]);
 
-	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
+	module.config([ '$translatePartialLoaderProvider', function SpellTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/spell');
 	} ]);
 	
-	module.config(['$stateProvider', function config($stateProvider) {
+	module.config(['$stateProvider', function SpellStateConfig($stateProvider) {
 
 		$stateProvider.state('spells', {
 			abstract: true,

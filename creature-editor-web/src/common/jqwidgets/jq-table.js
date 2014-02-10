@@ -32,7 +32,7 @@
 		element.jqxDataTable(angular.extend(params, options));
 	};
 
-	module.directive('jqDataTable', [ '$compile', function($compile) {
+	module.directive('jqDataTable', [ '$compile', function JqDataTableDirective($compile) {
 		return {
 			restrict : 'AE',
 			replace : true,

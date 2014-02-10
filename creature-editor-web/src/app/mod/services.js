@@ -3,7 +3,7 @@
 
 	var module = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
 
-	module.factory('Mod', [ '$resource', 'appSettings', function($resource, appSettings) {
+	module.factory('Mod', [ '$resource', 'appSettings', function ModFactory($resource, appSettings) {
 		var baseUrl = appSettings.restBaseUrl + 'mod/';
 
 		var res = $resource(baseUrl + ':id', {}, {

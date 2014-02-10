@@ -3,7 +3,7 @@
 
 	var module = angular.module('crud.services', []);
 
-	module.factory('crudListMethods', [ '$location', function($location) {
+	module.factory('crudListMethods', [ '$location', function CrudListMethodsFactory($location) {
 		return function(pathPrefix) {
 			var mixin = {
 				'new' : function() {

@@ -3,7 +3,7 @@
 
 	var module = angular.module('crud.directives', [ 'pascalprecht.translate', 'alert-message' ]);
 
-	module.directive('crudAddButton', function() {
+	module.directive('crudAddButton', function CrudAddButtonDirective() {
 		return {
 			restrict : 'E',
 			replace : true,
@@ -11,7 +11,7 @@
 		};
 	});
 
-	module.directive('crudButtons', function() {
+	module.directive('crudButtons', function CrudButtonsDirective() {
 		return {
 			restrict : 'E',
 			replace : true,
@@ -21,7 +21,7 @@
 
 	// Apply this directive to an element at or below a form that will manage CRUD operations on a resource.
 	// The resource must expose the following instance methods: $save(), $id() and $remove()
-	module.directive('crudEdit', [ '$parse', '$translate', 'alertMessageService', function($parse, $translate, alertMessageService) {
+	module.directive('crudEdit', [ '$parse', '$translate', 'alertMessageService', function crudEditDirective($parse, $translate, alertMessageService) {
 
 		// This function controls that resource has all required methods
 		function checkResourceMethods(resource, methods) {

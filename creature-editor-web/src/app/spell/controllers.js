@@ -10,8 +10,6 @@
 
 	module.controller('SpellListController', [ '$scope', '$stateParams', '$location', '$translate', 'spells', 'crudListMethods', 'alertMessageService',
 			function SpellListController($scope, $stateParams, $location, $translate, spells, crudListMethods, alertMessageService) {
-				console.log('SpellListController');
-
 				angular.extend($scope, crudListMethods($location.url()));
 
 				$scope.modId = parseInt($stateParams.modId, 10);
