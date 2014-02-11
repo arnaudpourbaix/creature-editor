@@ -28,19 +28,21 @@
 <script type="text/javascript" src="<%= file %>"></script>
 <% }); %>
 
-<link rel="stylesheet" type="text/css" href="assets/effeckt.css" />
-<script type="text/javascript" src="assets/Effeckt.js"></script>
+<link rel="stylesheet" type="text/css" href="assets/effeckt/effeckt.css" />
+<script type="text/javascript" src="assets/effeckt/Effeckt.js"></script>
 
 <!-- jQWidgets -->
 <link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.base.css" />
 <link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.bootstrap.css" />
 
 </head>
-<body>
+<body class="">
 	<div id="wrap">
 		<div data-ng-include="'header.tpl.html'"></div>
 		<div data-ng-include="'loading-animation/loading-animation.tpl.html'"></div>
-		<div class="container" data-ui-view></div>
+	    <div class="container">
+			<div data-ui-view></div>
+		</div>        
 		<div id="push"></div>
 	</div>
 	<div data-ng-include="'footer.tpl.html'"></div>

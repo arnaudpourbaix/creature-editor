@@ -40,6 +40,7 @@
 		}
 
 		function stop() {
+			// console.log('stop');
 			cancelTimeout(minDurationPromise);
 			cancelTimeout(maxDurationPromise);
 			minDurationPromise = null;
@@ -49,6 +50,7 @@
 		}
 
 		function requestStop() {
+			// console.log('request stop');
 			if (minDurationPromise) {
 				stopPendingRequest = true;
 			} else {
@@ -101,21 +103,22 @@
 		} ];
 	});
 
-	module.controller('LoadingAnimationController', [ '$scope', '$rootScope', '$loadingAnimation', function LoadingAnimationController($scope, $rootScope, $loadingAnimation) {
-		$scope.loadingAnimation = $loadingAnimation;
+	module.controller('LoadingAnimationController', [ '$scope', '$rootScope', '$loadingAnimation',
+			function LoadingAnimationController($scope, $rootScope, $loadingAnimation) {
+				$scope.loadingAnimation = $loadingAnimation;
 
-		$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
-			$loadingAnimation.start();
-		});
+				$rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+					$loadingAnimation.start();
+				});
 
-		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-			$loadingAnimation.stop();
-		});
+				$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+					$loadingAnimation.stop();
+				});
 
-		$rootScope.$on('$viewContentLoaded', function() {
-			$loadingAnimation.stop();
-		});
+				$rootScope.$on('$viewContentLoaded', function() {
+					$loadingAnimation.stop();
+				});
 
-	} ]);
+			} ]);
 
 })();
