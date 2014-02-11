@@ -39,14 +39,14 @@ module.exports = {
 	 * `vendor_files.css` property holds any CSS files to be automatically included in our app.
 	 */
 	vendor_files : {
-		js : [ 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/jquery/jquery.min.js', 'vendor/jquery-ui/ui/minified/jquery-ui.min.js',
-				'vendor/angular/angular.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js', 'vendor/angular-cookies/angular-cookies.min.js',
-				'vendor/angular-resource/angular-resource.min.js', 'vendor/angular-animate/angular-animate.min.js', 'vendor/angular-ui-utils/ui-utils.min.js',
-				'vendor/angular-ui-router/release/angular-ui-router.min.js', 'vendor/angular-route/angular-route.min.js', 'vendor/angular-translate/angular-translate.min.js',
-				'vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js', 'vendor/angular-translate-storage-local/angular-translate-storage-local.min.js',
-				'vendor/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 'vendor/angular-promise-tracker/promise-tracker.min.js',
-				'vendor/select2/select2.min.js', 'vendor/angular-ui-select2/src/select2.js', 'vendor/lodash/dist/lodash.min.js', 'vendor/restangular/dist/restangular.min.js',
-				'src/assets/jqwidgets/jqx-all.js' ],
+		js : [ 'vendor/modernizr/modernizr.js', 'vendor/html5shiv/dist/html5shiv.js', 'vendor/html5shiv/dist/html5shiv-printshiv.js', 'vendor/jquery/jquery.min.js',
+				'vendor/jquery-ui/ui/minified/jquery-ui.min.js', 'vendor/angular/angular.js', 'vendor/angular-bootstrap/ui-bootstrap-tpls.min.js',
+				'vendor/angular-cookies/angular-cookies.min.js', 'vendor/angular-resource/angular-resource.min.js', 'vendor/angular-animate/angular-animate.min.js',
+				'vendor/angular-ui-utils/ui-utils.min.js', 'vendor/angular-ui-router/release/angular-ui-router.min.js', 'vendor/angular-route/angular-route.min.js',
+				'vendor/angular-translate/angular-translate.min.js', 'vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js',
+				'vendor/angular-translate-storage-local/angular-translate-storage-local.min.js', 'vendor/angular-translate-loader-partial/angular-translate-loader-partial.min.js',
+				'vendor/angular-promise-tracker/promise-tracker.min.js', 'vendor/select2/select2.min.js', 'vendor/angular-ui-select2/src/select2.js',
+				'vendor/lodash/dist/lodash.min.js', 'vendor/restangular/dist/restangular.min.js', 'src/assets/jqwidgets/jqx-all.js' ],
 		css : [ 'vendor/font-awesome/css/font-awesome.min.css', 'vendor/animate.css/animate.min.css' ],
 		assets : [ 'jquery-ui/themes/base/**/*', 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css',
 				'roboto-fontface/*.css', 'roboto-fontface/fonts/*', 'select2/*.css', 'select2/*.png', 'select2/*.gif' ]
