@@ -1,18 +1,18 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap', 'ajoslin.promise-tracker' ]);
+	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function SpellTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/spell');
 	} ]);
-	
-	module.config(['$stateProvider', function SpellStateConfig($stateProvider) {
+
+	module.config([ '$stateProvider', function SpellStateConfig($stateProvider) {
 
 		$stateProvider.state('spells', {
-			abstract: true,
+			abstract : true,
 			url : '/spells',
-			controller: 'SpellController',
+			controller : 'SpellController',
 			templateUrl : 'spell/spell.tpl.html',
 			resolve : {
 				mods : [ 'Mod', function(Mod) {
@@ -36,7 +36,7 @@
 				} ]
 			}
 		});
-		
+
 		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
 			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', function($state, $stateParams, $modal, Spell) {
@@ -44,7 +44,7 @@
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
 					resolve : {
-						spell : ['Spell', function(Spell) {
+						spell : [ 'Spell', function(Spell) {
 							if ($stateParams.spellId !== 'new') {
 								return Spell.get({
 									id : $stateParams.id
@@ -55,7 +55,7 @@
 									name : ''
 								});
 							}
-						}]
+						} ]
 					}
 				});
 				modal.result.then(function(result) {
@@ -84,8 +84,9 @@
 				modal.result.finally(function(result) {
 					$state.go('^');
 				});
-			}]
+			} ]
 		});
-	}]);
+
+	} ]);
 
 })();
