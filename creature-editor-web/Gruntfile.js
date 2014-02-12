@@ -150,6 +150,14 @@ module.exports = function(grunt) {
 					expand : true
 				} ]
 			},
+			buildAppCss : {
+				files : [ {
+					src : [ '<%= app_files.css %>' ],
+					dest : '<%= build_dir %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
 			buildVendorCss : {
 				files : [ {
 					src : [ '<%= vendor_files.css %>' ],
@@ -329,7 +337,7 @@ module.exports = function(grunt) {
 			build : {
 				dir : '<%= build_dir %>',
 				src : [ '<%= vendor_files.js %>', '<%= build_dir %>/src/**/*.js', '<%= html2js.common.dest %>', '<%= html2js.app.dest %>',
-						'<%= vendor_files.css %>', '<%= recess.build.dest %>' ]
+				        '<%= app_files.css %>', '<%= vendor_files.css %>', '<%= recess.build.dest %>' ]
 			},
 
 			/**
@@ -477,7 +485,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [ 'buildnotest', 'karmaconfig', 'karma:continuous' ]);
 
 	grunt.registerTask('buildnotest', [ 'clean', 'html2js', 'jshint', 'recess:build', 'copy:buildAppAssets', 'copy:buildVendorAssets', 'copy:buildAppJs',
-			'copy:buildAppJson', 'copy:buildVendorJs', 'copy:buildVendorCss', 'index:build' ]);
+			'copy:buildAppJson', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 'index:build' ]);
 
 	/**
 	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.
@@ -494,6 +502,7 @@ module.exports = function(grunt) {
 	 * into variables for the template to use and then runs the compilation.
 	 */
 	grunt.registerMultiTask('index', 'Process index.html template', function() {
+		//console.log(this.filesSrc);
 		var dirRE = new RegExp('^(' + grunt.config('build_dir') + '|' + grunt.config('compile_dir') + ')\/', 'g');
 		var jsFiles = filterForJS(this.filesSrc).map(function(file) {
 			return file.replace(dirRE, '');
