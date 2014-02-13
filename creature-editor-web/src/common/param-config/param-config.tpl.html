@@ -1,0 +1,13 @@
+<div class="panel panel-primary">
+	<div class="panel-heading" data-translate>PARAMETER.LIST_TITLE</div>
+	<div class="panel-body">
+		<ul id="type-tabs" class="nav nav-tabs">
+		  <li data-ng-repeat="type in types" data-ng-class="{ active: $state.includes('param-config.list') && $stateParams.typeId == type.id }">
+		  	<a data-ui-sref="param-config.paramList({typeId: type.id})">{{type.label}}</a>
+		  </li>
+		</ul>
+		<div class="tab-view" data-ui-view></div>	 
+	</div>
+	<div class="panel-footer clearfix">
+	</div>
+</div>

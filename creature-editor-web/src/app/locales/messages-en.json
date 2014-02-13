@@ -9,7 +9,8 @@
 		"MODS" : "Mods",
 		"SPELLS" : "Spells",
 		"CATEGORIES" : "Categories",
-		"CONFIGURATION" : "Configuration"
+		"CONFIGURATION" : "Configuration",
+		"PARAMETERS" : "Parameters"
 	},
 	"CONTROLS" : {
 		"REQUIRED" : "Required",
