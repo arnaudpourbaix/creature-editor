@@ -19,7 +19,6 @@
 			} ]);
 
 	module.config([ '$loadingAnimationProvider', function LoadingAnimationConfig($loadingAnimationProvider) {
-		$loadingAnimationProvider.activationDelay(0.5);
 		$loadingAnimationProvider.minDuration(1);
 	} ]);
 

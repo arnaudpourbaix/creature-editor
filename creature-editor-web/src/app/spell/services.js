@@ -43,7 +43,7 @@
 				} else {
 					return Spell.query({
 						modId : modId
-					});
+					}).$promise;
 				}
 			}
 		};

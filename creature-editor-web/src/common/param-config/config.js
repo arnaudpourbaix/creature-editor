@@ -33,7 +33,7 @@
 				parameters : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
 					return Parameter.query({
 						typeId : $stateParams.typeId
-					}).$promise();
+					}).$promise;
 				} ]
 			}
 		});

@@ -9,26 +9,31 @@
 		var activationDelay = options.activationDelay * 1000;
 		var activationDelayPromise, minDurationPromise, maxDurationPromise;
 		var stopPendingRequest = false;
+		
+		function log(message) {
+			//console.debug(message);
+		}
 
 		function cancelTimeout(promise) {
 			if (promise) {
 				$timeout.cancel(promise);
 			}
+			return null;
 		}
 
 		function minDurationExpired() {
-			if (service.running && stopPendingRequest) {
-				stop();
-			}
+			log('minDurationExpired');
 		}
 
 		function maxDurationExpired() {
+			log('maxDurationExpired');
 			if (service.running) {
 				stop();
 			}
 		}
 
 		function start() {
+			log('start');
 			service.running = true;
 			activationDelayPromise = cancelTimeout(activationDelayPromise);
 			if (minDuration) {
@@ -40,19 +45,21 @@
 		}
 
 		function stop() {
-			// console.log('stop');
-			cancelTimeout(minDurationPromise);
-			cancelTimeout(maxDurationPromise);
-			minDurationPromise = null;
-			maxDurationPromise = null;
+			if (!service.running) {
+				return;
+			}
+			log('stop');
+			minDurationPromise = cancelTimeout(minDurationPromise);
+			maxDurationPromise = cancelTimeout(maxDurationPromise);
 			service.running = false;
 			stopPendingRequest = false;
 		}
 
 		function requestStop() {
-			// console.log('request stop');
+			log('request stop');
 			if (minDurationPromise) {
 				stopPendingRequest = true;
+				minDurationPromise.then(stop);
 			} else {
 				stop();
 			}
@@ -112,10 +119,17 @@
 				});
 
 				$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+					//console.info('$stateChangeSuccess', toState.name, 'success');
+					$loadingAnimation.stop();
+				});
+				
+				$rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
+					console.error('$stateChangeError', toState.name, error);
 					$loadingAnimation.stop();
 				});
 
 				$rootScope.$on('$viewContentLoaded', function() {
+					//console.info('$viewContentLoaded', 'success');
 					$loadingAnimation.stop();
 				});
 
