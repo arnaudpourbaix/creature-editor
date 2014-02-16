@@ -3,10 +3,7 @@ creature-editor-core/.settings
 creature-editor-core/.classpath
 creature-editor-core/bin
 creature-editor-core/target
-creature-editor-core/src/main/resources/db/hsqldb/creatureEditor.lck
-creature-editor-core/src/main/resources/db/hsqldb/creatureEditor.tmp
-creature-editor-core/src/main/resources/db/hsqldb/creatureEditor.log
-creature-editor-core/src/main/resources/db/hsqldb/creatureEditor.properties
+creature-editor-core/launcher/database
 creature-editor-front/.settings
 creature-editor-front/.classpath
 creature-editor-front/bin
@@ -34,3 +31,4 @@ infinity-file-reader/.settings
 infinity-file-reader/.classpath
 infinity-file-reader/bin
 infinity-file-reader/target
+launcher/database
