@@ -19,20 +19,26 @@
 					return {
 						data : 'parameters',
 						columns : [ {
-							text : $translate('SPELL.RESOURCE_FIELD'),
+							text : $translate('PARAMETER.NAME_FIELD'),
 							dataField : 'name',
 							type : 'string',
 							align : 'center',
-							width : 80
+							width : 250
 						}, {
-							text : $translate('SPELL.NAME_FIELD'),
+							text : $translate('PARAMETER.DESCRIPTION_FIELD'),
+							dataField : 'description',
+							type : 'string',
+							align : 'center',
+							width : 400
+						}, {
+							text : $translate('PARAMETER.VALUE_FIELD'),
 							dataField : 'value',
 							type : 'string',
 							align : 'center',
-							width : 200
+							width : 150
 						} ],
 						options : {
-							width : 670,
+							width : 800,
 							height : 400,
 							pageable : true,
 							pagerButtonsCount : 10,

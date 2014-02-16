@@ -3,7 +3,7 @@
 
 	var module = angular.module('param-config.config', [ 'param-config.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
-	module.config([ '$translatePartialLoaderProvider', function SpellTranslateConfig($translatePartialLoaderProvider) {
+	module.config([ '$translatePartialLoaderProvider', function ParameterTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('common/param-config');
 	} ]);
 
@@ -40,22 +40,15 @@
 
 		$stateProvider.state('param-config.list.edit', {
 			url : '/:id',
-			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', function($state, $stateParams, $modal, Spell) {
+			onEnter : [ '$state', '$stateParams', '$modal', 'Parameter', function($state, $stateParams, $modal, Parameter) {
 				var modal = $modal.open({
-					templateUrl : "param-config/spell-edit.tpl.html",
+					templateUrl : "param-config/parameter-edit.tpl.html",
 					controller : 'ParamConfigEditController',
 					resolve : {
-						spell : [ 'Spell', function(Spell) {
-							if ($stateParams.spellId !== 'new') {
-								return Spell.get({
-									id : $stateParams.id
-								}).$promise;
-							} else {
-								return new Spell({
-									id : null,
-									name : ''
-								});
-							}
+						parameter : [ 'Parameter', function(Parameter) {
+							return Parameter.get({
+								id : $stateParams.id
+							}).$promise;
 						} ]
 					}
 				});
