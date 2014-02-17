@@ -40,7 +40,7 @@ public class HyperSqlDbServer implements SmartLifecycle {
 			server = new Server();
 			try {
 				server.setProperties(properties);
-				server.start();
+				// server.start();
 				running = true;
 			} catch (AclFormatException afe) {
 				logger.error("Error starting HSQL server.", afe);

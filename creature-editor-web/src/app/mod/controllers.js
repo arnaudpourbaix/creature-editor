@@ -6,7 +6,7 @@
 	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', 'alertMessageService',
 			function ModListController($scope, $translate, mods, crudListMethods, alertMessageService) {
 				angular.extend($scope, crudListMethods('/mods'));
-
+				
 				$scope.mods = mods;
 
 				var getModGrid = function() {

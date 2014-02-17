@@ -257,7 +257,7 @@ module.exports = function(grunt) {
 		},
 
 		/**
-		 * `recess` handles our LESS compilation and uglification automatically. Only our `main.less` file is included in compilation; all other files must be
+		 * `recess` handles our LESS compilation and uglification automatically. Only our `app.less` file is included in compilation; all other files must be
 		 * imported from this file.
 		 */
 		recess : {

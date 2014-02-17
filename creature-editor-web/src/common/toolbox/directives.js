@@ -2,33 +2,20 @@
 (function(window, $) {
 	'use strict';
 
-	var module = angular.module('ui.components', [ 'ui.bootstrap' ]);
+	var module = angular.module('toolbox.directives', [ 'ui.bootstrap', 'toolbox.services' ]);
 
-	module.factory('uiService', function() {
-		var uiService = {};
-
-		uiService.draggable = function(element, options) {
-			var defaultOpts = {
-				cursor : 'move',
-				refreshPositions : true,
-				opacity : 0.5,
-				drag : function(e, ui) {
-					ui.position.left = ui.position.left * 1.4;
-					ui.position.top = ui.position.top * 1.0;
+	module.directive('focusMe', [ '$timeout', function FocusMeDirective($timeout) {
+		return function(scope, element, attrs) {
+			scope.$watch(attrs.focusMe, function(value) {
+				if (value) {
+					$timeout(function() {
+						element.focus();
+					}, 700);
 				}
-			}, opts = angular.extend(defaultOpts, options || {});
-			$(element).draggable(opts);
+			});
 		};
-
-		uiService.resizable = function(element, options) {
-			var defaultOpts = {}, opts = angular.extend(defaultOpts, options || {});
-			$(element).resizable(opts);
-		};
-
-		return uiService;
-
-	});
-
+	} ]);
+	
 	module.directive('draggable', [ 'uiService', function(uiService) {
 		return {
 			restrict : 'A',
