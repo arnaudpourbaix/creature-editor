@@ -2,7 +2,6 @@ package com.pourbaix.creature.editor.domain;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -25,7 +24,6 @@ public class ParameterType implements java.io.Serializable {
 
 	@Column(name = "LABEL", length = 100)
 	private String label;
-
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parameterType")
 	private Set<Parameter> parameters = new HashSet<Parameter>(0);
 

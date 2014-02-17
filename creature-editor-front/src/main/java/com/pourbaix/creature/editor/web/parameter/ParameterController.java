@@ -40,7 +40,8 @@ public class ParameterController {
 
 	@RequestMapping(value = "/parameter/{id}", method = RequestMethod.GET, produces = "application/json")
 	public Parameter getById(@PathVariable String id) {
-		return parameterRepository.findOne(id);
+		Parameter parameter = parameterRepository.findOne(id);
+		return parameter;
 	}
 
 	@RequestMapping(value = "/parameter", method = RequestMethod.PUT, produces = "application/json")

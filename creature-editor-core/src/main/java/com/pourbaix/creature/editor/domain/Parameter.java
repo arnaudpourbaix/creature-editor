@@ -1,7 +1,11 @@
 package com.pourbaix.creature.editor.domain;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -13,6 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PARAMETER", schema = "PUBLIC", catalog = "PUBLIC")
+@DiscriminatorColumn(name = "datatype", discriminatorType = DiscriminatorType.STRING)
 public class Parameter implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -20,16 +25,13 @@ public class Parameter implements java.io.Serializable {
 	@Id
 	@Column(name = "NAME", unique = true, nullable = false, length = 50)
 	private String name;
-
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TYPE_ID")
 	private ParameterType parameterType;
 
 	@Column(name = "DATATYPE", length = 10)
-	private String datatype;
-
-	@Column(name = "VALUE", length = 500)
-	private String value;
+	@Enumerated(value = EnumType.STRING)
+	private ParameterDatatypeEnum datatype;
 
 	@Column(name = "DESCRIPTION", length = 1000)
 	private String description;
@@ -39,14 +41,6 @@ public class Parameter implements java.io.Serializable {
 
 	public Parameter(String name) {
 		this.name = name;
-	}
-
-	public Parameter(String name, ParameterType parameterType, String datatype, String value, String description) {
-		this.name = name;
-		this.parameterType = parameterType;
-		this.datatype = datatype;
-		this.value = value;
-		this.description = description;
 	}
 
 	public String getName() {
@@ -65,20 +59,12 @@ public class Parameter implements java.io.Serializable {
 		this.parameterType = parameterType;
 	}
 
-	public String getDatatype() {
+	public ParameterDatatypeEnum getDatatype() {
 		return this.datatype;
 	}
 
-	public void setDatatype(String datatype) {
+	public void setDatatype(ParameterDatatypeEnum datatype) {
 		this.datatype = datatype;
-	}
-
-	public String getValue() {
-		return this.value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public String getDescription() {
