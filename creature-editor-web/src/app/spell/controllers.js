@@ -118,7 +118,7 @@
 			});
 		};
 
-		$scope.onSaveError = function() {
+		$scope.onSaveError = function(spell) {
 			$modalInstance.close({
 				spell : spell
 			});
@@ -130,7 +130,7 @@
 			});
 		};
 
-		$scope.onRemoveError = function() {
+		$scope.onRemoveError = function(spell) {
 			$modalInstance.close({
 				spell : spell
 			});

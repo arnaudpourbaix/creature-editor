@@ -13,7 +13,7 @@
 		});
 
 		res.prototype.$id = function() {
-			return this.id;
+			return this.name;
 		};
 
 		return res;

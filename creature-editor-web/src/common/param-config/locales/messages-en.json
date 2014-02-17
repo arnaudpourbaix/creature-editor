@@ -5,7 +5,6 @@
 		"NAME_FIELD" : "Name",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Value",
-		"ACTION_COLUMN" : "Actions",
 		"EDIT_TITLE" : "Parameter details"
 	}
 }

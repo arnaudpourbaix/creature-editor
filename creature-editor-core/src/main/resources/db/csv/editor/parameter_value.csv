@@ -1,0 +1,7 @@
+id;parameter_id;value;description
+0;GAME_VERSION;BG1EE;Baldur's Gate Enhanced Edition 
+1;GAME_VERSION;BG2EE;Baldur's Gate 2 Enhanced Edition
+2;GAME_VERSION;TUTU;EasyTutu
+3;GAME_VERSION;BGT;Baldur's Gate Trilogy
+4;DEFAULT_LANGUAGE;en_Us;English
+5;DEFAULT_LANGUAGE;fr_Fr;Français

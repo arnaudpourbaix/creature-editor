@@ -15,7 +15,10 @@
 		return {
 			restrict : 'E',
 			replace : true,
-			templateUrl : 'crud/crud-buttons.tpl.html'
+			templateUrl : 'crud/crud-buttons.tpl.html',
+			controller: function crudButtonsController($scope, $element, $attrs) {
+				$scope.removeDisabled = $attrs.remove ? $attrs.remove === 'false' : true;
+			}
 		};
 	});
 

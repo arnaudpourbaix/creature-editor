@@ -5,7 +5,6 @@
 		"NAME_FIELD" : "Libellé",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Valeur",
-		"ACTION_COLUMN" : "Actions",
 		"EDIT_TITLE" : "Détails d'un paramètre"
 	}
 }

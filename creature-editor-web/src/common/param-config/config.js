@@ -38,7 +38,7 @@
 			}
 		});
 
-		$stateProvider.state('param-config.list.edit', {
+		$stateProvider.state('param-config.paramList.edit', {
 			url : '/:id',
 			onEnter : [ '$state', '$stateParams', '$modal', 'Parameter', function($state, $stateParams, $modal, Parameter) {
 				var modal = $modal.open({

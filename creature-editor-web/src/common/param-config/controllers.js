@@ -46,7 +46,7 @@
 						},
 						events : {
 							cellClick : function($scope, parameter, column) {
-								$scope.edit(parameter.id);
+								$scope.edit(parameter.name);
 							}
 						}
 					};
@@ -59,30 +59,18 @@
 
 			} ]);
 
-	module.controller('ParamConfigEditController', [ '$scope', '$modalInstance', 'spell', function ParamConfigEditController($scope, $modalInstance, spell) {
-		$scope.spell = spell;
+	module.controller('ParamConfigEditController', [ '$scope', '$modalInstance', 'parameter', function ParamConfigEditController($scope, $modalInstance, parameter) {
+		$scope.parameter = parameter;
 
-		$scope.onSave = function(spell) {
+		$scope.onSave = function(parameter) {
 			$modalInstance.close({
-				spell : spell
+				parameter : parameter
 			});
 		};
 
-		$scope.onSaveError = function() {
+		$scope.onSaveError = function(parameter) {
 			$modalInstance.close({
-				spell : spell
-			});
-		};
-
-		$scope.onRemove = function(spell) {
-			$modalInstance.close({
-				spell : spell
-			});
-		};
-
-		$scope.onRemoveError = function() {
-			$modalInstance.close({
-				spell : spell
+				parameter : parameter
 			});
 		};
 	} ]);
