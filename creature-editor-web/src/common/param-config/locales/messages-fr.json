@@ -5,9 +5,15 @@
 		"NAME_FIELD" : "Libellé",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Valeur",
+		"VALUE_SELECT" : "Sélectionner une valeur",
 		"EDIT_TITLE" : "Détails d'un paramètre",
-		"STATE_FIELD" : "State",
+		"STATE_FIELD" : "Etat",
 		"ON" : "On",
-		"OFF" : "Off"
+		"OFF" : "Off",
+		"CONTROLS" : {
+			"REQUIRED" : "Requis",
+			"MIN" : "Doit être supérieur ou égal à {{min}}",
+			"MAX" : "Doit être inférieur ou égal à {{max}}"
+		}
 	}
 }

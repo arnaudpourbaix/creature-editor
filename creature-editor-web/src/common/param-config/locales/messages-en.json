@@ -5,6 +5,7 @@
 		"NAME_FIELD" : "Name",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Value",
+		"VALUE_SELECT" : "Select a value",
 		"EDIT_TITLE" : "Parameter details",
 		"STATE_FIELD" : "State",
 		"ON" : "On",
