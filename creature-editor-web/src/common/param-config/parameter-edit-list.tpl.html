@@ -1,0 +1,5 @@
+<div class="col-sm-10" data-ng-class="{'has-error': parameterForm.value.$invalid}">
+	List
+	<input id="parameter.value" name="value" class="form-control" type="text" placeholder="{{ 'PARAMETER.VALUE_FIELD' | translate }}" data-ng-model="parameter.value" required data-ng-trim="true" data-focus-me="true" />
+	<span class="help-block" data-ng-show="parameterForm.value.$error.required" data-translate>CONTROLS.REQUIRED</span>
+</div>

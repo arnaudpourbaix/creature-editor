@@ -26,7 +26,6 @@
 			filterable : true,
 			selectionMode : 'singlerow',
 			source : dataAdapter,
-			filtermode : 'excel',
 			pagermode : 'simple',
 			columnsreorder : false,
 			enabletooltips : true,

@@ -5,12 +5,12 @@
 
 	module.controller('MainController', [ '$scope', '$translate', '$rootScope', function MainController($scope, $translate, $rootScope) {
 		
-		$scope.$on('$translateChangeSuccess', function() {
-			$scope.langKey = $translate.uses();
+		$scope.$onRootScope('$translateChangeSuccess', function() {
+			$scope.langKey = $translate.use();
 		});
 		
 		$scope.changeLanguage = function(langKey) {
-			$translate.uses(langKey);
+			$translate.use(langKey);
 		};
 		
 	} ]);

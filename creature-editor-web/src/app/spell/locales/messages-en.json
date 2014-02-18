@@ -1,6 +1,6 @@
 {
 	"SPELL" : {
-		"LABEL" : "Mod",
+		"LABEL" : "Spell",
 		"LIST_TITLE" : "Spells",
 		"RESOURCE_FIELD" : "Resource",
 		"NAME_FIELD" : "Name",
@@ -8,6 +8,7 @@
 		"LEVEL_FIELD" : "Level",
 		"IDENTIFIER_FIELD" : "Identifier",
 		"ACTION_COLUMN" : "Actions",
+		"ACTION_DELETE" : "Delete",
 		"IMPORT_BUTTON" : "Import",
 		"IMPORT_CANCEL_BUTTON" : "Cancel",
 		"IMPORT_PROGRESS_MESSAGE" : "Importing <strong>{{name}}</strong>",

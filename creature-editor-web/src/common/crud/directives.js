@@ -17,7 +17,7 @@
 			replace : true,
 			templateUrl : 'crud/crud-buttons.tpl.html',
 			controller: function crudButtonsController($scope, $element, $attrs) {
-				$scope.removeDisabled = $attrs.remove ? $attrs.remove === 'false' : true;
+				$scope.removeDisabled = $attrs.remove ? $attrs.remove === 'false' : false;
 			}
 		};
 	});
@@ -45,9 +45,11 @@
 		}
 
 		function sendNotification(key, type, notification, resource) {
-			alertMessageService.push(key, type, {
-				entity : $translate(notification.entity),
-				name : resource[notification.name]
+			$translate(notification.entity).then(function(translation) {
+				alertMessageService.push(key, type, {
+					entity : translation,
+					name : resource[notification.name]
+				});
 			});
 		}
 

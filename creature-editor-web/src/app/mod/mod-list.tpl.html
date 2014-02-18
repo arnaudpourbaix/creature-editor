@@ -1,7 +1,7 @@
 <widget-panel class="mod-panel">
 	<div data-widget-panel-header data-translate>MOD.LIST_TITLE</div>
 	<div data-widget-panel-body>
-		<div class="mod-list" data-jq-grid="modGrid"></div>
+		<div data-ng-if="modGrid != null" class="mod-list" data-jq-grid="modGrid"></div>
 	</div>
 	<div data-widget-panel-footer>
 		<crud-add-button />

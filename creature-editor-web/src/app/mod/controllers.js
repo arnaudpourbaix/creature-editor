@@ -3,60 +3,64 @@
 
 	var module = angular.module('creatureEditor.mod.controllers', [ 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', 'alertMessageService',
-			function ModListController($scope, $translate, mods, crudListMethods, alertMessageService) {
+	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', 'alertMessageService', '$q', '$interpolate',
+			function ModListController($scope, $translate, mods, crudListMethods, alertMessageService, $q, $interpolate) {
 				angular.extend($scope, crudListMethods('/mods'));
 				
 				$scope.mods = mods;
 
-				var getModGrid = function() {
-					return {
-						data : 'mods',
-						columns : [ {
-							text : $translate('MOD.NAME_FIELD'),
-							dataField : 'name',
-							type : 'string',
-							align : 'center',
-							width : 200
-						}, {
-							text : $translate('MOD.ACTION_COLUMN'),
-							type : 'string',
-							width : 60,
-							align : 'center',
-							cellsalign : 'center',
-							filterable : false,
-							sortable : false,
-							cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
-								return '<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="Delete" /></div>';
-							}
-						} ],
-						options : {
-							width : 260,
-							height : 400
-						},
-						events : {
-							cellClick : function($scope, mod, column) {
-								if (column === 1) {
-									$scope.remove(mod);
-								} else {
-									$scope.edit(mod.id);
+				var setModGrid = function() {
+					$q.all([ $translate('MOD.NAME_FIELD'), $translate('MOD.ACTION_COLUMN'), $translate('MOD.ACTION_DELETE') ]).then(function(labels) {
+						$scope.modGrid = {
+								data : 'mods',
+								columns : [ {
+									text : labels[0],
+									dataField : 'name',
+									type : 'string',
+									align : 'center',
+									width : 200
+								}, {
+									text : labels[1],
+									type : 'string',
+									width : 60,
+									align : 'center',
+									cellsalign : 'center',
+									filterable : false,
+									sortable : false,
+									cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+										return $interpolate('<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="{{title}}" /></div>')({ title: labels[2] });
+									}
+								} ],
+								options : {
+									width : 260,
+									height : 400
+								},
+								events : {
+									cellClick : function($scope, mod, column) {
+										if (column === 1) {
+											$scope.remove(mod);
+										} else {
+											$scope.edit(mod.id);
+										}
+									}
 								}
-							}
-						}
-					};
+							};
+					});
 				};
 
-				$scope.modGrid = getModGrid();
-				$scope.$on('$translateChangeSuccess', function() {
-					$scope.modGrid = getModGrid();
+				setModGrid();
+				$scope.$onRootScope('$translateChangeSuccess', function() {
+					setModGrid();
 				});
-
+				
 				$scope.remove = function(mod) {
 					mod.$delete().then(function(response) {
 						$scope.removeFromList($scope.mods, 'id', mod.id);
-						alertMessageService.push('CRUD.REMOVE_SUCCESS', 'info', {
-							entity : $translate('MOD.LABEL'),
-							name : mod.name
+						$translate('MOD.LABEL').then(function (label) {
+							alertMessageService.push('CRUD.REMOVE_SUCCESS', 'info', {
+								entity : label,
+								name : mod.name
+							});
 						});
 					}, function() {
 						alertMessageService.push('CRUD.REMOVE_ERROR', 'danger', {

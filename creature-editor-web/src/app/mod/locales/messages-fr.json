@@ -5,6 +5,7 @@
 		"LIST_TITLE" : "Mods",
 		"NAME_FIELD" : "Libellé",
 		"ACTION_COLUMN" : "Actions",
+		"ACTION_DELETE" : "Supprimer",
 		"EDIT_TITLE" : "Détails d'un mod"
 	}
 }

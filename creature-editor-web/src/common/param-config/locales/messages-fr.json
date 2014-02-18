@@ -5,6 +5,9 @@
 		"NAME_FIELD" : "Libellé",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Valeur",
-		"EDIT_TITLE" : "Détails d'un paramètre"
+		"EDIT_TITLE" : "Détails d'un paramètre",
+		"STATE_FIELD" : "State",
+		"ON" : "On",
+		"OFF" : "Off"
 	}
 }

@@ -25,6 +25,7 @@ public class Parameter implements java.io.Serializable {
 	@Id
 	@Column(name = "NAME", unique = true, nullable = false, length = 50)
 	private String name;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TYPE_ID")
 	private ParameterType parameterType;

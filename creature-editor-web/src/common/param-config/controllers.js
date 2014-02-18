@@ -7,59 +7,62 @@
 		$scope.types = types;
 	} ]);
 
-	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', 'alertMessageService',
-			function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, alertMessageService) {
+	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', 'alertMessageService', '$q', '$interpolate',
+			function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, alertMessageService, $q, $interpolate) {
 				angular.extend($scope, crudListMethods($location.url()));
 
 				$scope.typeId = $stateParams.typeId;
 
 				$scope.parameters = parameters;
 
-				var getParameterGrid = function() {
-					return {
-						data : 'parameters',
-						columns : [ {
-							text : $translate('PARAMETER.NAME_FIELD'),
-							dataField : 'name',
-							type : 'string',
-							align : 'center',
-							width : 250
-						}, {
-							text : $translate('PARAMETER.DESCRIPTION_FIELD'),
-							dataField : 'description',
-							type : 'string',
-							align : 'center',
-							width : 400
-						}, {
-							text : $translate('PARAMETER.VALUE_FIELD'),
-							dataField : 'value',
-							type : 'string',
-							align : 'center',
-							width : 150
-						} ],
-						options : {
-							width : 800,
-							height : 400,
-							pageable : true,
-							pagerButtonsCount : 10,
-							pageSize : 15
-						},
-						events : {
-							cellClick : function($scope, parameter, column) {
-								$scope.edit(parameter.name);
-							}
-						}
-					};
+				var setParameterGrid = function() {
+					$q.all([ $translate('PARAMETER.NAME_FIELD'), $translate('PARAMETER.DESCRIPTION_FIELD'), $translate('PARAMETER.VALUE_FIELD') ]).then(function(labels) {
+						$scope.parameterGrid = {
+								data : 'parameters',
+								columns : [ {
+									text : labels[0],
+									dataField : 'name',
+									type : 'string',
+									align : 'center',
+									width : 250
+								}, {
+									text : labels[1],
+									dataField : 'description',
+									type : 'string',
+									align : 'center',
+									width : 400
+								}, {
+									text : labels[2],
+									dataField : 'value',
+									type : 'string',
+									align : 'center',
+									width : 150
+								} ],
+								options : {
+									width : 800,
+									height : 400,
+									pageable : true,
+									pagerButtonsCount : 10,
+									pageSize : 15
+								},
+								events : {
+									cellClick : function($scope, parameter, column) {
+										$scope.edit(parameter.name);
+									}
+								}
+							};
+					});
 				};
 
-				$scope.parameterGrid = getParameterGrid();
-				$scope.$on('$translateChangeSuccess', function() {
-					$scope.parameterGrid = getParameterGrid();
+				setParameterGrid();
+				$scope.$onRootScope('$translateChangeSuccess', function() {
+					setParameterGrid();
 				});
 
 			} ]);
 
 	module.controller('ParamConfigEditController', [ '$scope', '$modalInstance', 'parameter', function ParamConfigEditController($scope, $modalInstance, parameter) {
+		parameter.value = null;
 		$scope.parameter = parameter;
 
 		$scope.onSave = function(parameter) {

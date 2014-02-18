@@ -5,6 +5,14 @@
 		"NAME_FIELD" : "Name",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Value",
-		"EDIT_TITLE" : "Parameter details"
+		"EDIT_TITLE" : "Parameter details",
+		"STATE_FIELD" : "State",
+		"ON" : "On",
+		"OFF" : "Off",
+		"CONTROLS" : {
+			"REQUIRED" : "Required",
+			"MIN" : "Must be higher or equal than {{min}}",
+			"MAX" : "Must be lower or equal than {{max}}"
+		}
 	}
 }

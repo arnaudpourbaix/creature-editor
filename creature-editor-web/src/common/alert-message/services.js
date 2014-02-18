@@ -22,11 +22,13 @@
 		};
 
 		service.push = function(key, type, params) {
-			var message = {
-				text : $translate(key, params),
-				type : type
-			};
-			return addMessage(message);
+			$translate(key, params).then(function(text) {
+				var message = {
+						text : text,
+						type : type
+					};
+				addMessage(message);
+			});
 		};
 
 		service.pop = function() {

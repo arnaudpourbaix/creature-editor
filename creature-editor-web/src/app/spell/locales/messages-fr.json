@@ -8,6 +8,7 @@
 		"LEVEL_FIELD" : "Niveau",
 		"IDENTIFIER_FIELD" : "Identifiant",
 		"ACTION_COLUMN" : "Actions",
+		"ACTION_DELETE" : "Supprimer",
 		"IMPORT_BUTTON" : "Importer",
 		"IMPORT_CANCEL_BUTTON" : "Annuler",
 		"IMPORT_PROGRESS_MESSAGE" : "Importation de <strong>{{name}}</strong>",
