@@ -95,7 +95,7 @@
 						$translate('SPELL.LABEL').then(function (label) {
 							alertMessageService.push('CRUD.REMOVE_SUCCESS', 'info', {
 								entity : label,
-								name : spell.name
+								name : spell.resource
 							});
 						});
 					});

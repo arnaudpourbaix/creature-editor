@@ -48,8 +48,8 @@
 							iElement.on('rowClick', function(event) {
 								event.stopPropagation();
 								$scope.$apply(function() {
-									var spell = $scope[params.data][event.args.rowindex];
-									params.events.rowClick($scope, spell);
+									var item = $scope[params.data][event.args.rowindex];
+									params.events.rowClick($scope, item);
 								});
 							});
 						}
@@ -57,8 +57,8 @@
 							iElement.on("cellClick", function(event) {
 								event.stopPropagation();
 								$scope.$apply(function() {
-									var spell = $scope[params.data][event.args.rowindex];
-									params.events.cellClick($scope.$parent, spell, event.args.columnindex);
+									var item = $scope[params.data][event.args.rowindex];
+									params.events.cellClick($scope.$parent, item, event.args.columnindex);
 								});
 							});
 						}

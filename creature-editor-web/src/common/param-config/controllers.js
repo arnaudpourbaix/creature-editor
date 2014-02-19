@@ -64,6 +64,7 @@
 	module.controller('ParamConfigEditController', [ '$scope', '$modalInstance', '$translate', 'parameter',
 			function ParamConfigEditController($scope, $modalInstance, $translate, parameter) {
 				$scope.parameter = parameter;
+				parameter.value = "TUTU";
 				$scope.parameterValues = parameter.parameterValues;
 
 				$translate('PARAMETER.VALUE_SELECT').then(function(translation) {
