@@ -16,7 +16,7 @@
 			restrict : 'E',
 			replace : true,
 			templateUrl : 'crud/crud-buttons.tpl.html',
-			controller: function crudButtonsController($scope, $element, $attrs) {
+			controller : function crudButtonsController($scope, $element, $attrs) {
 				$scope.removeDisabled = $attrs.remove ? $attrs.remove === 'false' : false;
 			}
 		};
@@ -61,16 +61,16 @@
 			require : '^form',
 			restrict : 'A',
 			link : function(scope, element, attrs, form) {
-				// We extract the value of the crudEdit attribute, it should be an assignable expression evaluating to the model (resource) that is going to be
-				// edited
-				var resourceGetter = $parse(attrs.crudEdit);
+				var params = scope.$eval(attrs.crudEdit);
+				// We extract the value of the crudEdit attribute, it should be an assignable expression evaluating to the model (resource) that is going to be edited
+				var resourceGetter = $parse(params.model);
 				var resourceSetter = resourceGetter.assign;
 				// Store the resource object for easy access
 				var resource = resourceGetter(scope);
 				// Store a copy for reverting the changes
 				var original = angular.copy(resource);
 
-				var notification = scope.$eval(attrs.notification);
+				var notification = params.entity && params.name;
 
 				checkResourceMethods(resource, [ '$save', '$id', '$remove' ]);
 
@@ -84,25 +84,25 @@
 					// Reset the original to help with reverting and pristine checks
 					original = result;
 					if (notification) {
-						sendNotification('CRUD.SAVE_SUCCESS', 'success', notification, result);
+						sendNotification('CRUD.SAVE_SUCCESS', 'success', params, result);
 					}
 					userOnSave(result, status, headers, config);
 				};
 				var onSaveError = function(result, status, headers, config) {
 					if (notification) {
-						sendNotification('CRUD.SAVE_ERROR', 'danger', notification, result);
+						sendNotification('CRUD.SAVE_ERROR', 'danger', params, resource);
 					}
 					userOnSaveError(result, status, headers, config);
 				};
 				var onRemove = function(result, status, headers, config) {
 					if (notification) {
-						sendNotification('CRUD.REMOVE_SUCCESS', 'info', notification, result);
+						sendNotification('CRUD.REMOVE_SUCCESS', 'info', params, result);
 					}
 					userOnRemove(result, status, headers, config);
 				};
 				var onRemoveError = function(result, status, headers, config) {
 					if (notification) {
-						sendNotification('CRUD.REMOVE_ERROR', 'danger', notification, result);
+						sendNotification('CRUD.REMOVE_ERROR', 'danger', params, resource);
 					}
 					userOnRemoveError(result, status, headers, config);
 				};
