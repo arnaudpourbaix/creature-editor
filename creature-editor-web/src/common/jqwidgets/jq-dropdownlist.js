@@ -15,14 +15,13 @@
 		element.jqxDropDownList(angular.extend(params, options));
 	};
 
-	module.directive('jqDropDownList', [ '$compile', function JqDropDownListDirective($compile) {
+	module.directive('jqDropDownList', [ '$compile', '$timeout', function JqDropDownListDirective($compile, $timeout) {
 		return {
 			restrict : 'AE',
 			replace : true,
-			scope : true,
-			compile : function() {
-				return {
-					pre : function($scope, iElement, iAttrs) {
+			require: 'ngModel',
+			compile : function(tElm, tAttrs) {
+				return function($scope, iElement, iAttrs, controller) {
 						var params = $scope.$eval(iAttrs.jqDropDownList);
 						createDropDownList(iElement, $scope[params.data], params.displayMember, params.valueMember, params.options, params.events);
 						$scope.$parent.$watchCollection(params.data + '.length', function() {
@@ -32,24 +31,23 @@
 							params = $scope.$eval(iAttrs.jqDropDownList);
 							createDropDownList(iElement, $scope[params.data], params.displayMember, params.valueMember, params.options, params.events);
 						});
-						iElement.off();
-						console.log('model', $scope[params.model]);
-						iElement.on('select', function(event) {
-							var args = event.args;
-							if (args) {
-								// index represents the item's index.
-								var index = args.index;
-								var item = args.item;
-								// get item's label and value.
-								var label = item.label;
-								var value = item.value;
-								console.log(value, label);
-								$scope[params.model] = value;
-								console.log('model', $scope[params.model]);
+						$scope.$watch(tAttrs.ngModel, function(current, old) {
+							if (current == null) {
+								iElement.jqxDropDownList('clearSelection');
+							} else if (current !== old) {
+								iElement.val(current);
 							}
-							event.stopPropagation();
+						}, true);
+						iElement.on('select', function(event) {
+							var value = event.args.item.value;
+							if (value !== controller.$viewValue) {
+								controller.$setViewValue(value);
+								$scope.$apply();
+							}
 						});
-					}
+						$timeout(function () {
+							iElement.val(controller.$viewValue);
+						});
 				};
 			}
 		};

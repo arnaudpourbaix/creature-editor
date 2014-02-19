@@ -69,7 +69,6 @@
 				$translate('PARAMETER.VALUE_SELECT').then(function(translation) {
 					$scope.valuesSelect = {
 						data : 'parameterValues',
-						model : 'parameter.value',
 						displayMember : 'description',
 						valueMember : 'value',
 						options : {
