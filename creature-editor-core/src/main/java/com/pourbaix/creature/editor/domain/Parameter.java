@@ -26,6 +26,9 @@ public class Parameter implements java.io.Serializable {
 	@Column(name = "NAME", unique = true, nullable = false, length = 50)
 	private String name;
 
+	@Column(name = "REQUIRED", nullable = false)
+	private Boolean required;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "TYPE_ID")
 	private ParameterType parameterType;
@@ -33,6 +36,9 @@ public class Parameter implements java.io.Serializable {
 	@Column(name = "DATATYPE", length = 10)
 	@Enumerated(value = EnumType.STRING)
 	private ParameterDatatypeEnum datatype;
+
+	@Column(name = "LABEL", length = 500)
+	private String label;
 
 	@Column(name = "DESCRIPTION", length = 1000)
 	private String description;
@@ -74,6 +80,22 @@ public class Parameter implements java.io.Serializable {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public Boolean getRequired() {
+		return required;
+	}
+
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
 	}
 
 }

@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.main.config', [ 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'loading-animation' ]);
+	var module = angular.module('creatureEditor.main.config', [ 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'loading-animation', 'alert-message' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
 			function MainConfig($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
@@ -21,6 +21,10 @@
 		$loadingAnimationProvider.minDuration(1);
 	} ]);
 
+	module.config([ '$alertMessageProvider', function AlertMessageConfig($alertMessageProvider) {
+		$alertMessageProvider.showDuration(2);
+	} ]);
+	
 	module.config(['$provide', function($provide) {
 		// should be implemented in Angular 1.3.0, see https://github.com/angular/angular.js/issues/4574
 		$provide.decorator('$rootScope', ['$delegate', function($delegate) {

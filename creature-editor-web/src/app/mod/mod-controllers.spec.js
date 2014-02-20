@@ -6,7 +6,7 @@ xdescribe('Mod controllers', function() {
 	describe('list', function() {
 
 		var Mod, $rootScope, createController;
-		var alertMessageService = jasmine.createSpyObj('alertMessageService', [ 'push' ]);
+		var $alertMessage = jasmine.createSpyObj('$alertMessage', [ 'push' ]);
 		var crudListMethods = jasmine.createSpy('crudListMethods');
 
 		beforeEach(function() {
@@ -34,7 +34,7 @@ xdescribe('Mod controllers', function() {
 			createController = function() {
 				return $controller('ModListController', {
 					$scope : $rootScope,
-					alertMessageService : alertMessageService,
+					$alertMessage : $alertMessage,
 					crudListMethods : crudListMethods,
 					mods : Mod.query()
 				});
@@ -52,7 +52,7 @@ xdescribe('Mod controllers', function() {
 	describe('edit',
 			function() {
 
-				var Mod, $rootScope, alertMessageService = jasmine.createSpyObj('alertMessageService', [ 'push' ]), $modalInstance = jasmine
+				var Mod, $rootScope, $alertMessage = jasmine.createSpyObj('$alertMessage', [ 'push' ]), $modalInstance = jasmine
 						.createSpyObj('$modalInstance', [ 'close' ]), form, createController;
 
 				beforeEach(function() {
@@ -75,7 +75,7 @@ xdescribe('Mod controllers', function() {
 						return $controller('ModEditController', {
 							$scope : $rootScope,
 							$modalInstance : $modalInstance,
-							alertMessageService : alertMessageService,
+							$alertMessage : $alertMessage,
 							mod : Mod.get()
 						});
 					};
@@ -87,24 +87,24 @@ xdescribe('Mod controllers', function() {
 					expect($rootScope.mod.name).toBe('BGT');
 				});
 
-				it('should call alertMessageService services and close modal when $scope.onSave() is called', function() {
+				it('should call $alertMessage services and close modal when $scope.onSave() is called', function() {
 					createController();
 					$rootScope.onSave($rootScope.mod);
-					expect(alertMessageService.push).toHaveBeenCalled();
+					expect($alertMessage.push).toHaveBeenCalled();
 					expect($modalInstance.close).toHaveBeenCalled();
 				});
 
-				it('should call alertMessageService services and close modal when $scope.onRemove() is called', function() {
+				it('should call $alertMessage services and close modal when $scope.onRemove() is called', function() {
 					createController();
 					$rootScope.onRemove($rootScope.mod);
-					expect(alertMessageService.push).toHaveBeenCalled();
+					expect($alertMessage.push).toHaveBeenCalled();
 					expect($modalInstance.close).toHaveBeenCalled();
 				});
 
 				xit('should set updateError in onError', function() {
 					createController();
 					$rootScope.onError($rootScope.mod);
-					expect(alertMessageService.push).toHaveBeenCalled();
+					expect($alertMessage.push).toHaveBeenCalled();
 					expect($modalInstance.close).not.toHaveBeenCalled();
 				});
 			});

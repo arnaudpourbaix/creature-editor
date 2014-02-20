@@ -2,7 +2,7 @@
 	<h4 data-translate>PARAMETER.EDIT_TITLE</h4>
 </div>
 <form role="form" name="parameterForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' }">
-	<div data-widget-modal-body>
+	<div data-widget-modal-body class="param-config-edit">
 		<div class="form-group">
 			<label for="parameter.name" class="col-sm-2 control-label" data-translate>PARAMETER.NAME_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': parameterForm.name.$invalid}">
@@ -11,6 +11,12 @@
 			</div>
 		</div>
 		<div class="form-group">
+			<label for="parameter.label" class="col-sm-2 control-label" data-translate>PARAMETER.LABEL_FIELD</label>
+			<div class="col-sm-10" data-ng-class="{'has-error': parameterForm.label.$invalid}">
+				<input id="parameter.label" name="label" class="form-control" type="text" placeholder="{{ 'PARAMETER.LABEL_FIELD' | translate }}" data-ng-model="parameter.label" data-ng-trim="true" disabled="disabled" />
+			</div>
+		</div>
+		<div class="form-group" data-ng-show="parameter.description">
 			<label for="parameter.description" class="col-sm-2 control-label" data-translate>PARAMETER.DESCRIPTION_FIELD</label>
 			<div class="col-sm-10" data-ng-class="{'has-error': parameterForm.description.$invalid}">
 				<textarea name="description" rows="3" class="form-control" data-ng-model="parameter.description" data-ng-maxlength="1000" disabled="disabled"></textarea>			

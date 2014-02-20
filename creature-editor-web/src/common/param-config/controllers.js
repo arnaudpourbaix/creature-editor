@@ -7,8 +7,8 @@
 		$scope.types = types;
 	} ]);
 
-	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', 'alertMessageService', '$q',
-			'$interpolate', function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, alertMessageService, $q, $interpolate) {
+	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', '$alertMessage', '$q',
+			'$interpolate', function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, $alertMessage, $q, $interpolate) {
 				angular.extend($scope, crudListMethods($location.url()));
 
 				$scope.typeId = $stateParams.typeId;
@@ -16,7 +16,7 @@
 				$scope.parameters = parameters;
 
 				var setParameterGrid = function() {
-					$q.all([ $translate('PARAMETER.NAME_FIELD'), $translate('PARAMETER.DESCRIPTION_FIELD'), $translate('PARAMETER.VALUE_FIELD') ]).then(function(labels) {
+					$q.all([ $translate('PARAMETER.NAME_FIELD'), $translate('PARAMETER.LABEL_FIELD'), $translate('PARAMETER.VALUE_FIELD') ]).then(function(labels) {
 						$scope.parameterGrid = {
 							data : 'parameters',
 							columns : [ {
@@ -27,7 +27,7 @@
 								width : 250
 							}, {
 								text : labels[1],
-								dataField : 'description',
+								dataField : 'label',
 								type : 'string',
 								align : 'center',
 								width : 400
@@ -65,6 +65,9 @@
 			function ParamConfigEditController($scope, $modalInstance, $translate, parameter) {
 				$scope.parameter = parameter;
 				$scope.parameterValues = parameter.parameterValues;
+				
+				$scope.uploadme = {};
+				$scope.uploadme.src = "";
 
 				$translate('PARAMETER.VALUE_SELECT').then(function(translation) {
 					$scope.valuesSelect = {
@@ -77,6 +80,14 @@
 							width : '300px'
 						}
 					};
+				});
+				
+				$scope.openFileSelection = function() {
+					angular.element('#parameterFile').click();
+				};
+				
+				$scope.$watch('uploadme', function() {
+					console.log('file', $scope.uploadme);
 				});
 
 				$scope.onSave = function(parameter) {

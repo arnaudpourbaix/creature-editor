@@ -11,11 +11,15 @@
 			<column name="name" type="VARCHAR2(50)">
 				<constraints primaryKey="true" />
 			</column>
+			<column name="required" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
 			<column name="type_id" type="VARCHAR2(20)" />
 			<column name="datatype" type="VARCHAR2(10)" />
 			<column name="value" type="VARCHAR2(500)" />
 			<column name="min_value" type="int" />
 			<column name="max_value" type="int" />
+			<column name="label" type="VARCHAR2(500)" />
 			<column name="description" type="VARCHAR2(1000)" />
 		</createTable>
 
@@ -33,7 +37,9 @@
 			<column name="parameter_id" type="VARCHAR2(50)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="value" type="VARCHAR2(500)" />
+			<column name="value" type="VARCHAR2(500)">
+				<constraints nullable="false"/>
+			</column>
 			<column name="description" type="VARCHAR2(1000)" />
 		</createTable>
 	

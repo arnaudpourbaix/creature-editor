@@ -1,9 +1,10 @@
 <div class="form-group">
 	<label for="parameter.value" class="col-sm-2 control-label" data-translate>PARAMETER.VALUE_FIELD</label>
 	<div class="col-sm-10" data-ng-class="{'has-error': parameterForm.value.$invalid}">
-		<input id="parameter.value" name="value" class="form-control" type="number" 
-		min="{{parameter.minValue}}" max="{{parameter.maxValue}}" placeholder="{{ 'PARAMETER.VALUE_FIELD' | translate }}" data-ng-model="parameter.value" required data-ng-trim="true" data-focus-me="true" />
+		<input id="parameter.value" name="value" class="form-control" type="number"	min="{{parameter.minValue}}" max="{{parameter.maxValue}}" data-ng-required="parameter.required" 
+				placeholder="{{ 'PARAMETER.VALUE_FIELD' | translate }}" data-ng-model="parameter.value" data-ng-trim="true" data-focus-me="true" />
 		<span class="help-block" data-ng-show="parameterForm.value.$error.required" data-translate>PARAMETER.CONTROLS.REQUIRED</span>
+		<span class="help-block" data-ng-show="parameterForm.value.$error.number" data-translate>PARAMETER.CONTROLS.NUMBER</span>
 		<span class="help-block" data-ng-show="parameterForm.value.$error.min" data-translate data-translate-values="{ min: parameter.minValue }">PARAMETER.CONTROLS.MIN</span>
 		<span class="help-block" data-ng-show="parameterForm.value.$error.max" data-translate data-translate-values="{ max: parameter.maxValue }">PARAMETER.CONTROLS.MAX</span>
 	</div>

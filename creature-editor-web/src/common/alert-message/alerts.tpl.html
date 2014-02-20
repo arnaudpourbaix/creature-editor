@@ -1,5 +1,5 @@
 <div class="center-block alert-messages" data-ng-controller="AlertMessageController">
-	<alert type="message.type" data-ng-show="show">
-		{{message.text}}
+	<alert type="alertMessage.currentDisplayedMessage().type" data-ng-show="alertMessage.showDisplayedMessage()">
+		{{alertMessage.currentDisplayedMessage().text}}
 	</alert>
 </div>

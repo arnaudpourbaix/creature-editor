@@ -32,7 +32,7 @@ public class ParameterValue implements java.io.Serializable {
 	@JoinColumn(name = "PARAMETER_ID", nullable = false)
 	private Parameter parameter;
 
-	@Column(name = "VALUE", length = 500)
+	@Column(name = "VALUE", length = 500, nullable = false)
 	private String value;
 
 	@Column(name = "DESCRIPTION", length = 1000)

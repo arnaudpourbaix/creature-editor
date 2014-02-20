@@ -24,7 +24,7 @@
 
 	// Apply this directive to an element at or below a form that will manage CRUD operations on a resource.
 	// The resource must expose the following instance methods: $save(), $id() and $remove()
-	module.directive('crudEdit', [ '$parse', '$translate', 'alertMessageService', function crudEditDirective($parse, $translate, alertMessageService) {
+	module.directive('crudEdit', [ '$parse', '$translate', '$alertMessage', function crudEditDirective($parse, $translate, $alertMessage) {
 
 		// This function controls that resource has all required methods
 		function checkResourceMethods(resource, methods) {
@@ -46,7 +46,7 @@
 
 		function sendNotification(key, type, notification, resource) {
 			$translate(notification.entity).then(function(translation) {
-				alertMessageService.push(key, type, {
+				$alertMessage.push(key, type, {
 					entity : translation,
 					name : resource[notification.name]
 				});

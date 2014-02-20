@@ -51,7 +51,7 @@
 		return service;
 	} ]);
 
-	module.service('SpellImportService', [ '$http', '$interval', 'alertMessageService', function SpellImportService($http, $interval, alertMessageService) {
+	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', function SpellImportService($http, $interval, $alertMessage) {
 		var service = {
 			running : false,
 			spells : [],
@@ -71,7 +71,7 @@
 					service.spells = [];
 					service.spellCount = parseInt(response.data, 10);
 					if (service.spellCount === -1) {
-						alertMessageService.push('SPELL.IMPORT_ERROR_RUNNING', 'danger');
+						$alertMessage.push('SPELL.IMPORT_ERROR_RUNNING', 'danger');
 						return;
 					}
 					service.running = true;
@@ -95,14 +95,14 @@
 					});
 					service.progressValue = parseInt(100 / service.spellCount * service.spells.length, 10);
 					if (service.spells.length === service.spellCount) {
-						alertMessageService.push('SPELL.IMPORT_SUCCESS', 'success', {
+						$alertMessage.push('SPELL.IMPORT_SUCCESS', 'success', {
 							name : service.mod.name
 						});
 						service.endImport();
 					}
 				}, function() {
 					service.endImport();
-					alertMessageService.push('SPELL.IMPORT_ERROR', 'danger');
+					$alertMessage.push('SPELL.IMPORT_ERROR', 'danger');
 				});
 			},
 
@@ -115,7 +115,7 @@
 					url : 'rest/spell/import/cancel'
 				}).then(function(response) {
 					service.endImport();
-					alertMessageService.push('SPELL.IMPORT_CANCEL', 'warning');
+					$alertMessage.push('SPELL.IMPORT_CANCEL', 'warning');
 				});
 			}
 		};

@@ -19,17 +19,17 @@ describe(
 				it('requires a valid resource object', function() {
 					inject(function($compile, $rootScope) {
 						expect(function() {
-							$compile('<form crud-edit="resource"></form>')($rootScope);
+							$compile('<form crud-edit="{ model: \'resource\' }"></form>')($rootScope);
 						}).not.toThrow();
 						expect(function() {
 							$compile('<form crud-edit></form>')($rootScope);
 						}).toThrow();
 						expect(function() {
-							$compile('<form crud-edit="nonObject"></form>')($rootScope);
+							$compile('<form crud-edit="{ model: \'nonObject\' }"></form>')($rootScope);
 						}).toThrow();
 						expect(function() {
 							$rootScope.nonResourceObject = {};
-							$compile('<form crud-edit="nonResourceObject"></form>')($rootScope);
+							$compile('<form crud-edit="{ model: \'nonResourceObject\' }"></form>')($rootScope);
 						}).toThrow();
 					});
 				});
@@ -42,7 +42,7 @@ describe(
 									return resourceMock;
 								}
 							};
-							$compile('<form crud-edit="wrapper.wrappedResourceFn()"></form>')($rootScope);
+							$compile('<form crud-edit="{ model: \'wrapper.wrappedResourceFn()\' }"></form>')($rootScope);
 						}).not.toThrow();
 					});
 				});
@@ -50,17 +50,17 @@ describe(
 				it('requires a form element', function() {
 					inject(function($compile, $rootScope) {
 						expect(function() {
-							$compile('<form crud-edit="resource"></form>')($rootScope);
+							$compile('<form crud-edit="{ model: \'resource\' }"></form>')($rootScope);
 						}).not.toThrow();
 						expect(function() {
-							$compile('<div crud-edit="resource"></div>')($rootScope);
+							$compile('<div crud-edit="{ model: \'resource\' }"></div>')($rootScope);
 						}).toThrow();
 					});
 				});
 
 				it('should attach methods to the scope', function() {
 					inject(function($compile, $rootScope) {
-						var element = $compile('<form crud-edit="resource"></form>')($rootScope);
+						var element = $compile('<form crud-edit="{ model: \'resource\' }"></form>')($rootScope);
 						expect(element.scope().save).toBeDefined();
 						expect(element.scope().canSave).toBeDefined();
 						expect(element.scope().revertChanges).toBeDefined();
@@ -72,7 +72,7 @@ describe(
 
 				it('should not modify the parent scope', function() {
 					inject(function($compile, $rootScope) {
-						var element = $compile('<form crud-edit="resource"></form>')($rootScope);
+						var element = $compile('<form crud-edit="{ model: \'resource\' }"></form>')($rootScope);
 						expect($rootScope.save).not.toBeDefined();
 						expect($rootScope.canSave).not.toBeDefined();
 						expect($rootScope.revertChanges).not.toBeDefined();
@@ -90,7 +90,7 @@ describe(
 						beforeEach(inject(function($compile, _$rootScope_) {
 							$rootScope = _$rootScope_;
 							$rootScope.resource.someVal = 'original';
-							element = $compile('<form name="form" crud-edit="resource"><input name="someField" ng-model="resource.someVal"></form>')($rootScope);
+							element = $compile('<form name="form" crud-edit="{ model: \'resource\' }"><input name="someField" ng-model="resource.someVal"></form>')($rootScope);
 							scope = element.scope();
 							someField = scope.form.someField;
 							resourceMock.$save.andCallFake(function(onSave, onError) {
@@ -112,7 +112,7 @@ describe(
 											$rootScope.onSave = jasmine.createSpy('onSave');
 											$rootScope.onSaveError = jasmine.createSpy('onSaveError');
 
-											element = $compile('<form name="form" crud-edit="resource"><input name="someField" ng-model="resource.someVal"></form>')(
+											element = $compile('<form name="form" crud-edit="{ model: \'resource\' }"><input name="someField" ng-model="resource.someVal"></form>')(
 													$rootScope);
 											scope = element.scope();
 										});
@@ -132,7 +132,7 @@ describe(
 													$rootScope.onSaveError = jasmine.createSpy('onSaveError');
 
 													element = $compile(
-															'<form name="form" crud-edit="resource" on-save="onSaveAttr" on-save-error="onSaveErrorAttr"><input name="someField" ng-model="resource.someVal"></form>')
+															'<form name="form" crud-edit="{ model: \'resource\' }" on-save="onSaveAttr" on-save-error="onSaveErrorAttr"><input name="someField" ng-model="resource.someVal"></form>')
 															($rootScope);
 													scope = element.scope();
 												});
@@ -211,7 +211,7 @@ describe(
 											$rootScope.onRemove = jasmine.createSpy('onRemove');
 											$rootScope.onRemoveError = jasmine.createSpy('onRemoveError');
 
-											element = $compile('<form name="form" crud-edit="resource"><input name="someField" ng-model="resource.someVal"></form>')(
+											element = $compile('<form name="form" crud-edit="{ model: \'resource\' }"><input name="someField" ng-model="resource.someVal"></form>')(
 													$rootScope);
 											scope = element.scope();
 										});

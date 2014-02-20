@@ -3,15 +3,18 @@
 		"LABEL" : "Parameter",
 		"LIST_TITLE" : "Parameters",
 		"NAME_FIELD" : "Name",
+		"LABEL_FIELD" : "Label",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Value",
 		"VALUE_SELECT" : "Select a value",
 		"EDIT_TITLE" : "Parameter details",
 		"STATE_FIELD" : "State",
+		"FOLDER_PATH" : "Folder path",
 		"ON" : "On",
 		"OFF" : "Off",
 		"CONTROLS" : {
 			"REQUIRED" : "Required",
+			"NUMBER" : "Must be a number",
 			"MIN" : "Must be higher or equal than {{min}}",
 			"MAX" : "Must be lower or equal than {{max}}"
 		}

@@ -2,16 +2,19 @@
 	"PARAMETER" : {
 		"LABEL" : "Paramètre",
 		"LIST_TITLE" : "Paramètres",
-		"NAME_FIELD" : "Libellé",
+		"NAME_FIELD" : "Nom",
+		"LABEL_FIELD" : "Libellé",
 		"DESCRIPTION_FIELD" : "Description",
 		"VALUE_FIELD" : "Valeur",
 		"VALUE_SELECT" : "Sélectionner une valeur",
 		"EDIT_TITLE" : "Détails d'un paramètre",
 		"STATE_FIELD" : "Etat",
+		"FOLDER_PATH" : "Chemin du répertoire",
 		"ON" : "On",
 		"OFF" : "Off",
 		"CONTROLS" : {
 			"REQUIRED" : "Requis",
+			"NUMBER" : "Doit être un nombre",
 			"MIN" : "Doit être supérieur ou égal à {{min}}",
 			"MAX" : "Doit être inférieur ou égal à {{max}}"
 		}

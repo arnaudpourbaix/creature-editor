@@ -3,8 +3,8 @@
 
 	var module = angular.module('creatureEditor.mod.controllers', [ 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', 'alertMessageService', '$q', '$interpolate',
-			function ModListController($scope, $translate, mods, crudListMethods, alertMessageService, $q, $interpolate) {
+	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', '$alertMessage', '$q', '$interpolate',
+			function ModListController($scope, $translate, mods, crudListMethods, $alertMessage, $q, $interpolate) {
 				angular.extend($scope, crudListMethods('/mods'));
 				
 				$scope.mods = mods;
@@ -57,13 +57,13 @@
 					mod.$delete().then(function(response) {
 						$scope.removeFromList($scope.mods, 'id', mod.id);
 						$translate('MOD.LABEL').then(function (label) {
-							alertMessageService.push('CRUD.REMOVE_SUCCESS', 'info', {
+							$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
 								entity : label,
 								name : mod.name
 							});
 						});
 					}, function() {
-						alertMessageService.push('CRUD.REMOVE_ERROR', 'danger', {
+						$alertMessage.push('CRUD.REMOVE_ERROR', 'danger', {
 							name : mod.name
 						});
 					});

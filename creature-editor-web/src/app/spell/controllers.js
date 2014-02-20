@@ -8,8 +8,8 @@
 		$scope.mods = mods;
 	} ]);
 
-	module.controller('SpellListController', [ '$scope', '$stateParams', '$location', '$translate', 'spells', 'crudListMethods', 'alertMessageService', '$q', '$interpolate',
-			function SpellListController($scope, $stateParams, $location, $translate, spells, crudListMethods, alertMessageService, $q, $interpolate) {
+	module.controller('SpellListController', [ '$scope', '$stateParams', '$location', '$translate', 'spells', 'crudListMethods', '$alertMessage', '$q', '$interpolate',
+			function SpellListController($scope, $stateParams, $location, $translate, spells, crudListMethods, $alertMessage, $q, $interpolate) {
 				angular.extend($scope, crudListMethods($location.url()));
 
 				$scope.modId = parseInt($stateParams.modId, 10);
@@ -93,7 +93,7 @@
 					spell.$delete().then(function(response) {
 						$scope.removeFromList($scope.spells, 'id', spell.id);
 						$translate('SPELL.LABEL').then(function (label) {
-							alertMessageService.push('CRUD.REMOVE_SUCCESS', 'info', {
+							$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
 								entity : label,
 								name : spell.resource
 							});
