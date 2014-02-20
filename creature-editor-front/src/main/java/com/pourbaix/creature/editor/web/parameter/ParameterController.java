@@ -1,5 +1,6 @@
 package com.pourbaix.creature.editor.web.parameter;
 
+import java.io.File;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -48,6 +49,12 @@ public class ParameterController {
 	public Parameter save(@RequestBody Parameter parameter) {
 		parameterRepository.save(parameter);
 		return parameter;
+	}
+
+	@RequestMapping(value = "/parameter/checkFolder", params = "folder", method = RequestMethod.GET, produces = "application/json")
+	public boolean checkFolder(String folder) {
+		File file = new File(folder);
+		return file.exists() && file.isDirectory();
 	}
 
 }

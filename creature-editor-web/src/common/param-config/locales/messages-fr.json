@@ -14,6 +14,7 @@
 		"OFF" : "Off",
 		"CONTROLS" : {
 			"REQUIRED" : "Requis",
+			"FOLDER" : "Doit être un répertoire valide",
 			"NUMBER" : "Doit être un nombre",
 			"MIN" : "Doit être supérieur ou égal à {{min}}",
 			"MAX" : "Doit être inférieur ou égal à {{max}}"

@@ -7,8 +7,8 @@
 		$scope.types = types;
 	} ]);
 
-	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', '$alertMessage', '$q',
-			'$interpolate', function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, $alertMessage, $q, $interpolate) {
+	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', '$alertMessage', '$q', '$interpolate',
+			function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, $alertMessage, $q, $interpolate) {
 				angular.extend($scope, crudListMethods($location.url()));
 
 				$scope.typeId = $stateParams.typeId;
@@ -65,9 +65,6 @@
 			function ParamConfigEditController($scope, $modalInstance, $translate, parameter) {
 				$scope.parameter = parameter;
 				$scope.parameterValues = parameter.parameterValues;
-				
-				$scope.uploadme = {};
-				$scope.uploadme.src = "";
 
 				$translate('PARAMETER.VALUE_SELECT').then(function(translation) {
 					$scope.valuesSelect = {
@@ -80,14 +77,6 @@
 							width : '300px'
 						}
 					};
-				});
-				
-				$scope.openFileSelection = function() {
-					angular.element('#parameterFile').click();
-				};
-				
-				$scope.$watch('uploadme', function() {
-					console.log('file', $scope.uploadme);
 				});
 
 				$scope.onSave = function(parameter) {

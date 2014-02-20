@@ -27,4 +27,20 @@
 		return res;
 	} ]);
 
+	module.service('ParameterService', [ '$http', '$interval', '$alertMessage', function ParameterService($http, $interval, $alertMessage) {
+		var service = {
+			checkFolder : function(folder) {
+				return $http({
+					method : 'GET',
+					url : 'rest/parameter/checkFolder',
+					params : {
+						folder : folder
+					}
+				});
+			}
+		};
+
+		return service;
+	} ]);
+
 })();
