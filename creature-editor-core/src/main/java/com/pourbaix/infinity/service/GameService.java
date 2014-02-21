@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.pourbaix.creature.editor.service.ParameterService;
 import com.pourbaix.infinity.context.ReaderContext;
 import com.pourbaix.infinity.resource.ResourceFactory;
 import com.pourbaix.infinity.resource.StringResource;
@@ -31,7 +32,13 @@ public class GameService {
 	@Resource
 	private ReaderContext readerContext;
 
+	@Resource
+	private ParameterService parameterService;
+
 	public void openGame() throws ServiceException {
+		if (readerContext.isGameOpened()) {
+			return;
+		}
 		checkGameDirectory();
 		if (readerContext.isEnhancedEdition()) {
 			fetchUserGameProfileDirectory();
@@ -42,9 +49,19 @@ public class GameService {
 		ResourceFactory.getInstance().setGameVersion(readerContext.getGameVersion());
 		ResourceFactory.getInstance().setRootDirs(readerContext.getRootDirectories());
 		loadResources();
+		readerContext.setGameOpened(true);
+	}
+
+	public void closeGame() throws ServiceException {
+		if (!readerContext.isGameOpened()) {
+			return;
+		}
+		readerContext.setGameOpened(false);
 	}
 
 	private void checkGameDirectory() throws ServiceException {
+		String gameDirectory = parameterService.getGameDirectory();
+		readerContext.setGameDirectory(new File(gameDirectory));
 		if (readerContext.getGameDirectory() == null) {
 			throw new ServiceException("game directory is not defined in configuration");
 		}

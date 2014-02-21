@@ -4,21 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.pourbaix.infinity.datatype.GameVersionEnum;
 
 public class ReaderContext {
 
-	@Value("${default.language}")
+	private boolean gameOpened = false;
 	private String defaultLanguage;
-	@Value("${default.language}")
 	private String language;
-	@Value("${game.version}")
 	private GameVersionEnum gameVersion;
-	@Value("${ignore.read.errors}")
 	private boolean ignoreReadErrors;
-	@Value("${game.directory}")
 	private File gameDirectory;
 	private File userGameProfileDirectory;
 	private File languageDirectory;
@@ -111,6 +105,14 @@ public class ReaderContext {
 
 	public void setChitinKey(File chitinKey) {
 		this.chitinKey = chitinKey;
+	}
+
+	public boolean isGameOpened() {
+		return gameOpened;
+	}
+
+	public void setGameOpened(boolean gameOpened) {
+		this.gameOpened = gameOpened;
 	}
 
 }

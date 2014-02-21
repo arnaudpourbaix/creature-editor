@@ -12,7 +12,6 @@
 				ctrl.$parsers.push(function(viewValue) {
 					if (viewValue) {
 						ParameterService.checkFolder(viewValue).then(function(result) {
-							console.log('result', result.data);
 							ctrl.$setValidity('folder', result.data === 'true');
 						});
 						return viewValue;

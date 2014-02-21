@@ -3,7 +3,6 @@ package com.pourbaix.infinity.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 import org.slf4j.Logger;
@@ -43,12 +42,7 @@ public class ReaderService {
 	@Autowired
 	private IdentifierFactory identifierFactory;
 
-	@PostConstruct
-	private void init() throws ServiceException {
-		gameService.openGame();
-	}
-
-	public List<ResourceEntry> getSpellResources() {
+	public List<ResourceEntry> getSpellResources() throws ServiceException {
 		return Keyfile.getInstance().getResourceEntriesByExtension("spl");
 	}
 

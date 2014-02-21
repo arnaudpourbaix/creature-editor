@@ -63,7 +63,7 @@ public class SpellImport implements Runnable {
 		running = false;
 	}
 
-	public void startImport(DeferredResult<Integer> deferredResult, Integer modId) {
+	public void startImport(DeferredResult<Integer> deferredResult, Integer modId) throws ServiceException {
 		if (running) {
 			deferredResult.setResult(-1);
 			return;

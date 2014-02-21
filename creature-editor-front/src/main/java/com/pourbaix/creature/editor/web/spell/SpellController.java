@@ -18,6 +18,7 @@ import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.repository.SpellRepository;
 import com.pourbaix.creature.editor.spell.SpellImport;
 import com.pourbaix.creature.editor.spell.SpellImportException;
+import com.pourbaix.infinity.service.ServiceException;
 
 @RestController
 public class SpellController {
@@ -54,7 +55,7 @@ public class SpellController {
 	}
 
 	@RequestMapping(value = "/spell/import", params = "modId", method = RequestMethod.GET, produces = "application/json")
-	public DeferredResult<Integer> importSpells(Integer modId) {
+	public DeferredResult<Integer> importSpells(Integer modId) throws ServiceException {
 		final DeferredResult<Integer> result = new DeferredResult<>();
 		spellImport.startImport(result, modId);
 		return result;

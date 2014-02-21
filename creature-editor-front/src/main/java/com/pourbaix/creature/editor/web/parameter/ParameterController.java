@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pourbaix.creature.editor.domain.Parameter;
+import com.pourbaix.creature.editor.domain.ParameterBooleanValue;
+import com.pourbaix.creature.editor.domain.ParameterFolderValue;
+import com.pourbaix.creature.editor.domain.ParameterIntegerValue;
+import com.pourbaix.creature.editor.domain.ParameterListValue;
+import com.pourbaix.creature.editor.domain.ParameterStringValue;
 import com.pourbaix.creature.editor.domain.ParameterType;
 import com.pourbaix.creature.editor.repository.ParameterRepository;
 import com.pourbaix.creature.editor.repository.ParameterTypeRepository;
@@ -45,8 +50,32 @@ public class ParameterController {
 		return parameter;
 	}
 
-	@RequestMapping(value = "/parameter", method = RequestMethod.PUT, produces = "application/json")
-	public Parameter save(@RequestBody Parameter parameter) {
+	@RequestMapping(value = "/parameter", params = "type=STRING", method = RequestMethod.PUT, produces = "application/json")
+	public Parameter save(@RequestBody ParameterStringValue parameter) {
+		parameterRepository.save(parameter);
+		return parameter;
+	}
+
+	@RequestMapping(value = "/parameter", params = "type=BOOLEAN", method = RequestMethod.PUT, produces = "application/json")
+	public Parameter save(@RequestBody ParameterBooleanValue parameter) {
+		parameterRepository.save(parameter);
+		return parameter;
+	}
+
+	@RequestMapping(value = "/parameter", params = "type=INT", method = RequestMethod.PUT, produces = "application/json")
+	public Parameter save(@RequestBody ParameterIntegerValue parameter) {
+		parameterRepository.save(parameter);
+		return parameter;
+	}
+
+	@RequestMapping(value = "/parameter", params = "type=LIST", method = RequestMethod.PUT, produces = "application/json")
+	public Parameter save(@RequestBody ParameterListValue parameter) {
+		parameterRepository.save(parameter);
+		return parameter;
+	}
+
+	@RequestMapping(value = "/parameter", params = "type=FOLDER", method = RequestMethod.PUT, produces = "application/json")
+	public Parameter save(@RequestBody ParameterFolderValue parameter) {
 		parameterRepository.save(parameter);
 		return parameter;
 	}

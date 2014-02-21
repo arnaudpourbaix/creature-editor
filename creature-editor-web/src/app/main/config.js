@@ -20,10 +20,6 @@
 	module.config([ '$loadingAnimationProvider', function LoadingAnimationConfig($loadingAnimationProvider) {
 		$loadingAnimationProvider.minDuration(1);
 	} ]);
-
-	module.config([ '$alertMessageProvider', function AlertMessageConfig($alertMessageProvider) {
-		$alertMessageProvider.showDuration(2);
-	} ]);
 	
 	module.config(['$provide', function($provide) {
 		// should be implemented in Angular 1.3.0, see https://github.com/angular/angular.js/issues/4574

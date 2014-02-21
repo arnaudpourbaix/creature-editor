@@ -8,7 +8,8 @@
 
 		var res = $resource(baseUrl + ':id', {}, {
 			'save' : {
-				method : 'PUT'
+				method : 'PUT',
+				params: { type: '@datatype' }
 			}
 		});
 
