@@ -22,7 +22,6 @@ import com.pourbaix.infinity.service.ServiceException;
 @ContextConfiguration(classes = CoreConfig.class)
 public class ReaderServiceTest {
 
-	// @InjectMocks
 	@Autowired
 	ReaderService readerService;
 
@@ -37,25 +36,7 @@ public class ReaderServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	// @Test
-	public void idsFile() {
-		try {
-			readerService.getIdentifierFiles();
-		} catch (ServiceException e) {
-			fail(e.getMessage());
-		}
-	}
-
-	// @Test
-	public void allSpells() {
-		try {
-			readerService.getSpells();
-		} catch (ServiceException e) {
-			fail(e.getMessage());
-		}
-	}
-
-	// @Test
+	@Test
 	public void spellFireBall() {
 		try {
 			Spell spell = readerService.getSpell("spwi304.spl");
@@ -65,7 +46,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellSlow() {
 		try {
 			Spell spell = readerService.getSpell("spwi312.spl");
@@ -75,7 +56,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellDireCharm() {
 		try {
 			Spell spell = readerService.getSpell("spwi316.spl");
@@ -85,7 +66,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellImprovedInvisibility() {
 		try {
 			Spell spell = readerService.getSpell("spwi405.spl");
@@ -95,7 +76,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellConeOfCold() {
 		try {
 			Spell spell = readerService.getSpell("spwi503.spl");
@@ -105,7 +86,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellMagicMissile() {
 		try {
 			Spell spell = readerService.getSpell("spwi112.spl");
@@ -115,17 +96,17 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellDrawUponHolyMight() {
 		try {
 			Spell spell = readerService.getSpell("SPPR214.spl");
-			assertEquals(1, spell.getLevel());
+			assertEquals(2, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellBerserkerRage() {
 		try {
 			Spell spell = readerService.getSpell("SPCL321.spl");
@@ -135,7 +116,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellTarss() {
 		try {
 			Spell spell = readerService.getSpell("1TARSS.SPL");
@@ -145,7 +126,7 @@ public class ReaderServiceTest {
 		}
 	}
 
-	// @Test
+	@Test
 	public void spellSelection() {
 		try {
 			readerService.getSpell("SPIN869.SPL");

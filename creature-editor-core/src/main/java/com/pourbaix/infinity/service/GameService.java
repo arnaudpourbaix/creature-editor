@@ -40,6 +40,7 @@ public class GameService {
 			return;
 		}
 		checkGameDirectory();
+		checkGameVersion();
 		if (readerContext.isEnhancedEdition()) {
 			fetchUserGameProfileDirectory();
 			fetchLanguage();
@@ -60,13 +61,19 @@ public class GameService {
 	}
 
 	private void checkGameDirectory() throws ServiceException {
-		String gameDirectory = parameterService.getGameDirectory();
-		readerContext.setGameDirectory(new File(gameDirectory));
+		readerContext.setGameDirectory(parameterService.getGameDirectory());
 		if (readerContext.getGameDirectory() == null) {
 			throw new ServiceException("game directory is not defined in configuration");
 		}
 		if (!readerContext.getGameDirectory().isDirectory()) {
 			throw new ServiceException("game directory is invalid, please check configuration");
+		}
+	}
+
+	private void checkGameVersion() throws ServiceException {
+		readerContext.setGameVersion(parameterService.getGameVersion());
+		if (readerContext.getGameVersion() == null) {
+			throw new ServiceException("game version is not set, please check configuration");
 		}
 	}
 
@@ -121,6 +128,8 @@ public class GameService {
 	 */
 	private void fetchLanguage() throws ServiceException {
 		try {
+			readerContext.setDefaultLanguage(parameterService.getDefaultLanguage());
+			readerContext.setLanguage(readerContext.getDefaultLanguage());
 			if (readerContext.getDefaultLanguage().isEmpty() || !readerContext.getDefaultLanguage().matches("\\w{2}_\\w{2}")) {
 				throw new ServiceException("default language is not defined or invalid");
 			}
