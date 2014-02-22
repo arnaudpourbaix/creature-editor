@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.pourbaix.creature.editor.repository.ActionRepository;
 import com.pourbaix.creature.editor.repository.KeywordRepository;
 import com.pourbaix.creature.editor.repository.TriggerRepository;
+import com.pourbaix.creature.editor.service.ParameterService;
 import com.pourbaix.creature.script.context.GlobalContext;
 import com.pourbaix.creature.script.instruction.CommentInstruction;
 import com.pourbaix.creature.script.instruction.GeneratedInstruction;
@@ -34,6 +35,8 @@ public class GeneratorService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GeneratorService.class);
 
+	@Resource
+	private ParameterService parameterService;
 	@Resource
 	private GlobalContext globalContext;
 	@Resource
@@ -78,6 +81,7 @@ public class GeneratorService {
 	}
 
 	public void generateFile(final String file) {
+		loadParameters();
 		logger.debug("generating " + file);
 		try {
 			loadFile(file);
@@ -87,6 +91,24 @@ public class GeneratorService {
 		}
 	}
 
+	private void loadParameters() {
+		globalContext.setTobEx(parameterService.isTobexActive());
+		globalContext.getCheckContext().setSpellProtection(parameterService.isCheckSpellProtection());
+		globalContext.getCheckContext().setWeaponProtection(parameterService.isCheckWeaponProtection());
+		globalContext.getCheckContext().setMindImmunity(parameterService.isCheckMindImmunity());
+		globalContext.getCheckContext().setDeathImmunity(parameterService.isCheckDeathImmunity());
+		globalContext.getCheckContext().setElementalResistance(parameterService.isCheckElementalResistance());
+		globalContext.getCheckContext().setPoisonResistance(parameterService.isCheckPoisonResistance());
+		globalContext.getCheckContext().setMagicDamageResistance(parameterService.isCheckMagicDamageResistance());
+		globalContext.getCheckContext().setMagicResistance(parameterService.isCheckMagicResistance());
+		globalContext.getProbability().setActionSpell(parameterService.getProbabilityActionSpell());
+		globalContext.getProbability().setActionItem(parameterService.getProbabilityActionItem());
+		globalContext.getTarget().setAllegiance(parameterService.getTargetAllegiance());
+		globalContext.getTarget().setNearestCount(parameterService.getTargetNearestCount());
+		globalContext.getTarget().setTypeCount(parameterService.getTargetTypeCount());
+		globalContext.getTarget().setRandom(parameterService.isTargetRandom());
+	}
+	
 	private List<Instruction> loadFile(final String input) throws GeneratorException {
 		try {
 			List<Instruction> instructions = new ArrayList<>();

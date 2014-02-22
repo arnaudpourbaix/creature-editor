@@ -6,7 +6,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -21,7 +20,6 @@ import com.pourbaix.creature.script.spring.ScriptConfig;
 @ContextConfiguration(classes = { CoreConfig.class, ScriptConfig.class })
 public class ParseGeneratedInstructionTest {
 
-	@InjectMocks
 	@Autowired
 	InstructionService instructionService;
 

@@ -1,31 +1,15 @@
 package com.pourbaix.creature.script.context;
 
-import org.springframework.beans.factory.annotation.Value;
 
 public class CheckContext {
 
-	@Value("${check.spellProtection}")
 	private boolean spellProtection;
-
-	@Value("${check.weaponProtection}")
 	private boolean weaponProtection;
-
-	@Value("${check.mindImmunity}")
 	private boolean mindImmunity;
-
-	@Value("${check.deathImmunity}")
 	private boolean deathImmunity;
-
-	@Value("${check.elementalResistance}")
 	private boolean elementalResistance;
-
-	@Value("${check.poisonResistance}")
 	private boolean poisonResistance;
-
-	@Value("${check.magicDamageResistance}")
 	private boolean magicDamageResistance;
-
-	@Value("${check.magicResistance}")
 	private boolean magicResistance;
 
 	public boolean isSpellProtection() {

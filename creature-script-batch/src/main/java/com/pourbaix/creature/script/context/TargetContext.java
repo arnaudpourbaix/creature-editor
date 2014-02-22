@@ -1,19 +1,11 @@
 package com.pourbaix.creature.script.context;
 
-import org.springframework.beans.factory.annotation.Value;
 
 public class TargetContext {
 
-	@Value("${target.allegiance}")
 	private String allegiance;
-
-	@Value("${target.nearestCount}")
 	private int nearestCount;
-
-	@Value("${target.typeCount}")
 	private int typeCount;
-
-	@Value("${target.random}")
 	private boolean random;
 
 	public String getAllegiance() {

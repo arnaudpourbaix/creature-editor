@@ -2,8 +2,6 @@ package com.pourbaix.creature.script.context;
 
 import javax.annotation.Resource;
 
-import org.springframework.beans.factory.annotation.Value;
-
 public class GlobalContext {
 
 	private boolean loaded = false;
@@ -13,7 +11,6 @@ public class GlobalContext {
 	private ProbablityContext probability;
 	@Resource
 	private CheckContext checkContext;
-	@Value("${global.tobEx.active}")
 	private boolean tobEx;
 
 	public boolean isLoaded() {
@@ -48,4 +45,12 @@ public class GlobalContext {
 		this.checkContext = checkContext;
 	}
 
+	public boolean isTobEx() {
+		return tobEx;
+	}
+
+	public void setTobEx(boolean tobEx) {
+		this.tobEx = tobEx;
+	}
+	
 }
