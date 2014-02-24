@@ -39,38 +39,50 @@ public class EffectFactory {
 	@Resource
 	private IdentifierFactory identifierFactory;
 
+	private static final String INVALID_EFFECT_TARGET_TYPE = "INVALID_EFFECT_TARGET_TYPE";
+	private static final String INVALID_EFFECT_TIMING = "INVALID_EFFECT_TIMING";
+	private static final String INVALID_EFFECT_RESISTANCE = "INVALID_EFFECT_RESISTANCE";
+
 	private static final String[] SAVE_TYPES = { "No save", "Spell", "Breath weapon", "Paralyze/Poison/Death", "Rod/Staff/Wand", "Petrify/Polymorph", "", "",
 			"", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "Ex: bypass mirror image", "EE: ignore difficulty" };
 
-	public List<Effect> getEffects(byte buffer[], int offset, int count) throws FactoryException {
+	public List<Effect> getEffects(String resource, byte buffer[], int offset, int count) throws FactoryException {
 		List<Effect> effects = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
-			Effect effect = getEffect(buffer, offset);
+			Effect effect = getEffect(resource, buffer, offset);
 			effects.add(effect);
 			offset += 48;
 		}
 		return effects;
 	}
 
-	private Effect getEffect(byte buffer[], int offset) throws FactoryException {
+	private Effect getEffect(String resource, byte buffer[], int offset) throws FactoryException {
 		Effect effect = new Effect();
+		fetchOpcode(effect, buffer, offset);
 		try {
-			fetchOpcode(effect, buffer, offset);
 			effect.setTarget(TargetTypeEnum.valueOf(DynamicArray.getByte(buffer, offset + 2)));
-			effect.setPower(DynamicArray.getByte(buffer, offset + 3));
-			effect.setTiming(TimingEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
-			effect.setResistance(ResistanceEnum.valueOf(DynamicArray.getByte(buffer, offset + 13)));
-			effect.setDuration(DynamicArray.getInt(buffer, offset + 14));
-			effect.setProbability1(DynamicArray.getByte(buffer, offset + 18));
-			effect.setProbability2(DynamicArray.getByte(buffer, offset + 19));
-			effect.setDiceThrown((short) DynamicArray.getInt(buffer, offset + 28));
-			effect.setDiceSides((short) DynamicArray.getInt(buffer, offset + 32));
-			effect.setSavingThrowType(new Flag(DynamicArray.getInt(buffer, offset + 36), 4, SAVE_TYPES));
-			effect.setSavingThrowBonus((short) DynamicArray.getInt(buffer, offset + 40));
-			fetchResource(effect, buffer, offset);
 		} catch (UnknownValueException e) {
-			throw new FactoryException(e);
+			throw new FactoryException(INVALID_EFFECT_TARGET_TYPE, resource);
 		}
+		effect.setPower(DynamicArray.getByte(buffer, offset + 3));
+		try {
+			effect.setTiming(TimingEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_EFFECT_TIMING, resource);
+		}
+		try {
+			effect.setResistance(ResistanceEnum.valueOf(DynamicArray.getByte(buffer, offset + 13)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_EFFECT_RESISTANCE, resource);
+		}
+		effect.setDuration(DynamicArray.getInt(buffer, offset + 14));
+		effect.setProbability1(DynamicArray.getByte(buffer, offset + 18));
+		effect.setProbability2(DynamicArray.getByte(buffer, offset + 19));
+		effect.setDiceThrown((short) DynamicArray.getInt(buffer, offset + 28));
+		effect.setDiceSides((short) DynamicArray.getInt(buffer, offset + 32));
+		effect.setSavingThrowType(new Flag(DynamicArray.getInt(buffer, offset + 36), 4, SAVE_TYPES));
+		effect.setSavingThrowBonus((short) DynamicArray.getInt(buffer, offset + 40));
+		fetchResource(effect, buffer, offset);
 		return effect;
 	}
 

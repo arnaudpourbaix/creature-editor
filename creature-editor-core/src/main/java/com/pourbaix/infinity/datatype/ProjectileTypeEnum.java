@@ -26,7 +26,7 @@ public enum ProjectileTypeEnum {
 				return type;
 			}
 		}
-		throw new UnknownValueException(String.valueOf(value));
+		throw new UnknownValueException("no ProjectileTypeEnum found for " + value);
 	}
 
 }

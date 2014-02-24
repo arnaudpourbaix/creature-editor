@@ -18,6 +18,7 @@ import com.pourbaix.creature.editor.service.ParameterService;
 import com.pourbaix.infinity.context.ReaderContext;
 import com.pourbaix.infinity.resource.ResourceFactory;
 import com.pourbaix.infinity.resource.StringResource;
+import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.key.BiffResourceEntry;
 import com.pourbaix.infinity.resource.key.FileResourceEntry;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -35,6 +36,8 @@ public class GameService {
 	private static final String UNDEFINED_DEFAULT_LANGUAGE = "UNDEFINED_DEFAULT_LANGUAGE";
 	private static final String MISSING_CHITIN_KEY = "MISSING_CHITIN_KEY";
 	private static final String MISSING_DIALOG_FILE = "MISSING_DIALOG_FILE";
+	private static final String INIT_DIALOG_FILE_ERROR = "INIT_DIALOG_FILE_ERROR";
+	private static final String INIT_CHITIN_KEY_ERROR = "INIT_CHITIN_KEY_ERROR";
 
 	@Resource
 	private ReaderContext readerContext;
@@ -197,9 +200,13 @@ public class GameService {
 	private void loadResources() throws ServiceException {
 		try {
 			StringResource.getInstance().init(readerContext.getDialogFile(), readerContext.isEnhancedEdition());
+		} catch (StringResourceException e) {
+			throw new ServiceException(INIT_DIALOG_FILE_ERROR);
+		}
+		try {
 			Keyfile.getInstance().init(readerContext.getChitinKey());
-		} catch (Exception e) {
-			throw new ServiceException(e);
+		} catch (IOException e) {
+			throw new ServiceException(INIT_CHITIN_KEY_ERROR);
 		}
 		// Add override resources
 		for (final File rootDir : readerContext.getRootDirectories()) {

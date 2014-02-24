@@ -115,7 +115,9 @@
 					}
 				}, function(response) {
 					service.endImport();
-					$alertMessage.push('SPELL.ERRORS.' + response.data.code, 'danger');
+					$alertMessage.push('SPELL.ERRORS.' + response.data.code, 'danger', {
+						spell : response.data.param
+					});
 				});
 			},
 

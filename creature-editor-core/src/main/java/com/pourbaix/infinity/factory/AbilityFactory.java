@@ -27,31 +27,43 @@ public class AbilityFactory {
 	@Resource
 	private EffectFactory effectFactory;
 
-	public List<Ability> getAbilities(byte buffer[], int offset, int count, int globalEffectOffset) throws FactoryException {
+	private static final String INVALID_ABILITY_TYPE = "INVALID_ABILITY_TYPE";
+	private static final String INVALID_ABILITY_LOCATION = "INVALID_ABILITY_LOCATION";
+	private static final String INVALID_ABILITY_TARGET = "INVALID_ABILITY_TARGET";
+
+	public List<Ability> getAbilities(String resource, byte buffer[], int offset, int count, int globalEffectOffset) throws FactoryException {
 		List<Ability> abilities = new ArrayList<>(count);
 		for (int i = 0; i < count; i++) {
-			Ability ability = getAbility(buffer, offset, globalEffectOffset);
+			Ability ability = getAbility(resource, buffer, offset, globalEffectOffset);
 			abilities.add(ability);
 			offset += 40;
 		}
 		return abilities;
 	}
 
-	private Ability getAbility(byte buffer[], int offset, int globalEffectOffset) throws FactoryException {
+	private Ability getAbility(String resource, byte buffer[], int offset, int globalEffectOffset) throws FactoryException {
 		Ability ability = new Ability();
 		try {
 			ability.setType(AbilityTypeEnum.valueOf(DynamicArray.getShort(buffer, offset)));
-			ability.setLocation(AbilityLocationEnum.valueOf(DynamicArray.getShort(buffer, offset + 2)));
-			ability.setTarget(AbilityTargetEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
-			ability.setTargetCount(DynamicArray.getByte(buffer, offset + 13));
-			ability.setRange(DynamicArray.getShort(buffer, offset + 14));
-			ability.setLevel((byte) DynamicArray.getShort(buffer, offset + 16));
-			ability.setCastingTime((byte) DynamicArray.getShort(buffer, offset + 18));
-			fetchProjectile(ability, buffer, offset);
-			fetchEffects(ability, buffer, offset, globalEffectOffset);
 		} catch (UnknownValueException e) {
-			throw new FactoryException(e);
+			throw new FactoryException(INVALID_ABILITY_TYPE, resource);
 		}
+		try {
+			ability.setLocation(AbilityLocationEnum.valueOf(DynamicArray.getShort(buffer, offset + 2)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_ABILITY_LOCATION, resource);
+		}
+		try {
+			ability.setTarget(AbilityTargetEnum.valueOf(DynamicArray.getByte(buffer, offset + 12)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_ABILITY_TARGET, resource);
+		}
+		ability.setTargetCount(DynamicArray.getByte(buffer, offset + 13));
+		ability.setRange(DynamicArray.getShort(buffer, offset + 14));
+		ability.setLevel((byte) DynamicArray.getShort(buffer, offset + 16));
+		ability.setCastingTime((byte) DynamicArray.getShort(buffer, offset + 18));
+		fetchProjectile(ability, buffer, offset);
+		fetchEffects(resource, ability, buffer, offset, globalEffectOffset);
 		return ability;
 	}
 
@@ -64,10 +76,10 @@ public class AbilityFactory {
 		}
 	}
 
-	private void fetchEffects(Ability ability, byte buffer[], int offset, int globalEffectOffset) throws FactoryException {
+	private void fetchEffects(String resource, Ability ability, byte buffer[], int offset, int globalEffectOffset) throws FactoryException {
 		int effectIndex = (int) DynamicArray.getShort(buffer, offset + 32);
 		int effectCount = (int) DynamicArray.getShort(buffer, offset + 30);
-		ability.setEffects(effectFactory.getEffects(buffer, globalEffectOffset + (effectIndex * 48), effectCount));
+		ability.setEffects(effectFactory.getEffects(resource, buffer, globalEffectOffset + (effectIndex * 48), effectCount));
 	}
 
 }

@@ -31,7 +31,7 @@ public class ExceptionControllerAdvice {
 	@ExceptionHandler
 	ResponseEntity<ExceptionContainer> ServiceException(ServiceException ex) {
 		logger.error(ExceptionUtils.getStackTrace(ex));
-		ResponseEntity<ExceptionContainer> responseEntity = new ResponseEntity<ExceptionContainer>(new ExceptionContainer(ex.getMessage()),
+		ResponseEntity<ExceptionContainer> responseEntity = new ResponseEntity<ExceptionContainer>(new ExceptionContainer(ex.getCode(), ex.getParam()),
 				HttpStatus.INTERNAL_SERVER_ERROR);
 		return responseEntity;
 	}

@@ -59,25 +59,28 @@ public class ProjectileFactory {
 	}
 
 	public Projectile getProjectile(ResourceEntry entry) throws FactoryException {
+		byte buffer[];
 		try {
-			byte buffer[] = entry.getResourceData();
-			Projectile projectile = new Projectile();
-			projectile.setResource(entry.getResourceName());
-			projectile.setType(ProjectileTypeEnum.valueOf((long) DynamicArray.getUnsignedShort(buffer, 8)));
-			projectile.setSpeed((int) DynamicArray.getShort(buffer, 10));
-			projectile.setBehaviorFlags(new Flag((long) DynamicArray.getInt(buffer, 12), 4, BEHAVIOR_FLAGS));
-			if (projectile.getType() == ProjectileTypeEnum.AreaOfEffect) {
-				int offset = 512;
-				projectile.setAreaOfEffectFlags(new Flag((long) DynamicArray.getInt(buffer, offset), 4, AREA_FLAGS));
-				projectile.setTriggerRadius((int) DynamicArray.getShort(buffer, offset + 4));
-				projectile.setAreaOfEffectRadius((int) DynamicArray.getShort(buffer, offset + 6));
-				projectile.setConeWidth((int) DynamicArray.getShort(buffer, offset + 36));
-			}
-			return projectile;
+			buffer = entry.getResourceData();
 		} catch (IOException e) {
 			throw new FactoryException(INVALID_PROJECTILE_FILE, entry.getResourceName());
-		} catch (UnknownValueException e) {
-			throw new FactoryException(UNKNOWN_PROJECTILE_TYPE, e.getMessage());
 		}
+		Projectile projectile = new Projectile();
+		projectile.setResource(entry.getResourceName());
+		try {
+			projectile.setType(ProjectileTypeEnum.valueOf((long) DynamicArray.getUnsignedShort(buffer, 8)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(UNKNOWN_PROJECTILE_TYPE, entry.getResourceName());
+		}
+		projectile.setSpeed((int) DynamicArray.getShort(buffer, 10));
+		projectile.setBehaviorFlags(new Flag((long) DynamicArray.getInt(buffer, 12), 4, BEHAVIOR_FLAGS));
+		if (projectile.getType() == ProjectileTypeEnum.AreaOfEffect) {
+			int offset = 512;
+			projectile.setAreaOfEffectFlags(new Flag((long) DynamicArray.getInt(buffer, offset), 4, AREA_FLAGS));
+			projectile.setTriggerRadius((int) DynamicArray.getShort(buffer, offset + 4));
+			projectile.setAreaOfEffectRadius((int) DynamicArray.getShort(buffer, offset + 6));
+			projectile.setConeWidth((int) DynamicArray.getShort(buffer, offset + 36));
+		}
+		return projectile;
 	}
 }

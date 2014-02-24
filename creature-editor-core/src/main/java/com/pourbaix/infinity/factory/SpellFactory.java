@@ -26,6 +26,9 @@ import com.pourbaix.infinity.util.DynamicArray;
 @Service
 public class SpellFactory {
 
+	@SuppressWarnings("unused")
+	private static final Logger logger = LoggerFactory.getLogger(SpellFactory.class);
+
 	@Resource
 	private IdentifierFactory identifierFactory;
 
@@ -35,8 +38,13 @@ public class SpellFactory {
 	@Resource
 	private EffectFactory effectFactory;
 
-	@SuppressWarnings("unused")
-	private static final Logger logger = LoggerFactory.getLogger(SpellFactory.class);
+	private static final String MISSING_SPELL_FILE = "MISSING_SPELL_FILE";
+	private static final String INVALID_SPELL_FILE = "INVALID_SPELL_FILE";
+	private static final String INVALID_SPELL_NAME = "INVALID_SPELL_NAME";
+	private static final String INVALID_SPELL_TYPE = "INVALID_SPELL_TYPE";
+	private static final String INVALID_SPELL_SCHOOL = "INVALID_SPELL_SCHOOL";
+	private static final String INVALID_SPELL_SECONDARY_TYPE = "INVALID_SPELL_SECONDARY_TYPE";
+	private static final String INVALID_SPELL_DESCRIPTION = "INVALID_SPELL_DESCRIPTION";
 
 	private static final String[] FLAGS = { "None", "", "", "", "", "", "", "", "", "", "", "Hostile/Breaks Invisibility", "No LOS required", "Allow spotting",
 			"Outdoors only", "Non-magical ability", "Trigger/Contingency", "Non-combat ability", "", "", "", "", "", "", "", "Ex: can target invisible",
@@ -48,35 +56,56 @@ public class SpellFactory {
 	public Spell getSpell(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
-			throw new FactoryException("Entry doesn't exist: " + entryName);
+			throw new FactoryException(MISSING_SPELL_FILE, entryName);
 		}
 		return getSpell(entry);
 	}
 
 	public Spell getSpell(ResourceEntry entry) throws FactoryException {
+		RawSpell spell = new RawSpell();
+		spell.setResource(entry.getResourceName());
+		byte buffer[];
 		try {
-			RawSpell spell = new RawSpell();
-			spell.setResource(entry.getResourceName());
-			byte buffer[] = entry.getResourceData();
-			spell.setName(StringResource.getInstance().getStringRef(buffer, 8));
-			spell.setFlags(new Flag((long) DynamicArray.getInt(buffer, 24), 4, FLAGS));
-			spell.setExclusionFlags(new Flag((long) DynamicArray.getInt(buffer, 30), 4, EXCLUDE_FLAGS));
-			spell.setType(SpellTypeEnum.valueOf(DynamicArray.getShort(buffer, 28)));
-			spell.setSchool(SchoolEnum.valueOf(DynamicArray.getByte(buffer, 37)));
-			spell.setSecondaryType(SpellSecondaryTypeEnum.valueOf(DynamicArray.getByte(buffer, 39)));
-			spell.setLevel((byte) DynamicArray.getInt(buffer, 52));
-			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
-			IdentifierEntry identifierEntry = identifierFactory.getSpellIdentifierByResource(spell.getResource());
-			if (identifierEntry != null) {
-				spell.setIdentifier(identifierEntry.getFirstValue());
-			}
-			int effectOffset = DynamicArray.getInt(buffer, 106);
-			fetchSpellAbilities(spell, buffer, effectOffset);
-			fetchSpellEffects(spell, buffer, effectOffset);
-			return getSpell(spell);
-		} catch (UnknownValueException | IOException | StringResourceException e) {
-			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
+			buffer = entry.getResourceData();
+		} catch (IOException e) {
+			throw new FactoryException(INVALID_SPELL_FILE, entry.getResourceName());
 		}
+		try {
+			spell.setName(StringResource.getInstance().getStringRef(buffer, 8));
+		} catch (StringResourceException e) {
+			throw new FactoryException(INVALID_SPELL_NAME, entry.getResourceName());
+		}
+		spell.setFlags(new Flag((long) DynamicArray.getInt(buffer, 24), 4, FLAGS));
+		spell.setExclusionFlags(new Flag((long) DynamicArray.getInt(buffer, 30), 4, EXCLUDE_FLAGS));
+		try {
+			spell.setType(SpellTypeEnum.valueOf(DynamicArray.getShort(buffer, 28)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_SPELL_TYPE, entry.getResourceName());
+		}
+		try {
+			spell.setSchool(SchoolEnum.valueOf(DynamicArray.getByte(buffer, 37)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_SPELL_SCHOOL, entry.getResourceName());
+		}
+		try {
+			spell.setSecondaryType(SpellSecondaryTypeEnum.valueOf(DynamicArray.getByte(buffer, 39)));
+		} catch (UnknownValueException e) {
+			throw new FactoryException(INVALID_SPELL_SECONDARY_TYPE, entry.getResourceName());
+		}
+		spell.setLevel((byte) DynamicArray.getInt(buffer, 52));
+		try {
+			spell.setDescription(StringResource.getInstance().getStringRef(buffer, 80));
+		} catch (StringResourceException e) {
+			throw new FactoryException(INVALID_SPELL_DESCRIPTION, entry.getResourceName());
+		}
+		IdentifierEntry identifierEntry = identifierFactory.getSpellIdentifierByResource(spell.getResource());
+		if (identifierEntry != null) {
+			spell.setIdentifier(identifierEntry.getFirstValue());
+		}
+		int effectOffset = DynamicArray.getInt(buffer, 106);
+		fetchSpellAbilities(spell, buffer, effectOffset);
+		fetchSpellEffects(spell, buffer, effectOffset);
+		return getSpell(spell);
 	}
 
 	private Spell getSpell(RawSpell rawSpell) {
@@ -95,12 +124,12 @@ public class SpellFactory {
 	private void fetchSpellAbilities(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int offset = DynamicArray.getInt(buffer, 100);
 		int count = DynamicArray.getShort(buffer, 104);
-		spell.setAbilities(abilityFactory.getAbilities(buffer, offset, count, effectOffset));
+		spell.setAbilities(abilityFactory.getAbilities(spell.getResource(), buffer, offset, count, effectOffset));
 	}
 
 	private void fetchSpellEffects(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {
 		int count = DynamicArray.getShort(buffer, 112);
-		spell.setGlobalEffects(effectFactory.getEffects(buffer, effectOffset, count));
+		spell.setGlobalEffects(effectFactory.getEffects(spell.getResource(), buffer, effectOffset, count));
 	}
 
 }

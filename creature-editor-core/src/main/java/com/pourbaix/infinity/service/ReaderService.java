@@ -54,7 +54,7 @@ public class ReaderService {
 			}
 			return spells;
 		} catch (FactoryException e) {
-			throw new ServiceException(e);
+			throw new ServiceException(e.getCode(), e.getParam());
 		}
 	}
 
@@ -63,7 +63,7 @@ public class ReaderService {
 			Spell spell = spellFactory.getSpell(entry);
 			return spell;
 		} catch (FactoryException e) {
-			throw new ServiceException(e);
+			throw new ServiceException(e.getCode(), e.getParam());
 		}
 	}
 
@@ -72,7 +72,7 @@ public class ReaderService {
 			Spell spell = spellFactory.getSpell(resource);
 			return spell;
 		} catch (FactoryException e) {
-			throw new ServiceException(e);
+			throw new ServiceException(e.getCode(), e.getParam());
 		}
 	}
 
@@ -85,7 +85,7 @@ public class ReaderService {
 			}
 			return creatures;
 		} catch (FactoryException e) {
-			throw new ServiceException(e);
+			throw new ServiceException(e.getCode(), e.getParam());
 		}
 	}
 
@@ -94,7 +94,7 @@ public class ReaderService {
 			Creature creature = creatureFactory.getCreature(resource);
 			return creature;
 		} catch (FactoryException e) {
-			throw new ServiceException(e);
+			throw new ServiceException(e.getCode(), e.getParam());
 		}
 	}
 
@@ -105,7 +105,7 @@ public class ReaderService {
 				IdentifierFile id = identifierFactory.getIdentifierFile(entry);
 				ids.add(id);
 			} catch (FactoryException e) {
-				throw new ServiceException(e);
+				throw new ServiceException(e.getCode(), e.getParam());
 			}
 		}
 		return ids;

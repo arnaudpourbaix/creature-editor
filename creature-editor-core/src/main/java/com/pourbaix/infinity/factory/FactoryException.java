@@ -7,23 +7,11 @@ public class FactoryException extends Exception {
 	private String code;
 	private String param;
 
-	// public FactoryException() {
-	//
-	// }
-
 	public FactoryException(final String code, String param) {
 		super(code + ": " + param);
 		this.code = code;
 		this.param = param;
 	}
-
-	// public FactoryException(final Throwable cause) {
-	// super(cause);
-	// }
-	//
-	// public FactoryException(final String message, final Throwable cause) {
-	// super(message, cause);
-	// }
 
 	public String getCode() {
 		return code;

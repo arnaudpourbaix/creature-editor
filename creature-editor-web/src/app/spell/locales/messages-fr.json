@@ -33,6 +33,7 @@
 		"EDIT_TITLE" : "Spell details",
 		"ERRORS" : {
 			"IMPORT_ALREADY_RUNNING": "Spell import is already running",
+			"IMPORT_SAVING_ERROR" : "Error when saving imported spell '{{spell}}'",
 			"UNDEFINED_GAME_DIRECTORY" : "Game directory is not defined, check configuration",
 			"INVALID_GAME_DIRECTORY" : "Game directory is not valid, check configuration",
 			"UNDEFINED_GAME_VERSION" : "Game version is not defined, check configuration",

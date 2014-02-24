@@ -39,11 +39,14 @@ public class SpellImportService implements Runnable {
 	@Resource
 	private ModRepository modRepository;
 
+	private static final String IMPORT_SAVING_ERROR = "IMPORT_SAVING_ERROR";
+
 	private volatile boolean running = false;
 	private Thread thread;
 	private LinkedBlockingQueue<Spell> spells;
 	private Integer modId;
 	private List<ResourceEntry> resources;
+	private ServiceException exception;
 
 	public void run() {
 		Mod mod = modRepository.findOne(modId);
@@ -59,9 +62,14 @@ public class SpellImportService implements Runnable {
 				spell.setMod(mod);
 				spellRepository.save(spell);
 				spells.add(spell);
-			} catch (DataException | ServiceException | PersistenceException e) {
+			} catch (ServiceException e) {
 				logger.error(resource.getResourceName(), e.getMessage());
 				running = false;
+				exception = e;
+			} catch (DataException | PersistenceException e) {
+				logger.error(resource.getResourceName(), e.getMessage());
+				running = false;
+				exception = new ServiceException(IMPORT_SAVING_ERROR, resource.getResourceName());
 			}
 		}
 		running = false;
@@ -72,6 +80,7 @@ public class SpellImportService implements Runnable {
 			deferredResult.setResult(-1);
 			return;
 		}
+		this.exception = null;
 		this.modId = modId;
 		gameService.openGame();
 		resources = readerService.getSpellResources();
@@ -81,7 +90,10 @@ public class SpellImportService implements Runnable {
 		thread.start();
 	}
 
-	public void getSpellsInQueue(DeferredResult<List<Spell>> deferredResult) {
+	public void getSpellsInQueue(DeferredResult<List<Spell>> deferredResult) throws ServiceException {
+		if (!running && exception != null) {
+			throw exception;
+		}
 		List<Spell> resultSpells = new ArrayList<>();
 		try {
 			while (!spells.isEmpty()) {

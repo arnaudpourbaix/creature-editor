@@ -19,12 +19,12 @@ import com.pourbaix.creature.editor.domain.SpellFlag;
 import com.pourbaix.creature.editor.repository.SpellRepository;
 import com.pourbaix.creature.editor.service.SpellDataService;
 import com.pourbaix.creature.editor.spell.SpellImportService;
-import com.pourbaix.creature.editor.spell.SpellImportException;
 import com.pourbaix.infinity.service.ServiceException;
 
 @RestController
 public class SpellController {
 
+	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(SpellController.class);
 
 	@Autowired
@@ -64,7 +64,7 @@ public class SpellController {
 	}
 
 	@RequestMapping("/spell/import/gather")
-	public DeferredResult<List<Spell>> getImportedSpells() throws SpellImportException {
+	public DeferredResult<List<Spell>> getImportedSpells() throws ServiceException {
 		final DeferredResult<List<Spell>> result = new DeferredResult<>();
 		spellImportService.getSpellsInQueue(result);
 		return result;
