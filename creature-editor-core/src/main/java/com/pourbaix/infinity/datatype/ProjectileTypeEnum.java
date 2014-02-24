@@ -1,6 +1,5 @@
 package com.pourbaix.infinity.datatype;
 
-
 public enum ProjectileTypeEnum {
 
 	Unknown(0L, "Unknown"), NoBAM(1L, "No BAM"), SingleTarget(2L, "Single target"), AreaOfEffect(3L, "Area of effect");
@@ -27,7 +26,7 @@ public enum ProjectileTypeEnum {
 				return type;
 			}
 		}
-		throw new UnknownValueException("no ProjectileTypeEnum found for " + value);
+		throw new UnknownValueException(String.valueOf(value));
 	}
 
 }

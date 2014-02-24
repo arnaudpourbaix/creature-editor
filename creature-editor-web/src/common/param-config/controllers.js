@@ -16,7 +16,7 @@
 				$scope.parameters = parameters;
 
 				var setParameterGrid = function() {
-					$q.all([ $translate('PARAMETER.NAME_FIELD'), $translate('PARAMETER.LABEL_FIELD'), $translate('PARAMETER.VALUE_FIELD') ]).then(function(labels) {
+					$q.all([ $translate('PARAMETER.FIELDS.NAME'), $translate('PARAMETER.FIELDS.LABEL'), $translate('PARAMETER.FIELDS.VALUE') ]).then(function(labels) {
 						$scope.parameterGrid = {
 							data : 'parameters',
 							columns : [ {

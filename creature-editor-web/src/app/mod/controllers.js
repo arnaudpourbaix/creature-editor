@@ -10,7 +10,7 @@
 				$scope.mods = mods;
 
 				var setModGrid = function() {
-					$q.all([ $translate('MOD.NAME_FIELD'), $translate('MOD.ACTION_COLUMN'), $translate('MOD.ACTION_DELETE') ]).then(function(labels) {
+					$q.all([ $translate('MOD.FIELDS.NAME'), $translate('MOD.COLUMNS.ACTION'), $translate('MOD.COLUMNS.DELETE') ]).then(function(labels) {
 						$scope.modGrid = {
 								data : 'mods',
 								columns : [ {

@@ -3,9 +3,13 @@
 		"LABEL" : "Mod",
 		"SELECT_MOD" : "Select a mod",
 		"LIST_TITLE" : "Mods",
-		"NAME_FIELD" : "Name",
-		"ACTION_COLUMN" : "Actions",
-		"ACTION_DELETE" : "Delete",
+		"FIELDS" : {
+			"NAME" : "Name"
+		},
+		"COLUMNS" : {
+			"ACTION" : "Actions",
+			"DELETE" : "Delete"
+		},
 		"EDIT_TITLE" : "Mod details"
 	}
 }

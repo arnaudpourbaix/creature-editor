@@ -1,13 +1,17 @@
 package com.pourbaix.infinity.factory;
 
+import java.io.IOException;
+
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.IdsEnum;
 import com.pourbaix.infinity.datatype.ProjectileTypeEnum;
+import com.pourbaix.infinity.datatype.UnknownValueException;
 import com.pourbaix.infinity.domain.IdentifierEntry;
 import com.pourbaix.infinity.domain.IdentifierFile;
 import com.pourbaix.infinity.domain.Projectile;
@@ -21,8 +25,12 @@ public class ProjectileFactory {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(ProjectileFactory.class);
 
-	@Autowired
+	@Resource
 	private IdentifierFactory identifierFactory;
+
+	private static final String MISSING_PROJECTILE_FILE = "MISSING_PROJECTILE_FILE";
+	private static final String INVALID_PROJECTILE_FILE = "INVALID_PROJECTILE_FILE";
+	private static final String UNKNOWN_PROJECTILE_TYPE = "UNKNOWN_PROJECTILE_TYPE";
 
 	private static final String[] BEHAVIOR_FLAGS = { "No flags set", "Show sparks", "Use z coordinate", "Loop fire sound", "Loop impact sound",
 			"Do not affect direct target", "Draw below animate objects" };
@@ -45,7 +53,7 @@ public class ProjectileFactory {
 	public Projectile getProjectile(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
-			throw new FactoryException("Entry doesn't exist: " + entryName);
+			throw new FactoryException(MISSING_PROJECTILE_FILE, entryName);
 		}
 		return getProjectile(entry);
 	}
@@ -66,8 +74,10 @@ public class ProjectileFactory {
 				projectile.setConeWidth((int) DynamicArray.getShort(buffer, offset + 36));
 			}
 			return projectile;
-		} catch (Exception e) {
-			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
+		} catch (IOException e) {
+			throw new FactoryException(INVALID_PROJECTILE_FILE, entry.getResourceName());
+		} catch (UnknownValueException e) {
+			throw new FactoryException(UNKNOWN_PROJECTILE_TYPE, e.getMessage());
 		}
 	}
 }

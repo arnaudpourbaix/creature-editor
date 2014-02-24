@@ -29,6 +29,13 @@ public class GameService {
 
 	private static final Logger logger = LoggerFactory.getLogger(GameService.class);
 
+	private static final String UNDEFINED_GAME_DIRECTORY = "UNDEFINED_GAME_DIRECTORY";
+	private static final String INVALID_GAME_DIRECTORY = "INVALID_GAME_DIRECTORY";
+	private static final String UNDEFINED_GAME_VERSION = "UNDEFINED_GAME_VERSION";
+	private static final String UNDEFINED_DEFAULT_LANGUAGE = "UNDEFINED_DEFAULT_LANGUAGE";
+	private static final String MISSING_CHITIN_KEY = "MISSING_CHITIN_KEY";
+	private static final String MISSING_DIALOG_FILE = "MISSING_DIALOG_FILE";
+
 	@Resource
 	private ReaderContext readerContext;
 
@@ -53,7 +60,7 @@ public class GameService {
 		readerContext.setGameOpened(true);
 	}
 
-	public void closeGame() throws ServiceException {
+	public void closeGame() {
 		if (!readerContext.isGameOpened()) {
 			return;
 		}
@@ -63,17 +70,17 @@ public class GameService {
 	private void checkGameDirectory() throws ServiceException {
 		readerContext.setGameDirectory(parameterService.getGameDirectory());
 		if (readerContext.getGameDirectory() == null) {
-			throw new ServiceException("game directory is not defined in configuration");
+			throw new ServiceException(UNDEFINED_GAME_DIRECTORY);
 		}
 		if (!readerContext.getGameDirectory().isDirectory()) {
-			throw new ServiceException("game directory is invalid, please check configuration");
+			throw new ServiceException(INVALID_GAME_DIRECTORY);
 		}
 	}
 
 	private void checkGameVersion() throws ServiceException {
 		readerContext.setGameVersion(parameterService.getGameVersion());
 		if (readerContext.getGameVersion() == null) {
-			throw new ServiceException("game version is not set, please check configuration");
+			throw new ServiceException(UNDEFINED_GAME_VERSION);
 		}
 	}
 
@@ -131,7 +138,7 @@ public class GameService {
 			readerContext.setDefaultLanguage(parameterService.getDefaultLanguage());
 			readerContext.setLanguage(readerContext.getDefaultLanguage());
 			if (readerContext.getDefaultLanguage().isEmpty() || !readerContext.getDefaultLanguage().matches("\\w{2}_\\w{2}")) {
-				throw new ServiceException("default language is not defined or invalid");
+				throw new ServiceException(UNDEFINED_DEFAULT_LANGUAGE);
 			}
 			File iniFile = new File(readerContext.getUserGameProfileDirectory(), Constant.INI_FILENAME);
 			if (!iniFile.exists()) {
@@ -171,7 +178,7 @@ public class GameService {
 	private void fetchChitinKey() throws ServiceException {
 		File chitinKey = new File(readerContext.getGameDirectory(), "chitin.key");
 		if (!chitinKey.exists()) {
-			throw new ServiceException("no chitin key in game directory !");
+			throw new ServiceException(MISSING_CHITIN_KEY);
 		}
 		readerContext.setChitinKey(chitinKey);
 	}
@@ -183,7 +190,7 @@ public class GameService {
 			readerContext.setDialogFile(new File(readerContext.getGameDirectory(), Constant.DIALOG_FILENAME));
 		}
 		if (!readerContext.getDialogFile().exists()) {
-			throw new ServiceException(Constant.DIALOG_FILENAME + " not found !");
+			throw new ServiceException(MISSING_DIALOG_FILE);
 		}
 	}
 

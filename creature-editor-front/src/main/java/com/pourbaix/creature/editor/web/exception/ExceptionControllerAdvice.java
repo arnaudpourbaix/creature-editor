@@ -29,11 +29,10 @@ public class ExceptionControllerAdvice {
 	}
 
 	@ExceptionHandler
-	ResponseEntity<String> ServiceException(ServiceException ex) {
+	ResponseEntity<ExceptionContainer> ServiceException(ServiceException ex) {
 		logger.error(ExceptionUtils.getStackTrace(ex));
-		HttpHeaders headers = new HttpHeaders();
-		headers.set("HeaderKey", "HeaderDetails");
-		ResponseEntity<String> responseEntity = new ResponseEntity<String>("ServiceException error", headers, HttpStatus.INTERNAL_SERVER_ERROR);
+		ResponseEntity<ExceptionContainer> responseEntity = new ResponseEntity<ExceptionContainer>(new ExceptionContainer(ex.getMessage()),
+				HttpStatus.INTERNAL_SERVER_ERROR);
 		return responseEntity;
 	}
 

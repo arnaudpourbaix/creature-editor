@@ -9,14 +9,14 @@
 		<div class="tab-view" data-ui-view></div>	 
 	</div>
 	<div class="panel-footer clearfix">
-		<button data-ui-sref="spells.list.import" class="btn btn-primary pull-right" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT_BUTTON</button>
+		<button data-ui-sref="spells.list.import" class="btn btn-primary pull-right" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT.BUTTON</button>
 		<div class="row spell-import-progress" data-ng-show="importService.running">
-			<div class="col-md-4 text-right" data-translate data-translate-values="{ name : importService.mod.name }">SPELL.IMPORT_PROGRESS_MESSAGE</div>
+			<div class="col-md-4 text-right" data-translate data-translate-values="{ name : importService.mod.name }">SPELL.IMPORT.PROGRESS_MESSAGE</div>
 			<div class="col-md-6">
 				<progressbar animate="false" value="importService.progressValue" type="success"><b>{{importService.progressValue}}%</b></progressbar>		  
 			</div>
 			<div class="col-md-2">
-				<button type="button" class="btn btn-danger btn-xs" data-ng-click="importService.cancelImport()" data-translate>SPELL.IMPORT_CANCEL_BUTTON</button>			
+				<button type="button" class="btn btn-danger btn-xs" data-ng-click="importService.cancelImport()" data-translate>SPELL.IMPORT.CANCEL_BUTTON</button>			
 			</div>
 		</div>
 	</div>

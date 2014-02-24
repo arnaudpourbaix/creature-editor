@@ -18,7 +18,7 @@ import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.domain.SpellFlag;
 import com.pourbaix.creature.editor.repository.SpellRepository;
 import com.pourbaix.creature.editor.service.SpellDataService;
-import com.pourbaix.creature.editor.spell.SpellImport;
+import com.pourbaix.creature.editor.spell.SpellImportService;
 import com.pourbaix.creature.editor.spell.SpellImportException;
 import com.pourbaix.infinity.service.ServiceException;
 
@@ -31,7 +31,7 @@ public class SpellController {
 	private SpellRepository spellRepository;
 
 	@Autowired
-	private SpellImport spellImport;
+	private SpellImportService spellImportService;
 
 	@RequestMapping(value = "/spell", params = "modId", method = RequestMethod.GET, produces = "application/json")
 	public List<Spell> listByMod(Integer modId) {
@@ -59,26 +59,31 @@ public class SpellController {
 	@RequestMapping(value = "/spell/import", params = "modId", method = RequestMethod.GET, produces = "application/json")
 	public DeferredResult<Integer> importSpells(Integer modId) throws ServiceException {
 		final DeferredResult<Integer> result = new DeferredResult<>();
-		spellImport.startImport(result, modId);
+		spellImportService.startImport(result, modId);
 		return result;
 	}
 
 	@RequestMapping("/spell/import/gather")
 	public DeferredResult<List<Spell>> getImportedSpells() throws SpellImportException {
 		final DeferredResult<List<Spell>> result = new DeferredResult<>();
-		spellImport.getSpellsInQueue(result);
+		spellImportService.getSpellsInQueue(result);
 		return result;
 
 	}
 
 	@RequestMapping("/spell/import/cancel")
 	public void cancelImport() {
-		spellImport.cancelImport();
+		spellImportService.cancelImport();
 	}
 
 	@RequestMapping("/spell/flags")
 	public List<SpellFlag> getFlags() {
 		return SpellDataService.flags;
+	}
+
+	@RequestMapping("/spell/exclusionFlags")
+	public List<SpellFlag> getExclusionFlags() {
+		return SpellDataService.exclusionFlags;
 	}
 
 }

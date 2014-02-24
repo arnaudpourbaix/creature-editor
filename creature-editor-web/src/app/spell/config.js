@@ -39,7 +39,7 @@
 
 		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
-			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', function($state, $stateParams, $modal, Spell) {
+			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', 'SpellService', function($state, $stateParams, $modal, Spell, SpellService) {
 				var modal = $modal.open({
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
@@ -56,9 +56,9 @@
 								});
 							}
 						} ],
-					flags : [ 'Spell', function(Spell) {
-						return Spell.getFlags().$promise;
-					} ]
+						flags : [ 'SpellService', function(SpellService) {
+							return SpellService.getFlags();
+						} ]
 					}
 				});
 				modal.result.then(function(result) {

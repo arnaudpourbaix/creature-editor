@@ -40,7 +40,7 @@
 		return res;
 	} ]);
 
-	module.service('SpellService', [ 'Spell', 'SpellImportService', function SpellService(Spell, SpellImportService) {
+	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'appSettings', function SpellService(Spell, SpellImportService, $http, appSettings) {
 		var service = {
 			getSpells : function(modId) {
 				if (SpellImportService.running && modId === SpellImportService.modId) {
@@ -50,6 +50,12 @@
 						modId : modId
 					}).$promise;
 				}
+			},
+			getFlags : function() {
+				return $http({
+					method : 'GET',
+					url : appSettings.restBaseUrl + 'flags'
+				});
 			}
 		};
 
@@ -76,11 +82,13 @@
 					service.spells = [];
 					service.spellCount = parseInt(response.data, 10);
 					if (service.spellCount === -1) {
-						$alertMessage.push('SPELL.IMPORT_ERROR_RUNNING', 'danger');
+						$alertMessage.push('SPELL.ERRORS.IMPORT_ALREADY_RUNNING', 'danger');
 						return;
 					}
 					service.running = true;
 					service.interval = $interval(service.gatherImportedSpells, 2000);
+				}, function(response) {
+					$alertMessage.push('SPELL.ERRORS.' + response.data.code, 'danger');
 				});
 			},
 
@@ -100,14 +108,14 @@
 					});
 					service.progressValue = parseInt(100 / service.spellCount * service.spells.length, 10);
 					if (service.spells.length === service.spellCount) {
-						$alertMessage.push('SPELL.IMPORT_SUCCESS', 'success', {
+						$alertMessage.push('SPELL.IMPORT.SUCCESS', 'success', {
 							name : service.mod.name
 						});
 						service.endImport();
 					}
-				}, function() {
+				}, function(response) {
 					service.endImport();
-					$alertMessage.push('SPELL.IMPORT_ERROR', 'danger');
+					$alertMessage.push('SPELL.ERRORS.' + response.data.code, 'danger');
 				});
 			},
 
@@ -120,7 +128,7 @@
 					url : 'rest/spell/import/cancel'
 				}).then(function(response) {
 					service.endImport();
-					$alertMessage.push('SPELL.IMPORT_CANCEL', 'warning');
+					$alertMessage.push('SPELL.IMPORT.CANCEL', 'warning');
 				});
 			}
 		};

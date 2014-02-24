@@ -7,7 +7,6 @@ import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.creature.editor.domain.Spell;
@@ -30,16 +29,16 @@ public class ReaderService {
 	@Resource
 	private ReaderContext readerContext;
 
-	@Autowired
+	@Resource
 	private GameService gameService;
 
-	@Autowired
+	@Resource
 	private SpellFactory spellFactory;
 
-	@Autowired
+	@Resource
 	private CreatureFactory creatureFactory;
 
-	@Autowired
+	@Resource
 	private IdentifierFactory identifierFactory;
 
 	public List<ResourceEntry> getSpellResources() throws ServiceException {

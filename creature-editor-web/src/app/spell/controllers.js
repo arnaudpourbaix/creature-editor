@@ -34,9 +34,9 @@
 
 				var setSpellGrid = function() {
 					$q.all(
-							[ $translate('SPELL.RESOURCE_FIELD'), $translate('SPELL.NAME_FIELD'), $translate('SPELL.LEVEL_FIELD'), $translate('SPELL.IDENTIFIER_FIELD'),
-									$translate('SPELL.TYPE_FIELD'), $translate('SPELL.SCHOOL_FIELD'), $translate('SPELL.ACTION_COLUMN'), $translate('SPELL.ACTION_DELETE'),
-									$translate('SPELL.SECONDARY_TYPE_FIELD') ]).then(function(labels) {
+							[ $translate('SPELL.FIELDS.RESOURCE'), $translate('SPELL.FIELDS.NAME'), $translate('SPELL.FIELDS.LEVEL'), $translate('SPELL.FIELDS.IDENTIFIER'),
+									$translate('SPELL.FIELDS.TYPE'), $translate('SPELL.FIELDS.SCHOOL'), $translate('SPELL.COLUMNS.ACTION'), $translate('SPELL.FIELDS.COLUMNS.DELETE'),
+									$translate('SPELL.FIELDS.SECONDARY_TYPE') ]).then(function(labels) {
 						$scope.spellGrid = {
 							data : 'spells',
 							columns : [ {

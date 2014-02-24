@@ -24,7 +24,8 @@ public class Parameter implements java.io.Serializable {
 
 	@Id
 	@Column(name = "NAME", unique = true, nullable = false, length = 50)
-	private String name;
+	@Enumerated(EnumType.STRING)
+	private ParameterEnum name;
 
 	@Column(name = "REQUIRED", nullable = false)
 	private Boolean required;
@@ -46,15 +47,15 @@ public class Parameter implements java.io.Serializable {
 	public Parameter() {
 	}
 
-	public Parameter(String name) {
+	public Parameter(ParameterEnum name) {
 		this.name = name;
 	}
 
-	public String getName() {
+	public ParameterEnum getName() {
 		return this.name;
 	}
 
-	public void setName(String name) {
+	public void setName(ParameterEnum name) {
 		this.name = name;
 	}
 

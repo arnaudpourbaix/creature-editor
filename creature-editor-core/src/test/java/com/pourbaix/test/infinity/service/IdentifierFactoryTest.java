@@ -3,12 +3,13 @@ package com.pourbaix.test.infinity.service;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import javax.annotation.Resource;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -23,10 +24,10 @@ import com.pourbaix.infinity.service.ServiceException;
 @ContextConfiguration(classes = CoreConfig.class)
 public class IdentifierFactoryTest {
 
-	@Autowired
+	@Resource
 	GameService gameService;
 
-	@Autowired
+	@Resource
 	IdentifierFactory identifierFactory;
 
 	@Before

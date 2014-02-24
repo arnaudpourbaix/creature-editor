@@ -1,11 +1,15 @@
 {
 	"MOD" : {
 		"LABEL" : "Mod",
-		"SELECT_MOD" : "Sélectionner un mod",
+		"SELECT_MOD" : "Select a mod",
 		"LIST_TITLE" : "Mods",
-		"NAME_FIELD" : "Libellé",
-		"ACTION_COLUMN" : "Actions",
-		"ACTION_DELETE" : "Supprimer",
-		"EDIT_TITLE" : "Détails d'un mod"
+		"FIELDS" : {
+			"NAME" : "Name"
+		},
+		"COLUMNS" : {
+			"ACTION" : "Actions",
+			"DELETE" : "Delete"
+		},
+		"EDIT_TITLE" : "Mod details"
 	}
 }

@@ -3,9 +3,10 @@ package com.pourbaix.infinity.factory;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.datatype.AbilityLocationEnum;
@@ -20,10 +21,10 @@ public class AbilityFactory {
 
 	private static final Logger logger = LoggerFactory.getLogger(AbilityFactory.class);
 
-	@Autowired
+	@Resource
 	private ProjectileFactory projectileFactory;
 
-	@Autowired
+	@Resource
 	private EffectFactory effectFactory;
 
 	public List<Ability> getAbilities(byte buffer[], int offset, int count, int globalEffectOffset) throws FactoryException {

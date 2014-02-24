@@ -28,6 +28,10 @@ public class IdentifierFactory {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(IdentifierFactory.class);
 
+	private static final String MISSING_IDENTIFIER_FILE = "MISSING_IDENTIFIER_FILE";
+	private static final String MISSING_IDENTIFIER_ENTRY = "MISSING_IDENTIFIER_ENTRY";
+	private static final String INVALID_IDENTIFIER_FILE = "INVALID_IDENTIFIER_FILE";
+
 	private final Map<String, IdentifierFile> cache = new HashMap<>();
 
 	private static final BiMap<String, String> IDENTIFIER_KEY_RESOURCES = ImmutableBiMap.of("1", "SPPR", "2", "SPWI", "3", "SPIN", "4", "SPCL");
@@ -35,7 +39,7 @@ public class IdentifierFactory {
 	public String getFirstValueByKey(String ids, Long key) throws FactoryException {
 		IdentifierFile file = getIdentifierFile(ids);
 		if (file == null) {
-			throw new FactoryException(ids + " is missing!");
+			throw new FactoryException(MISSING_IDENTIFIER_FILE, ids);
 		}
 		IdentifierEntry entry = file.getEntryByKey(key);
 		if (entry == null) {
@@ -86,7 +90,7 @@ public class IdentifierFactory {
 	private IdentifierFile get(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
-			throw new FactoryException("Entry doesn't exist: " + entryName);
+			throw new FactoryException(MISSING_IDENTIFIER_ENTRY, entryName);
 		}
 		return get(entry);
 	}
@@ -122,7 +126,7 @@ public class IdentifierFactory {
 			}
 			return identifierFile;
 		} catch (IOException e) {
-			throw new FactoryException(entry.getResourceName() + ": " + e.getMessage());
+			throw new FactoryException(INVALID_IDENTIFIER_FILE, entry.getResourceName());
 		}
 	}
 

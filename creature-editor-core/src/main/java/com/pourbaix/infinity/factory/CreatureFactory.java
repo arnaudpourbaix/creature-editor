@@ -2,9 +2,10 @@ package com.pourbaix.infinity.factory;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.infinity.datatype.Flag;
@@ -22,7 +23,7 @@ public class CreatureFactory {
 	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(CreatureFactory.class);
 
-	@Autowired
+	@Resource
 	private IdentifierFactory identifierFactory;
 
 	private static final String[] FLAGS = { "No flags set", "Identified", "No corpse", "Permanent corpse", "Original class: Fighter", "Original class: Mage",

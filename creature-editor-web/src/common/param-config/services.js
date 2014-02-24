@@ -28,12 +28,12 @@
 		return res;
 	} ]);
 
-	module.service('ParameterService', [ '$http', '$interval', '$alertMessage', function ParameterService($http, $interval, $alertMessage) {
+	module.service('ParameterService', [ '$http', 'appSettings', function ParameterService($http, appSettings) {
 		var service = {
 			checkFolder : function(folder) {
 				return $http({
 					method : 'GET',
-					url : 'rest/parameter/checkFolder',
+					url : appSettings.restBaseUrl + 'parameter/checkFolder',
 					params : {
 						folder : folder
 					}

@@ -2,10 +2,11 @@ package com.pourbaix.infinity.factory;
 
 import java.io.IOException;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.creature.editor.domain.Spell;
@@ -25,13 +26,13 @@ import com.pourbaix.infinity.util.DynamicArray;
 @Service
 public class SpellFactory {
 
-	@Autowired
+	@Resource
 	private IdentifierFactory identifierFactory;
 
-	@Autowired
+	@Resource
 	private AbilityFactory abilityFactory;
 
-	@Autowired
+	@Resource
 	private EffectFactory effectFactory;
 
 	@SuppressWarnings("unused")

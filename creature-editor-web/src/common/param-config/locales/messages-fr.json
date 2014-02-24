@@ -1,23 +1,25 @@
 {
 	"PARAMETER" : {
-		"LABEL" : "Paramètre",
-		"LIST_TITLE" : "Paramètres",
-		"NAME_FIELD" : "Nom",
-		"LABEL_FIELD" : "Libellé",
-		"DESCRIPTION_FIELD" : "Description",
-		"VALUE_FIELD" : "Valeur",
-		"VALUE_SELECT" : "Sélectionner une valeur",
-		"EDIT_TITLE" : "Détails d'un paramètre",
-		"STATE_FIELD" : "Etat",
-		"FOLDER_PATH" : "Chemin du répertoire",
+		"LABEL" : "Parameter",
+		"LIST_TITLE" : "Parameters",
+		"FIELDS" : {
+			"NAME" : "Name",
+			"LABEL" : "Label",
+			"DESCRIPTION" : "Description",
+			"VALUE" : "Value",
+			"STATE" : "State"
+		},
+		"VALUE_SELECT" : "Select a value",
+		"EDIT_TITLE" : "Parameter details",
+		"FOLDER_PATH" : "Folder path",
 		"ON" : "On",
 		"OFF" : "Off",
 		"CONTROLS" : {
-			"REQUIRED" : "Requis",
-			"FOLDER" : "Doit être un répertoire valide",
-			"NUMBER" : "Doit être un nombre",
-			"MIN" : "Doit être supérieur ou égal à {{min}}",
-			"MAX" : "Doit être inférieur ou égal à {{max}}"
+			"REQUIRED" : "Required",
+			"FOLDER" : "Must be a valid folder",
+			"NUMBER" : "Must be a number",
+			"MIN" : "Must be higher or equal than {{min}}",
+			"MAX" : "Must be lower or equal than {{max}}"
 		}
 	}
 }

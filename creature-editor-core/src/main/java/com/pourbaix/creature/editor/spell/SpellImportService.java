@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import javax.annotation.Resource;
 import javax.persistence.PersistenceException;
 
 import org.hibernate.exception.DataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -23,20 +23,20 @@ import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
 
 @Service
-public class SpellImport implements Runnable {
+public class SpellImportService implements Runnable {
 
-	private static final Logger logger = LoggerFactory.getLogger(SpellImport.class);
+	private static final Logger logger = LoggerFactory.getLogger(SpellImportService.class);
 
-	@Autowired
+	@Resource
 	private GameService gameService;
 
-	@Autowired
+	@Resource
 	private ReaderService readerService;
 
-	@Autowired
+	@Resource
 	private SpellRepository spellRepository;
 
-	@Autowired
+	@Resource
 	private ModRepository modRepository;
 
 	private volatile boolean running = false;
@@ -72,12 +72,11 @@ public class SpellImport implements Runnable {
 			deferredResult.setResult(-1);
 			return;
 		}
-		running = true;
 		this.modId = modId;
 		gameService.openGame();
 		resources = readerService.getSpellResources();
 		deferredResult.setResult(resources.size());
-
+		running = true;
 		thread = new Thread(this, "import");
 		thread.start();
 	}
