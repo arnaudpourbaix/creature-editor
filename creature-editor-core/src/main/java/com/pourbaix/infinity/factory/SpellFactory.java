@@ -40,9 +40,9 @@ public class SpellFactory {
 	private static final String[] FLAGS = { "None", "", "", "", "", "", "", "", "", "", "", "Hostile/Breaks Invisibility", "No LOS required", "Allow spotting",
 			"Outdoors only", "Non-magical ability", "Trigger/Contingency", "Non-combat ability", "", "", "", "", "", "", "", "Ex: can target invisible",
 			"Ex: castable when silenced" };
-	private static final String[] s_exclude = { "None", "Chaotic", "Evil", "Good", "... Neutral", "Lawful", "Neutral ...", "Abjurer", "Conjurer", "Diviner",
-			"Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf", "Half-elf",
-			"Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
+	private static final String[] EXCLUDE_FLAGS = { "None", "Chaotic", "Evil", "Good", "... Neutral", "Lawful", "Neutral ...", "Abjurer", "Conjurer",
+			"Diviner", "Enchanter", "Illusionist", "Invoker", "Necromancer", "Transmuter", "Generalist", "", "", "", "", "", "", "", "", "Elf", "Dwarf",
+			"Half-elf", "Halfling", "Human", "Gnome", "", "Cleric", "Druid" };
 
 	public Spell getSpell(String entryName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
@@ -59,7 +59,7 @@ public class SpellFactory {
 			byte buffer[] = entry.getResourceData();
 			spell.setName(StringResource.getInstance().getStringRef(buffer, 8));
 			spell.setFlags(new Flag((long) DynamicArray.getInt(buffer, 24), 4, FLAGS));
-			spell.setExclusionFlags(new Flag((long) DynamicArray.getInt(buffer, 30), 4, s_exclude));
+			spell.setExclusionFlags(new Flag((long) DynamicArray.getInt(buffer, 30), 4, EXCLUDE_FLAGS));
 			spell.setType(SpellTypeEnum.valueOf(DynamicArray.getShort(buffer, 28)));
 			spell.setSchool(SchoolEnum.valueOf(DynamicArray.getByte(buffer, 37)));
 			spell.setSecondaryType(SpellSecondaryTypeEnum.valueOf(DynamicArray.getByte(buffer, 39)));
@@ -85,6 +85,9 @@ public class SpellFactory {
 		spell.setLevel(rawSpell.getLevel());
 		spell.setDescription(rawSpell.getDescription());
 		spell.setIdentifier(rawSpell.getIdentifier());
+		spell.setType(rawSpell.getType());
+		spell.setSecondaryType(rawSpell.getSecondaryType());
+		spell.setSchool(rawSpell.getSchool());
 		return spell;
 	}
 

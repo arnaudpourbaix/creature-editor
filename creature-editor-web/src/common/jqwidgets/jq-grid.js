@@ -23,14 +23,14 @@
 			altRows : true,
 			columnsResize : true,
 			sortable : true,
+			showfilterrow : true,
 			filterable : true,
 			selectionMode : 'singlerow',
-			source : dataAdapter,
 			pagermode : 'simple',
-			columnsreorder : false,
 			enabletooltips : true,
 			theme : 'bootstrap',
-			columns : columns
+			columns : columns,
+			source : dataAdapter
 		};
 		element.jqxGrid(angular.extend(params, options));
 	};
@@ -63,7 +63,7 @@
 							});
 						}
 						createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
-						$scope.$parent.$on('jqGrid-new-data', function() {
+						$scope.$on('jqGrid-new-data', function() {
 							createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
 						});
 						$scope.$parent.$watchCollection(params.data + '.length', function() {

@@ -25,6 +25,11 @@
 			'getByName' : {
 				url : baseUrl + 'name/:name',
 				method : 'GET'
+			},
+			'getFlags' : {
+				url : baseUrl + 'flags',
+				method : 'GET',
+				isArray : true
 			}
 		});
 

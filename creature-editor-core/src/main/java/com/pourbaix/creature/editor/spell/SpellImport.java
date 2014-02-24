@@ -18,6 +18,7 @@ import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.repository.ModRepository;
 import com.pourbaix.creature.editor.repository.SpellRepository;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
+import com.pourbaix.infinity.service.GameService;
 import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
 
@@ -25,6 +26,9 @@ import com.pourbaix.infinity.service.ServiceException;
 public class SpellImport implements Runnable {
 
 	private static final Logger logger = LoggerFactory.getLogger(SpellImport.class);
+
+	@Autowired
+	private GameService gameService;
 
 	@Autowired
 	private ReaderService readerService;
@@ -70,6 +74,7 @@ public class SpellImport implements Runnable {
 		}
 		running = true;
 		this.modId = modId;
+		gameService.openGame();
 		resources = readerService.getSpellResources();
 		deferredResult.setResult(resources.size());
 

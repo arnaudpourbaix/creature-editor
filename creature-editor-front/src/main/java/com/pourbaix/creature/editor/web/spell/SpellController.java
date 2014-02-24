@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.pourbaix.creature.editor.domain.Spell;
+import com.pourbaix.creature.editor.domain.SpellFlag;
 import com.pourbaix.creature.editor.repository.SpellRepository;
+import com.pourbaix.creature.editor.service.SpellDataService;
 import com.pourbaix.creature.editor.spell.SpellImport;
 import com.pourbaix.creature.editor.spell.SpellImportException;
 import com.pourbaix.infinity.service.ServiceException;
@@ -72,6 +74,11 @@ public class SpellController {
 	@RequestMapping("/spell/import/cancel")
 	public void cancelImport() {
 		spellImport.cancelImport();
+	}
+
+	@RequestMapping("/spell/flags")
+	public List<SpellFlag> getFlags() {
+		return SpellDataService.flags;
 	}
 
 }

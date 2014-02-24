@@ -2,6 +2,6 @@
 (function(window, $) {
 	'use strict';
 
-	angular.module('jqwidgets', [ 'jqwidgets.grid', 'jqwidgets.table', 'jqwidgets.dropdownlist' ]);
+	angular.module('jqwidgets', [ 'jqwidgets.grid', 'jqwidgets.dropdownlist' ]);
 
 }(window, jQuery));

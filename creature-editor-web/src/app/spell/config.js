@@ -55,7 +55,10 @@
 									name : ''
 								});
 							}
-						} ]
+						} ],
+					flags : [ 'Spell', function(Spell) {
+						return Spell.getFlags().$promise;
+					} ]
 					}
 				});
 				modal.result.then(function(result) {

@@ -46,6 +46,3 @@ Attributes values are well-detailed to prevent any user-input mistakes and all o
 
 ### Search
 It is possible to use every possible criterias and even multiple criteria of the same attribute. In any search, it is possible to specify a context if applicable (organization, game, mod, edition, state).
-
-### Parallel (cool but time-consuming)
-It is possible to edit 2 creatures at the same time, useful to compare or copy values between them.

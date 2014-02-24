@@ -9,7 +9,7 @@ It is split in 4 maven submodules.
 - repositories are based on Spring-Data-Jpa
 
 ### Front
-- is based on an excellent [spring-mvc-archetype](https://github.com/kolorobot/spring-mvc-quickstart-archetype) and deployed on a Tomcat server.
+- is based on an excellent [spring-mvc-archetype](https://github.com/kolorobot/spring-mvc-quickstart-archetype) and deployed on an embedded Tomcat server.
 - contains web project configuration and controllers.
 
 ### Web
@@ -33,8 +33,6 @@ It is split in 4 maven submodules.
 1. [Eclipse IDE for Java EE Developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplerr).
 2. [Plugin EasyShell](http://pluginbox.sourceforge.net). Handfull for calling grunt tasks.
 3. Add Java 1.7 SDK (Preferences / Installed JREs)
-4. Add Tomcat 7.0.20+ (Preferences / Runtime Environment)
-5. Setup a Tomcat server on port 8090
 
 ### Parent Project
 1. Open Git Repository Exploring
@@ -43,7 +41,7 @@ It is split in 4 maven submodules.
 4. Maven Update projects on all projects
 
 ### Core project
-1. Configure database access in `hibernate.cfg.xml`, `persistence.properties` and `pom.xml`
+1. Start database
 2. Create and run a maven configuration to create database: `liquibase:update`
 
 ### Front project
