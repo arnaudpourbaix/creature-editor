@@ -37,39 +37,39 @@
 			}
 		});
 
-//		$stateProvider.state('spells.list.edit', {
-//			url : '/:id',
-//			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', 'SpellService', function($state, $stateParams, $modal, Spell, SpellService) {
-//				var modal = $modal.open({
-//					templateUrl : "spell/spell-edit.tpl.html",
-//					controller : 'SpellEditController',
-//					resolve : {
-//						spell : [ 'Spell', function(Spell) {
-//							if ($stateParams.spellId !== 'new') {
-//								return Spell.get({
-//									id : $stateParams.id
-//								}).$promise;
-//							} else {
-//								return new Spell({
-//									id : null,
-//									name : ''
-//								});
-//							}
-//						} ],
-//						flags : [ 'SpellService', function(SpellService) {
-//							return SpellService.getFlags();
-//						} ]
-//					}
-//				});
-//				modal.result.then(function(result) {
-//					$state.go('^', {}, {
-//						reload : true
-//					});
-//				}, function() {
-//					$state.go('^');
-//				});
-//			} ]
-//		});
+// $stateProvider.state('spells.list.edit', {
+// url : '/:id',
+// onEnter : [ '$state', '$stateParams', '$modal', 'Spell', 'SpellService', function($state, $stateParams, $modal, Spell, SpellService) {
+// var modal = $modal.open({
+// templateUrl : "spell/spell-edit.tpl.html",
+// controller : 'SpellEditController',
+// resolve : {
+// spell : [ 'Spell', function(Spell) {
+// if ($stateParams.spellId !== 'new') {
+// return Spell.get({
+// id : $stateParams.id
+// }).$promise;
+// } else {
+// return new Spell({
+// id : null,
+// name : ''
+// });
+// }
+// } ],
+// flags : [ 'SpellService', function(SpellService) {
+// return SpellService.getFlags();
+// } ]
+// }
+// });
+// modal.result.then(function(result) {
+// $state.go('^', {}, {
+// reload : true
+// });
+// }, function() {
+// $state.go('^');
+// });
+// } ]
+// });
 
 		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
@@ -101,13 +101,13 @@
 					}
 				});
 				modal.result.then(function(result) {
-					console.log('then');
-//					$state.go('^', {}, {
-//						reload : true
-//					});
+					console.log('modal success');
+					$state.go('^', {}, {
+						reload : true
+					});
 				}, function() {
-					console.log('fail');
-//					$state.go('^');
+					console.log('modal fail');
+					// $state.go('^');
 				});
 			} ]
 		});

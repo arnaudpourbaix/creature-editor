@@ -154,6 +154,13 @@
 		console.log(spell);
 		console.log(flags);
 
+		$scope.clickMe = function() {
+			console.log('clickMe');
+			$modalInstance.close({
+				spell : spell
+			});
+		};
+
 		$scope.onSave = function(spell) {
 			$modalInstance.close({
 				spell : spell
