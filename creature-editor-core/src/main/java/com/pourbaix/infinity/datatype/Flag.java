@@ -41,4 +41,8 @@ public class Flag {
 		return (value & bitnr) == bitnr;
 	}
 
+	public long getValue() {
+		return value;
+	}
+
 }

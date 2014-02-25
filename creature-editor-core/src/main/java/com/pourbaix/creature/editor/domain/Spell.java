@@ -57,10 +57,10 @@ public class Spell implements java.io.Serializable {
 	private SpellSecondaryTypeEnum secondaryType;
 
 	@Column(name = "FLAGS")
-	private Integer flags;
+	private Long flags;
 
 	@Column(name = "EXCLUSIONFLAGS")
-	private Integer exclusionflags;
+	private Long exclusionflags;
 
 	@Column(name = "RANGE")
 	private Integer range;
@@ -77,33 +77,6 @@ public class Spell implements java.io.Serializable {
 
 	public Spell() {
 	}
-
-	//	public Spell(Mod mod, String resource, String name, int level, SpellTypeEnum type, SpellSecondaryTypeEnum secondarytype, boolean hurtAllies) {
-	//		this.mod = mod;
-	//		this.resource = resource;
-	//		this.name = name;
-	//		this.level = level;
-	//		this.type = type;
-	//		this.secondarytype = secondarytype;
-	//		this.hurtAllies = hurtAllies;
-	//	}
-	//
-	//	public Spell(Mod mod, String resource, String name, String identifier, String description, int level, SpellTypeEnum type,
-	//			SpellSecondaryTypeEnum secondarytype, Integer exclusionflags, Integer range, SchoolEnum school, boolean hurtAllies, Integer effects) {
-	//		this.mod = mod;
-	//		this.resource = resource;
-	//		this.name = name;
-	//		this.identifier = identifier;
-	//		this.description = description;
-	//		this.level = level;
-	//		this.type = type;
-	//		this.secondarytype = secondarytype;
-	//		this.exclusionflags = exclusionflags;
-	//		this.range = range;
-	//		this.school = school;
-	//		this.hurtAllies = hurtAllies;
-	//		this.effects = effects;
-	//	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder(resource);
@@ -185,11 +158,11 @@ public class Spell implements java.io.Serializable {
 		this.secondaryType = secondaryType;
 	}
 
-	public Integer getExclusionflags() {
+	public Long getExclusionflags() {
 		return this.exclusionflags;
 	}
 
-	public void setExclusionflags(Integer exclusionflags) {
+	public void setExclusionflags(Long exclusionflags) {
 		this.exclusionflags = exclusionflags;
 	}
 
@@ -225,11 +198,11 @@ public class Spell implements java.io.Serializable {
 		this.effects = effects;
 	}
 
-	public Integer getFlags() {
+	public Long getFlags() {
 		return flags;
 	}
 
-	public void setFlags(Integer flags) {
+	public void setFlags(Long flags) {
 		this.flags = flags;
 	}
 

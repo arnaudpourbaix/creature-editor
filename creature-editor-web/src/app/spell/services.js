@@ -54,7 +54,7 @@
 			getFlags : function() {
 				return $http({
 					method : 'GET',
-					url : appSettings.restBaseUrl + 'flags'
+					url : appSettings.restBaseUrl + 'spell/flags'
 				});
 			}
 		};

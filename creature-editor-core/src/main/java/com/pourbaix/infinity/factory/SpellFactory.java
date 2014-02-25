@@ -118,6 +118,8 @@ public class SpellFactory {
 		spell.setType(rawSpell.getType());
 		spell.setSecondaryType(rawSpell.getSecondaryType());
 		spell.setSchool(rawSpell.getSchool());
+		spell.setFlags(rawSpell.getFlags().getValue());
+		spell.setExclusionflags(rawSpell.getExclusionFlags().getValue());
 		return spell;
 	}
 

@@ -37,12 +37,51 @@
 			}
 		});
 
+//		$stateProvider.state('spells.list.edit', {
+//			url : '/:id',
+//			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', 'SpellService', function($state, $stateParams, $modal, Spell, SpellService) {
+//				var modal = $modal.open({
+//					templateUrl : "spell/spell-edit.tpl.html",
+//					controller : 'SpellEditController',
+//					resolve : {
+//						spell : [ 'Spell', function(Spell) {
+//							if ($stateParams.spellId !== 'new') {
+//								return Spell.get({
+//									id : $stateParams.id
+//								}).$promise;
+//							} else {
+//								return new Spell({
+//									id : null,
+//									name : ''
+//								});
+//							}
+//						} ],
+//						flags : [ 'SpellService', function(SpellService) {
+//							return SpellService.getFlags();
+//						} ]
+//					}
+//				});
+//				modal.result.then(function(result) {
+//					$state.go('^', {}, {
+//						reload : true
+//					});
+//				}, function() {
+//					$state.go('^');
+//				});
+//			} ]
+//		});
+
 		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
-			onEnter : [ '$state', '$stateParams', '$modal', 'Spell', 'SpellService', function($state, $stateParams, $modal, Spell, SpellService) {
-				var modal = $modal.open({
+			onEnter : [ '$state', '$stateParams', '$jqWindow', 'Spell', 'SpellService', function($state, $stateParams, $jqWindow, Spell, SpellService) {
+				var modal = $jqWindow.open({
+					title: '{{ spell.resource }}',
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
+					options : {
+						width: 900,
+						height: 600
+					},
 					resolve : {
 						spell : [ 'Spell', function(Spell) {
 							if ($stateParams.spellId !== 'new') {
@@ -62,15 +101,17 @@
 					}
 				});
 				modal.result.then(function(result) {
-					$state.go('^', {}, {
-						reload : true
-					});
+					console.log('then');
+//					$state.go('^', {}, {
+//						reload : true
+//					});
 				}, function() {
-					$state.go('^');
+					console.log('fail');
+//					$state.go('^');
 				});
 			} ]
 		});
-
+		
 		$stateProvider.state('spells.list.import', {
 			onEnter : [ '$state', '$stateParams', '$modal', function($state, $stateParams, $modal) {
 				var modal = $modal.open({

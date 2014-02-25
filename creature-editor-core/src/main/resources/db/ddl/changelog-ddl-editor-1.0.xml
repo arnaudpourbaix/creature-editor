@@ -156,8 +156,8 @@
 			<column name="secondaryType" type="int">
 				<constraints nullable="false"/>
 			</column>
-			<column name="flags" type="int" />
-			<column name="exclusionFlags" type="int" />
+			<column name="flags" type="bigint" />
+			<column name="exclusionFlags" type="bigint" />
 			<column name="range" type="int" />
 			<column name="school" type="int" />
 			<column name="hurt_allies" type="BOOLEAN">
