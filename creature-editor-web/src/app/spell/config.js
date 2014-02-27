@@ -80,7 +80,8 @@
 					controller : 'SpellEditController',
 					options : {
 						width: 900,
-						height: 600
+						height: 600,
+						isModal: true
 					},
 					resolve : {
 						spell : [ 'Spell', function(Spell) {
@@ -101,13 +102,11 @@
 					}
 				});
 				modal.result.then(function(result) {
-					console.log('window success');
-//					$state.go('^', {}, {
-//						reload : true
-//					});
+					$state.go('^', {}, {
+						reload : true
+					});
 				}, function() {
-					console.log('window fail');
-					// $state.go('^');
+					$state.go('^');
 				});
 			} ]
 		});

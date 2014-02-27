@@ -151,15 +151,8 @@
 
 	module.controller('SpellEditController', [ '$scope', '$windowInstance', 'spell', 'flags', function SpellEditController($scope, $windowInstance, spell, flags) {
 		$scope.spell = spell;
-		//console.log(spell);
-		//console.log(flags);
-
-		$scope.clickMe = function() {
-			console.log('clickMe');
-			$windowInstance.close({
-				spell : spell
-			});
-		};
+		// console.log(spell);
+		// console.log(flags);
 
 		$scope.onSave = function(spell) {
 			$windowInstance.close({
