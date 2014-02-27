@@ -4,6 +4,136 @@
 
 	var module = angular.module('jqwidgets.window', [ 'ui.router' ]);
 
+	function JqWindowService(globalOptions, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
+
+		function log(message) {
+			// console.debug(message);
+		}
+
+		function ModalWrapper(modalOptions) {
+			var modalResultDeferred = $q.defer();
+			var modalOpenedDeferred = $q.defer();
+
+			var self = {};
+
+			self.result = modalResultDeferred.promise;
+			self.opened = modalOpenedDeferred.promise;
+
+			self.open = function() {
+				var modalScope = (modalOptions.scope || $rootScope).$new();
+				var ctrlInstance, ctrlLocals = {};
+				var resolveIter = 1;
+				// controllers
+				if (modalOptions.controller) {
+					ctrlLocals.$scope = modalScope;
+					ctrlLocals.$modalInstance = modalInstance;
+					angular.forEach(modalOptions.resolve, function(value, key) {
+						ctrlLocals[key] = tplAndVars[resolveIter++];
+					});
+					ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
+				}
+
+				var options = angular.extend({}, globalOptions, modalOptions.options, {
+					title : modalOptions.title ? $interpolate(modalOptions.title)(modalScope) : '&nbsp;',
+					content : $compile(tplAndVars[0])(modalScope)
+				});
+
+				$(document.body).append('<div id="newWindow"><div></div><div></div></div>');
+				var modalWindow = $('#newWindow');
+				modalWindow.jqxWindow(options);
+				modalWindow.on('close', function(event) {
+					modalScope.$apply(function() {
+						console.log('event', event);
+						modalWindow.remove();
+						modalResultDeferred.resolve();
+					});
+				});
+			};
+
+			self.close = function(result) {
+				console.log('close request', result);
+				// $jqWindowStack.close(modalInstance, result);
+			};
+
+			self.dismiss = function(reason) {
+				console.log('dismiss request', reason);
+				// $jqWindowStack.dismiss(modalInstance, reason);
+			};
+		}
+
+		function getTemplatePromise(options) {
+			return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
+				cache : $templateCache
+			}).then(function(result) {
+				return result.data;
+			});
+		}
+
+		function getResolvePromises(resolves) {
+			var promisesArr = [];
+			angular.forEach(resolves, function(value, key) {
+				if (angular.isFunction(value) || angular.isArray(value)) {
+					promisesArr.push($q.when($injector.invoke(value)));
+				}
+			});
+			return promisesArr;
+		}
+
+		var service = {
+			open : function(modalOptions) {
+				// verify options
+				if (!modalOptions.template && !modalOptions.templateUrl) {
+					throw new Error('One of template or templateUrl options is required.');
+				}
+				modalOptions.resolve = modalOptions.resolve || {};
+
+				var modalInstance = new ModalWrapper(modalOptions);
+
+				var templateAndResolvePromise = $q.all([ getTemplatePromise(modalOptions) ].concat(getResolvePromises(modalOptions.resolve)));
+
+				templateAndResolvePromise.then(function resolveSuccess(tplAndVars) {
+					modalInstance.open();
+					modalOpenedDeferred.resolve(true);
+				}, function resolveError(reason) {
+					modalResultDeferred.reject(reason);
+					modalOpenedDeferred.reject(false);
+				});
+
+				return modalInstance;
+			},
+
+			stop : function() {
+			}
+		};
+
+		return service;
+	}
+
+	module.provider('$jqWindow', function JqWindowProvider() {
+		var options = {
+			theme : 'bootstrap',
+			showCollapseButton : true,
+			isModal : true
+		};
+
+		this.activationDelay = function(value) {
+			options.activationDelay = value;
+		};
+
+		this.minDuration = function(value) {
+			options.minDuration = value;
+		};
+
+		this.maxDuration = function(value) {
+			options.maxDuration = value;
+		};
+
+		this.$get = [ '$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$compile', '$interpolate', '$state',
+				function jqWindowService($injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
+					return new JqWindowService(options, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state);
+				} ];
+	});
+
 	module.factory('$jqWindowStack', [ '$transition', '$timeout', '$document', '$compile', '$rootScope', '$$stackedMap',
 			function($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
 
@@ -126,107 +256,5 @@
 
 				return $jqWindowStack;
 			} ]);
-
-	module.provider('$jqWindow', function() {
-		var $jqWindowProvider = {
-			options : {
-				theme : 'bootstrap',
-				showCollapseButton : true,
-				isModal : true
-			},
-			$get : [ '$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$compile', '$interpolate', '$state',
-					function($injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
-						var $jqWindow = {}, number = 0;
-
-						function getTemplatePromise(options) {
-							return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
-								cache : $templateCache
-							}).then(function(result) {
-								return result.data;
-							});
-						}
-
-						function getResolvePromises(resolves) {
-							var promisesArr = [];
-							angular.forEach(resolves, function(value, key) {
-								if (angular.isFunction(value) || angular.isArray(value)) {
-									promisesArr.push($q.when($injector.invoke(value)));
-								}
-							});
-							return promisesArr;
-						}
-
-						$jqWindow.open = function(modalOptions) {
-							var modalResultDeferred = $q.defer();
-							var modalOpenedDeferred = $q.defer();
-							// prepare an instance of a modal to be injected into controllers and returned to a caller
-							var modalInstance = {
-								result : modalResultDeferred.promise,
-								opened : modalOpenedDeferred.promise,
-								close : function(result) {
-									console.log('close request', result);
-									// $jqWindowStack.close(modalInstance, result);
-								},
-								dismiss : function(reason) {
-									console.log('dismiss request', reason);
-									// $jqWindowStack.dismiss(modalInstance, reason);
-								}
-							};
-
-							// verify options
-							modalOptions.resolve = modalOptions.resolve || {};
-							if (!modalOptions.template && !modalOptions.templateUrl) {
-								throw new Error('One of template or templateUrl options is required.');
-							}
-
-							var templateAndResolvePromise = $q.all([ getTemplatePromise(modalOptions) ].concat(getResolvePromises(modalOptions.resolve)));
-
-							templateAndResolvePromise.then(function resolveSuccess(tplAndVars) {
-								var modalScope = (modalOptions.scope || $rootScope).$new();
-								var ctrlInstance, ctrlLocals = {};
-								var resolveIter = 1;
-								// controllers
-								if (modalOptions.controller) {
-									ctrlLocals.$scope = modalScope;
-									ctrlLocals.$modalInstance = modalInstance;
-									angular.forEach(modalOptions.resolve, function(value, key) {
-										ctrlLocals[key] = tplAndVars[resolveIter++];
-									});
-									ctrlInstance = $controller(modalOptions.controller, ctrlLocals);
-								}
-
-								var options = angular.extend({}, $jqWindowProvider.options, modalOptions.options, {
-									title : modalOptions.title ? $interpolate(modalOptions.title)(modalScope) : '&nbsp;',
-									content : $compile(tplAndVars[0])(modalScope)
-								});
-
-								$(document.body).append('<div id="newWindow"><div></div><div></div></div>');
-								var modalWindow = $('#newWindow');
-								modalWindow.jqxWindow(options);
-								modalWindow.on('close', function(event) {
-									modalScope.$apply(function() {
-										console.log('event', event);
-										modalWindow.remove();
-										modalResultDeferred.resolve();
-									});
-								});
-							}, function resolveError(reason) {
-								modalResultDeferred.reject(reason);
-							});
-
-							templateAndResolvePromise.then(function() {
-								modalOpenedDeferred.resolve(true);
-							}, function() {
-								modalOpenedDeferred.reject(false);
-							});
-
-							return modalInstance;
-						};
-
-						return $jqWindow;
-					} ]
-		};
-		return $jqWindowProvider;
-	});
 
 }(window, jQuery));
