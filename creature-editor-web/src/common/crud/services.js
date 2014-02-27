@@ -10,6 +10,7 @@
 					$location.path(pathPrefix + '/new');
 				},
 				'edit' : function(itemId) {
+					console.log('edit', pathPrefix + '/' + itemId);
 					$location.path(pathPrefix + '/' + itemId);
 				},
 				'removeFromList' : function(array, property, value) {

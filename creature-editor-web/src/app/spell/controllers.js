@@ -149,38 +149,38 @@
 
 			} ]);
 
-	module.controller('SpellEditController', [ '$scope', '$modalInstance', 'spell', 'flags', function SpellEditController($scope, $modalInstance, spell, flags) {
+	module.controller('SpellEditController', [ '$scope', '$windowInstance', 'spell', 'flags', function SpellEditController($scope, $windowInstance, spell, flags) {
 		$scope.spell = spell;
-		console.log(spell);
-		console.log(flags);
+		//console.log(spell);
+		//console.log(flags);
 
 		$scope.clickMe = function() {
 			console.log('clickMe');
-			$modalInstance.close({
+			$windowInstance.close({
 				spell : spell
 			});
 		};
 
 		$scope.onSave = function(spell) {
-			$modalInstance.close({
+			$windowInstance.close({
 				spell : spell
 			});
 		};
 
 		$scope.onSaveError = function(spell) {
-			$modalInstance.close({
+			$windowInstance.close({
 				spell : spell
 			});
 		};
 
 		$scope.onRemove = function(spell) {
-			$modalInstance.close({
+			$windowInstance.close({
 				spell : spell
 			});
 		};
 
 		$scope.onRemoveError = function(spell) {
-			$modalInstance.close({
+			$windowInstance.close({
 				spell : spell
 			});
 		};

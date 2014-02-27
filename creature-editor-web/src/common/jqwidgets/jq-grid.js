@@ -58,6 +58,7 @@
 								event.stopPropagation();
 								$scope.$apply(function() {
 									var item = $scope[params.data][event.args.rowindex];
+									console.log('click', $scope.$parent, item, event.args.columnindex);
 									params.events.cellClick($scope.$parent, item, event.args.columnindex);
 								});
 							});

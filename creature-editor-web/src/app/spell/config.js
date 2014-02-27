@@ -101,12 +101,12 @@
 					}
 				});
 				modal.result.then(function(result) {
-					console.log('modal success');
-					$state.go('^', {}, {
-						reload : true
-					});
+					console.log('window success');
+//					$state.go('^', {}, {
+//						reload : true
+//					});
 				}, function() {
-					console.log('modal fail');
+					console.log('window fail');
 					// $state.go('^');
 				});
 			} ]
