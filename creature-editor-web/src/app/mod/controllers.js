@@ -71,29 +71,29 @@
 
 			} ]);
 
-	module.controller('ModEditController', [ '$scope', '$modalInstance', 'mod', function ModEditController($scope, $modalInstance, mod) {
+	module.controller('ModEditController', [ '$scope', '$windowInstance', 'mod', function ModEditController($scope, $windowInstance, mod) {
 		$scope.mod = mod;
 
 		$scope.onSave = function(mod) {
-			$modalInstance.close({
+			$windowInstance.close({
 				mod : mod
 			});
 		};
 
 		$scope.onSaveError = function(mod) {
-			$modalInstance.close({
+			$windowInstance.close({
 				mod : mod
 			});
 		};
 
 		$scope.onRemove = function(mod) {
-			$modalInstance.close({
+			$windowInstance.close({
 				mod : mod
 			});
 		};
 
 		$scope.onRemoveError = function(mod) {
-			$modalInstance.close({
+			$windowInstance.close({
 				mod : mod
 			});
 		};

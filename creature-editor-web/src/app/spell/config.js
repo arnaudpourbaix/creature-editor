@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
+	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'jqwidgets', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function SpellTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/spell');
@@ -80,8 +80,7 @@
 					controller : 'SpellEditController',
 					options : {
 						width: 900,
-						height: 600,
-						isModal: true
+						height: 600
 					},
 					resolve : {
 						spell : [ 'Spell', function(Spell) {

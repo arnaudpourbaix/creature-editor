@@ -46,6 +46,9 @@
 				angular.forEach(windowOptions.resolve, function(value, key) {
 					ctrlLocals[key] = tplAndVars[resolveIter++];
 				});
+				angular.forEach(windowOptions.inject, function(value, key) {
+					ctrlLocals[key] = value;
+				});
 				$controller(windowOptions.controller, ctrlLocals);
 			}
 			
@@ -67,7 +70,7 @@
 					content : $compile(tplAndVars[0])(windowScope)
 				});
 				containerId = 'jqWindow' + sequence;
-				$(document.body).append('<div id="' + containerId + '"><div></div><div></div></div>');
+				$(document.body).append('<div class="jq-window" id="' + containerId + '"><div></div><div></div></div>');
 				jqSelector = $('#' + containerId);
 				jqSelector.jqxWindow(options);
 				jqSelector.on('close', function(event) {
@@ -142,7 +145,7 @@
 		var options = {
 			theme : 'bootstrap',
 			showCollapseButton : true,
-			isModal : false
+			isModal : true
 		};
 
 		this.theme = function(value) {

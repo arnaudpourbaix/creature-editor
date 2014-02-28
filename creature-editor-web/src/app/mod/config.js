@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.config', [ 'creatureEditor.mod.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
+	var module = angular.module('creatureEditor.mod.config', [ 'creatureEditor.mod.services', 'jqwidgets', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function ModTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/mod');
@@ -21,23 +21,31 @@
 
 		$stateProvider.state('mods.edit', {
 			url : '/:modId',
-			onEnter : [ '$state', '$stateParams', '$modal', '$timeout', 'Restangular', function($state, $stateParams, $modal, $timeout, Restangular) {
-				var modal = $modal.open({
+			resolve : {
+				mod : [ 'Mod', '$stateParams', function(Mod, $stateParams) {
+					if ($stateParams.modId !== 'new') {
+						return Mod.get({
+							id : $stateParams.modId
+						}).$promise;
+					} else {
+						return new Mod({
+							id : null,
+							name : ''
+						});
+					}
+				} ]
+			},
+			onEnter : [ '$state', '$jqWindow', 'mod', function($state, $jqWindow, mod) {
+				var modal = $jqWindow.open({
+					title: "{{ mod.name || '&nbsp;' }}",
 					templateUrl : "mod/mod-edit.tpl.html",
 					controller : 'ModEditController',
-					resolve : {
-						mod : [ 'Mod', function(Mod) {
-							if ($stateParams.modId !== 'new') {
-								return Mod.get({
-									id : $stateParams.modId
-								}).$promise;
-							} else {
-								return new Mod({
-									id : null,
-									name : ''
-								});
-							}
-						} ]
+					options : {
+						width: 500,
+						height: 200
+					},
+					inject : {
+						mod : mod
 					}
 				});
 				modal.result.then(function(result) {

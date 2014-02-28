@@ -23,7 +23,7 @@ module.exports = {
 
 		html : [ 'src/index.html' ],
 		css : [ 'src/**/*.css', '!src/assets/**/*.css' ],
-		less : 'src/less/main.less'
+		less : 'src/app/app.less'
 	},
 
 	/**
