@@ -61,8 +61,8 @@
 
 			} ]);
 
-	module.controller('ParamConfigEditController', [ '$scope', '$modalInstance', '$translate', 'parameter',
-			function ParamConfigEditController($scope, $modalInstance, $translate, parameter) {
+	module.controller('ParamConfigEditController', [ '$scope', '$windowInstance', '$translate', 'parameter',
+			function ParamConfigEditController($scope, $windowInstance, $translate, parameter) {
 				$scope.parameter = parameter;
 				$scope.parameterValues = parameter.parameterValues;
 
@@ -80,13 +80,13 @@
 				});
 
 				$scope.onSave = function(parameter) {
-					$modalInstance.close({
+					$windowInstance.close({
 						parameter : parameter
 					});
 				};
 
 				$scope.onSaveError = function(parameter) {
-					$modalInstance.close({
+					$windowInstance.close({
 						parameter : parameter
 					});
 				};

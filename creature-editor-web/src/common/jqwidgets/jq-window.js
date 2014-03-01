@@ -24,6 +24,15 @@
 				});
 			}
 
+			function getResolveTitle(title) {
+				// can resolve function that return a text or a promise, but it doesn't support dependencies injection yet
+				if (angular.isFunction(title)) {
+					return $q.when(title());
+				} else {
+					return $q.when(title);
+				}
+			}
+			
 			function getResolvePromises(resolves) {
 				var promisesArr = [];
 				angular.forEach(resolves, function(value, key) {
@@ -38,7 +47,7 @@
 				if (!windowOptions.controller) {
 					return;
 				}
-				var resolveIter = 1; // 0 is the view template
+				var resolveIter = 2; // 0 is the view template
 				var ctrlLocals = {
 					$scope : windowScope,
 					$windowInstance : self
@@ -66,7 +75,8 @@
 				instanciateController(windowOptions, windowScope, tplAndVars);
 
 				var options = angular.extend({}, globalOptions, windowOptions.options, {
-					title : windowOptions.title ? $interpolate(windowOptions.title)(windowScope) : '&nbsp;',
+					// title : windowOptions.title ? $interpolate(windowOptions.title)(windowScope) : '&nbsp;',
+					title : tplAndVars[1],
 					content : $compile(tplAndVars[0])(windowScope)
 				});
 				containerId = 'jqWindow' + sequence;
@@ -100,7 +110,7 @@
 			};
 			
 			(function constructor() {
-				var templateAndResolvePromise = $q.all([ getTemplatePromise(windowOptions) ].concat(getResolvePromises(windowOptions.resolve)));
+				var templateAndResolvePromise = $q.all([ getTemplatePromise(windowOptions) ].concat([ getResolveTitle(windowOptions.title) ]).concat(getResolvePromises(windowOptions.resolve)));
 				templateAndResolvePromise.then(function resolveSuccess(tplAndVars) {
 					open(tplAndVars);
 					windowOpenedDeferred.resolve(true);

@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('param-config.config', [ 'param-config.services', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
+	var module = angular.module('param-config.config', [ 'param-config.services', 'jqwidgets', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function ParameterTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('common/param-config');
@@ -40,16 +40,24 @@
 
 		$stateProvider.state('param-config.paramList.edit', {
 			url : '/:id',
-			onEnter : [ '$state', '$stateParams', '$modal', 'Parameter', function($state, $stateParams, $modal, Parameter) {
-				var modal = $modal.open({
+			resolve : {
+				parameter : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
+					return Parameter.get({
+						id : $stateParams.id
+					}).$promise;
+				} ]
+			},
+			onEnter : [ '$state', '$stateParams', '$jqWindow', 'parameter', function($state, $stateParams, $jqWindow, parameter) {
+				var modal = $jqWindow.open({
 					templateUrl : "param-config/parameter-edit.tpl.html",
 					controller : 'ParamConfigEditController',
-					resolve : {
-						parameter : [ 'Parameter', function(Parameter) {
-							return Parameter.get({
-								id : $stateParams.id
-							}).$promise;
-						} ]
+					options : {
+						width : 500,
+						height : 350
+					},
+					title : parameter.name,
+					inject : {
+						parameter : parameter
 					}
 				});
 				modal.result.then(function(result) {

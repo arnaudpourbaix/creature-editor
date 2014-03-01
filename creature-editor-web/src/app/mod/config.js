@@ -35,14 +35,22 @@
 					}
 				} ]
 			},
-			onEnter : [ '$state', '$jqWindow', 'mod', function($state, $jqWindow, mod) {
+			onEnter : [ '$state', '$jqWindow', '$translate', 'mod', function($state, $jqWindow, $translate, mod) {
 				var modal = $jqWindow.open({
-					title: "{{ mod.name || '&nbsp;' }}",
+					title : function() {
+						if (mod.id == null) {
+							return $translate('MOD.NEW_TITLE');
+						} else {
+							return $translate('MOD.EDIT_TITLE', {
+								name : mod.name
+							});
+						}
+					},
 					templateUrl : "mod/mod-edit.tpl.html",
 					controller : 'ModEditController',
 					options : {
-						width: 500,
-						height: 200
+						width : 500,
+						height : 200
 					},
 					inject : {
 						mod : mod

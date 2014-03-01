@@ -138,13 +138,13 @@
 
 			} ]);
 
-	module.controller('SpellImportController', [ '$scope', '$modalInstance', 'SpellImportService', 'mod',
-			function SpellImportController($scope, $modalInstance, SpellImportService, mod) {
+	module.controller('SpellImportController', [ '$scope', '$windowInstance', 'SpellImportService', 'mod',
+			function SpellImportController($scope, $windowInstance, SpellImportService, mod) {
 				$scope.mod = mod;
 
 				$scope.confirm = function() {
 					SpellImportService.startImport($scope.mod);
-					$modalInstance.close();
+					$windowInstance.close();
 				};
 
 			} ]);

@@ -10,6 +10,7 @@
 			"ACTION" : "Actions",
 			"DELETE" : "Delete"
 		},
-		"EDIT_TITLE" : "Mod details"
+		"EDIT_TITLE" : "{{name}}",
+		"NEW_TITLE" : "New mod"
 	}
 }

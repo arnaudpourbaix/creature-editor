@@ -37,67 +37,38 @@
 			}
 		});
 
-// $stateProvider.state('spells.list.edit', {
-// url : '/:id',
-// onEnter : [ '$state', '$stateParams', '$modal', 'Spell', 'SpellService', function($state, $stateParams, $modal, Spell, SpellService) {
-// var modal = $modal.open({
-// templateUrl : "spell/spell-edit.tpl.html",
-// controller : 'SpellEditController',
-// resolve : {
-// spell : [ 'Spell', function(Spell) {
-// if ($stateParams.spellId !== 'new') {
-// return Spell.get({
-// id : $stateParams.id
-// }).$promise;
-// } else {
-// return new Spell({
-// id : null,
-// name : ''
-// });
-// }
-// } ],
-// flags : [ 'SpellService', function(SpellService) {
-// return SpellService.getFlags();
-// } ]
-// }
-// });
-// modal.result.then(function(result) {
-// $state.go('^', {}, {
-// reload : true
-// });
-// }, function() {
-// $state.go('^');
-// });
-// } ]
-// });
-
 		$stateProvider.state('spells.list.edit', {
 			url : '/:id',
-			onEnter : [ '$state', '$stateParams', '$jqWindow', 'Spell', 'SpellService', function($state, $stateParams, $jqWindow, Spell, SpellService) {
+			resolve : {
+				spell : [ 'Spell', '$stateParams', function(Spell, $stateParams) {
+					if ($stateParams.spellId !== 'new') {
+						return Spell.get({
+							id : $stateParams.id
+						}).$promise;
+					} else {
+						return new Spell({
+							id : null,
+							name : ''
+						});
+					}
+				} ],
+				flags : [ 'SpellService', function(SpellService) {
+					return SpellService.getFlags();
+				} ]
+			},
+			onEnter : [ '$state', '$jqWindow', 'spell', 'flags', function($state, $jqWindow, spell, flags) {
 				var modal = $jqWindow.open({
-					title: '{{ spell.resource }}',
+					title: spell.resource,
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
 					options : {
 						width: 900,
 						height: 600
 					},
-					resolve : {
-						spell : [ 'Spell', function(Spell) {
-							if ($stateParams.spellId !== 'new') {
-								return Spell.get({
-									id : $stateParams.id
-								}).$promise;
-							} else {
-								return new Spell({
-									id : null,
-									name : ''
-								});
-							}
-						} ],
-						flags : [ 'SpellService', function(SpellService) {
-							return SpellService.getFlags();
-						} ]
+					inject : {
+						spell : spell,
+						flags : flags
+						
 					}
 				});
 				modal.result.then(function(result) {
@@ -111,16 +82,24 @@
 		});
 		
 		$stateProvider.state('spells.list.import', {
-			onEnter : [ '$state', '$stateParams', '$modal', function($state, $stateParams, $modal) {
-				var modal = $modal.open({
+			resolve : {
+				mod : [ 'Mod', '$stateParams', function(Mod, $stateParams) {
+					return Mod.get({
+						id : $stateParams.modId
+					}).$promise;
+				} ]
+			},
+			onEnter : [ '$state', 'mod', '$jqWindow', '$translate', function($state, mod, $jqWindow, $translate) {
+				var modal = $jqWindow.open({
 					templateUrl : "spell/spell-import.tpl.html",
 					controller : 'SpellImportController',
-					resolve : {
-						mod : [ 'Mod', function(Mod) {
-							return Mod.get({
-								id : $stateParams.modId
-							}).$promise;
-						} ]
+					title : $translate('SPELL.IMPORT.TITLE'),
+					options : {
+						width: 500,
+						height: 150
+					},
+					inject: {
+						mod : mod
 					}
 				});
 				modal.result.finally(function(result) {
