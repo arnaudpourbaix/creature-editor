@@ -54,21 +54,24 @@
 				} ],
 				flags : [ 'SpellService', function(SpellService) {
 					return SpellService.getFlags();
+				} ],
+				exclusionFlags : [ 'SpellService', function(SpellService) {
+					return SpellService.getExclusionFlags();
 				} ]
 			},
-			onEnter : [ '$state', '$jqWindow', 'spell', 'flags', function($state, $jqWindow, spell, flags) {
+			onEnter : [ '$state', '$jqWindow', 'spell', 'flags', 'exclusionFlags', function($state, $jqWindow, spell, flags, exclusionFlags) {
 				var modal = $jqWindow.open({
 					title: spell.resource,
 					templateUrl : "spell/spell-edit.tpl.html",
 					controller : 'SpellEditController',
 					options : {
 						width: 900,
-						height: 600
+						height: 800
 					},
 					inject : {
 						spell : spell,
-						flags : flags
-						
+						flags : flags.data,
+						exclusionFlags : exclusionFlags.data
 					}
 				});
 				modal.result.then(function(result) {

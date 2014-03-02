@@ -105,6 +105,7 @@ public class SpellFactory {
 		int effectOffset = DynamicArray.getInt(buffer, 106);
 		fetchSpellAbilities(spell, buffer, effectOffset);
 		fetchSpellEffects(spell, buffer, effectOffset);
+		//		logger.debug(spell.toString());
 		return getSpell(spell);
 	}
 
@@ -119,7 +120,7 @@ public class SpellFactory {
 		spell.setSecondaryType(rawSpell.getSecondaryType());
 		spell.setSchool(rawSpell.getSchool());
 		spell.setFlags(rawSpell.getFlags().getValue());
-		spell.setExclusionflags(rawSpell.getExclusionFlags().getValue());
+		spell.setExclusionFlags(rawSpell.getExclusionFlags().getValue());
 		return spell;
 	}
 

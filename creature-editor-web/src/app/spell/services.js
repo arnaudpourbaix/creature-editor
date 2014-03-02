@@ -56,6 +56,12 @@
 					method : 'GET',
 					url : appSettings.restBaseUrl + 'spell/flags'
 				});
+			},
+			getExclusionFlags : function() {
+				return $http({
+					method : 'GET',
+					url : appSettings.restBaseUrl + 'spell/exclusionFlags'
+				});
 			}
 		};
 

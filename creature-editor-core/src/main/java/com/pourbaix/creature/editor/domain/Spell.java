@@ -52,15 +52,15 @@ public class Spell implements java.io.Serializable {
 	@Enumerated
 	private SpellTypeEnum type;
 
-	@Column(name = "SECONDARYTYPE", nullable = false)
+	@Column(name = "SECONDARY_TYPE", nullable = false)
 	@Enumerated
 	private SpellSecondaryTypeEnum secondaryType;
 
 	@Column(name = "FLAGS")
 	private Long flags;
 
-	@Column(name = "EXCLUSIONFLAGS")
-	private Long exclusionflags;
+	@Column(name = "EXCLUSION_FLAGS")
+	private Long exclusionFlags;
 
 	@Column(name = "RANGE")
 	private Integer range;
@@ -158,12 +158,12 @@ public class Spell implements java.io.Serializable {
 		this.secondaryType = secondaryType;
 	}
 
-	public Long getExclusionflags() {
-		return this.exclusionflags;
+	public Long getExclusionFlags() {
+		return this.exclusionFlags;
 	}
 
-	public void setExclusionflags(Long exclusionflags) {
-		this.exclusionflags = exclusionflags;
+	public void setExclusionFlags(Long exclusionFlags) {
+		this.exclusionFlags = exclusionFlags;
 	}
 
 	public Integer getRange() {

@@ -20,6 +20,7 @@
 			"ACTION" : "Actions",
 			"DELETE" : "Delete"
 		},
+		"NONE" : "None",
 		"IMPORT" : {
 			"TITLE" : "Import spells",
 			"BUTTON" : "Import",

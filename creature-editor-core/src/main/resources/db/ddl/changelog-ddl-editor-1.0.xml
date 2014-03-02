@@ -153,11 +153,11 @@
 			<column name="type" type="int">
 				<constraints nullable="false"/>
 			</column>
-			<column name="secondaryType" type="int">
+			<column name="secondary_type" type="int">
 				<constraints nullable="false"/>
 			</column>
 			<column name="flags" type="bigint" />
-			<column name="exclusionFlags" type="bigint" />
+			<column name="exclusion_flags" type="bigint" />
 			<column name="range" type="int" />
 			<column name="school" type="int" />
 			<column name="hurt_allies" type="BOOLEAN">

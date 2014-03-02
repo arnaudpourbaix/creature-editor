@@ -118,10 +118,10 @@ public class ReaderServiceTest {
 	}
 
 	@Test
-	public void spellTarss() {
+	public void spellBPDISPEL() {
 		try {
-			Spell spell = readerService.getSpell("1TARSS.SPL");
-			assertEquals(4, spell.getLevel());
+			Spell spell = readerService.getSpell("BPDISPEL.SPL");
+			assertEquals(3, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}

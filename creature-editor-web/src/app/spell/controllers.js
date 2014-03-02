@@ -1,4 +1,5 @@
-(function() {
+/* global _ */
+(function(_) {
 	'use strict';
 
 	var module = angular.module('creatureEditor.spell.controllers', [ 'creatureEditor.spell.services', 'alert-message', 'crud', 'ui.bootstrap' ]);
@@ -149,34 +150,55 @@
 
 			} ]);
 
-	module.controller('SpellEditController', [ '$scope', '$windowInstance', 'spell', 'flags', function SpellEditController($scope, $windowInstance, spell, flags) {
-		$scope.spell = spell;
-		// console.log(spell);
-		// console.log(flags);
+	module.controller('SpellEditController', [ '$scope', '$windowInstance', '$q', '$translate', 'spell', 'flags', 'exclusionFlags',
+			function SpellEditController($scope, $windowInstance, $q, $translate, spell, flags, exclusionFlags) {
+				$scope.spell = spell;
+				console.log(spell);
 
-		$scope.onSave = function(spell) {
-			$windowInstance.close({
-				spell : spell
-			});
-		};
+				function getFlags(flags, num) {
+					var result = _.reduce(flags, function(result, flag, key) {
+						var value = Math.pow(2, flag.bit);
+						if ((num & value) === value) {
+							if (result) {
+								result += ', ';
+							}
+							result += flag.label;
+						}
+						return result;
+					}, '');
+					return $q.when(result ? result : $translate('SPELL.NONE'));
+				}
 
-		$scope.onSaveError = function(spell) {
-			$windowInstance.close({
-				spell : spell
-			});
-		};
+				getFlags(flags, spell.flags).then(function(result) {
+					$scope.flags = result;
+				});
+				getFlags(exclusionFlags, spell.exclusionFlags).then(function(result) {
+					$scope.exclusionFlags = result;
+				});
 
-		$scope.onRemove = function(spell) {
-			$windowInstance.close({
-				spell : spell
-			});
-		};
+				$scope.onSave = function(spell) {
+					$windowInstance.close({
+						spell : spell
+					});
+				};
 
-		$scope.onRemoveError = function(spell) {
-			$windowInstance.close({
-				spell : spell
-			});
-		};
-	} ]);
+				$scope.onSaveError = function(spell) {
+					$windowInstance.close({
+						spell : spell
+					});
+				};
 
-})();
+				$scope.onRemove = function(spell) {
+					$windowInstance.close({
+						spell : spell
+					});
+				};
+
+				$scope.onRemoveError = function(spell) {
+					$windowInstance.close({
+						spell : spell
+					});
+				};
+			} ]);
+
+})(_);
