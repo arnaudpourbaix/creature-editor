@@ -4,16 +4,26 @@
 	var module = angular.module('jqwidgets.services', []);
 
 	function JqDataAdapterService(dataAdapterOptions) {
+		var getDataAdapter = function(source, settings) {
+			var params = angular.extend({}, dataAdapterOptions, settings);
+			return new $.jqx.dataAdapter(source, params);
+		};
+
 		var service = {
 			get : function(source, settings) {
-				console.log('data adapter test');
-				var params = angular.extend({}, dataAdapterOptions, settings);
-				return new $.jqx.dataAdapter(source, params);
+				return getDataAdapter(source, settings);
+			},
+			getRecordsHierarchy : function(source, id, parent, display, settings) {
+				var dataAdapter = getDataAdapter(source, settings);
+				return dataAdapter.getRecordsHierarchy(id, parent, null, [ {
+					name : display,
+					map : 'label'
+				} ]);
 			}
 		};
 		return service;
 	}
-	
+
 	function JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions) {
 		var dataAdapter = new JqDataAdapterService(dataAdapterOptions);
 		var service = {
@@ -64,10 +74,10 @@
 			isModal : true
 		};
 		var panelOptions = {
-				
+
 		};
 		var treeOptions = {
-				
+
 		};
 		var dataAdapterOptions = {
 			autoBind : true
@@ -80,5 +90,5 @@
 			return new JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions);
 		} ];
 	});
-	
+
 }(window));
