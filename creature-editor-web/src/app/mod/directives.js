@@ -28,37 +28,4 @@
 		};
 	} ]);
 
-	/**
-	 * Create a select2 component for a mod<br>
-	 * Emit 'selectedMod' event on change with mod parameter.
-	 */
-	module.directive('selectMod', [ 'Mod', function SelectModDirective(Mod) {
-		return {
-			restrict : 'E',
-			transclude : true,
-			replace : true,
-			scope : true,
-			templateUrl : 'mod/mod-select.tpl.html',
-			controller : function($scope, $element, $attrs, $transclude) {
-				$scope.mods = Mod.query();
-
-				$scope.modId = null;
-
-				$scope.select2Options = {
-					allowClear : $attrs.allowClear === 'true'
-				};
-
-				$scope.$watch('modId', function(newValue, oldValue) {
-					if (newValue === oldValue) {
-						return;
-					}
-					var mod = _.find($scope.mods, function(mod) {
-						return mod.id === parseInt($scope.modId, 10);
-					});
-					$scope.$emit('selectedMod', mod);
-				});
-			}
-		};
-	} ]);
-
 })(_);

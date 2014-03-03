@@ -172,9 +172,20 @@
 				getFlags(flags, spell.flags).then(function(result) {
 					$scope.flags = result;
 				});
+				
 				getFlags(exclusionFlags, spell.exclusionFlags).then(function(result) {
 					$scope.exclusionFlags = result;
 				});
+				
+				$scope.descriptionPanel = {
+					//content: "{{spell.description}}",
+					//content: "spell.description",
+					content: "<div>{{spell.description}}</div>",
+					options: {
+						width: "500px",
+						height: "200px"
+					}
+				};
 
 				$scope.onSave = function(spell) {
 					$windowInstance.close({

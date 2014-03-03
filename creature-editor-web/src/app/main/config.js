@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.main.config', [ 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'loading-animation', 'alert-message' ]);
+	var module = angular.module('creatureEditor.main.config', [ 'ngCookies', 'pascalprecht.translate', 'restangular', 'ui.router', 'loading-animation', 'alert-message', 'jqwidgets' ]);
 
 	module.config([ '$urlRouterProvider', '$locationProvider', '$translateProvider', '$translatePartialLoaderProvider', 'RestangularProvider',
 			function MainConfig($urlRouterProvider, $locationProvider, $translateProvider, $translatePartialLoaderProvider, RestangularProvider) {
@@ -17,8 +17,8 @@
 				$translateProvider.fallbackLanguage('en');
 			} ]);
 
-	module.config([ '$loadingAnimationProvider', function LoadingAnimationConfig($loadingAnimationProvider) {
-		$loadingAnimationProvider.minDuration(1);
+	module.config([ '$jqwidgetsProvider', function JqWidgetConfig($jqwidgetsProvider) {
+		$jqwidgetsProvider.theme('bootstrap');
 	} ]);
 	
 	module.config(['$provide', function($provide) {

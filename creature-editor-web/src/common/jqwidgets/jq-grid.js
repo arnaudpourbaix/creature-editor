@@ -2,9 +2,9 @@
 (function(window, $) {
 	'use strict';
 
-	var module = angular.module('jqwidgets.grid', []);
+	var module = angular.module('jqwidgets.grid', [ 'jqwidgets.services' ]);
 
-	var createGrid = function(element, columns, data, options, events) {
+	var createGrid = function($jqwidgets, element, columns, data, options, events) {
 		var dataFields = [];
 		angular.forEach(columns, function(column, index) {
 			if (column.dataField) {
@@ -19,23 +19,19 @@
 			dataType : "array",
 			dataFields : dataFields
 		});
-		var params = {
-			altRows : true,
-			columnsResize : true,
-			sortable : true,
-			showfilterrow : true,
-			filterable : true,
-			selectionMode : 'singlerow',
-			pagermode : 'simple',
-			enabletooltips : true,
-			theme : 'bootstrap',
+		$jqwidgets.dataAdapter().get({
+			localData : data,
+			dataType : "array",
+			dataFields : dataFields
+		});
+		var params = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.gridOptions(), options, {
 			columns : columns,
 			source : dataAdapter
-		};
-		element.jqxGrid(angular.extend(params, options));
+		});
+		element.jqxGrid(params);
 	};
 
-	module.directive('jqGrid', [ '$compile', function JqGridDirective($compile) {
+	module.directive('jqGrid', [ '$compile', '$jqwidgets', function JqGridDirective($compile, $jqwidgets) {
 		return {
 			restrict : 'AE',
 			replace : true,
@@ -62,16 +58,16 @@
 								});
 							});
 						}
-						createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
+						createGrid($jqwidgets, iElement, params.columns, $scope[params.data], params.options, params.events);
 						$scope.$on('jqGrid-new-data', function() {
-							createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
+							createGrid($jqwidgets, iElement, params.columns, $scope[params.data], params.options, params.events);
 						});
 						$scope.$parent.$watchCollection(params.data + '.length', function() {
 							iElement.jqxGrid('updatebounddata');
 						});
 						$scope.$parent.$watch(iAttrs.jqGrid, function() {
 							params = $scope.$eval(iAttrs.jqGrid);
-							createGrid(iElement, params.columns, $scope[params.data], params.options, params.events);
+							createGrid($jqwidgets, iElement, params.columns, $scope[params.data], params.options, params.events);
 						});
 					}
 				};

@@ -2,9 +2,9 @@
 (function(window, $) {
 	'use strict';
 
-	var module = angular.module('jqwidgets.window', [ 'ui.router' ]);
-
-	function JqWindowService(globalOptions, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
+	var module = angular.module('jqwidgets.window', [ 'jqwidgets.services', 'ui.router' ]);
+	
+	module.service('$jqWindow', [ '$jqwidgets', '$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$compile', '$interpolate', '$state', function jqWindowService($jqwidgets, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
 		var windowInstances = [], windowSequence = 0;
 
 		function log(message) {
@@ -47,7 +47,7 @@
 				if (!windowOptions.controller) {
 					return;
 				}
-				var resolveIter = 2; // 0 is the view template
+				var resolveIter = 2; // 0: view template, 1: title
 				var ctrlLocals = {
 					$scope : windowScope,
 					$windowInstance : self
@@ -74,8 +74,7 @@
 				var windowScope = (windowOptions.scope || $rootScope).$new();
 				instanciateController(windowOptions, windowScope, tplAndVars);
 
-				var options = angular.extend({}, globalOptions, windowOptions.options, {
-					// title : windowOptions.title ? $interpolate(windowOptions.title)(windowScope) : '&nbsp;',
+				var options = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.windowOptions(), windowOptions.options, {
 					title : tplAndVars[1],
 					content : $compile(tplAndVars[0])(windowScope)
 				});
@@ -149,31 +148,7 @@
 		};
 
 		return service;
-	}
-
-	module.provider('$jqWindow', function JqWindowProvider() {
-		var options = {
-			theme : 'bootstrap',
-			showCollapseButton : true,
-			isModal : true
-		};
-
-		this.theme = function(value) {
-			options.theme = value;
-		};
-
-		this.showCollapseButton = function(value) {
-			options.showCollapseButton = value;
-		};
-
-		this.isModal = function(value) {
-			options.isModal = value;
-		};
-
-		this.$get = [ '$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$compile', '$interpolate', '$state',
-				function jqWindowService($injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
-					return new JqWindowService(options, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state);
-				} ];
-	});
+	} ]);
+	
 	
 }(window, jQuery));

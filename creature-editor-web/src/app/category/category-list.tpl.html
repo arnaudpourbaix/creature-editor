@@ -1,7 +1,7 @@
 <widget-panel>
-	<div data-widget-panel-header>Categories</div>
+	<div data-widget-panel-header data-translate>CATEGORY.LIST_TITLE</div>
 	<div data-widget-panel-body>
-		<div data-jqxtree="categories"></div>
+		<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree"></div>
 	</div>
 	<div data-widget-panel-footer>
 		<button data-ng-click="gotoCategoryNewPage()" class="button">Add</button>
