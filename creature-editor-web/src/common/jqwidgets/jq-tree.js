@@ -6,7 +6,7 @@
 
 	var createTree = function($jqwidgets, element, scope, params) {
 		if (!params.data || !scope[params.data]) {
-			throw new Error("undefined data!");
+			throw new Error("undefined param 'data'!");
 		}
 		if (!params.datafields) {
 			throw new Error("undefined param 'datafields'!");
@@ -22,7 +22,7 @@
 		}
 		var source = angular.extend({
 			datafields : params.datafields,
-			datatype : "json",
+			datatype : "array",
 			localdata : scope[params.data],
 			id : params.id
 		});
@@ -43,7 +43,10 @@
 					pre : function($scope, iElement, iAttrs) {
 						var params = $scope.$eval(iAttrs.jqTree);
 						createTree($jqwidgets, iElement, $scope, params);
-						$scope.$parent.$watch(iAttrs.jqGrid, function() {
+						$scope.$parent.$watch(iAttrs.jqGrid, function(newValue, oldValue) {
+							if (newValue === oldValue) {
+								return;
+							}
 							params = $scope.$eval(iAttrs.jqTree);
 							createTree($jqwidgets, iElement, $scope, params);
 						});

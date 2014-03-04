@@ -15,7 +15,7 @@
 								data : 'mods',
 								columns : [ {
 									text : labels[0],
-									dataField : 'name',
+									datafield : 'name',
 									type : 'string',
 									align : 'center',
 									width : 200

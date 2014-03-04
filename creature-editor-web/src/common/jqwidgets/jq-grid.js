@@ -4,31 +4,24 @@
 
 	var module = angular.module('jqwidgets.grid', [ 'jqwidgets.services' ]);
 
-	var createGrid = function($jqwidgets, element, columns, data, options, events) {
-		var dataFields = [];
-		angular.forEach(columns, function(column, index) {
-			if (column.dataField) {
-				dataFields.push({
-					name : column.dataField,
-					type : column.type
-				});
-			}
-		});
-		var dataAdapter = new $.jqx.dataAdapter({
-			localData : data,
-			dataType : "array",
-			dataFields : dataFields
-		});
-		$jqwidgets.dataAdapter().get({
-			localData : data,
-			dataType : "array",
-			dataFields : dataFields
-		});
-		var params = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.gridOptions(), options, {
-			columns : columns,
+	var createGrid = function($jqwidgets, element, scope, params) {
+		if (!params.data || !scope[params.data]) {
+			throw new Error("undefined param 'data'!");
+		}
+		if (!params.columns) {
+			throw new Error("undefined param 'columns'!");
+		}
+		var source = {
+			localdata : scope[params.data],
+			datatype : "json",
+			datafields : params.columns
+		};
+		var dataAdapter = $jqwidgets.dataAdapter().get(source);
+		var settings = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.gridOptions(), params.options, {
+			columns : params.columns,
 			source : dataAdapter
 		});
-		element.jqxGrid(params);
+		element.jqxGrid(settings);
 	};
 
 	module.directive('jqGrid', [ '$compile', '$jqwidgets', function JqGridDirective($compile, $jqwidgets) {
@@ -58,16 +51,19 @@
 								});
 							});
 						}
-						createGrid($jqwidgets, iElement, params.columns, $scope[params.data], params.options, params.events);
+						createGrid($jqwidgets, iElement, $scope, params);
 						$scope.$on('jqGrid-new-data', function() {
-							createGrid($jqwidgets, iElement, params.columns, $scope[params.data], params.options, params.events);
+							createGrid($jqwidgets, iElement, $scope, params);
 						});
 						$scope.$parent.$watchCollection(params.data + '.length', function() {
 							iElement.jqxGrid('updatebounddata');
 						});
-						$scope.$parent.$watch(iAttrs.jqGrid, function() {
+						$scope.$parent.$watch(iAttrs.jqGrid, function(newValue, oldValue) {
+							if (newValue === oldValue) {
+								return;
+							}
 							params = $scope.$eval(iAttrs.jqGrid);
-							createGrid($jqwidgets, iElement, params.columns, $scope[params.data], params.options, params.events);
+							createGrid($jqwidgets, iElement, $scope, params);
 						});
 					}
 				};

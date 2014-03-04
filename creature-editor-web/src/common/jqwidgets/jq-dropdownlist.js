@@ -4,13 +4,22 @@
 
 	var module = angular.module('jqwidgets.dropdownlist', [ 'jqwidgets.services' ]);
 
-	var createDropDownList = function($jqwidgets, element, data, displayMember, valueMember, options, events) {
-		var params = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.dropDownListOptions(), options, {
-			source : data,
-			displayMember : displayMember,
-			valueMember : valueMember
+	var createDropDownList = function($jqwidgets, element, scope, params) {
+		if (!params.data || !scope[params.data]) {
+			throw new Error("undefined param 'data'!");
+		}
+		if (!params.displayMember) {
+			throw new Error("undefined param 'displayMember'!");
+		}
+		if (!params.valueMember) {
+			throw new Error("undefined param 'valueMember'!");
+		}
+		var settings = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.dropDownListOptions(), params.options, {
+			source : scope[params.data],
+			displayMember : params.displayMember,
+			valueMember : params.valueMember
 		});
-		element.jqxDropDownList(params);
+		element.jqxDropDownList(settings);
 	};
 
 	module.directive('jqDropDownList', [ '$compile', '$timeout', '$jqwidgets', function JqDropDownListDirective($compile, $timeout, $jqwidgets) {
@@ -21,13 +30,19 @@
 			compile : function(tElm, tAttrs) {
 				return function($scope, iElement, iAttrs, controller) {
 						var params = $scope.$eval(iAttrs.jqDropDownList);
-						createDropDownList($jqwidgets, iElement, $scope[params.data], params.displayMember, params.valueMember, params.options, params.events);
-						$scope.$parent.$watchCollection(params.data + '.length', function() {
-							createDropDownList($jqwidgets, iElement, $scope[params.data], params.displayMember, params.valueMember, params.options, params.events);
+						createDropDownList($jqwidgets, iElement, $scope, params);
+						$scope.$parent.$watch(params.data, function(newValue, oldValue) {
+							if (newValue === oldValue) {
+								return;
+							}
+							createDropDownList($jqwidgets, iElement, $scope, params);
 						});
-						$scope.$parent.$watch(iAttrs.jqDropDownList, function() {
+						$scope.$parent.$watch(iAttrs.jqDropDownList, function(newValue, oldValue) {
+							if (newValue === oldValue) {
+								return;
+							}
 							params = $scope.$eval(iAttrs.jqDropDownList);
-							createDropDownList($jqwidgets, iElement, $scope[params.data], params.displayMember, params.valueMember, params.options, params.events);
+							createDropDownList($jqwidgets, iElement, $scope, params);
 						});
 						$scope.$watch(tAttrs.ngModel, function(current, old) {
 							if (current == null) {

@@ -21,19 +21,19 @@
 							data : 'parameters',
 							columns : [ {
 								text : labels[0],
-								dataField : 'name',
+								datafield : 'name',
 								type : 'string',
 								align : 'center',
 								width : 250
 							}, {
 								text : labels[1],
-								dataField : 'label',
+								datafield : 'label',
 								type : 'string',
 								align : 'center',
 								width : 400
 							}, {
 								text : labels[2],
-								dataField : 'value',
+								datafield : 'value',
 								type : 'string',
 								align : 'center',
 								width : 150
