@@ -21,7 +21,6 @@
 		
 		var getDataAdapter = function(source, settings) {
 			source.datafields = getDatafields(source.datafields);
-			source.dataFields = source.datafields; // FIXME component bug
 			var params = angular.extend({}, dataAdapterOptions, settings);
 			return new $.jqx.dataAdapter(source, params);
 		};

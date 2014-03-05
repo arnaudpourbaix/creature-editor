@@ -34,7 +34,7 @@
 					pre : function($scope, iElement, iAttrs) {
 						var params = $scope.$eval(iAttrs.jqGrid);
 						if (params.events.rowClick) {
-							iElement.on('rowClick', function(event) {
+							iElement.on('rowclick', function(event) {
 								event.stopPropagation();
 								$scope.$apply(function() {
 									var item = $scope[params.data][event.args.rowindex];
@@ -43,7 +43,7 @@
 							});
 						}
 						if (params.events.cellClick) {
-							iElement.on("cellClick", function(event) {
+							iElement.on("cellclick", function(event) {
 								event.stopPropagation();
 								$scope.$apply(function() {
 									var item = $scope[params.data][event.args.rowindex];
