@@ -1,18 +1,19 @@
-<nav id="menu-nav" class="navbar navbar-default navbar-fixed-top" role="navigation">
-	<p class="navbar-text navbar-right" data-translate>APP_NAME</p>
-	<ul class="nav navbar-nav">
-		<li data-ng-class="{active:$state.includes('mods')}"><a data-ui-sref="mods" data-translate>MENU.MODS</a></li>
-		<li data-ng-class="{active:$state.includes('spells')}"><a data-ui-sref="spells.modSelect" data-translate>MENU.SPELLS</a></li>
-		<li data-ng-class="{active:$state.includes('categories')}"><a data-ui-sref="categories" data-translate>MENU.CATEGORIES</a></li>
-		<li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" data-translate>MENU.CONFIGURATION <b class="caret"></b></a>
-			<ul class="dropdown-menu">
+<ng-include src="'alert-message/alerts.tpl.html'"></ng-include>
+<nav id="menu-nav" role="navigation">
+<div data-jq-menu>
+	<ul>
+		<li><a data-ui-sref="mods" data-translate>MENU.MODS</a></li>
+		<li><a data-ui-sref="spells.modSelect" data-translate>MENU.SPELLS</a></li>
+		<li><a data-ui-sref="categories" data-translate>MENU.CATEGORIES</a></li>
+		<li>{{ 'MENU.CONFIGURATION' | translate }}
+			<ul>
 				<li><a data-ui-sref="categories" data-translate>MENU.CATEGORIES</a></li>
-				<li class="divider"></li>
+				<li type='separator'></li>
 				<li><a data-ui-sref="mods" data-translate>MENU.MODS</a></li>
-				<li><a data-ui-sref="spells" data-translate>MENU.SPELLS</a></li>
+				<li><a data-ui-sref="spells.modSelect" data-translate>MENU.SPELLS</a></li>
 				<li><a data-ui-sref="param-config.paramList({ typeId: 'GENERAL' })" data-translate>MENU.PARAMETERS</a></li>
 			</ul>
 		</li>
 	</ul>
-	<ng-include src="'alert-message/alerts.tpl.html'"></ng-include>
+</div>
 </nav>

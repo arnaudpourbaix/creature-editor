@@ -1,16 +1,20 @@
 /* alert-messages CSS */
 
 .alert-messages {
+	position: fixed;
+	top: 0; left: 0; right: 0;
+	/*height: 50px;*/
 	z-index: 9999;
-	width: 50%;
-	height: 50%;
+		
 	.alert {
-		margin-top: 7px;
-		margin-bottom: 0;
-		padding: 7px;
+		display: inline-block;
+		text-align: center;
+		z-index: 9999;
+		margin: 0 auto;
 	}    
 }
 
+/*
 .alert-messages .alert.ng-hide-remove {
 	display:block!important;
 	.lh-animation(slideInLeft 0.5s);
@@ -20,3 +24,4 @@
 	display:block!important;
 	.lh-animation(slideOutRight 0.5s);
 }
+*/

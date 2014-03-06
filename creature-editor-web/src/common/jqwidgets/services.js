@@ -104,7 +104,9 @@
 
 		};
 		var menuOptions = {
-
+			showTopLevelArrows : true,
+			enableHover : true,
+			autoOpen : true
 		};
 		var dataAdapterOptions = {
 			autoBind : true
