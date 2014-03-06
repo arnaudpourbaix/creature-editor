@@ -14,11 +14,13 @@
 				if (!name) {
 					return;
 				}
-				result.push(angular.extend(_.pick(datafield, props), { name: name }));
+				result.push(angular.extend(_.pick(datafield, props), {
+					name : name
+				}));
 			});
 			return result;
 		};
-		
+
 		var getDataAdapter = function(source, settings) {
 			source.datafields = getDatafields(source.datafields);
 			var params = angular.extend({}, dataAdapterOptions, settings);
@@ -43,7 +45,7 @@
 		return service;
 	}
 
-	function JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions) {
+	function JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions, menuOptions) {
 		var dataAdapter = new JqDataAdapterService(dataAdapterOptions);
 		var service = {
 			dataAdapter : function() {
@@ -66,6 +68,9 @@
 			},
 			treeOptions : function() {
 				return treeOptions;
+			},
+			menuOptions : function() {
+				return menuOptions;
 			}
 		};
 		return service;
@@ -98,6 +103,9 @@
 		var treeOptions = {
 
 		};
+		var menuOptions = {
+
+		};
 		var dataAdapterOptions = {
 			autoBind : true
 		};
@@ -106,7 +114,7 @@
 		};
 
 		this.$get = [ function jqWidgetService() {
-			return new JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions);
+			return new JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions, menuOptions);
 		} ];
 	});
 
