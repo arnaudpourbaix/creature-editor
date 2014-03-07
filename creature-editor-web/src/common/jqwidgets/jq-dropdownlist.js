@@ -5,14 +5,8 @@
 	var module = angular.module('jqwidgets.dropdownlist', [ 'jqwidgets.services' ]);
 
 	var createDropDownList = function($jqwidgets, element, scope, params) {
-		if (!params.data || !scope[params.data]) {
-			throw new Error("undefined param 'data'!");
-		}
-		if (!params.displayMember) {
-			throw new Error("undefined param 'displayMember'!");
-		}
-		if (!params.valueMember) {
-			throw new Error("undefined param 'valueMember'!");
+		if (!scope[params.data]) {
+			throw new Error("undefined data in scope: " + params.data);
 		}
 		var settings = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.dropDownListOptions(), params.options, {
 			source : scope[params.data],
@@ -29,21 +23,34 @@
 			require: 'ngModel',
 			compile : function(tElm, tAttrs) {
 				return function($scope, iElement, iAttrs, controller) {
-						var params = $scope.$eval(iAttrs.jqDropDownList);
+						var getParams = function() {
+							return $jqwidgets.common().getParams($scope.$eval(iAttrs.jqDropDownList), ['data', 'displayMember', 'valueMember'], ['options', 'events']);
+						};
+						var bindEvents = function(params) {
+							iElement.off();
+							iElement.on('select', function(event) {
+								var value = event.args.item.value;
+								if (value !== controller.$viewValue) {
+									controller.$setViewValue(value);
+									$scope.$apply();
+								}
+							});
+						};
+			
+						
+						var params = getParams();
+						bindEvents(params);
 						createDropDownList($jqwidgets, iElement, $scope, params);
-						$scope.$parent.$watch(params.data, function(newValue, oldValue) {
-							if (newValue === oldValue) {
-								return;
-							}
-							createDropDownList($jqwidgets, iElement, $scope, params);
-						});
+
 						$scope.$parent.$watch(iAttrs.jqDropDownList, function(newValue, oldValue) {
 							if (newValue === oldValue) {
 								return;
 							}
-							params = $scope.$eval(iAttrs.jqDropDownList);
+							params = getParams();
+							bindEvents(params);
 							createDropDownList($jqwidgets, iElement, $scope, params);
 						});
+						
 						$scope.$watch(tAttrs.ngModel, function(current, old) {
 							if (current == null) {
 								iElement.jqxDropDownList('clearSelection');
@@ -51,13 +58,14 @@
 								iElement.val(current);
 							}
 						}, true);
-						iElement.on('select', function(event) {
-							var value = event.args.item.value;
-							if (value !== controller.$viewValue) {
-								controller.$setViewValue(value);
-								$scope.$apply();
+						
+						$scope.$parent.$watch(params.data, function(newValue, oldValue) {
+							if (newValue === oldValue) {
+								return;
 							}
+							createDropDownList($jqwidgets, iElement, $scope, params);
 						});
+						
 						$timeout(function () {
 							iElement.val(controller.$viewValue);
 						});

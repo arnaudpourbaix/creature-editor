@@ -4,7 +4,7 @@
 		"SELECT_MOD" : "Select a mod",
 		"LIST_TITLE" : "Mods",
 		"FIELDS" : {
-			"NAME" : "Name"
+			"NAME" : "Nom"
 		},
 		"COLUMNS" : {
 			"ACTION" : "Actions",

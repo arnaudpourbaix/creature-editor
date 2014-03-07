@@ -5,20 +5,8 @@
 	var module = angular.module('jqwidgets.tree', [ 'jqwidgets.services' ]);
 
 	var createTree = function($jqwidgets, element, scope, params) {
-		if (!params.data || !scope[params.data]) {
-			throw new Error("undefined param 'data'!");
-		}
-		if (!params.datafields) {
-			throw new Error("undefined param 'datafields'!");
-		}
-		if (!params.id) {
-			throw new Error("undefined param 'id'!");
-		}
-		if (!params.parent) {
-			throw new Error("undefined param 'parent'!");
-		}
-		if (!params.display) {
-			throw new Error("undefined param 'display'!");
+		if (!scope[params.data]) {
+			throw new Error("undefined data in scope: " + params.data);
 		}
 		var source = angular.extend({
 			datafields : params.datafields,
@@ -32,7 +20,7 @@
 		});
 		element.jqxTree(settings);
 	};
-
+	
 	module.directive('jqTree', [ '$compile', '$jqwidgets', function JqTreeDirective($compile, $jqwidgets) {
 		return {
 			restrict : 'AE',
@@ -41,13 +29,41 @@
 			compile : function() {
 				return {
 					pre : function($scope, iElement, iAttrs) {
-						var params = $scope.$eval(iAttrs.jqTree);
+						var getParams = function() {
+							return $jqwidgets.common().getParams($scope.$eval(iAttrs.jqTree), ['data', 'datafields', 'id', 'parent', 'display'], ['options', 'events', 'contextMenu']);
+						};
+						var bindEvents = function(params) {
+							iElement.off();
+							if (params.events.itemClick) {
+							}
+							if (params.events.contextMenu) {
+								iElement.on('contextmenu', 'li', function (event) {
+									// disable the default browser's context menu
+									event.preventDefault();
+									var target = angular.element(event.target).parents('li:first')[0];
+									if (target != null) {
+										iElement.jqxTree('selectItem', target);
+										var posX = angular.element(window).scrollLeft() + parseInt(event.clientX) + 5;
+										var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
+										contextMenu.jqxMenu('open', posX, posY);
+									}
+								});
+								var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px',  height: '56px', autoOpenPopup: false, mode: 'popup' });
+								$jqwidgets.menu().getContextual(params.events.contextMenu);
+							}
+						};
+
+						
+						var params = getParams();
+						bindEvents(params);
 						createTree($jqwidgets, iElement, $scope, params);
+						
 						$scope.$parent.$watch(iAttrs.jqGrid, function(newValue, oldValue) {
 							if (newValue === oldValue) {
 								return;
 							}
-							params = $scope.$eval(iAttrs.jqTree);
+							params = getParams();
+							bindEvents(params);
 							createTree($jqwidgets, iElement, $scope, params);
 						});
 					}

@@ -4,8 +4,35 @@
 
 	var module = angular.module('jqwidgets.services', []);
 
-	function JqDataAdapterService(dataAdapterOptions) {
-
+	function JqCommonService(commonOptions) {
+		var service = {
+			/**
+			 * return params object after controlling required properties and adding missing optional properties
+			 * @param params : object (required)
+			 * @param requiredProps : array of string (optional)
+			 * @param optionalProps : array of string (optional)
+			 */
+			getParams : function(params, requiredProps, optionalProps) {
+				var paramKeys = _.keys(params);
+				if (angular.isArray(requiredProps)) {
+					var difference = _.difference(requiredProps, paramKeys);
+					if (difference.length) {
+						throw new Error("missing required params: " + difference.toString());
+					}
+				}
+				if (angular.isArray(optionalProps)) {
+					angular.forEach(optionalProps, function(prop, index) {
+						params[prop] = params[prop] || {};
+					});
+				}
+				return params;
+			}
+		};
+		return service;
+	}
+	
+	function JqDataAdapterService(commonService, dataAdapterOptions) {
+		
 		var getDatafields = function(datafields) {
 			var result = [];
 			var props = [ 'name', 'type', 'map', 'format', 'values' ];
@@ -45,11 +72,41 @@
 		return service;
 	}
 
+	function JqMenuService(commonService, menuOptions) {
+		
+		var checkParams = function(params) {
+			commonService.getParams(params, ['items']);
+			if (!angular.isArray(params.items)) {
+				throw new Error("items must be an array: " + params.items);
+			}
+			angular.forEach(items, function(item, index) {
+				
+			});
+		};
+		
+		var service = {
+			getContextual : function(params) {
+				checkParams(params);
+				//var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px',  height: '56px', autoOpenPopup: false, mode: 'popup' });
+				console.log('getContextual', params);
+			}
+		};
+		return service;
+	}
+	
 	function JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions, menuOptions) {
-		var dataAdapter = new JqDataAdapterService(dataAdapterOptions);
+		var commonService = new JqCommonService(commonOptions);
+		var dataAdapterService = new JqDataAdapterService(commonService, dataAdapterOptions);
+		var menuService = new JqMenuService(commonService, menuOptions);
 		var service = {
 			dataAdapter : function() {
-				return dataAdapter;
+				return dataAdapterService;
+			},
+			menu : function() {
+				return menuService;
+			},
+			common : function() {
+				return commonService;
 			},
 			commonOptions : function() {
 				return commonOptions;

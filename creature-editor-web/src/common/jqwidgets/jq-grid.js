@@ -5,11 +5,8 @@
 	var module = angular.module('jqwidgets.grid', [ 'jqwidgets.services' ]);
 
 	var createGrid = function($jqwidgets, element, scope, params) {
-		if (!params.data || !scope[params.data]) {
-			throw new Error("undefined param 'data'!");
-		}
-		if (!params.columns) {
-			throw new Error("undefined param 'columns'!");
+		if (!scope[params.data]) {
+			throw new Error("undefined data in scope: " + params.data);
 		}
 		var source = {
 			localdata : scope[params.data],
@@ -32,38 +29,51 @@
 			compile : function() {
 				return {
 					pre : function($scope, iElement, iAttrs) {
-						var params = $scope.$eval(iAttrs.jqGrid);
-						if (params.events.rowClick) {
-							iElement.on('rowclick', function(event) {
-								event.stopPropagation();
-								$scope.$apply(function() {
-									var item = $scope[params.data][event.args.rowindex];
-									params.events.rowClick($scope, item);
+						var getParams = function() {
+							return $jqwidgets.common().getParams($scope.$eval(iAttrs.jqGrid), ['data', 'columns'], ['options', 'events']);
+						};
+						var bindEvents = function(params) {
+							iElement.off();
+							if (params.events.rowClick) {
+								iElement.on('rowclick', function(event) {
+									event.stopPropagation();
+									$scope.$apply(function() {
+										var item = $scope[params.data][event.args.rowindex];
+										params.events.rowClick($scope, item);
+									});
 								});
-							});
-						}
-						if (params.events.cellClick) {
-							iElement.on("cellclick", function(event) {
-								event.stopPropagation();
-								$scope.$apply(function() {
-									var item = $scope[params.data][event.args.rowindex];
-									params.events.cellClick($scope.$parent, item, event.args.columnindex);
+							}
+							if (params.events.cellClick) {
+								iElement.on("cellclick", function(event) {
+									event.stopPropagation();
+									$scope.$apply(function() {
+										var item = $scope[params.data][event.args.rowindex];
+										params.events.cellClick($scope.$parent, item, event.args.columnindex);
+									});
 								});
-							});
-						}
+							}
+						};
+						
+						
+						var params = getParams();
+						bindEvents(params);
 						createGrid($jqwidgets, iElement, $scope, params);
-						$scope.$on('jqGrid-new-data', function() {
-							createGrid($jqwidgets, iElement, $scope, params);
-						});
-						$scope.$parent.$watchCollection(params.data + '.length', function() {
-							iElement.jqxGrid('updatebounddata');
-						});
+						
 						$scope.$parent.$watch(iAttrs.jqGrid, function(newValue, oldValue) {
 							if (newValue === oldValue) {
 								return;
 							}
-							params = $scope.$eval(iAttrs.jqGrid);
+							params = getParams();
+							bindEvents(params);
 							createGrid($jqwidgets, iElement, $scope, params);
+						});
+						
+						$scope.$on('jqGrid-new-data', function() {
+							createGrid($jqwidgets, iElement, $scope, params);
+						});
+						
+						$scope.$parent.$watchCollection(params.data + '.length', function() {
+							iElement.jqxGrid('updatebounddata');
 						});
 					}
 				};
