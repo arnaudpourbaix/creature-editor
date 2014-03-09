@@ -17,7 +17,7 @@
 			var containerId, jqSelector, resultData;
 
 			function getTemplatePromise(options) {
-				return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
+				return options.template ? $q.when(angular.element(options.template)) : $http.get(options.templateUrl, {
 					cache : $templateCache
 				}).then(function(result) {
 					return result.data;

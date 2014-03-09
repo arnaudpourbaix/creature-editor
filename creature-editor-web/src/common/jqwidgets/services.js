@@ -2,22 +2,26 @@
 (function(window, _) {
 	'use strict';
 
-	var module = angular.module('jqwidgets.services', []);
+	var module = angular.module('jqwidgets.services', [ 'jqwidgets.controllers' ]);
 
-	function JqCommonService(commonOptions) {
+	function JqCommonService(commonOptions, $q, $http, $templateCache, $rootScope, $controller) {
 		var service = {
 			/**
 			 * return params object after controlling required properties and adding missing optional properties
-			 * @param params : object (required)
-			 * @param requiredProps : array of string (optional)
-			 * @param optionalProps : array of string (optional)
+			 * 
+			 * @param params :
+			 *           object (required)
+			 * @param requiredProps :
+			 *           array of string (optional)
+			 * @param optionalProps :
+			 *           array of string (optional)
 			 */
 			getParams : function(params, requiredProps, optionalProps) {
 				var paramKeys = _.keys(params);
 				if (angular.isArray(requiredProps)) {
 					var difference = _.difference(requiredProps, paramKeys);
 					if (difference.length) {
-						throw new Error("missing required params: " + difference.toString());
+						throw new Error("missing required parameters: " + difference.toString());
 					}
 				}
 				if (angular.isArray(optionalProps)) {
@@ -26,13 +30,35 @@
 					});
 				}
 				return params;
+			},
+
+			getTemplatePromise : function(options) {
+				return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
+					cache : $templateCache
+				}).then(function(result) {
+					return result.data;
+				});
+			},
+
+			instanciateController : function(controller, scope, dependencies) {
+				if (!controller) {
+					throw new Error("missing controller!");
+				}
+				var ctrlLocals = {
+					$scope : scope || $rootScope.$new()
+				};
+				angular.forEach(dependencies, function(value, key) {
+					ctrlLocals[key] = value;
+				});
+				$controller(controller, ctrlLocals);
 			}
+
 		};
 		return service;
 	}
-	
+
 	function JqDataAdapterService(commonService, dataAdapterOptions) {
-		
+
 		var getDatafields = function(datafields) {
 			var result = [];
 			var props = [ 'name', 'type', 'map', 'format', 'values' ];
@@ -72,32 +98,52 @@
 		return service;
 	}
 
-	function JqMenuService(commonService, menuOptions) {
-		
+	function JqMenuService(commonService, menuOptions, $compile, $rootScope) {
+
 		var checkParams = function(params) {
-			commonService.getParams(params, ['items']);
+			commonService.getParams(params, [ 'items' ]);
 			if (!angular.isArray(params.items)) {
 				throw new Error("items must be an array: " + params.items);
 			}
-			angular.forEach(items, function(item, index) {
-				
+			angular.forEach(params.items, function(item, index) {
+				var difference = _.difference([ 'label', 'action' ], _.keys(item));
+				if (difference.length) {
+					throw new Error("missing item parameters: " + difference.toString());
+				}
+				if (!angular.isString(item.label)) {
+					throw new Error("label must be a string: " + item.label.toString());
+				}
+				if (!angular.isFunction(item.action)) {
+					throw new Error("action must be a function: " + item.action.toString());
+				}
 			});
 		};
-		
+
 		var service = {
 			getContextual : function(params) {
 				checkParams(params);
-				//var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px',  height: '56px', autoOpenPopup: false, mode: 'popup' });
-				console.log('getContextual', params);
+				commonService.getTemplatePromise({
+					// templateUrl : 'jqwidgets/jq-menu.tpl.html'
+					template : '<ul><li data-ng-repeat="item in items">{{item.label}}</li></ul>'
+				}).then(function(tpl) {
+					var scope = $rootScope.$new();
+					commonService.instanciateController('JqContextualMenuController', scope, {
+						items : params.items,
+					});
+					var content = $compile(tpl)(scope);
+					$("#testMenu").html(content);
+					// var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px', height: '56px', autoOpenPopup: false, mode: 'popup' });
+				});
 			}
 		};
 		return service;
 	}
-	
-	function JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions, menuOptions) {
-		var commonService = new JqCommonService(commonOptions);
+
+	function JqWidgetService($q, $http, $templateCache, $rootScope, $controller, $compile, dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions,
+			panelOptions, treeOptions, menuOptions) {
+		var commonService = new JqCommonService(commonOptions, $q, $http, $templateCache, $rootScope, $controller);
 		var dataAdapterService = new JqDataAdapterService(commonService, dataAdapterOptions);
-		var menuService = new JqMenuService(commonService, menuOptions);
+		var menuService = new JqMenuService(commonService, menuOptions, $compile, $rootScope);
 		var service = {
 			dataAdapter : function() {
 				return dataAdapterService;
@@ -172,9 +218,17 @@
 			commonOptions.theme = value;
 		};
 
-		this.$get = [ function jqWidgetService() {
-			return new JqWidgetService(dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions, windowOptions, panelOptions, treeOptions, menuOptions);
-		} ];
+		this.$get = [
+				'$q',
+				'$http',
+				'$templateCache',
+				'$rootScope',
+				'$controller',
+				'$compile',
+				function jqWidgetService($q, $http, $templateCache, $rootScope, $controller, $compile) {
+					return new JqWidgetService($q, $http, $templateCache, $rootScope, $controller, $compile, dataAdapterOptions, commonOptions, gridOptions, dropDownListOptions,
+							windowOptions, panelOptions, treeOptions, menuOptions);
+				} ];
 	});
 
 }(window, _));
