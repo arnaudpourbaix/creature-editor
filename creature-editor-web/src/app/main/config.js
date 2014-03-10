@@ -17,8 +17,8 @@
 				$translateProvider.fallbackLanguage('en');
 			} ]);
 
-	module.config([ '$jqwidgetsProvider', function JqWidgetConfig($jqwidgetsProvider) {
-		$jqwidgetsProvider.theme('bootstrap');
+	module.config([ '$jqCommonProvider', function JqWidgetConfig($jqCommonProvider) {
+		$jqCommonProvider.theme('bootstrap');
 	} ]);
 	
 	module.config(['$provide', function($provide) {

@@ -1,8 +1,7 @@
-/* global jQuery */
-(function(window, $) {
+(function(window) {
 	'use strict';
 
-	angular.module('jqwidgets', [ 'jqwidgets.services', 'jqwidgets.controllers', 'jqwidgets.window', 'jqwidgets.grid', 'jqwidgets.dropdownlist', 'jqwidgets.panel',
+	angular.module('jqwidgets', [ 'jqwidgets.common', 'jqwidgets.data-adapter', 'jqwidgets.window', 'jqwidgets.grid', 'jqwidgets.dropdownlist', 'jqwidgets.panel',
 			'jqwidgets.tree', 'jqwidgets.menu' ]);
 
-}(window, jQuery));
+}(window));

@@ -41,11 +41,11 @@
 			replace : true,
 			template : '<div class="panel panel-primary" data-ng-transclude></div>',
 			link : function(scope, element, attributes) {
-				uiService.draggable(element, {
-					handle : $('.panel-heading', element),
-					containment : "document"
-				});
-				uiService.resizable(element);
+//				uiService.draggable(element, {
+//					handle : $('.panel-heading', element),
+//					containment : "document"
+//				});
+//				uiService.resizable(element);
 			}
 		};
 	} ]);

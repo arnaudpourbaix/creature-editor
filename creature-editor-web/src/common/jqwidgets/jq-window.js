@@ -2,9 +2,13 @@
 (function(window, $) {
 	'use strict';
 
-	var module = angular.module('jqwidgets.window', [ 'jqwidgets.services', 'ui.router' ]);
+	var module = angular.module('jqwidgets.window', [ 'jqwidgets.common', 'ui.router' ]);
 	
-	module.service('$jqWindow', [ '$jqwidgets', '$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$compile', '$interpolate', '$state', function jqWindowService($jqwidgets, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
+	module.service('$jqWindow', [ '$jqCommon', '$injector', '$rootScope', '$q', '$http', '$templateCache', '$controller', '$compile', '$interpolate', '$state', function jqWindowService($jqCommon, $injector, $rootScope, $q, $http, $templateCache, $controller, $compile, $interpolate, $state) {
+		var options = {
+			showCollapseButton : true,
+			isModal : true
+		};
 		var windowInstances = [], windowSequence = 0;
 
 		function log(message) {
@@ -74,14 +78,14 @@
 				var windowScope = (windowOptions.scope || $rootScope).$new();
 				instanciateController(windowOptions, windowScope, tplAndVars);
 
-				var options = angular.extend({}, $jqwidgets.commonOptions(), $jqwidgets.windowOptions(), windowOptions.options, {
+				var settings = angular.extend({}, $jqCommon.options(), options, windowOptions.options, {
 					title : tplAndVars[1],
 					content : $compile(tplAndVars[0])(windowScope)
 				});
 				containerId = 'jqWindow' + sequence;
 				$(document.body).append('<div class="jq-window" id="' + containerId + '"><div></div><div></div></div>');
 				jqSelector = $('#' + containerId);
-				jqSelector.jqxWindow(options);
+				jqSelector.jqxWindow(settings);
 				jqSelector.on('close', function(event) {
 					// windowScope.$apply(function() {
 						close();

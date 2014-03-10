@@ -52,7 +52,7 @@
 					templateUrl : "param-config/parameter-edit.tpl.html",
 					controller : 'ParamConfigEditController',
 					options : {
-						width : 500,
+						width : 600,
 						height : 350
 					},
 					title : parameter.name,
