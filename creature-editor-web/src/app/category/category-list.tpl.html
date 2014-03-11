@@ -2,13 +2,18 @@
 	<div data-widget-panel-header data-translate>CATEGORY.LIST_TITLE</div>
 	<div data-widget-panel-body>
 		<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree"></div>
-		<div id="jqxMenu" data-jqq-menu="{ autoOpenPopup: false, mode: 'popup' }">
+		<!-- <div id="jqxMenu" data-jq-menu="{ autoOpenPopup: false, mode: 'popup' }">
+			<ul>
+				<li>Add Item</li>
+				<li>Remove Item</li>
+			</ul>
+		</div> -->
+		<div id="testMenu">
 			<ul>
 				<li>Add Item</li>
 				<li>Remove Item</li>
 			</ul>
 		</div>
-		<div id="testMenu"></div>
 	</div>
 	<div data-widget-panel-footer>
 		<button data-ng-click="gotoCategoryNewPage()" class="button">Add</button>

@@ -20,7 +20,7 @@
 						},
 						/**
 						 * @ngdoc function
-						 * @name angular.getParams
+						 * @name $jqCommon.getParams
 						 * @module jqwidgets.common
 						 * @function
 						 *
@@ -48,12 +48,12 @@
 
 						/**
 						 * @ngdoc function
-						 * @name angular.getTemplatePromise
+						 * @name $jqCommon.getTemplatePromise
 						 * @module jqwidgets.common
 						 * @function
 						 *
 						 * @description Get template promise from a template string or url.
-						 * @param {array} options Must contains template or templateUrl property.
+						 * @param {object} options Must contains template or templateUrl property.
 						 * @returns {object} Template promise.
 						 */
 						getTemplatePromise : function(options) {
@@ -66,17 +66,17 @@
 
 						/**
 						 * @ngdoc function
-						 * @name angular.instanciateController
+						 * @name $jqCommon.instanciateController
 						 * @module jqwidgets.common
 						 * @function
 						 *
 						 * @description Instanciate a controller.
 						 * @param {string} controller Controller's name.
-						 * @param {object} scope Controller's scope, if not provided, a new scope is created from root scope.
 						 * @param {array} dependencies Dependencies to inject.
+						 * @param {object} scope Controller's scope, if not provided, a new scope is created from root scope.
 						 * @returns
 						 */
-						instanciateController : function(controller, scope, dependencies) {
+						instanciateController : function(controller, dependencies, scope) {
 							if (!controller) {
 								throw new Error("missing controller!");
 							}
@@ -87,6 +87,29 @@
 								ctrlLocals[key] = value;
 							});
 							$controller(controller, ctrlLocals);
+						},
+						
+						/**
+						 * @ngdoc function
+						 * @name $jqCommon.getView
+						 * @module jqwidgets.common
+						 * @function
+						 *
+						 * @description Create and return a view, also instanciate a controller related to the view.
+						 * @param {object} templateOptions Must contains template or templateUrl property.
+						 * @param {string} controller Controller's name.
+						 * @param {array} dependencies Dependencies to inject.
+						 * @param {object} scope Controller's scope, if not provided, a new scope is created from root scope.
+						 * @returns {element} dom element compiled with angular's scope.
+						 */
+						getView : function(templateOptions, controller, dependencies, scope) {
+							return service.getTemplatePromise(templateOptions).then(function(template) {
+								scope = scope || $rootScope.$new();
+								if (controller) {
+									service.instanciateController(controller, dependencies, scope);
+								}
+								return $compile(template)(scope);
+							});
 						}
 
 					};

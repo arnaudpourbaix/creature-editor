@@ -31,6 +31,10 @@
 						console.log(category);
 					},
 					contextMenu : {
+						domSelector: '#testMenu',
+						options : {
+							
+						},
 						items : [ {
 							label : 'Add category',
 							action : function($scope, category) {

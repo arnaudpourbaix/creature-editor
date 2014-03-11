@@ -11,7 +11,7 @@
 			autoOpen : true
 		};
 
-		this.$get = [ '$jqCommon', '$rootScope', '$compile', function jqMenuService($jqCommon, $rootScope, $compile) {
+		this.$get = [ '$jqCommon', '$rootScope', '$compile', '$timeout', function jqMenuService($jqCommon, $rootScope, $compile, $timeout) {
 			var checkParams = function(params) {
 				$jqCommon.getParams(params, [ 'items' ]);
 				if (!angular.isArray(params.items)) {
@@ -37,18 +37,24 @@
 				},
 				getContextual : function(params) {
 					checkParams(params);
-					$jqCommon.getTemplatePromise({
-						// templateUrl : 'jqwidgets/jq-menu.tpl.html'
+					var templateOptions = {
 						template : '<ul><li data-ng-repeat="item in items">{{item.label}}</li></ul>'
-					}).then(function(tpl) {
-						var scope = $rootScope.$new();
-						$jqCommon.instanciateController('JqContextualMenuController', scope, {
-							items : params.items,
+					};
+					var dependencies = {
+						items : params.items
+					};
+					return $jqCommon.getView(templateOptions, 'JqContextualMenuController', dependencies).then(function(view) {
+						console.log(view);
+						var element;
+						if (params.domSelector) {
+							element = angular.element(params.domSelector);
+						}
+						return element.html(view).jqxMenu({
+							width : '200px',
+							height : '56px',
+							autoOpenPopup : false,
+							mode : 'popup'
 						});
-						var content = $compile(tpl)(scope);
-						//$("#testMenu").html(content);
-						// var contextMenu = $("#jqxMenu").jqxMenu({ width: '120px', height: '56px', autoOpenPopup: false, mode: 'popup' });
-						return content;
 					});
 				}
 			};

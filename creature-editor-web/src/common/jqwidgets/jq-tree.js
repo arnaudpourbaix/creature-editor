@@ -32,10 +32,11 @@
 
 	module.directive('jqTree', [
 			'$compile',
+			'$timeout',
 			'$jqCommon',
 			'$jqTree',
 			'$jqMenu',
-			function JqTreeDirective($compile, $jqCommon, $jqTree, $jqMenu) {
+			function JqTreeDirective($compile, $timeout, $jqCommon, $jqTree, $jqMenu) {
 				return {
 					restrict : 'AE',
 					replace : true,
@@ -60,17 +61,12 @@
 												iElement.jqxTree('selectItem', target);
 												var posX = angular.element(window).scrollLeft() + parseInt(event.clientX) + 5;
 												var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
-												//contextMenu.jqxMenu('open', posX, posY);
-												console.log($scope.contextual);
+												$scope.contextualMenu.jqxMenu('open', posX, posY);
 											}
 										});
-//										var contextMenu = $("#jqxMenu").jqxMenu({
-//											width : '120px',
-//											height : '56px',
-//											autoOpenPopup : false,
-//											mode : 'popup'
-//										});
-										$scope.contextual = $jqMenu.getContextual(params.events.contextMenu);
+										$jqMenu.getContextual(params.events.contextMenu).then(function(result) {
+											$scope.contextualMenu = result;
+										});
 									}
 								};
 
