@@ -33,7 +33,8 @@
 					contextMenu : {
 						domSelector: '#testMenu',
 						options : {
-							
+							width : '200px',
+							height : '60px'
 						},
 						items : [ {
 							label : 'Add category',

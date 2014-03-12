@@ -44,17 +44,25 @@
 						items : params.items
 					};
 					return $jqCommon.getView(templateOptions, 'JqContextualMenuController', dependencies).then(function(view) {
-						console.log(view);
+						var container = document.createElement("div");
+						container.appendChild(view[0].cloneNode(true));
+						console.log('view', view[0]);
+						console.log('container', container);
+						var html = container.innerHTML;
+						
 						var element;
 						if (params.domSelector) {
 							element = angular.element(params.domSelector);
 						}
-						return element.html(view).jqxMenu({
-							width : '200px',
-							height : '56px',
+						var settings = angular.extend({}, params.options, {
 							autoOpenPopup : false,
 							mode : 'popup'
 						});
+						//view = '<ul class="ng-scope"><!-- ngRepeat: item in items --><li data-ng-repeat="item in items" class="ng-scope ng-binding">Add category</li><!-- end ngRepeat: item in items --><li data-ng-rapeat="item in items" class="ng-scope ng-binding">Remove category</li><!-- end ngRepeat: item in items --></ul>';
+						//view = '<ul class="ng-scope"><!-- ngRepeat: item in items --><li data-ng-repeat="item in items" class="ng-scope ng-binding">Add category</li><!-- end ngRepeat: item in items --><li data-ng-repeat="item in items" class="ng-scope ng-binding">Remove category</li><!-- end ngRepeat: item in items --></ul>';
+						//return element.html(view.html()).jqxMenu(settings);
+						console.log('html', html);
+						return element.html(html).jqxMenu(settings);
 					});
 				}
 			};
