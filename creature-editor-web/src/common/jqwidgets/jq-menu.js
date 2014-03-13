@@ -30,12 +30,22 @@
 					}
 				});
 			};
+			
+			function selectItem(label, scope, params) {
+				var item = _.find(params.items, function(item, index) {
+					return item.label === label;
+				});
+				console.log('click', item);
+				scope.$apply(function() {
+					item.action();
+				});
+			}
 
 			var service = {
 				options : function() {
 					return options;
 				},
-				getContextual : function(params) {
+				getContextual : function(params, scope) {
 					checkParams(params);
 					var templateOptions = {
 						template : '<ul><li data-ng-repeat="item in items">{{item.label}}</li></ul>'
@@ -44,12 +54,6 @@
 						items : params.items
 					};
 					return $jqCommon.getView(templateOptions, 'JqContextualMenuController', dependencies).then(function(view) {
-						var container = document.createElement("div");
-						container.appendChild(view[0].cloneNode(true));
-						console.log('view', view[0]);
-						console.log('container', container);
-						var html = container.innerHTML;
-						
 						var element;
 						if (params.domSelector) {
 							element = angular.element(params.domSelector);
@@ -58,11 +62,14 @@
 							autoOpenPopup : false,
 							mode : 'popup'
 						});
-						//view = '<ul class="ng-scope"><!-- ngRepeat: item in items --><li data-ng-repeat="item in items" class="ng-scope ng-binding">Add category</li><!-- end ngRepeat: item in items --><li data-ng-rapeat="item in items" class="ng-scope ng-binding">Remove category</li><!-- end ngRepeat: item in items --></ul>';
-						//view = '<ul class="ng-scope"><!-- ngRepeat: item in items --><li data-ng-repeat="item in items" class="ng-scope ng-binding">Add category</li><!-- end ngRepeat: item in items --><li data-ng-repeat="item in items" class="ng-scope ng-binding">Remove category</li><!-- end ngRepeat: item in items --></ul>';
-						//return element.html(view.html()).jqxMenu(settings);
-						console.log('html', html);
-						return element.html(html).jqxMenu(settings);
+						$timeout(function() {
+							element.jqxMenu(settings);
+							element.on('itemclick', function (event) {
+								selectItem($(event.target).text(), scope, params);
+							});
+						});
+						console.log(params);
+						return element.html(view);
 					});
 				}
 			};
@@ -82,6 +89,7 @@
 
 	module.controller('JqContextualMenuController', [ '$scope', 'items', function JqContextualMenuController($scope, items) {
 		$scope.items = items;
+		
 	} ]);
 
 }(window, jQuery, _));

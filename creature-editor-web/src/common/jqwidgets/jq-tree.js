@@ -64,7 +64,7 @@
 												$scope.contextualMenu.jqxMenu('open', posX, posY);
 											}
 										});
-										$jqMenu.getContextual(params.events.contextMenu).then(function(result) {
+										$jqMenu.getContextual(iElement, params.events.contextMenu, $scope).then(function(result) {
 											$scope.contextualMenu = result;
 										});
 									}
