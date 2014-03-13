@@ -30,14 +30,14 @@
 					}
 				});
 			};
-			
-			function selectItem(label, scope, params) {
+
+			function selectItem(label, scope, params, getEntity) {
 				var item = _.find(params.items, function(item, index) {
 					return item.label === label;
 				});
-				console.log('click', item);
 				scope.$apply(function() {
-					item.action();
+					var entity = getEntity();
+					item.action(entity);
 				});
 			}
 
@@ -45,7 +45,7 @@
 				options : function() {
 					return options;
 				},
-				getContextual : function(params, scope) {
+				getContextual : function(params, scope, getEntity) {
 					checkParams(params);
 					var templateOptions = {
 						template : '<ul><li data-ng-repeat="item in items">{{item.label}}</li></ul>'
@@ -64,11 +64,10 @@
 						});
 						$timeout(function() {
 							element.jqxMenu(settings);
-							element.on('itemclick', function (event) {
-								selectItem($(event.target).text(), scope, params);
+							element.on('itemclick', function(event) {
+								selectItem($(event.target).text(), scope, params, getEntity);
 							});
 						});
-						console.log(params);
 						return element.html(view);
 					});
 				}
@@ -89,7 +88,7 @@
 
 	module.controller('JqContextualMenuController', [ '$scope', 'items', function JqContextualMenuController($scope, items) {
 		$scope.items = items;
-		
+
 	} ]);
 
 }(window, jQuery, _));

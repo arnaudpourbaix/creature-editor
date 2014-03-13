@@ -31,19 +31,19 @@
 						console.log(category);
 					},
 					contextMenu : {
-						domSelector: '#testMenu',
+						domSelector : '#testMenu',
 						options : {
 							width : '200px',
 							height : '60px'
 						},
 						items : [ {
 							label : 'Add category',
-							action : function($scope, category) {
+							action : function(category) {
 								console.log('add category', category);
 							}
 						}, {
 							label : 'Remove category',
-							action : function($scope, category) {
+							action : function(category) {
 								console.log('remove category', category);
 							}
 						} ]
