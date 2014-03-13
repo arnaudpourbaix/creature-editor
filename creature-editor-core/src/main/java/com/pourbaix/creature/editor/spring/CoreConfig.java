@@ -11,7 +11,7 @@ import com.pourbaix.infinity.context.ReaderContext;
 @Configuration
 @EnableAutoConfiguration
 @ComponentScan(basePackages = { "com.pourbaix" })
-@PropertySource({ "classpath:reader.properties", "classpath:/hibernate/persistence.properties" })
+@PropertySource({ "classpath:/hibernate/persistence.properties" })
 public class CoreConfig {
 
 	@Bean

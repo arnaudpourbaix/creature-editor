@@ -11,7 +11,6 @@ import com.pourbaix.creature.script.context.ProbablityContext;
 import com.pourbaix.creature.script.context.TargetContext;
 
 @Configuration
-@PropertySource({ "classpath:script.properties" })
 public class ScriptConfig {
 
 	@Bean
