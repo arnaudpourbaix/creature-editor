@@ -43,6 +43,7 @@
 						};
 						var getEntity = function() {
 							var selectedItem = iElement.jqxTree('getSelectedItem');
+							console.log('selectedItem', selectedItem);
 							var entity = _.find($scope[params.data], function(item) { /* jshint -W116 */
 								return item[params.id] == selectedItem.id;
 							});
@@ -81,6 +82,10 @@
 							}
 							params = getParams();
 							bindEvents(params);
+							$jqTree.create(iElement, $scope, params);
+						});
+						
+						$scope.$parent.$watchCollection(params.data + '.length', function() {
 							$jqTree.create(iElement, $scope, params);
 						});
 					}

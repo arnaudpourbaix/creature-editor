@@ -6,7 +6,7 @@
 
 	module.provider('$jqDataAdapter', function JqDataAdapterProvider() {
 		var options = {
-			autoBind : true
+			//autoBind : true
 		};
 		this.autoBind = function(value) {
 			options.autoBind = value;

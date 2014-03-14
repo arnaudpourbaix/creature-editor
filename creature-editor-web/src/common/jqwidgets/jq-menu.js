@@ -26,7 +26,7 @@
 						throw new Error("label must be a string: " + item.label.toString());
 					}
 					if (!angular.isFunction(item.action)) {
-						throw new Error("action must be a function: " + item.action.toString());
+						throw new Error("action must be a function: " + item.action);
 					}
 				});
 			};

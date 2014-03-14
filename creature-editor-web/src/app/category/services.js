@@ -8,6 +8,18 @@
 		return $resource(baseUrl + ':id', {}, {
 			'save' : {
 				method : 'PUT'
+			},
+			'delete' : {
+				method : 'DELETE',
+				params : {
+					id : '@id'
+				}
+			},
+			'remove' : {
+				method : 'DELETE',
+				params : {
+					id : '@id'
+				}
 			}
 		});
 	} ]);

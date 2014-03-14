@@ -3,8 +3,8 @@
 
 	var module = angular.module('creatureEditor.mod.controllers', [ 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('ModListController', [ '$scope', '$translate', 'mods', 'crudListMethods', '$alertMessage', '$q', '$interpolate',
-			function ModListController($scope, $translate, mods, crudListMethods, $alertMessage, $q, $interpolate) {
+	module.controller('ModListController', [ '$scope', '$translate', 'crudListMethods', '$alertMessage', '$q', '$interpolate', 'mods',
+			function ModListController($scope, $translate, crudListMethods, $alertMessage, $q, $interpolate, mods) {
 				angular.extend($scope, crudListMethods('/mods'));
 				
 				$scope.mods = mods;
