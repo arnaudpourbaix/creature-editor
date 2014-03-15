@@ -30,18 +30,6 @@ public class CategoryController {
 		return categories;
 	}
 
-	// @RequestMapping(value = "/category", method = RequestMethod.GET, produces = "application/json")
-	// public List<CategoryDTO> list() {
-	// List<Category> categories = categoryRepository.findAllFetchParent();
-	// List<CategoryDTO> result = Lists.transform(categories, new Function<Category, CategoryDTO>() {
-	// @Override
-	// public CategoryDTO apply(Category input) {
-	// return new CategoryDTO(input);
-	// }
-	// });
-	// return result;
-	// }
-
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
 	public Category getById(@PathVariable Integer id) {
 		return categoryRepository.findOne(id);

@@ -5,11 +5,14 @@
 	var module = angular.module('jqwidgets.data-adapter', [ 'jqwidgets.common' ]);
 
 	module.provider('$jqDataAdapter', function JqDataAdapterProvider() {
-		var options = {
-			//autoBind : true
+		var defaultSource = {
+			mapchar : '.'
+		};
+		var defaultSettings = {
+			autoBind : true
 		};
 		this.autoBind = function(value) {
-			options.autoBind = value;
+			defaultSettings.autoBind = value;
 		};
 
 		this.$get = [ '$jqCommon', function jqDataAdapterService($jqCommon) {
@@ -30,8 +33,9 @@
 
 			var getDataAdapter = function(source, settings) {
 				source.datafields = getDatafields(source.datafields);
-				var params = angular.extend({}, options, settings);
-				return new $.jqx.dataAdapter(source, params);
+				var params = angular.extend({}, defaultSettings, settings);
+				var src = angular.extend({}, defaultSource, source);
+				return new $.jqx.dataAdapter(src, params);
 			};
 
 			var service = {
