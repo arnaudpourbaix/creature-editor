@@ -1,12 +1,15 @@
 package com.pourbaix.creature.editor.domain;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -34,10 +37,12 @@ public class Category implements java.io.Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 250)
 	private String name;
+
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "CREATURE_CATEGORY", schema = "PUBLIC", catalog = "PUBLIC", joinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "CREATURE_ID", nullable = false, updatable = false) })
 	private Set<Creature> creatures = new HashSet<Creature>(0);
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent", cascade = CascadeType.REMOVE)
 	private Set<Category> children = new HashSet<Category>(0);
 
 	public Category() {
