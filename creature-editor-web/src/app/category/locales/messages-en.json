@@ -9,6 +9,13 @@
 		"COLUMNS" : {
 			"ACTION" : "Actions",
 			"DELETE" : "Delete"
-		}
+		},
+		"CONTEXTUAL" : {
+			"ADD" : "Add",
+			"EDIT" : "Edit",
+			"DELETE" : "Delete"
+		},
+		"EDIT_TITLE" : "{{name}}",
+		"NEW_TITLE" : "New category"
 	}
 }
