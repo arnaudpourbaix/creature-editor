@@ -1,6 +1,7 @@
 {
 	"JQWIDGETS" : {
 		"TREE" : {
+			"ADD" : "Add",
 			"COLLAPSE" : "Collapse all",
 			"EXPAND" : "Expand all"
 		}
