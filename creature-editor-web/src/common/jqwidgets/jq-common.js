@@ -40,7 +40,7 @@
 							}
 							if (angular.isArray(optionalProps)) {
 								angular.forEach(optionalProps, function(prop, index) {
-									params[prop] = params[prop] || {};
+									params[prop] = params[prop] || null;
 								});
 							}
 							return params;

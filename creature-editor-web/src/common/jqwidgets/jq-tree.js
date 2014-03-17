@@ -7,7 +7,7 @@
 	module.provider('$jqTree', function JqTreeProvider() {
 		var options = {};
 
-		this.$get = [ '$jqCommon', '$jqDataAdapter', function jqTreeService($jqCommon, $jqDataAdapter) {
+		this.$get = [ '$jqCommon', '$jqDataAdapter', '$compile', '$translate', function jqTreeService($jqCommon, $jqDataAdapter, $compile, $translate) {
 			var service = {
 				create : function(element, scope, params) {
 					if (!scope[params.data]) {
@@ -15,7 +15,7 @@
 					}
 					var source = angular.extend({
 						datafields : params.datafields,
-						datatype : "array",
+						datatype : "json",
 						localdata : scope[params.data],
 						id : params.id
 					});
@@ -25,8 +25,10 @@
 					});
 					element.jqxTree(settings);
 				},
-				addCollapseButtons : function(element) {
-					angular.element('#collapseButtons').html('Expand all<br/>Collapse all');
+				addExpandCollapseButtons : function(element, scope, selector) {
+					var template = '<div class="jq-expand-collapse-buttons"><button type="button" data-ng-click="collapse()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-minus" />&nbsp;{{ \'JQWIDGETS.TREE.COLLAPSE\' | translate }}</button><button type="button" data-ng-click="expand()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus" />&nbsp;{{ \'JQWIDGETS.TREE.EXPAND\' | translate }}</button></div>';
+					var html = $compile(template)(scope);
+					angular.element(selector).html(html);
 				}
 			};
 			return service;
@@ -49,7 +51,7 @@
 							pre : function($scope, iElement, iAttrs) {
 								var getParams = function() {
 									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events', 'contextMenu',
-											'collapseButtons' ]);
+											'expandCollapseButtonsSelector' ]);
 								};
 								var getEntity = function() {
 									var selectedItem = iElement.jqxTree('getSelectedItem');
@@ -85,8 +87,8 @@
 								var params = getParams();
 								bindEvents(params);
 								$jqTree.create(iElement, $scope, params);
-								if (params.collapseButtons) {
-									$jqTree.addCollapseButtons(iElement);
+								if (params.expandCollapseButtonsSelector) {
+									$jqTree.addExpandCollapseButtons(iElement, $scope, params.expandCollapseButtonsSelector);
 								}
 
 								$scope.$parent.$watch(iAttrs.jqTree, function(newValue, oldValue) {
@@ -101,6 +103,14 @@
 								$scope.$parent.$watchCollection(params.data + '.length', function() {
 									$jqTree.create(iElement, $scope, params);
 								});
+								
+								$scope.expand = function() {
+									iElement.jqxTree('expandAll');
+								};
+								
+								$scope.collapse = function() {
+									iElement.jqxTree('collapseAll');
+								};
 							}
 						};
 					}
