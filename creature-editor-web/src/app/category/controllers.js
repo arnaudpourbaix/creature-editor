@@ -23,16 +23,15 @@
 			function CategoryListController($scope, $translate, $state, crudListMethods, $q, $alertMessage, Category) {
 				angular.extend($scope, crudListMethods('/categories'));
 
-				console.log('CategoryListController', $scope.categories);
-
 				$scope.addCategory = function(category) {
-					$state.go('categories.edit', {
+					$scope.category = category;
+					$state.go('categories.list.edit', {
 						categoryId : 'new'
 					});
 				};
 
 				$scope.editCategory = function(category) {
-					$state.go('categories.edit', {
+					$state.go('categories.list.edit', {
 						categoryId : category.id
 					});
 				};
@@ -84,9 +83,7 @@
 								expandCollapse : true
 							},
 							events : {
-								itemClick : function($scope, category) {
-									console.log(category);
-								},
+								//itemClick : $scope.editCategory,
 								contextMenu : {
 									domSelector : '#contextualMenu',
 									options : {
@@ -116,11 +113,13 @@
 
 			} ]);
 
-	module.controller('CategoryEditController', [ '$scope', 'category', function CategoryEditController($scope, category) {
-		console.log('CategoryEditController', $scope.categories);
-
+	module.controller('CategoryEditController', [ '$scope', '$state', 'category', function CategoryEditController($scope, $state, category) {
 		$scope.category = category;
 
+		$scope.onCancel = function() {
+			$state.go('^');
+		};
+		
 		$scope.onSave = function(category) {
 		};
 

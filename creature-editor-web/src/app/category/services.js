@@ -5,7 +5,8 @@
 
 	module.factory('Category', [ '$resource', 'appSettings', function CategoryFactory($resource, appSettings) {
 		var baseUrl = appSettings.restBaseUrl + 'category/';
-		return $resource(baseUrl + ':id', {}, {
+		
+		var res = $resource(baseUrl + ':id', {}, {
 			'save' : {
 				method : 'PUT'
 			},
@@ -22,6 +23,12 @@
 				}
 			}
 		});
+		
+		res.prototype.$id = function() {
+			return this.id;
+		};
+		
+		return res;
 	} ]);
 
 })();

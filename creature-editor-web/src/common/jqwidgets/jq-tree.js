@@ -71,7 +71,6 @@
 								};
 								var getEntity = function() {
 									var selectedItem = iElement.jqxTree('getSelectedItem');
-									console.log('selectedItem', selectedItem);
 									var entity = _.find($scope[params.data], function(item) { /* jshint -W116 */
 										return item[params.id] == selectedItem.id;
 									});
@@ -79,7 +78,11 @@
 								};
 								var bindEvents = function(params) {
 									iElement.off();
-									if (params.events.itemClick) {
+									if (angular.isFunction(params.events.itemClick)) {
+										iElement.on('select', function(event) {
+											var category = getEntity();
+											params.events.itemClick(category);
+										});
 									}
 									if (params.events.contextMenu) {
 										iElement.on('contextmenu', 'li', function(event) {

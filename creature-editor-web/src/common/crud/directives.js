@@ -75,6 +75,7 @@
 				checkResourceMethods(resource, [ '$save', '$id', '$remove' ]);
 
 				// Set up callbacks with fallback
+				var userOnCancel = attrs.onCancel ? makeFn(scope, attrs, 'onCancel') : (scope.onCancel || angular.noop);
 				var userOnSave = attrs.onSave ? makeFn(scope, attrs, 'onSave') : (scope.onSave || angular.noop);
 				var userOnSaveError = attrs.onSaveError ? makeFn(scope, attrs, 'onSaveError') : (scope.onSaveError || angular.noop);
 				var userOnRemove = attrs.onRemove ? makeFn(scope, attrs, 'onRemove') : (scope.onRemove || angular.noop);
@@ -108,8 +109,9 @@
 				};
 
 				// The following functions should be triggered by elements on the form
-				scope.save = function() {
-					resource.$save(onSave, onSaveError);
+				scope.cancel = function() {
+					scope.revertChanges();
+					userOnCancel();
 				};
 				scope.revertChanges = function() {
 					resource = angular.copy(original);

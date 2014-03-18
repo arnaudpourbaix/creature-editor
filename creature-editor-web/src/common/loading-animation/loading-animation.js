@@ -119,17 +119,14 @@
 				});
 
 				$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-					//console.info('$stateChangeSuccess', toState.name, 'success');
 					$loadingAnimation.stop();
 				});
 				
 				$rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {
-					console.error('$stateChangeError', toState.name, error);
 					$loadingAnimation.stop();
 				});
 
 				$rootScope.$on('$viewContentLoaded', function() {
-					//console.info('$viewContentLoaded', 'success');
 					$loadingAnimation.stop();
 				});
 

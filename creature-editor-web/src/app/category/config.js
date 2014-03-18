@@ -31,30 +31,26 @@
 			url : ''
 		});
 
-		$stateProvider.state('categories.edit', {
+		$stateProvider.state('categories.list.edit', {
 			url : '/:categoryId',
-			views : {
-				'category-list' : {
-					controller : 'CategoryListController',
-					templateUrl : 'category/category-list.tpl.html'
-				},
-				'category-edit' : {
-					controller : 'CategoryEditController',
-					templateUrl : 'category/category-edit.tpl.html',
-					resolve : {
-						category : [ 'Category', '$stateParams', function(Category, $stateParams) {
-							if ($stateParams.categoryId !== 'new') {
-								return Category.get({
-									id : $stateParams.categoryId
-								}).$promise;
-							} else {
-								return new Category({
-									id : null,
-									name : ''
-								});
-							}
-						} ]
+			resolve : {
+				category : [ 'Category', '$stateParams', function(Category, $stateParams) {
+					if ($stateParams.categoryId !== 'new') {
+						return Category.get({
+							id : $stateParams.categoryId
+						}).$promise;
+					} else {
+						return new Category({
+							id : null,
+							name : ''
+						});
 					}
+				} ]
+			},
+			views : {
+				'category-edit@categories' : {
+					controller : 'CategoryEditController',
+					templateUrl : 'category/category-edit.tpl.html'
 				}
 			}
 		});
