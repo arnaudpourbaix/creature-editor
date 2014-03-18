@@ -1,3 +1,15 @@
-<div id="treeButtons"></div>
-<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree"></div>
-<div id="contextualMenu"></div>
+<div class="panel panel-primary">
+	<div class="panel-heading" data-translate>CATEGORY.LIST_TITLE</div>
+	<div class="panel-body">
+		<div data-jq-splitter="splitter">
+			<div><div class="category-list">
+				<div id="treeButtons"></div>
+				<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree"></div>
+				<div id="contextualMenu"></div>
+			</div></div>
+			<div><div class="category-edit" data-ui-view="category-edit"></div></div>
+		</div>
+	</div>
+	<div class="panel-footer clearfix">
+	</div>
+</div>

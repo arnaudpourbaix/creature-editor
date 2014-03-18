@@ -19,19 +19,32 @@
 		};
 	} ]);
 
-	module.controller('CategoryListController', [ '$scope', '$translate', '$state', 'crudListMethods', '$q', '$alertMessage', 'Category',
-			function CategoryListController($scope, $translate, $state, crudListMethods, $q, $alertMessage, Category) {
+	module.controller('CategoryListController', [ '$scope', '$translate', '$state', 'crudListMethods', '$q', '$alertMessage', 'Category', 'categories',
+			function CategoryListController($scope, $translate, $state, crudListMethods, $q, $alertMessage, Category, categories) {
 				angular.extend($scope, crudListMethods('/categories'));
 
+				$scope.categories = categories;
+
+				$scope.splitter = {
+					width : 1000,
+					height : 600,
+					panels : [ {
+						size : 600,
+						min : 200
+					}, {
+						size : 400,
+						min : 100
+					} ]
+				};
+				
 				$scope.addCategory = function(category) {
-					$scope.category = category;
-					$state.go('categories.list.edit', {
+					$state.go('categories.edit', {
 						categoryId : 'new'
 					});
 				};
 
 				$scope.editCategory = function(category) {
-					$state.go('categories.list.edit', {
+					$state.go('categories.edit', {
 						categoryId : category.id
 					});
 				};
@@ -83,7 +96,9 @@
 								expandCollapse : true
 							},
 							events : {
-								//itemClick : $scope.editCategory,
+								itemClick : function(category) {
+									$scope.selectedCategory = category;
+								},
 								contextMenu : {
 									domSelector : '#contextualMenu',
 									options : {
@@ -114,6 +129,7 @@
 			} ]);
 
 	module.controller('CategoryEditController', [ '$scope', '$state', 'category', function CategoryEditController($scope, $state, category) {
+		console.log($scope.selectedCategory, category);
 		$scope.category = category;
 
 		$scope.onCancel = function() {
@@ -121,15 +137,19 @@
 		};
 		
 		$scope.onSave = function(category) {
+			$state.go('^');
 		};
 
 		$scope.onSaveError = function(category) {
+			$state.go('^');
 		};
 
 		$scope.onRemove = function(category) {
+			$state.go('^');
 		};
 
 		$scope.onRemoveError = function(category) {
+			$state.go('^');
 		};
 	} ]);
 

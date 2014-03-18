@@ -8,52 +8,42 @@
 	} ]);
 
 	module.config(function config($stateProvider) {
+		
+	$stateProvider.state('categories', {
+		url : '/categories',
+		controller : 'CategoryListController',
+		templateUrl : 'category/category-list.tpl.html',
+		resolve : {
+			categories : [ 'Category', function(Category) {
+				return Category.query().$promise;
+			} ]
+		}
+	});
 
-		$stateProvider.state('categories', {
-			abstract : true,
-			url : '/categories',
-			controller : 'CategoryController',
-			templateUrl : 'category/category.tpl.html',
-			resolve : {
-				categories : [ 'Category', function(Category) {
-					return Category.query().$promise;
-				} ]
-			}
-		});
-
-		$stateProvider.state('categories.list', {
-			views : {
-				'category-list' : {
-					controller : 'CategoryListController',
-					templateUrl : 'category/category-list.tpl.html'
+	$stateProvider.state('categories.edit', {
+		url : '/:categoryId',
+		resolve : {
+			category : [ 'Category', '$stateParams', function(Category, $stateParams) {
+				if ($stateParams.categoryId !== 'new') {
+					return Category.get({
+						id : $stateParams.categoryId
+					}).$promise;
+				} else {
+					return new Category({
+						id : null,
+						name : ''
+					});
 				}
-			},
-			url : ''
-		});
-
-		$stateProvider.state('categories.list.edit', {
-			url : '/:categoryId',
-			resolve : {
-				category : [ 'Category', '$stateParams', function(Category, $stateParams) {
-					if ($stateParams.categoryId !== 'new') {
-						return Category.get({
-							id : $stateParams.categoryId
-						}).$promise;
-					} else {
-						return new Category({
-							id : null,
-							name : ''
-						});
-					}
-				} ]
-			},
-			views : {
-				'category-edit@categories' : {
-					controller : 'CategoryEditController',
-					templateUrl : 'category/category-edit.tpl.html'
-				}
+			} ]
+		},
+		views : {
+			'category-edit' : {
+				controller : 'CategoryEditController',
+				templateUrl : 'category/category-edit.tpl.html'
 			}
-		});
+		}
+	});
+		
 	});
 
 })();
