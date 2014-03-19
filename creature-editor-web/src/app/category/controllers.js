@@ -1,30 +1,15 @@
-(function() {
+/* global _ */
+(function(_) {
 	'use strict';
 
 	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives', 'creatureEditor.category.services' ]);
-
-	module.controller('CategoryController', [ '$scope', 'categories', function CategoryController($scope, categories) {
-		$scope.categories = categories;
-
-		$scope.splitter = {
-			width : 1000,
-			height : 600,
-			panels : [ {
-				size : 600,
-				min : 200
-			}, {
-				size : 400,
-				min : 100
-			} ]
-		};
-	} ]);
 
 	module.controller('CategoryListController', [ '$scope', '$translate', '$state', 'crudListMethods', '$q', '$alertMessage', 'Category', 'CategoryService','categories',
 			function CategoryListController($scope, $translate, $state, crudListMethods, $q, $alertMessage, Category, CategoryService, categories) {
 				angular.extend($scope, crudListMethods('/categories'));
 
 				$scope.categories = categories;
-
+				
 				$scope.splitter = {
 					width : 1000,
 					height : 600,
@@ -55,14 +40,7 @@
 
 				$scope.moveCategory = function(category, parent) {
 					category.parent = parent;
-					category.$save().then(function(response) {
-//						$translate('CATEGORY.LABEL').then(function(label) {
-//							$alertMessage.push('CRUD.SAVE_SUCCESS', 'success', {
-//								entity : label,
-//								name : category.name
-//							});
-//						});
-					});
+					category.$save();
 				};
 				
 				$scope.removeCategory = function(category) {
@@ -146,11 +124,15 @@
 
 			} ]);
 
-	module.controller('CategoryEditController', [ '$scope', '$state', '$stateParams', function CategoryEditController($scope, $state, $stateParams) {
-		if (!$scope.category) { // need to select in tree
-			console.log('$stateParams', $stateParams);
+	module.controller('CategoryEditController', [ '$scope', '$state', '$stateParams', 'CategoryService', function CategoryEditController($scope, $state, $stateParams, CategoryService) {
+		if (!$scope.category) {
+			if ($stateParams.categoryId !== 'new') {
+				$scope.$parent.category = CategoryService.getById($scope.categories, $stateParams.categoryId);
+			} else {
+				var parent = CategoryService.getById($scope.categories, $stateParams.categoryParentId);
+				$scope.$parent.category = CategoryService.new(parent);
+			}
 		}
-		console.log('CategoryEditController', $scope.category);
 
 		$scope.onCancel = function() {
 			$state.go('^');
@@ -158,9 +140,9 @@
 		
 		$scope.onSave = function(category) {
 			$state.go('^');
-//			$state.go('^', {}, {
-//				reload : true
-//			});
+// $state.go('^', {}, {
+// reload : true
+// });
 		};
 
 		$scope.onSaveError = function(category) {
@@ -169,9 +151,9 @@
 
 		$scope.onRemove = function(category) {
 			$state.go('^');
-//			$state.go('^', {}, {
-//				reload : true
-//			});
+// $state.go('^', {}, {
+// reload : true
+// });
 		};
 
 		$scope.onRemoveError = function(category) {
@@ -179,4 +161,4 @@
 		};
 	} ]);
 
-})();
+})(_);
