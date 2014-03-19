@@ -21,21 +21,7 @@
 	});
 
 	$stateProvider.state('categories.edit', {
-		url : '/:categoryId',
-		resolve : {
-			category : [ 'Category', '$stateParams', function(Category, $stateParams) {
-				if ($stateParams.categoryId !== 'new') {
-					return Category.get({
-						id : $stateParams.categoryId
-					}).$promise;
-				} else {
-					return new Category({
-						id : null,
-						name : ''
-					});
-				}
-			} ]
-		},
+		url : '/:categoryParentId/:categoryId',
 		views : {
 			'category-edit' : {
 				controller : 'CategoryEditController',

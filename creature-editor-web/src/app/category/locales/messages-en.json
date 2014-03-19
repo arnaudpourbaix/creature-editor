@@ -4,6 +4,7 @@
 		"LIST_TITLE" : "Categories",
 		"EDIT_TITLE" : "Category details",
 		"FIELDS" : {
+			"PARENT_NAME" : "Parent",
 			"NAME" : "Name"
 		},
 		"COLUMNS" : {

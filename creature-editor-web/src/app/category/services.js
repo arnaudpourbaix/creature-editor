@@ -31,4 +31,15 @@
 		return res;
 	} ]);
 
+	module.service('CategoryService', [ 'Category', 'appSettings', function CategoryService(Category, appSettings) {
+		var service = {
+			'new' : function(parent) {
+				var category = new Category({ id: null, name: null, parent: parent ? parent : null });
+				return category;
+			}
+		};
+
+		return service;
+	} ]);
+	
 })();

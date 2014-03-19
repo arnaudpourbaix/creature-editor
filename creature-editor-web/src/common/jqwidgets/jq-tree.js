@@ -15,37 +15,58 @@
 								'$jqDataAdapter',
 								'$compile',
 								'$translate',
-								function jqTreeService($jqCommon, $jqDataAdapter, $compile, $translate) {
-									var service = {
-										create : function(element, scope, params) {
-											if (!scope[params.data]) {
-												throw new Error("undefined data in scope: " + params.data);
-											}
-											var source = angular.extend({
-												datafields : params.datafields,
-												datatype : "json",
-												localdata : scope[params.data],
-												id : params.id
-											});
-											var dataAdapter = $jqDataAdapter.getRecordsHierarchy(source, params.id, params.parent, params.display);
-											var settings = angular.extend({}, $jqCommon.options(), options, params.options, {
-												source : dataAdapter
-											});
-											element.jqxTree(settings);
-										},
-										addButtons : function(element, scope, settings) {
-											var template = '<div class="jq-tree-buttons">';
-											if (settings.add) {
-												template += '<button type="button" data-ng-click="add()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus" />&nbsp;{{ \'JQWIDGETS.TREE.ADD\' | translate }}</button>';
-											}
-											if (settings.expandCollapse) {
-												template += '<button type="button" data-ng-click="collapse()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-collapse-down" />&nbsp;{{ \'JQWIDGETS.TREE.COLLAPSE\' | translate }}</button>';
-												template += '<button type="button" data-ng-click="expand()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-expand" />&nbsp;{{ \'JQWIDGETS.TREE.EXPAND\' | translate }}</button>';
-											}
-											template += '</div>';
-											var html = $compile(template)(scope);
-											angular.element(settings.selector).html(html);
+								'$timeout',
+								function jqTreeService($jqCommon, $jqDataAdapter, $compile, $translate, $timeout) {
+									var service = {};
+
+									service.create = function(element, scope, params) {
+										if (!scope[params.data]) {
+											throw new Error("undefined data in scope: " + params.data);
 										}
+										var source = angular.extend({
+											datafields : params.datafields,
+											datatype : "json",
+											localdata : scope[params.data],
+											id : params.id
+										});
+										var dataAdapter = $jqDataAdapter.getRecordsHierarchy(source, params.id, params.parent, params.display);
+										var settings = angular.extend({}, $jqCommon.options(), options, params.options, {
+											source : dataAdapter
+										});
+										if (settings.allowDrop && !settings.dragEnd && angular.isFunction(params.events.dragEnd)) {
+											angular.extend(settings, {
+												dragEnd : function(item, dropItem) {
+													var dragEntity = service.getEntity(scope[params.data], item, params.id);
+													var dropEntity = service.getEntity(scope[params.data], dropItem, params.id);
+													params.events.dragEnd(dragEntity, dropEntity, item, dropItem);
+													$timeout(function() {
+														element.jqxTree('expandItem', dropItem);
+													});
+												}
+											});
+										}
+										element.jqxTree(settings);
+									};
+
+									service.getEntity = function(entities, item, idField) {
+										var entity = _.find(entities, function(entity) { /* jshint -W116 */
+											return entity[idField] == item.id;
+										});
+										return entity;
+									};
+
+									service.addButtons = function(element, scope, settings) {
+										var template = '<div class="jq-tree-buttons">';
+										if (settings.add) {
+											template += '<button type="button" data-ng-click="add()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-plus" />&nbsp;{{ \'JQWIDGETS.TREE.ADD\' | translate }}</button>';
+										}
+										if (settings.expandCollapse) {
+											template += '<button type="button" data-ng-click="collapse()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-collapse-down" />&nbsp;{{ \'JQWIDGETS.TREE.COLLAPSE\' | translate }}</button>';
+											template += '<button type="button" data-ng-click="expand()" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-expand" />&nbsp;{{ \'JQWIDGETS.TREE.EXPAND\' | translate }}</button>';
+										}
+										template += '</div>';
+										var html = $compile(template)(scope);
+										angular.element(settings.selector).html(html);
 									};
 									return service;
 								} ];
@@ -66,22 +87,19 @@
 						return {
 							pre : function($scope, iElement, iAttrs) {
 								var getParams = function() {
-									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events', 'contextMenu',
-											'buttons' ]);
+									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events',
+											'contextMenu', 'buttons' ]);
 								};
-								var getEntity = function() {
+								var getSelectedEntity = function() {
 									var selectedItem = iElement.jqxTree('getSelectedItem');
-									var entity = _.find($scope[params.data], function(item) { /* jshint -W116 */
-										return item[params.id] == selectedItem.id;
-									});
-									return entity;
+									return $jqTree.getEntity($scope[params.data], selectedItem, params.id);
 								};
 								var bindEvents = function(params) {
 									iElement.off();
 									if (angular.isFunction(params.events.itemClick)) {
 										iElement.on('select', function(event) {
-											var category = getEntity();
-											params.events.itemClick(category);
+											var entity = getSelectedEntity();
+											params.events.itemClick(entity);
 										});
 									}
 									if (params.events.contextMenu) {
@@ -97,7 +115,7 @@
 											var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
 											$scope.contextualMenu.jqxMenu('open', posX, posY);
 										});
-										$jqMenu.getContextual(params.events.contextMenu, $scope, getEntity).then(function(result) {
+										$jqMenu.getContextual(params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
 											$scope.contextualMenu = result;
 										});
 									}

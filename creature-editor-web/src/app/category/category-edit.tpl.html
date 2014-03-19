@@ -1,4 +1,10 @@
-<form role="form" name="categoryForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'category', entity: 'category.LABEL', name: 'name' }">
+<form role="form" name="categoryForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'category', entity: 'CATEGORY.LABEL', name: 'name' }">
+	<div data-ng-if="category.parent != null" class="form-group">
+		<label for="category.parent" class="col-sm-2 control-label" data-translate>CATEGORY.FIELDS.PARENT_NAME</label>
+		<div class="col-sm-10" data-ng-class="{'has-error': categoryForm.parent.$invalid}">
+			<input id="category.parent.name" class="form-control" type="text" placeholder="{{ 'CATEGORY.FIELDS.PARENT_NAME' | translate }}" name="parent" data-ng-model="category.parent.name" /> 
+		</div>
+	</div>
 	<div class="form-group">
 		<label for="category.name" class="col-sm-2 control-label" data-translate>CATEGORY.FIELDS.NAME</label>
 		<div class="col-sm-10" data-ng-class="{'has-error': categoryForm.name.$invalid}">

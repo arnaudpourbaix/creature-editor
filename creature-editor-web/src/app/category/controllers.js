@@ -19,8 +19,8 @@
 		};
 	} ]);
 
-	module.controller('CategoryListController', [ '$scope', '$translate', '$state', 'crudListMethods', '$q', '$alertMessage', 'Category', 'categories',
-			function CategoryListController($scope, $translate, $state, crudListMethods, $q, $alertMessage, Category, categories) {
+	module.controller('CategoryListController', [ '$scope', '$translate', '$state', 'crudListMethods', '$q', '$alertMessage', 'Category', 'CategoryService','categories',
+			function CategoryListController($scope, $translate, $state, crudListMethods, $q, $alertMessage, Category, CategoryService, categories) {
 				angular.extend($scope, crudListMethods('/categories'));
 
 				$scope.categories = categories;
@@ -38,17 +38,33 @@
 				};
 				
 				$scope.addCategory = function(category) {
+					$scope.category = CategoryService.new(category);
 					$state.go('categories.edit', {
+						categoryParentId : category ? category.id : 'root',
 						categoryId : 'new'
 					});
 				};
-
+				
 				$scope.editCategory = function(category) {
+					$scope.category = category;
 					$state.go('categories.edit', {
+						categoryParentId : category.parent ? category.parent.id : 'root',
 						categoryId : category.id
 					});
 				};
 
+				$scope.moveCategory = function(category, parent) {
+					category.parent = parent;
+					category.$save().then(function(response) {
+//						$translate('CATEGORY.LABEL').then(function(label) {
+//							$alertMessage.push('CRUD.SAVE_SUCCESS', 'success', {
+//								entity : label,
+//								name : category.name
+//							});
+//						});
+					});
+				};
+				
 				$scope.removeCategory = function(category) {
 					category.$delete().then(function(response) {
 						$translate('CATEGORY.LABEL').then(function(label) {
@@ -88,7 +104,7 @@
 							options : {
 								width : 580,
 								allowDrag : true,
-								allowDrop : true
+								allowDrop : true,
 							},
 							buttons : {
 								selector : '#treeButtons',
@@ -97,8 +113,10 @@
 							},
 							events : {
 								itemClick : function(category) {
+									console.log('itemClick', category);
 									$scope.selectedCategory = category;
 								},
+								dragEnd: $scope.moveCategory,
 								contextMenu : {
 									domSelector : '#contextualMenu',
 									options : {
@@ -128,9 +146,11 @@
 
 			} ]);
 
-	module.controller('CategoryEditController', [ '$scope', '$state', 'category', function CategoryEditController($scope, $state, category) {
-		console.log($scope.selectedCategory, category);
-		$scope.category = category;
+	module.controller('CategoryEditController', [ '$scope', '$state', '$stateParams', function CategoryEditController($scope, $state, $stateParams) {
+		if (!$scope.category) { // need to select in tree
+			console.log('$stateParams', $stateParams);
+		}
+		console.log('CategoryEditController', $scope.category);
 
 		$scope.onCancel = function() {
 			$state.go('^');
@@ -138,6 +158,9 @@
 		
 		$scope.onSave = function(category) {
 			$state.go('^');
+//			$state.go('^', {}, {
+//				reload : true
+//			});
 		};
 
 		$scope.onSaveError = function(category) {
@@ -146,6 +169,9 @@
 
 		$scope.onRemove = function(category) {
 			$state.go('^');
+//			$state.go('^', {}, {
+//				reload : true
+//			});
 		};
 
 		$scope.onRemoveError = function(category) {

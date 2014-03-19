@@ -113,6 +113,9 @@
 					scope.revertChanges();
 					userOnCancel();
 				};
+				scope.save = function() {
+					resource.$save(onSave, onSaveError);
+				};
 				scope.revertChanges = function() {
 					resource = angular.copy(original);
 					resourceSetter(scope, resource);
