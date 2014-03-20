@@ -4,7 +4,7 @@
 		<div data-jq-splitter="splitter">
 			<div><div class="category-list">
 				<div id="treeButtons"></div>
-				<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree"></div>
+				<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree" data-jq-selected-item="selectedItem($stateParams)"></div>
 				<div id="contextualMenu"></div>
 			</div></div>
 			<div><div class="category-edit" data-ui-view="category-edit"></div></div>

@@ -19,7 +19,7 @@
 								function jqTreeService($jqCommon, $jqDataAdapter, $compile, $translate, $timeout) {
 									var service = {};
 
-									service.create = function(element, scope, params) {
+									service.create = function(element, scope, params, selectedId) {
 										if (!scope[params.data]) {
 											throw new Error("undefined data in scope: " + params.data);
 										}
@@ -46,6 +46,11 @@
 											});
 										}
 										element.jqxTree(settings);
+										if (selectedId) {
+											$timeout(function() {
+												element.jqxTree('selectItem', selectedId);
+											});
+										}
 									};
 
 									service.getEntity = function(entities, item, idField) {
@@ -53,6 +58,10 @@
 											return entity[idField] == item.id;
 										});
 										return entity;
+									};
+									
+									service.getItem = function(element, label) {
+										var items = element.jqxTree('getItems');
 									};
 
 									service.addButtons = function(element, scope, settings) {
@@ -88,10 +97,13 @@
 							pre : function($scope, iElement, iAttrs) {
 								var getParams = function() {
 									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events',
-											'contextMenu', 'buttons' ]);
+											'contextMenu', 'buttons', 'selectedId' ]);
 								};
 								var getSelectedEntity = function() {
 									var selectedItem = iElement.jqxTree('getSelectedItem');
+									if (selectedItem == null) {
+										throw new Error("wrong selected item !");
+									}
 									return $jqTree.getEntity($scope[params.data], selectedItem, params.id);
 								};
 								var bindEvents = function(params) {
@@ -123,7 +135,7 @@
 
 								var params = getParams();
 								bindEvents(params);
-								$jqTree.create(iElement, $scope, params);
+								$jqTree.create(iElement, $scope, params, $scope.$eval(iAttrs.jqSelectedItem));
 								if (params.buttons) {
 									$jqTree.addButtons(iElement, $scope, params.buttons);
 								}
@@ -134,11 +146,11 @@
 									}
 									params = getParams();
 									bindEvents(params);
-									$jqTree.create(iElement, $scope, params);
+									$jqTree.create(iElement, $scope, params, $scope.$eval(iAttrs.jqSelectedItem));
 								});
 
 								$scope.$parent.$watchCollection(params.data + '.length', function() {
-									$jqTree.create(iElement, $scope, params);
+									$jqTree.create(iElement, $scope, params, $scope.$eval(iAttrs.jqSelectedItem));
 								});
 
 								$scope.add = function() {

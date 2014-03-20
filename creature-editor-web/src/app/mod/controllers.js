@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.controllers', [ 'alert-message', 'crud', 'ui.bootstrap' ]);
+	var module = angular.module('creatureEditor.mod.controllers', [ 'alert-message', 'crud', 'ui.bootstrap', 'translate-wrapper' ]);
 
 	module.controller('ModListController', [ '$scope', '$translate', 'crudListMethods', '$alertMessage', '$q', '$interpolate', 'mods',
 			function ModListController($scope, $translate, crudListMethods, $alertMessage, $q, $interpolate, mods) {
