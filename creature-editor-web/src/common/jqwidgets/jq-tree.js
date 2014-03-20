@@ -48,7 +48,9 @@
 										element.jqxTree(settings);
 										if (selectedId) {
 											$timeout(function() {
-												element.jqxTree('selectItem', selectedId);
+												var item = service.getItem(element, selectedId[params.display]);
+												element.jqxTree('selectItem', item);
+												element.jqxTree('expandItem', item.parentElement);
 											});
 										}
 									};
@@ -59,9 +61,12 @@
 										});
 										return entity;
 									};
-									
+
 									service.getItem = function(element, label) {
 										var items = element.jqxTree('getItems');
+										return _.find(items, function(item) { /* jshint -W116 */
+											return item.label == label;
+										});
 									};
 
 									service.addButtons = function(element, scope, settings) {
@@ -96,8 +101,8 @@
 						return {
 							pre : function($scope, iElement, iAttrs) {
 								var getParams = function() {
-									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events',
-											'contextMenu', 'buttons', 'selectedId' ]);
+									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events', 'contextMenu',
+											'buttons', 'selectedId' ]);
 								};
 								var getSelectedEntity = function() {
 									var selectedItem = iElement.jqxTree('getSelectedItem');
