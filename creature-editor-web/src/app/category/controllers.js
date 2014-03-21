@@ -2,16 +2,10 @@
 (function(_) {
 	'use strict';
 
-	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives', 'creatureEditor.category.services', 'translate-wrapper' ]);
+	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives', 'creatureEditor.category.services',
+			'translate-wrapper' ]);
 
-	module.controller('CategoryListController', [
-			'$scope',
-			'$translateWrapper',
-			'$state',
-			'$alertMessage',
-			'Category',
-			'CategoryService',
-			'categories',
+	module.controller('CategoryListController', [ '$scope', '$translateWrapper', '$state', '$alertMessage', 'Category', 'CategoryService', 'categories',
 			function CategoryListController($scope, $translateWrapper, $state, $alertMessage, Category, CategoryService, categories) {
 				$scope.categories = categories;
 
@@ -26,20 +20,18 @@
 						min : 100
 					} ]
 				};
-				
-				$scope.selectedItem = function(params) {
+
+				$scope.selectedCategory = function(params) {
+					var result;
 					if (params.categoryId && params.categoryId !== 'new') {
-						//return params.categoryId;
-						return CategoryService.getById($scope.categories, params.categoryId);
+						result = CategoryService.getById($scope.categories, params.categoryId);
 					} else if (params.categoryParentId && params.categoryParentId !== 'root') {
-						//return params.categoryParentId;
-						return CategoryService.getById($scope.categories, params.categoryParentId);
+						result = CategoryService.getById($scope.categories, params.categoryParentId);
 					}
-					return null;
+					return result;
 				};
 
 				$scope.addCategory = function(category) {
-					$scope.category = CategoryService.getNew(category);
 					$state.go('categories.edit', {
 						categoryParentId : category ? category.id : 'root',
 						categoryId : 'new'
@@ -47,7 +39,6 @@
 				};
 
 				$scope.editCategory = function(category) {
-					$scope.category = category;
 					$state.go('categories.edit', {
 						categoryParentId : category.parent ? category.parent.id : 'root',
 						categoryId : category.id
@@ -76,63 +67,60 @@
 						});
 					});
 				};
-				
 
 				var setCategoryTree = function() {
-					$translateWrapper(['CATEGORY.CONTEXTUAL.ADD', 'CATEGORY.CONTEXTUAL.EDIT', 'CATEGORY.CONTEXTUAL.DELETE']).then(
-							function(labels) {
-								$scope.categoryTree = {
-									data : 'categories',
-									datafields : [ {
-										name : 'id',
-										type : 'number'
-									}, {
-										name : 'name',
-										type : 'string'
-									}, {
-										name : 'parentId',
-										map : 'parent.id',
-										type : 'number'
-									} ],
-									id : 'id',
-									parent : 'parentId',
-									display : 'name',
+					$translateWrapper([ 'CATEGORY.CONTEXTUAL.ADD', 'CATEGORY.CONTEXTUAL.EDIT', 'CATEGORY.CONTEXTUAL.DELETE' ]).then(function(labels) {
+						$scope.categoryTree = {
+							data : 'categories',
+							datafields : [ {
+								name : 'id',
+								type : 'number'
+							}, {
+								name : 'name',
+								type : 'string'
+							}, {
+								name : 'parentId',
+								map : 'parent.id',
+								type : 'number'
+							} ],
+							id : 'id',
+							parent : 'parentId',
+							display : 'name',
+							options : {
+								width : 580,
+								allowDrag : true,
+								allowDrop : true,
+							},
+							filter : {
+								selector: '#treeSearch'
+							},
+							buttons : {
+								selector : '#treeButtons',
+								add : 'addCategory',
+								expandCollapse : true
+							},
+							events : {
+								dragEnd : 'moveCategory',
+								contextMenu : {
+									domSelector : '#contextualMenu',
 									options : {
-										width : 580,
-										allowDrag : true,
-										allowDrop : true,
+										width : '200px',
+										height : '90px'
 									},
-									buttons : {
-										selector : '#treeButtons',
-										add : $scope.addCategory,
-										expandCollapse : true
-									},
-									events : {
-										itemClick : function(category) {
-											console.log('itemClick', category);
-											$scope.selectedCategory = category;
-										},
-										dragEnd : $scope.moveCategory,
-										contextMenu : {
-											domSelector : '#contextualMenu',
-											options : {
-												width : '200px',
-												height : '90px'
-											},
-											items : [ {
-												label : labels['CATEGORY.CONTEXTUAL.ADD'],
-												action : $scope.addCategory
-											}, {
-												label : labels['CATEGORY.CONTEXTUAL.EDIT'],
-												action : $scope.editCategory
-											}, {
-												label : labels['CATEGORY.CONTEXTUAL.DELETE'],
-												action : $scope.removeCategory
-											} ]
-										}
-									}
-								};
-							});
+									items : [ {
+										label : labels['CATEGORY.CONTEXTUAL.ADD'],
+										action : 'addCategory'
+									}, {
+										label : labels['CATEGORY.CONTEXTUAL.EDIT'],
+										action : 'editCategory'
+									}, {
+										label : labels['CATEGORY.CONTEXTUAL.DELETE'],
+										action : 'removeCategory'
+									} ]
+								}
+							}
+						};
+					});
 				};
 
 				setCategoryTree();
@@ -144,35 +132,36 @@
 
 	module.controller('CategoryEditController', [ '$scope', '$state', '$stateParams', 'CategoryService',
 			function CategoryEditController($scope, $state, $stateParams, CategoryService) {
-				if (!$scope.category) {
-					if ($stateParams.categoryId !== 'new') {
-						$scope.$parent.category = CategoryService.getById($scope.categories, $stateParams.categoryId);
-					} else {
-						var parent = CategoryService.getById($scope.categories, $stateParams.categoryParentId);
-						$scope.$parent.category = CategoryService.getNew(parent);
-					}
+				$scope.create = $stateParams.categoryId === 'new';
+				if ($scope.create) {
+					var parent = CategoryService.getById($scope.categories, $stateParams.categoryParentId);
+					$scope.category = CategoryService.getNew(parent);
+				} else {
+					$scope.category = angular.copy(CategoryService.getById($scope.categories, $stateParams.categoryId));
 				}
 
 				$scope.onCancel = function() {
 					$state.go('^');
 				};
 
-				$scope.onSave = function(category) {
+				$scope.onSave = function() {
+					if ($scope.create) {
+						$scope.categories.push($scope.category);
+					} else {
+						var item = CategoryService.getById($scope.categories, $scope.category.id);
+						angular.extend(item, $scope.category);
+					}
 					$state.go('^');
-					// $state.go('^', {}, {
-					// reload : true
-					// });
 				};
 
 				$scope.onSaveError = function(category) {
 					$state.go('^');
 				};
 
-				$scope.onRemove = function(category) {
+				$scope.onRemove = function() {
+					var item = CategoryService.getById($scope.categories, $scope.category.id);
+					$scope.categories.splice($scope.categories.indexOf(item), 1);
 					$state.go('^');
-					// $state.go('^', {}, {
-					// reload : true
-					// });
 				};
 
 				$scope.onRemoveError = function(category) {

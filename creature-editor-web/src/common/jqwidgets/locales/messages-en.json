@@ -1,5 +1,8 @@
 {
 	"JQWIDGETS" : {
+		"FILTER" : {
+			"SEARCH" : "Search"
+		},
 		"TREE" : {
 			"ADD" : "Add",
 			"COLLAPSE" : "Collapse all",

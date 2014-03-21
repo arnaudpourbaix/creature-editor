@@ -8,7 +8,9 @@
 			.provider(
 					'$jqTree',
 					function JqTreeProvider() {
-						var options = {};
+						var options = {
+								toggleMode : 'click'
+						};
 
 						this.$get = [
 								'$jqCommon',
@@ -19,7 +21,7 @@
 								function jqTreeService($jqCommon, $jqDataAdapter, $compile, $translate, $timeout) {
 									var service = {};
 
-									service.create = function(element, scope, params, selectedId) {
+									service.create = function(element, scope, params, selectedItem) {
 										if (!scope[params.data]) {
 											throw new Error("undefined data in scope: " + params.data);
 										}
@@ -33,22 +35,22 @@
 										var settings = angular.extend({}, $jqCommon.options(), options, params.options, {
 											source : dataAdapter
 										});
-										if (settings.allowDrop && !settings.dragEnd && angular.isFunction(params.events.dragEnd)) {
+										if (settings.allowDrop && !settings.dragEnd && angular.isString(params.events.dragEnd)) {
 											angular.extend(settings, {
 												dragEnd : function(item, dropItem) {
 													var dragEntity = service.getEntity(scope[params.data], item, params.id);
 													var dropEntity = service.getEntity(scope[params.data], dropItem, params.id);
-													params.events.dragEnd(dragEntity, dropEntity, item, dropItem);
 													$timeout(function() {
+														scope.$eval(params.events.dragEnd)(dragEntity, dropEntity, item, dropItem);
 														element.jqxTree('expandItem', dropItem);
 													});
 												}
 											});
 										}
 										element.jqxTree(settings);
-										if (selectedId) {
+										if (selectedItem) {
 											$timeout(function() {
-												var item = service.getItem(element, selectedId[params.display]);
+												var item = service.getItem(element, selectedItem[params.display]);
 												element.jqxTree('selectItem', item);
 												element.jqxTree('expandItem', item.parentElement);
 											});
@@ -82,6 +84,15 @@
 										var html = $compile(template)(scope);
 										angular.element(settings.selector).html(html);
 									};
+									
+									service.addFilter = function(element, scope, settings) {
+										var template = '<div class="jq-tree-filter">';
+										template += '<input class="form-control" type="text" placeholder="{{ \'JQWIDGETS.FILTER.SEARCH\' | translate }}" data-ng-model="searchFilter" data-ng-trim="true" />';
+										template += '</div>';
+										var html = $compile(template)(scope);
+										angular.element(settings.selector).html(html);
+									};
+									
 									return service;
 								} ];
 					});
@@ -102,7 +113,7 @@
 							pre : function($scope, iElement, iAttrs) {
 								var getParams = function() {
 									return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events', 'contextMenu',
-											'buttons', 'selectedId' ]);
+											'buttons', 'filter' ]);
 								};
 								var getSelectedEntity = function() {
 									var selectedItem = iElement.jqxTree('getSelectedItem');
@@ -113,10 +124,10 @@
 								};
 								var bindEvents = function(params) {
 									iElement.off();
-									if (angular.isFunction(params.events.itemClick)) {
+									if (angular.isString(params.events.itemClick)) {
 										iElement.on('select', function(event) {
 											var entity = getSelectedEntity();
-											params.events.itemClick(entity);
+											$scope.$eval(params.events.itemClick)(entity);
 										});
 									}
 									if (params.events.contextMenu) {
@@ -144,22 +155,30 @@
 								if (params.buttons) {
 									$jqTree.addButtons(iElement, $scope, params.buttons);
 								}
+								if (params.filter) {
+									$jqTree.addFilter(iElement, $scope, params.filter);
+								}
 
 								$scope.$parent.$watch(iAttrs.jqTree, function(newValue, oldValue) {
-									if (newValue === oldValue) {
+									if (angular.equals(newValue, oldValue)) {
 										return;
 									}
 									params = getParams();
 									bindEvents(params);
-									$jqTree.create(iElement, $scope, params, $scope.$eval(iAttrs.jqSelectedItem));
+									var selectedItem = $scope.$eval(iAttrs.jqSelectedItem) || getSelectedEntity();
+									$jqTree.create(iElement, $scope, params, selectedItem);
 								});
 
-								$scope.$parent.$watchCollection(params.data + '.length', function() {
-									$jqTree.create(iElement, $scope, params, $scope.$eval(iAttrs.jqSelectedItem));
-								});
+								$scope.$parent.$watch(params.data, function(newValue, oldValue) {
+									if (angular.equals(newValue, oldValue)) {
+										return;
+									}
+									var selectedItem = $scope.$eval(iAttrs.jqSelectedItem) || getSelectedEntity();
+									$jqTree.create(iElement, $scope, params, selectedItem);
+								}, true);
 
 								$scope.add = function() {
-									params.buttons.add();
+									$scope.$eval(params.buttons.add)();
 								};
 
 								$scope.expand = function() {
@@ -169,6 +188,21 @@
 								$scope.collapse = function() {
 									iElement.jqxTree('collapseAll');
 								};
+								
+								$scope.$watch('searchFilter', function(newValue, oldValue) {
+									if (newValue === oldValue) {
+										return;
+									}
+									var treeItems = iElement.jqxTree('getItems');
+									angular.forEach(treeItems, function(item) {
+										if (newValue && _.contains(item.label.toUpperCase(), newValue.toUpperCase())) {
+											$("#" + item.id + " div:eq(0)").addClass('jq-match-item');
+										} else {
+											$("#" + item.id + " div:eq(0)").removeClass('jq-match-item');
+										}
+									});
+								});
+								
 							}
 						};
 					}
