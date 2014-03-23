@@ -23,11 +23,14 @@
 						 * @name $jqCommon.getParams
 						 * @module jqwidgets.common
 						 * @function
-						 *
+						 * 
 						 * @description return params object after controlling required properties and adding missing optional properties.
-						 * @param {object} params object to control.
-						 * @param {array} requiredProps required properties array.
-						 * @param {array} optionalProps optional properties array.
+						 * @param {object}
+						 *           params object to control.
+						 * @param {array}
+						 *           requiredProps required properties array.
+						 * @param {array}
+						 *           optionalProps optional properties array.
 						 * @returns {object} params object including missing optional properties.
 						 */
 						getParams : function(params, requiredProps, optionalProps) {
@@ -51,9 +54,10 @@
 						 * @name $jqCommon.getTemplatePromise
 						 * @module jqwidgets.common
 						 * @function
-						 *
+						 * 
 						 * @description Get template promise from a template string or url.
-						 * @param {object} options Must contains template or templateUrl property.
+						 * @param {object}
+						 *           options Must contains template or templateUrl property.
 						 * @returns {object} Template promise.
 						 */
 						getTemplatePromise : function(options) {
@@ -69,11 +73,14 @@
 						 * @name $jqCommon.instanciateController
 						 * @module jqwidgets.common
 						 * @function
-						 *
+						 * 
 						 * @description Instanciate a controller.
-						 * @param {string} controller Controller's name.
-						 * @param {array} dependencies Dependencies to inject.
-						 * @param {object} scope Controller's scope, if not provided, a new scope is created from root scope.
+						 * @param {string}
+						 *           controller Controller's name.
+						 * @param {array}
+						 *           dependencies Dependencies to inject.
+						 * @param {object}
+						 *           scope Controller's scope, if not provided, a new scope is created from root scope.
 						 * @returns
 						 */
 						instanciateController : function(controller, dependencies, scope) {
@@ -88,18 +95,22 @@
 							});
 							$controller(controller, ctrlLocals);
 						},
-						
+
 						/**
 						 * @ngdoc function
 						 * @name $jqCommon.getView
 						 * @module jqwidgets.common
 						 * @function
-						 *
+						 * 
 						 * @description Create and return a view, also instanciate a controller related to the view.
-						 * @param {object} templateOptions Must contains template or templateUrl property.
-						 * @param {string} controller Controller's name.
-						 * @param {array} dependencies Dependencies to inject.
-						 * @param {object} scope Controller's scope, if not provided, a new scope is created from root scope.
+						 * @param {object}
+						 *           templateOptions Must contains template or templateUrl property.
+						 * @param {string}
+						 *           controller Controller's name.
+						 * @param {array}
+						 *           dependencies Dependencies to inject.
+						 * @param {object}
+						 *           scope Controller's scope, if not provided, a new scope is created from root scope.
 						 * @returns {element} dom element compiled with angular's scope.
 						 */
 						getView : function(templateOptions, controller, dependencies, scope) {
@@ -115,6 +126,20 @@
 					};
 					return service;
 				} ];
+	});
+
+	module.directive("ngScopeElement", function() {
+		return {
+			restrict : "A",
+			compile : function compile() {
+				return {
+					pre : function preLink(scope, iElement, iAttrs, controller) {
+						scope[iAttrs.ngScopeElement] = iElement;
+					}
+				};
+			}
+		};
+
 	});
 
 }(window, _));

@@ -45,7 +45,7 @@
 				options : function() {
 					return options;
 				},
-				getContextual : function(params, scope, getEntity) {
+				getContextual : function(element, params, scope, getEntity) {
 					checkParams(params);
 					var templateOptions = {
 						template : '<ul><li data-ng-repeat="item in items">{{item.label}}</li></ul>'
@@ -54,10 +54,6 @@
 						items : params.items
 					};
 					return $jqCommon.getView(templateOptions, 'JqContextualMenuController', dependencies).then(function(view) {
-						var element;
-						if (params.domSelector) {
-							element = angular.element(params.domSelector);
-						}
 						var settings = angular.extend({}, params.options, {
 							autoOpenPopup : false,
 							mode : 'popup'

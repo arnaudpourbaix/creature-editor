@@ -2,8 +2,7 @@
 (function(_) {
 	'use strict';
 
-	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives', 'creatureEditor.category.services',
-			'translate-wrapper' ]);
+	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives', 'creatureEditor.category.services', 'translate-wrapper' ]);
 
 	module.controller('CategoryListController', [ '$scope', '$translateWrapper', '$state', '$alertMessage', 'Category', 'CategoryService', 'categories',
 			function CategoryListController($scope, $translateWrapper, $state, $alertMessage, Category, CategoryService, categories) {
@@ -91,18 +90,14 @@
 								allowDrag : true,
 								allowDrop : true,
 							},
-							filter : {
-								selector: '#treeSearch'
-							},
+							filter : true,
 							buttons : {
-								selector : '#treeButtons',
 								add : 'addCategory',
 								expandCollapse : true
 							},
 							events : {
 								dragEnd : 'moveCategory',
 								contextMenu : {
-									domSelector : '#contextualMenu',
 									options : {
 										width : '200px',
 										height : '90px'
