@@ -160,13 +160,14 @@
 								return {
 									restrict : 'A',
 									template : '<div class="jq-tree"><div data-ng-scope-element="contextualMenu" class="jq-contextual-menu"></div><div class="jq-tree-header"><div data-ng-scope-element="buttons" class="jq-tree-buttons"></div><div data-ng-scope-element="filter" class="jq-tree-filter"></div></div><div data-ng-scope-element="tree" class="jq-tree-body"></div></div>',
+									replace : true,
 									scope : true,
 									compile : function() {
 										return {
 											post : function($scope, iElement, iAttrs) {
 												var getParams = function() {
-													return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [
-															'options', 'events', 'contextMenu', 'buttons', 'filter' ]);
+													return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events',
+															'contextMenu', 'buttons', 'filter' ]);
 												};
 												var getSelectedEntity = function() {
 													var selectedItem = $scope.tree.jqxTree('getSelectedItem');
@@ -196,10 +197,9 @@
 															var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
 															$scope.contextualMenu.jqxMenu('open', posX, posY);
 														});
-														$jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(
-																function(result) {
-																	$scope.contextualMenu = result;
-																});
+														$jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
+															$scope.contextualMenu = result;
+														});
 													}
 												};
 

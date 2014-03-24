@@ -6,7 +6,20 @@
 
 	module.controller('SpellController', [ '$scope', 'SpellImportService', 'mods', function SpellController($scope, SpellImportService, mods) {
 		$scope.importService = SpellImportService;
+
 		$scope.mods = mods;
+
+		$scope.splitter = {
+			width : 1200,
+			height : 800,
+			panels : [ {
+				size : 1100,
+				min : 400
+			}, {
+				size : 100,
+				min : 100
+			} ]
+		};
 	} ]);
 
 	module.controller('SpellListController', [
@@ -102,7 +115,7 @@
 							} ],
 							options : {
 								width : 1000,
-								height : 400,
+								height : 470,
 								pageable : true,
 								pagerButtonsCount : 10,
 								pageSize : 15
@@ -172,7 +185,7 @@
 				getFlags(flags, spell.flags).then(function(result) {
 					$scope.flags = result;
 				});
-				
+
 				getFlags(exclusionFlags, spell.exclusionFlags).then(function(result) {
 					$scope.exclusionFlags = result;
 				});

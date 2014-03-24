@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'jqwidgets', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
+	var module = angular.module('creatureEditor.spell.config', [ 'creatureEditor.spell.services', 'pascalprecht.translate', 'ui.router' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function SpellTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('app/spell');
@@ -27,8 +27,12 @@
 
 		$stateProvider.state('spells.list', {
 			url : '/:modId',
-			controller : 'SpellListController',
-			templateUrl : 'spell/spell-list.tpl.html',
+			views : {
+				'spell-list' : {
+					controller : 'SpellListController',
+					templateUrl : 'spell/spell-list.tpl.html',
+				}
+			},
 			resolve : {
 				spells : [ 'SpellService', '$stateParams', function(SpellService, $stateParams) {
 					var spells = SpellService.getSpells($stateParams.modId);

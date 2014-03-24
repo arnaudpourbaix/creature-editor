@@ -66,6 +66,9 @@
 								width : 260,
 								height : 400
 							},
+							buttons : {
+								add : 'new'
+							},
 							events : {
 								cellClick : function($scope, mod, column) {
 									if (column === 1) {
@@ -86,42 +89,41 @@
 
 			} ]);
 
-	module.controller('ModEditController', [ '$scope', '$state', '$stateParams', 'ModService',
-			function ModEditController($scope, $state, $stateParams, ModService) {
-				$scope.create = $stateParams.modId === 'new';
-				if ($scope.create) {
-					$scope.mod = ModService.getNew();
-				} else {
-					$scope.mod = angular.copy(ModService.getById($scope.mods, $stateParams.modId));
-				}
+	module.controller('ModEditController', [ '$scope', '$state', '$stateParams', 'ModService', function ModEditController($scope, $state, $stateParams, ModService) {
+		$scope.create = $stateParams.modId === 'new';
+		if ($scope.create) {
+			$scope.mod = ModService.getNew();
+		} else {
+			$scope.mod = angular.copy(ModService.getById($scope.mods, $stateParams.modId));
+		}
 
-				$scope.onCancel = function() {
-					$state.go('^');
-				};
+		$scope.onCancel = function() {
+			$state.go('^');
+		};
 
-				$scope.onSave = function() {
-					if ($scope.create) {
-						$scope.mods.push($scope.mod);
-					} else {
-						var item = ModService.getById($scope.mods, $scope.mod.id);
-						angular.extend(item, $scope.mod);
-					}
-					$state.go('^');
-				};
+		$scope.onSave = function() {
+			if ($scope.create) {
+				$scope.mods.push($scope.mod);
+			} else {
+				var item = ModService.getById($scope.mods, $scope.mod.id);
+				angular.extend(item, $scope.mod);
+			}
+			$state.go('^');
+		};
 
-				$scope.onSaveError = function(category) {
-					$state.go('^');
-				};
+		$scope.onSaveError = function(category) {
+			$state.go('^');
+		};
 
-				$scope.onRemove = function() {
-					var item = ModService.getById($scope.mods, $scope.mod.id);
-					$scope.mods.splice($scope.mods.indexOf(item), 1);
-					$state.go('^');
-				};
+		$scope.onRemove = function() {
+			var item = ModService.getById($scope.mods, $scope.mod.id);
+			$scope.mods.splice($scope.mods.indexOf(item), 1);
+			$state.go('^');
+		};
 
-				$scope.onRemoveError = function(category) {
-					$state.go('^');
-				};
-			} ]);
+		$scope.onRemoveError = function(category) {
+			$state.go('^');
+		};
+	} ]);
 
 })();

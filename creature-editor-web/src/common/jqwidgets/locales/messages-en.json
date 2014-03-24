@@ -7,6 +7,9 @@
 			"ADD" : "Add",
 			"COLLAPSE" : "Collapse all",
 			"EXPAND" : "Expand all"
+		},
+		"GRID" : {
+			"ADD" : "Add"
 		}
 	}
 }

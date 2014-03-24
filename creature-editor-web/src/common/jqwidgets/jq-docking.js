@@ -24,6 +24,8 @@
 				var params = scope.$eval(attributes.jqDocking);
 				var options = angular.extend({}, $jqCommon.options(), $jqDocking.options(), params);
 				element.jqxDocking(options);
+				// http://www.jqwidgets.com/community/topic/docking-window-size-600px/
+				// TODO build jqDocking to allow window rendering with size parameters
 			}
 		};
 	} ]);
