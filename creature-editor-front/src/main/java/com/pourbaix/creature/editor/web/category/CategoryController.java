@@ -35,6 +35,12 @@ public class CategoryController {
 		return categoryRepository.findOne(id);
 	}
 
+	@RequestMapping(value = "/category/name/{name}", method = RequestMethod.GET, produces = "application/json")
+	public Category getByName(@PathVariable String name) {
+		Category category = categoryRepository.findByName(name);
+		return category;
+	}
+
 	@RequestMapping(value = "/category", method = RequestMethod.PUT, produces = "application/json")
 	public Category save(@RequestBody Category category) {
 		categoryRepository.save(category);

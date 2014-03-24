@@ -1,13 +1,13 @@
-<div class="panel panel-primary">
-	<div class="panel-heading" data-translate>CATEGORY.LIST_TITLE</div>
-	<div class="panel-body">
-		<div data-jq-splitter="splitter">
-			<div><div class="category-list">
-				<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree" data-jq-selected-item="selectedCategory($stateParams)"></div>
-			</div></div>
-			<div><div class="category-edit" data-ui-view="category-edit"></div></div>
+<div data-jq-docking="{ width: 1020 }">
+	<div>
+		<div>
+			<div data-translate>CATEGORY.LIST_TITLE</div>		
+			<div data-jq-splitter="splitter">
+				<div><div class="category-list">
+					<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree" data-jq-selected-item="selectedCategory($stateParams)"></div>
+				</div></div>
+				<div><div class="category-edit" data-ui-view="category-edit"></div></div>
+			</div>
 		</div>
-	</div>
-	<div class="panel-footer clearfix">
 	</div>
 </div>

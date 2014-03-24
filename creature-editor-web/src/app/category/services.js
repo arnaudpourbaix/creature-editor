@@ -22,6 +22,10 @@
 				params : {
 					id : '@id'
 				}
+			},
+			'getByName' : {
+				url : baseUrl + 'name/:name',
+				method : 'GET'
 			}
 		});
 

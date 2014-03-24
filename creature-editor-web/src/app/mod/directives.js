@@ -1,13 +1,12 @@
-/* global _ */
-(function(_) {
+(function() {
 	'use strict';
 
 	var module = angular.module('creatureEditor.mod.directives', [ 'creatureEditor.mod.services' ]);
 
 	/**
-	 * A validation directive to ensure that the model contains a unique name mod
+	 * ensure that mod name is unique
 	 */
-	module.directive('uniqueName', [ 'Mod', function UniqueNameDirective(Mod) {
+	module.directive('uniqueModName', [ 'Mod', function UniqueModNameDirective(Mod) {
 		return {
 			require : 'ngModel',
 			restrict : 'A',
@@ -15,7 +14,7 @@
 				// using push() here to run it as the last parser, after we are sure that other validators were run
 				ctrl.$parsers.push(function(viewValue) {
 					if (viewValue) {
-						var params = scope.$eval(attrs.uniqueName);
+						var params = scope.$eval(attrs.uniqueModName);
 						Mod.getByName({
 							name : viewValue
 						}, function(result) {
@@ -28,4 +27,4 @@
 		};
 	} ]);
 
-})(_);
+})();

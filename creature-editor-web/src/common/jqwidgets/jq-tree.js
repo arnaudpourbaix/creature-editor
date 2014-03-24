@@ -165,8 +165,8 @@
 										return {
 											post : function($scope, iElement, iAttrs) {
 												var getParams = function() {
-													return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events',
-															'contextMenu', 'buttons', 'filter' ]);
+													return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [
+															'options', 'events', 'contextMenu', 'buttons', 'filter' ]);
 												};
 												var getSelectedEntity = function() {
 													var selectedItem = $scope.tree.jqxTree('getSelectedItem');
@@ -196,9 +196,10 @@
 															var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
 															$scope.contextualMenu.jqxMenu('open', posX, posY);
 														});
-														$jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
-															$scope.contextualMenu = result;
-														});
+														$jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(
+																function(result) {
+																	$scope.contextualMenu = result;
+																});
 													}
 												};
 
@@ -250,14 +251,6 @@
 													var selectedItem = $scope.$eval(iAttrs.jqSelectedItem) || getSelectedEntity();
 													$scope.tree.jqxTree('clear');
 													$jqTree.create($scope.tree, $scope, params, selectedItem, newValue);
-													// var treeItems = $scope.tree.jqxTree('getItems');
-													// angular.forEach(treeItems, function(item) {
-													// if (newValue && _.contains(item.label.toUpperCase(), newValue.toUpperCase())) {
-													// $("#" + item.id + " div:eq(0)").addClass('jq-match-item');
-													// } else {
-													// $("#" + item.id + " div:eq(0)").removeClass('jq-match-item');
-													// }
-													// });
 												});
 
 											}

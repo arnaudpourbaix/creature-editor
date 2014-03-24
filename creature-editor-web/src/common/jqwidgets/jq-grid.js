@@ -89,9 +89,12 @@
 							$jqGrid.create(iElement, $scope, params);
 						});
 
-						$scope.$parent.$watchCollection(params.data + '.length', function() {
+						$scope.$parent.$watch(params.data, function(newValue, oldValue) {
+							if (angular.equals(newValue, oldValue)) {
+								return;
+							}
 							iElement.jqxGrid('updatebounddata');
-						});
+						}, true);
 					}
 				};
 			}

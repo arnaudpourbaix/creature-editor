@@ -2,7 +2,7 @@
 (function(_) {
 	'use strict';
 
-	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.directives', 'creatureEditor.category.services', 'translate-wrapper' ]);
+	var module = angular.module('creatureEditor.category.controllers', [ 'creatureEditor.category.services', 'crud', 'alert-message', 'translate-wrapper' ]);
 
 	module.controller('CategoryListController', [ '$scope', '$translateWrapper', '$state', '$alertMessage', 'Category', 'CategoryService', 'categories',
 			function CategoryListController($scope, $translateWrapper, $state, $alertMessage, Category, CategoryService, categories) {

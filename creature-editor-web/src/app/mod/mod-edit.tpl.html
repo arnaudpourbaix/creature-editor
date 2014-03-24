@@ -3,7 +3,7 @@
 		<label for="mod.name" class="col-sm-2 control-label" data-translate>MOD.FIELDS.NAME</label>
 		<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
 			<input id="mod.name" class="form-control" type="text" placeholder="{{ 'MOD.FIELDS.NAME' | translate }}" name="name" data-ng-model="mod.name" data-ng-trim="true" data-focus-me="true"
-				required data-unique-name="{ id: mod.id }" /> 
+				required data-unique-mod-name="{ id: mod.id }" /> 
 			<span class="help-block" data-ng-show="modForm.name.$error.required" data-translate>CONTROLS.REQUIRED</span> 
 			<span class="help-block" data-ng-show="modForm.name.$dirty && modForm.name.$error.unique" data-translate>CONTROLS.EXISTS</span>
 		</div>
