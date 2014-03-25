@@ -14,6 +14,7 @@
 			url : '/spells',
 			controller : 'SpellController',
 			templateUrl : 'spell/spell.tpl.html',
+			// template: '<div data-jq-docking="layout"></div>',
 			resolve : {
 				mods : [ 'Mod', function(Mod) {
 					return Mod.query().$promise;
