@@ -30,52 +30,6 @@
 			}
 		});
 		
-//		$stateProvider.state('mods.edit', {
-//			url : '/:modId',
-//			resolve : {
-//				mod : [ 'Mod', '$stateParams', function(Mod, $stateParams) {
-//					if ($stateParams.modId !== 'new') {
-//						return Mod.get({
-//							id : $stateParams.modId
-//						}).$promise;
-//					} else {
-//						return new Mod({
-//							id : null,
-//							name : ''
-//						});
-//					}
-//				} ]
-//			},
-//			onEnter : [ '$state', '$jqWindow', '$translate', 'mod', function($state, $jqWindow, $translate, mod) {
-//				var modal = $jqWindow.open({
-//					title : function() {
-//						if (mod.id == null) {
-//							return $translate('MOD.NEW_TITLE');
-//						} else {
-//							return $translate('MOD.EDIT_TITLE', {
-//								name : mod.name
-//							});
-//						}
-//					},
-//					templateUrl : "mod/mod-edit.tpl.html",
-//					controller : 'ModEditController',
-//					options : {
-//						width : 500,
-//						height : 200
-//					},
-//					inject : {
-//						mod : mod
-//					}
-//				});
-//				modal.result.then(function(result) {
-//					$state.go('^', {}, {
-//						reload : true
-//					});
-//				}, function() {
-//					$state.go('^');
-//				});
-//			} ]
-//		});
 	} ]);
 
 })();

@@ -9,6 +9,21 @@
 
 		$scope.mods = mods;
 
+		$scope.layout = {
+			options : {
+				width : 1200,
+				height : 800
+			},
+			windows : [ {
+				maxHeight : 700,
+				height : 700,
+				templateUrl : 'spell/spell-dock-list.tpl.html'
+			}, {
+				height : 100,
+				templateUrl : 'spell/spell-dock-import.tpl.html'
+			} ]
+		};
+
 		$scope.splitter = {
 			width : 1200,
 			height : 800,
@@ -48,89 +63,90 @@
 
 				var setSpellGrid = function() {
 					$q.all(
-							[ $translate('SPELL.FIELDS.RESOURCE'), $translate('SPELL.FIELDS.NAME'), $translate('SPELL.FIELDS.LEVEL'), $translate('SPELL.FIELDS.IDENTIFIER'),
-									$translate('SPELL.FIELDS.TYPE'), $translate('SPELL.FIELDS.SCHOOL'), $translate('SPELL.COLUMNS.ACTION'), $translate('SPELL.FIELDS.COLUMNS.DELETE'),
-									$translate('SPELL.FIELDS.SECONDARY_TYPE') ]).then(function(labels) {
-						$scope.spellGrid = {
-							data : 'spells',
-							columns : [ {
-								text : labels[0],
-								dataField : 'resource',
-								type : 'string',
-								align : 'center',
-								width : 80
-							}, {
-								text : labels[1],
-								dataField : 'name',
-								type : 'string',
-								align : 'center',
-								width : 200
-							}, {
-								text : labels[2],
-								dataField : 'level',
-								type : 'number',
-								cellsalign : 'center',
-								align : 'center',
-								width : 55
-							}, {
-								text : labels[3],
-								dataField : 'identifier',
-								type : 'string',
-								align : 'center',
-								width : 200
-							}, {
-								text : labels[4],
-								dataField : 'type',
-								type : 'string',
-								filtertype : 'checkedlist',
-								align : 'center',
-								width : 80
-							}, {
-								text : labels[5],
-								dataField : 'school',
-								type : 'string',
-								filtertype : 'checkedlist',
-								align : 'center',
-								width : 100
-							}, {
-								text : labels[8],
-								dataField : 'secondaryType',
-								type : 'string',
-								filtertype : 'checkedlist',
-								align : 'center',
-								width : 100
-							}, {
-								text : labels[6],
-								type : 'string',
-								width : 60,
-								align : 'center',
-								cellsalign : 'center',
-								filterable : false,
-								sortable : false,
-								cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
-									return $interpolate('<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="{{title}}" /></div>')({
-										title : labels[7]
-									});
-								}
-							} ],
-							options : {
-								width : 1000,
-								height : 470,
-								pageable : true,
-								pagerButtonsCount : 10,
-								pageSize : 15
-							},
-							events : {
-								cellClick : function($scope, spell, column) {
-									if (column === 7) {
-										$scope.remove(spell);
-									} else {
-										$scope.edit(spell.id);
+							[ $translate('SPELL.FIELDS.RESOURCE'), $translate('SPELL.FIELDS.NAME'), $translate('SPELL.FIELDS.LEVEL'),
+									$translate('SPELL.FIELDS.IDENTIFIER'), $translate('SPELL.FIELDS.TYPE'), $translate('SPELL.FIELDS.SCHOOL'),
+									$translate('SPELL.COLUMNS.ACTION'), $translate('SPELL.FIELDS.COLUMNS.DELETE'), $translate('SPELL.FIELDS.SECONDARY_TYPE') ]).then(
+							function(labels) {
+								$scope.spellGrid = {
+									data : 'spells',
+									columns : [ {
+										text : labels[0],
+										dataField : 'resource',
+										type : 'string',
+										align : 'center',
+										width : 80
+									}, {
+										text : labels[1],
+										dataField : 'name',
+										type : 'string',
+										align : 'center',
+										width : 200
+									}, {
+										text : labels[2],
+										dataField : 'level',
+										type : 'number',
+										cellsalign : 'center',
+										align : 'center',
+										width : 55
+									}, {
+										text : labels[3],
+										dataField : 'identifier',
+										type : 'string',
+										align : 'center',
+										width : 200
+									}, {
+										text : labels[4],
+										dataField : 'type',
+										type : 'string',
+										filtertype : 'checkedlist',
+										align : 'center',
+										width : 80
+									}, {
+										text : labels[5],
+										dataField : 'school',
+										type : 'string',
+										filtertype : 'checkedlist',
+										align : 'center',
+										width : 100
+									}, {
+										text : labels[8],
+										dataField : 'secondaryType',
+										type : 'string',
+										filtertype : 'checkedlist',
+										align : 'center',
+										width : 100
+									}, {
+										text : labels[6],
+										type : 'string',
+										width : 60,
+										align : 'center',
+										cellsalign : 'center',
+										filterable : false,
+										sortable : false,
+										cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+											return $interpolate('<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="{{title}}" /></div>')({
+												title : labels[7]
+											});
+										}
+									} ],
+									options : {
+										width : 1000,
+										height : 470,
+										pageable : true,
+										pagerButtonsCount : 10,
+										pageSize : 15
+									},
+									events : {
+										cellClick : function($scope, spell, column) {
+											if (column === 7) {
+												$scope.remove(spell);
+											} else {
+												$scope.edit(spell.id);
+											}
+										}
 									}
-								}
-							}
-						};
-					});
+								};
+							});
 				};
 
 				setSpellGrid();

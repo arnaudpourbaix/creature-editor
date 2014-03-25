@@ -3,7 +3,7 @@
 describe('Mod directives', function() {
 	"use strict";
 
-	describe('uniqueName', function() {
+	describe('uniqueModName', function() {
 		var Mod, $scope, form;
 
 		function setNameValue(value) {
@@ -23,7 +23,7 @@ describe('Mod directives', function() {
 
 		beforeEach(inject(function($compile, $rootScope) {
 			$scope = $rootScope;
-			var element = angular.element('<form name="form"><input name="modName" ng-model="mod.name" unique-name="{ id: 1 }"></form>');
+			var element = angular.element('<form name="form"><input name="modName" ng-model="mod.name" unique-mod-name="{ id: 1 }"></form>');
 			$scope.mod = {
 				name : null
 			};
