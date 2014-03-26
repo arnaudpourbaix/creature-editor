@@ -33,7 +33,7 @@
 		return {
 			restrict : 'AE',
 			link : function($scope, iElement, iAttrs) {
-				var params = $jqCommon.getParams($scope.$eval(iAttrs.jqDocking), [ 'windows' ], [ 'options' ]);
+				var params = $jqCommon.getParams($scope.$eval(iAttrs.jqDocking), [], [ 'windows', 'options' ]);
 				var options = angular.extend({}, $jqCommon.options(), $jqDocking.options(), params.options);
 				iElement.jqxDocking(options);
 				angular.forEach(params.windows, function(w) {

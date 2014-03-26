@@ -4,10 +4,16 @@
 
 	var module = angular.module('creatureEditor.spell.controllers', [ 'creatureEditor.spell.services', 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('SpellController', [ '$scope', 'SpellImportService', 'mods', function SpellController($scope, SpellImportService, mods) {
+	module.controller('SpellController', [ '$scope', '$translateWrapper', '$state', 'SpellImportService', 'mods', function SpellController($scope, $translateWrapper, $state, SpellImportService, mods) {
 		$scope.importService = SpellImportService;
 
 		$scope.mods = mods;
+		
+		$scope.modId = 2;
+		$scope.testchange = function(id) {
+			console.log('testchange', id);
+			$scope.modId = id;
+		};
 
 		$scope.layout = {
 			options : {
@@ -16,11 +22,9 @@
 			},
 			windows : [ {
 				id : 'spell-list',
-				templateUrl : 'spell/spell-dock-list.tpl.html',
 				height : 700
 			}, {
 				id : 'spell-import',
-				templateUrl : 'spell/spell-dock-import.tpl.html',
 				height : 100,
 			} ]
 		};
@@ -36,6 +40,33 @@
 				min : 100
 			} ]
 		};
+		
+		$translateWrapper('MOD.SELECT_MOD').then(function(translation) {
+			$scope.modsSelect = {
+				data : 'mods',
+				displayMember : 'name',
+				valueMember : 'id',
+				options : {
+					placeHolder : translation,
+					width : '200px'
+				}
+			};
+		});
+		
+		$scope.$watch('modId', function(newValue, oldValue) {
+			if (angular.isUndefined(newValue)) {
+				return;
+			}
+			console.log('watch in controller', newValue, oldValue);
+			if (angular.isUndefined(newValue) || newValue === oldValue) {
+				return;
+			}
+			console.log('activate state with modId', newValue);
+//			$state.go('spells.list', {
+//				modId : newValue
+//			});
+		}, true);
+		
 	} ]);
 
 	module.controller('SpellListController', [
