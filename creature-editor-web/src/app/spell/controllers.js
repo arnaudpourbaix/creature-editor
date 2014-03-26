@@ -4,70 +4,73 @@
 
 	var module = angular.module('creatureEditor.spell.controllers', [ 'creatureEditor.spell.services', 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('SpellController', [ '$scope', '$translateWrapper', '$state', 'SpellImportService', 'mods', function SpellController($scope, $translateWrapper, $state, SpellImportService, mods) {
-		$scope.importService = SpellImportService;
+	module.controller('SpellController', [ '$scope', '$translateWrapper', '$state', 'SpellImportService', 'mods',
+			function SpellController($scope, $translateWrapper, $state, SpellImportService, mods) {
+				$scope.importService = SpellImportService;
 
-		$scope.mods = mods;
-		
-		$scope.modId = 2;
-		$scope.testchange = function(id) {
-			console.log('testchange', id);
-			$scope.modId = id;
-		};
+				$scope.mods = mods;
 
-		$scope.layout = {
-			options : {
-				width : 1200,
-				height : 800
-			},
-			windows : [ {
-				id : 'spell-list',
-				height : 700
-			}, {
-				id : 'spell-import',
-				height : 100,
-			} ]
-		};
+				$scope.modId = 2;
+				$scope.testchange = function(id) {
+					console.log('current modId', $scope.modId, 'testchange', id);
+					// $scope.modId = id;
+				};
 
-		$scope.splitter = {
-			width : 1200,
-			height : 800,
-			panels : [ {
-				size : 1100,
-				min : 400
-			}, {
-				size : 100,
-				min : 100
-			} ]
-		};
-		
-		$translateWrapper('MOD.SELECT_MOD').then(function(translation) {
-			$scope.modsSelect = {
-				data : 'mods',
-				displayMember : 'name',
-				valueMember : 'id',
-				options : {
-					placeHolder : translation,
-					width : '200px'
-				}
-			};
-		});
-		
-		$scope.$watch('modId', function(newValue, oldValue) {
-			if (angular.isUndefined(newValue)) {
-				return;
-			}
-			console.log('watch in controller', newValue, oldValue);
-			if (angular.isUndefined(newValue) || newValue === oldValue) {
-				return;
-			}
-			console.log('activate state with modId', newValue);
-//			$state.go('spells.list', {
-//				modId : newValue
-//			});
-		}, true);
-		
-	} ]);
+				$scope.layout = {
+					options : {
+						width : 1200,
+						height : 800
+					},
+					windows : [ {
+						id : 'spell-list',
+						height : 700
+					}, {
+						id : 'spell-import',
+						height : 100,
+					} ]
+				};
+
+				$scope.splitter = {
+					width : 1200,
+					height : 800,
+					panels : [ {
+						size : 1100,
+						min : 400
+					}, {
+						size : 100,
+						min : 100
+					} ]
+				};
+
+				$translateWrapper('MOD.SELECT_MOD').then(function(translation) {
+					$scope.modsSelect = {
+						data : 'mods',
+						displayMember : 'name',
+						valueMember : 'id',
+						options : {
+							// selectedIndex : 2,
+							placeHolder : translation,
+							width : '200px'
+						}
+					};
+				});
+
+				$scope.$watch('modId', function(newValue, oldValue) {
+					console.log('watch in controller', newValue, oldValue);
+					if (angular.isUndefined(newValue)) {
+						return;
+					}
+					// console.log('watch in controller', newValue, oldValue);
+					if (angular.isUndefined(newValue) || newValue === oldValue) {
+						return;
+					}
+					console.log('activate state with modId', newValue);
+					$state.go('spells.list', {
+						modId : newValue
+					});
+				});
+
+			} ]);
 
 	module.controller('SpellListController', [
 			'$scope',
