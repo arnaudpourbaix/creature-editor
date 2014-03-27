@@ -4,7 +4,15 @@
 		<div>
 			<div data-jq-splitter="splitter" class="mod-splitter">
 				<div>
-					<div contenteditable name="modId" data-ng-if="modsSelect != null" data-jq-drop-down-list="modsSelect" data-jq-selected-item="$stateParams.modId" data-ng-model="modId"></div>
+					<form name="myForm">
+						<!-- 
+ 						<div ap-test ng-model="userContent">Change me!</div>
+ 						userContent2={{userContent2}}
+ 						<div ap-test ng-model="userContent2"></div>
+ 						 -->
+						<div contenteditable name="modId" data-ng-if="modsSelect != null" data-jq-drop-down-list="modsSelect" data-jq-selected-item="$stateParams.modId" data-ng-model="modId"></div>
+						<br>modId = {{modId}}
+					</form>				
 					<div class="spell-list" data-ui-view="spell-list"></div>
 					<button type="button" ng-click="testchange(4)">Test change</button>
 					<button type="button" ng-click="testchange()">Test remove</button>

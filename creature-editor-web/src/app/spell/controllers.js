@@ -10,10 +10,12 @@
 
 				$scope.mods = mods;
 
-				$scope.modId = 2;
+				$scope.modId = 3;
+				$scope.userContent2 = 'Arnaud';
+				
 				$scope.testchange = function(id) {
-					console.log('current modId', $scope.modId, 'testchange', id);
-					// $scope.modId = id;
+					console.log('testchange', id);
+					$scope.modId = id;
 				};
 
 				$scope.layout = {
@@ -55,20 +57,20 @@
 					};
 				});
 
-				$scope.$watch('modId', function(newValue, oldValue) {
-					console.log('watch in controller', newValue, oldValue);
-					if (angular.isUndefined(newValue)) {
-						return;
-					}
-					// console.log('watch in controller', newValue, oldValue);
-					if (angular.isUndefined(newValue) || newValue === oldValue) {
-						return;
-					}
-					console.log('activate state with modId', newValue);
-					$state.go('spells.list', {
-						modId : newValue
-					});
-				});
+//				$scope.$watch('modId', function(newValue, oldValue) {
+//					console.log('watch in controller', newValue, oldValue);
+//					if (angular.isUndefined(newValue)) {
+//						return;
+//					}
+//					// console.log('watch in controller', newValue, oldValue);
+//					if (angular.isUndefined(newValue) || newValue === oldValue) {
+//						return;
+//					}
+//					console.log('activate state with modId', newValue);
+//					$state.go('spells.list', {
+//						modId : newValue
+//					});
+//				});
 
 			} ]);
 
