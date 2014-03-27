@@ -10,22 +10,14 @@
 
 				$scope.mods = mods;
 
-				$scope.modId = 3;
-				$scope.userContent2 = 'Arnaud';
-				
-				$scope.testchange = function(id) {
-					console.log('testchange', id);
-					$scope.modId = id;
-				};
-
 				$scope.layout = {
 					options : {
 						width : 1200,
-						height : 800
+						height : 900
 					},
 					windows : [ {
 						id : 'spell-list',
-						height : 700
+						height : 800
 					}, {
 						id : 'spell-import',
 						height : 100,
@@ -50,27 +42,20 @@
 						displayMember : 'name',
 						valueMember : 'id',
 						options : {
-							// selectedIndex : 2,
 							placeHolder : translation,
 							width : '200px'
 						}
 					};
 				});
 
-//				$scope.$watch('modId', function(newValue, oldValue) {
-//					console.log('watch in controller', newValue, oldValue);
-//					if (angular.isUndefined(newValue)) {
-//						return;
-//					}
-//					// console.log('watch in controller', newValue, oldValue);
-//					if (angular.isUndefined(newValue) || newValue === oldValue) {
-//						return;
-//					}
-//					console.log('activate state with modId', newValue);
-//					$state.go('spells.list', {
-//						modId : newValue
-//					});
-//				});
+				$scope.$watch('modId', function(newValue, oldValue) {
+					if (angular.isUndefined(newValue) || newValue === oldValue) {
+						return;
+					}
+					$state.go('spells.list', {
+						modId : newValue
+					});
+				});
 
 			} ]);
 

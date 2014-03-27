@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('param-config.config', [ 'param-config.services', 'jqwidgets', 'pascalprecht.translate', 'ui.router', 'ui.bootstrap' ]);
+	var module = angular.module('param-config.config', [ 'param-config.services', 'pascalprecht.translate', 'ui.router' ]);
 
 	module.config([ '$translatePartialLoaderProvider', function ParameterTranslateConfig($translatePartialLoaderProvider) {
 		$translatePartialLoaderProvider.addPart('common/param-config');

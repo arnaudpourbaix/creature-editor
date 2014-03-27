@@ -4,9 +4,9 @@
 	var module = angular.module('creatureEditor.category.directives', [ 'creatureEditor.category.services' ]);
 
 	/**
-	 * ensure that category name is unique 
+	 * ensure that category name is unique
 	 */
-	module.directive('uniqueCategoryName', [ 'Category', function UniqueCategoryNameDirective(Category) {
+	module.directive('apUniqueCategoryName', [ 'Category', function ApUniqueCategoryNameDirective(Category) {
 		return {
 			require : 'ngModel',
 			restrict : 'A',
@@ -14,7 +14,7 @@
 				// using push() here to run it as the last parser, after we are sure that other validators were run
 				ctrl.$parsers.push(function(viewValue) {
 					if (viewValue) {
-						var params = scope.$eval(attrs.uniqueCategoryName);
+						var params = scope.$eval(attrs.apUniqueCategoryName);
 						Category.getByName({
 							name : viewValue
 						}, function(result) {
@@ -26,5 +26,5 @@
 			}
 		};
 	} ]);
-	
+
 })();
