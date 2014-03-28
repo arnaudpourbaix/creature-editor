@@ -111,7 +111,7 @@
 			$state.go('^');
 		};
 
-		$scope.onSaveError = function(category) {
+		$scope.onSaveError = function() {
 			$state.go('^');
 		};
 
@@ -121,7 +121,7 @@
 			$state.go('^');
 		};
 
-		$scope.onRemoveError = function(category) {
+		$scope.onRemoveError = function() {
 			$state.go('^');
 		};
 	} ]);

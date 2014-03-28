@@ -2,17 +2,14 @@
 	<div id="spell-list">
 		<div data-translate>SPELL.LIST_TITLE</div>
 		<div>
-			<div data-jq-splitter="splitter" class="mod-splitter">
-				<div><div class="spell-list">
-					<div data-ng-if="modsSelect != null" data-jq-drop-down-list="modsSelect" data-jq-selected-item="$stateParams.modId" data-ng-model="modId"></div>
-					<button data-ui-sref="spells.list.import" class="btn btn-primary pull-right" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT.BUTTON</button>
-					<div data-ui-view="spell-list"></div>
-				</div></div>
-				<div><div class="spell-edit" data-ui-view="spell-edit"></div></div>
+			<div class="spell-header">
+				<div data-ng-if="modsSelect != null" data-jq-drop-down-list="modsSelect" data-jq-selected-item="$stateParams.modId" data-ng-model="modId"></div>
+				<button data-ui-sref="spells.list.import" class="btn btn-default btn-sm" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT.BUTTON</button>
 			</div>
+			<div data-ui-view="spell-list"></div>
 		</div>
 	</div>
-	<div id="spell-import">
+	<div id="spell-import" data-ng-show="importService.running">
 		<div data-translate>SPELL.IMPORT.TITLE</div>
 		<div>
 			<div class="row spell-import-progress" data-ng-show="importService.running">

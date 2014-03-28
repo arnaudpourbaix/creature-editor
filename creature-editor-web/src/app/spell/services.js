@@ -1,4 +1,5 @@
-(function() {
+/* global _ */
+(function(_) {
 	'use strict';
 
 	var module = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
@@ -40,33 +41,54 @@
 		return res;
 	} ]);
 
-	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'appSettings', function SpellService(Spell, SpellImportService, $http, appSettings) {
-		var service = {
-			getSpells : function(modId) {
-				if (SpellImportService.running && modId === SpellImportService.modId) {
-					return SpellImportService.spells;
-				} else {
-					return Spell.query({
-						modId : modId
-					}).$promise;
-				}
-			},
-			getFlags : function() {
-				return $http({
-					method : 'GET',
-					url : appSettings.restBaseUrl + 'spell/flags'
-				});
-			},
-			getExclusionFlags : function() {
-				return $http({
-					method : 'GET',
-					url : appSettings.restBaseUrl + 'spell/exclusionFlags'
-				});
-			}
-		};
+	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'appSettings',
+			function SpellService(Spell, SpellImportService, $http, appSettings) {
+				var service = {};
 
-		return service;
-	} ]);
+				service.getNew = function() {
+					var spell = new Spell({
+						id : null,
+						name : null
+					});
+					return spell;
+				};
+
+				service.getById = function(spells, id) {
+					return _.find(spells, function(spell) { /* jshint -W116 */
+						return spell.id == id;
+					});
+				};
+
+				service.getSpells = function(modId) {
+					if (SpellImportService.running && modId === SpellImportService.modId) {
+						return SpellImportService.spells;
+					} else {
+						return Spell.query({
+							modId : modId
+						}).$promise;
+					}
+				};
+
+				service.getFlags = function() {
+					return $http({
+						method : 'GET',
+						url : appSettings.restBaseUrl + 'spell/flags'
+					}).then(function(result) {
+						return result.data;
+					});
+				};
+
+				service.getExclusionFlags = function() {
+					return $http({
+						method : 'GET',
+						url : appSettings.restBaseUrl + 'spell/exclusionFlags'
+					}).then(function(result) {
+						return result.data;
+					});
+				};
+
+				return service;
+			} ]);
 
 	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', function SpellImportService($http, $interval, $alertMessage) {
 		var service = {
@@ -144,4 +166,4 @@
 		return service;
 	} ]);
 
-})();
+})(_);

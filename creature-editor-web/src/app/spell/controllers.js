@@ -4,20 +4,22 @@
 
 	var module = angular.module('creatureEditor.spell.controllers', [ 'creatureEditor.spell.services', 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('SpellController', [ '$scope', '$translateWrapper', '$state', 'SpellImportService', 'mods',
-			function SpellController($scope, $translateWrapper, $state, SpellImportService, mods) {
+	module.controller('SpellController', [ '$scope', '$translateWrapper', '$state', 'SpellImportService', 'mods', 'flags', 'exclusionFlags',
+			function SpellController($scope, $translateWrapper, $state, SpellImportService, mods, flags, exclusionFlags) {
+		
 				$scope.importService = SpellImportService;
-
 				$scope.mods = mods;
+				$scope.flags = flags;
+				$scope.exclusionFlags = exclusionFlags;
 
 				$scope.layout = {
 					options : {
 						width : 1200,
-						height : 900
+						height : 800
 					},
 					windows : [ {
 						id : 'spell-list',
-						height : 800
+						height : 700
 					}, {
 						id : 'spell-import',
 						height : 100,
@@ -25,10 +27,10 @@
 				};
 
 				$scope.splitter = {
-					width : 1200,
-					height : 800,
+					width : 1160,
+					height : 620,
 					panels : [ {
-						size : 1100,
+						size : 1060,
 						min : 400
 					}, {
 						size : 100,
@@ -63,13 +65,12 @@
 			'$scope',
 			'$stateParams',
 			'$location',
-			'$translate',
+			'$translateWrapper',
 			'spells',
 			'crudListMethods',
 			'$alertMessage',
-			'$q',
 			'$interpolate',
-			function SpellListController($scope, $stateParams, $location, $translate, spells, crudListMethods, $alertMessage, $q, $interpolate) {
+			function SpellListController($scope, $stateParams, $location, $translateWrapper, spells, crudListMethods, $alertMessage, $interpolate) {
 				angular.extend($scope, crudListMethods($location.url()));
 
 				$scope.modId = parseInt($stateParams.modId, 10);
@@ -84,60 +85,59 @@
 				});
 
 				var setSpellGrid = function() {
-					$q.all(
-							[ $translate('SPELL.FIELDS.RESOURCE'), $translate('SPELL.FIELDS.NAME'), $translate('SPELL.FIELDS.LEVEL'), $translate('SPELL.FIELDS.IDENTIFIER'),
-									$translate('SPELL.FIELDS.TYPE'), $translate('SPELL.FIELDS.SCHOOL'), $translate('SPELL.COLUMNS.ACTION'), $translate('SPELL.FIELDS.COLUMNS.DELETE'),
-									$translate('SPELL.FIELDS.SECONDARY_TYPE') ]).then(function(labels) {
+					$translateWrapper(
+							[ 'SPELL.FIELDS.RESOURCE', 'SPELL.FIELDS.NAME', 'SPELL.FIELDS.LEVEL', 'SPELL.FIELDS.IDENTIFIER', 'SPELL.FIELDS.TYPE',
+									'SPELL.FIELDS.SCHOOL', 'SPELL.FIELDS.SECONDARY_TYPE', 'SPELL.COLUMNS.ACTION', 'SPELL.COLUMNS.DELETE' ]).then(function(labels) {
 						$scope.spellGrid = {
 							data : 'spells',
 							columns : [ {
-								text : labels[0],
+								text : labels['SPELL.FIELDS.RESOURCE'],
 								dataField : 'resource',
 								type : 'string',
 								align : 'center',
 								width : 80
 							}, {
-								text : labels[1],
+								text : labels['SPELL.FIELDS.NAME'],
 								dataField : 'name',
 								type : 'string',
 								align : 'center',
 								width : 200
 							}, {
-								text : labels[2],
+								text : labels['SPELL.FIELDS.LEVEL'],
 								dataField : 'level',
 								type : 'number',
 								cellsalign : 'center',
 								align : 'center',
 								width : 55
 							}, {
-								text : labels[3],
+								text : labels['SPELL.FIELDS.IDENTIFIER'],
 								dataField : 'identifier',
 								type : 'string',
 								align : 'center',
 								width : 200
 							}, {
-								text : labels[4],
+								text : labels['SPELL.FIELDS.TYPE'],
 								dataField : 'type',
 								type : 'string',
 								filtertype : 'checkedlist',
 								align : 'center',
 								width : 80
 							}, {
-								text : labels[5],
+								text : labels['SPELL.FIELDS.SCHOOL'],
 								dataField : 'school',
 								type : 'string',
 								filtertype : 'checkedlist',
 								align : 'center',
 								width : 100
 							}, {
-								text : labels[8],
+								text : labels['SPELL.FIELDS.SECONDARY_TYPE'],
 								dataField : 'secondaryType',
 								type : 'string',
 								filtertype : 'checkedlist',
 								align : 'center',
 								width : 100
 							}, {
-								text : labels[6],
+								text : labels['SPELL.COLUMNS.ACTION'],
 								type : 'string',
 								width : 60,
 								align : 'center',
@@ -146,16 +146,16 @@
 								sortable : false,
 								cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
 									return $interpolate('<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="{{title}}" /></div>')({
-										title : labels[7]
+										title : labels['SPELL.COLUMNS.DELETE']
 									});
 								}
 							} ],
 							options : {
 								width : 1000,
-								height : 470,
+								height : 590,
 								pageable : true,
 								pagerButtonsCount : 10,
-								pageSize : 15
+								pageSize : 20
 							},
 							events : {
 								cellClick : function($scope, spell, column) {
@@ -178,7 +178,7 @@
 				$scope.remove = function(spell) {
 					spell.$delete().then(function(response) {
 						$scope.removeFromList($scope.spells, 'id', spell.id);
-						$translate('SPELL.LABEL').then(function(label) {
+						$translateWrapper('SPELL.LABEL').then(function(label) {
 							$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
 								entity : label,
 								name : spell.resource
@@ -200,10 +200,18 @@
 
 			} ]);
 
-	module.controller('SpellEditController', [ '$scope', '$windowInstance', '$q', '$translate', 'spell', 'flags', 'exclusionFlags',
-			function SpellEditController($scope, $windowInstance, $q, $translate, spell, flags, exclusionFlags) {
-				$scope.spell = spell;
-				console.log(spell);
+	module.controller('SpellEditController', [ '$scope', '$q', '$translateWrapper', '$state', '$stateParams', 'SpellService',
+			function SpellEditController($scope, $q, $translateWrapper, $state, $stateParams, SpellService) {
+				angular.element('.spell-splitter').jqxSplitter('collapse');
+
+				$scope.create = $stateParams.spellId === 'new';
+				if ($scope.create) {
+					$scope.spell = SpellService.getNew();
+				} else {
+					$scope.spell = angular.copy(SpellService.getById($scope.spells, $stateParams.spellId));
+				}
+				
+				console.log($scope.spell.name, $scope.spell);
 
 				function getFlags(flags, num) {
 					var result = _.reduce(flags, function(result, flag, key) {
@@ -216,40 +224,50 @@
 						}
 						return result;
 					}, '');
-					return $q.when(result ? result : $translate('SPELL.NONE'));
+					return $q.when(result ? result : $translateWrapper('SPELL.NONE'));
 				}
 
-				getFlags(flags, spell.flags).then(function(result) {
+				getFlags($scope.flags, $scope.spell.flags).then(function(result) {
 					$scope.flags = result;
 				});
 
-				getFlags(exclusionFlags, spell.exclusionFlags).then(function(result) {
+				getFlags($scope.exclusionFlags, $scope.spell.exclusionFlags).then(function(result) {
 					$scope.exclusionFlags = result;
 				});
 
-				$scope.onSave = function(spell) {
-					$windowInstance.close({
-						spell : spell
-					});
+				$scope.onCancel = function() {
+					console.log('cancel');
+					$state.go('^');
 				};
 
-				$scope.onSaveError = function(spell) {
-					$windowInstance.close({
-						spell : spell
-					});
+				$scope.onSave = function() {
+					if ($scope.create) {
+						// $scope.mods.push($scope.mod);
+					} else {
+						// var item = ModService.getById($scope.mods, $scope.mod.id);
+						// angular.extend(item, $scope.mod);
+					}
+					console.log('save');
+					$state.go('^');
 				};
 
-				$scope.onRemove = function(spell) {
-					$windowInstance.close({
-						spell : spell
-					});
+				$scope.onSaveError = function() {
+					console.error('save error');
+					$state.go('^');
 				};
 
-				$scope.onRemoveError = function(spell) {
-					$windowInstance.close({
-						spell : spell
-					});
+				$scope.onRemove = function() {
+					// var item = ModService.getById($scope.mods, $scope.mod.id);
+					// $scope.mods.splice($scope.mods.indexOf(item), 1);
+					console.log('remove');
+					$state.go('^');
 				};
+
+				$scope.onRemoveError = function() {
+					console.error('remove error');
+					$state.go('^');
+				};
+
 			} ]);
 
 })(_);

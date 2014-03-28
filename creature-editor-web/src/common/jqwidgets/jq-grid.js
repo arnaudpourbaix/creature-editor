@@ -66,7 +66,7 @@
 							function JqGridDirective($compile, $jqCommon, $jqGrid) {
 								return {
 									restrict : 'AE',
-									template : '<div class="jq-grid"><div data-ng-scope-element="contextualMenu" class="jq-contextual-menu"></div><div class="jq-grid-header"><div data-ng-scope-element="buttons" class="jq-grid-buttons"></div></div><div data-ng-scope-element="grid" class="jq-grid-body"></div></div>',
+									template : '<div class="jq-grid"><div data-ng-scope-element="contextualMenu" class="jq-contextual-menu"></div><div data-ng-show="showHeader()" class="jq-grid-header"><div data-ng-scope-element="buttons" class="jq-grid-buttons"></div></div><div data-ng-scope-element="grid" class="jq-grid-body"></div></div>',
 									replace : true,
 									scope : true,
 									compile : function() {
@@ -103,6 +103,10 @@
 												if (params.buttons) {
 													$jqGrid.addButtons($scope.buttons, $scope, params.buttons);
 												}
+												
+												$scope.showHeader = function() {
+													return params.buttons;
+												};
 
 												$scope.add = function() {
 													$scope.$eval(params.buttons.add)();

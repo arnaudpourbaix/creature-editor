@@ -24,9 +24,7 @@
 			link : function(scope, element, attributes) {
 				var params = scope.$eval(attributes.jqTabs) || {};
 				var options = angular.extend({}, $jqCommon.options(), $jqTabs.options(), params);
-				$timeout(function() {
-					element.jqxTabs(options);
-				});
+				element.jqxTabs(options);
 			}
 		};
 	} ]);
