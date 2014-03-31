@@ -3,7 +3,7 @@
 		<div data-translate>SPELL.LIST_TITLE</div>
 		<div>
 			<div class="spell-header">
-				<div data-ng-if="modsSelect != null" data-jq-drop-down-list="modsSelect" data-jq-selected-item="$stateParams.modId" data-ng-model="modId"></div>
+				<div data-ng-if="modsSelect != null" data-jq-drop-down-list="modsSelect" data-jq-selected-item="$stateParams.modId" data-ng-model="modId" data-ng-click="selectMod()"></div>
 				<button data-ui-sref="spells.list.import" class="btn btn-default btn-sm" data-ng-disabled="$stateParams.modId == null" data-ng-show="!importService.running" data-translate>SPELL.IMPORT.BUTTON</button>
 			</div>
 			<div data-ui-view="spell-list"></div>

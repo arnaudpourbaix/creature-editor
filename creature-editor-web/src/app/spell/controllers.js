@@ -43,21 +43,29 @@
 						data : 'mods',
 						displayMember : 'name',
 						valueMember : 'id',
+						select : 'selectMod',
 						options : {
 							placeHolder : translation,
 							width : '200px'
 						}
 					};
 				});
-
-				$scope.$watch('modId', function(newValue, oldValue) {
-					if (angular.isUndefined(newValue) || newValue === oldValue) {
-						return;
-					}
+				
+				$scope.selectMod = function(modId) {
+					console.log('selectMod', $scope.modId, modId);
 					$state.go('spells.list', {
-						modId : newValue
+						modId : $scope.modId
 					});
-				});
+				};
+
+//				$scope.$watch('modId', function(newValue, oldValue) {
+//					if (angular.isUndefined(newValue) || newValue === oldValue) {
+//						return;
+//					}
+//					$state.go('spells.list', {
+//						modId : newValue
+//					});
+//				});
 
 			} ]);
 
