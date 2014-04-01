@@ -18,7 +18,7 @@
 		});
 
 		$rootScope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-			console.info('$stateChangeSuccess', toState.name, 'success');
+//			console.info('$stateChangeSuccess', toState.name, 'success');
 		});
 		
 		$rootScope.$on('$stateChangeError', function(event, toState, toParams, fromState, fromParams, error) {

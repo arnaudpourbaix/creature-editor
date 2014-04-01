@@ -1,5 +1,5 @@
-/* global jQuery */
-(function(window, $) {
+/* global jQuery, _ */
+(function(window, $, _) {
 	'use strict';
 
 	var module = angular.module('jqwidgets.dropdownlist', [ 'jqwidgets.common' ]);
@@ -33,17 +33,23 @@
 			require : 'ngModel',
 			link : function($scope, element, attributes, ngModel) {
 				function render(value) {
-					console.log('rendering', value);
 					if (value) {
 						element.jqxDropDownList('val', value);
 					} else {
 						element.jqxDropDownList('clearSelection');
 					}
 				}
-
-//				ngModel.$render = function() {
-//					render(ngModel.$viewValue);
-//				};
+				function getItemIndex(id) { /* jshint -W116 */
+					return _.findIndex($scope[params.data], function(item) {
+						return item[params.valueMember] == id;
+					});
+				}
+				function selectItem(id) {
+					$scope.$parent[attributes.ngModel] = id;
+					if (angular.isString(params.select)) {
+						$scope[params.select](id);
+					}
+				}
 
 				var getParams = function() {
 					return $jqCommon.getParams($scope.$eval(attributes.jqDropDownList), [ 'data', 'displayMember', 'valueMember' ], [ 'options', 'select' ]);
@@ -56,26 +62,29 @@
 						if (value === ngModel.$viewValue) { // do nothing if value is the same
 							return;
 						}
-						console.log('select item', value);
 						if (!$scope.$$phase) {
 							$scope.$apply(function() {
-								$scope.$parent[attributes.ngModel] = value;
+								selectItem(value);
 							});
 						} else {
-							$scope.$parent[attributes.ngModel] = value;
+							selectItem(value);
 						}
 					});
 				};
 
 				var params = getParams();
 				bindEvents(params);
+				
+				var selectedId = $scope.$eval(attributes.jqSelectedItem);
+				if (selectedId != null) {
+					$scope.$parent[attributes.ngModel] = selectedId;
+					params.options.selectedIndex = getItemIndex(selectedId);
+				} else if ($scope.$parent[attributes.ngModel] != null) {
+					params.options.selectedIndex = $scope.$parent[attributes.ngModel];
+				}
+				
 				$jqDropdownlist.create(element, $scope, params);
 
-				var selectedId = $scope.$eval(attributes.jqSelectedItem);
-				if (selectedId) {
-					$scope.$parent[attributes.ngModel] = selectedId;
-					// TODO add selectedIndex property to init grid with selected value
-				}
 				
 				$scope.$watch(attributes.jqDropDownList, function(newValue, oldValue) { /* jshint -W116 */
 					if (newValue == oldValue) {
@@ -90,7 +99,6 @@
 					if (newValue == oldValue) {
 						return;
 					}
-					console.log('watch model change', newValue, oldValue);
 					ngModel.$setViewValue(newValue);
 					render(newValue);
 				});
@@ -99,4 +107,4 @@
 		};
 	} ]);
 
-}(window, jQuery));
+}(window, jQuery, _));

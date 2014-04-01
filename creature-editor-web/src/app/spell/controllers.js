@@ -37,7 +37,7 @@
 						min : 100
 					} ]
 				};
-
+				
 				$translateWrapper('MOD.SELECT_MOD').then(function(translation) {
 					$scope.modsSelect = {
 						data : 'mods',
@@ -52,20 +52,10 @@
 				});
 				
 				$scope.selectMod = function(modId) {
-					console.log('selectMod', $scope.modId, modId);
 					$state.go('spells.list', {
 						modId : $scope.modId
 					});
 				};
-
-//				$scope.$watch('modId', function(newValue, oldValue) {
-//					if (angular.isUndefined(newValue) || newValue === oldValue) {
-//						return;
-//					}
-//					$state.go('spells.list', {
-//						modId : newValue
-//					});
-//				});
 
 			} ]);
 

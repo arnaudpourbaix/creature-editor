@@ -38,11 +38,15 @@
 			return this.id;
 		};
 
+		res.prototype.baseUrl = function() {
+			return baseUrl;
+		};
+		
 		return res;
 	} ]);
 
-	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'appSettings',
-			function SpellService(Spell, SpellImportService, $http, appSettings) {
+	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http',
+			function SpellService(Spell, SpellImportService, $http) {
 				var service = {};
 
 				service.getNew = function() {
@@ -72,7 +76,7 @@
 				service.getFlags = function() {
 					return $http({
 						method : 'GET',
-						url : appSettings.restBaseUrl + 'spell/flags'
+						url : Spell.baseUrl() + 'flags'
 					}).then(function(result) {
 						return result.data;
 					});
@@ -81,7 +85,7 @@
 				service.getExclusionFlags = function() {
 					return $http({
 						method : 'GET',
-						url : appSettings.restBaseUrl + 'spell/exclusionFlags'
+						url : Spell.baseUrl() + 'exclusionFlags'
 					}).then(function(result) {
 						return result.data;
 					});
@@ -90,7 +94,7 @@
 				return service;
 			} ]);
 
-	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', function SpellImportService($http, $interval, $alertMessage) {
+	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', 'Spell', function SpellImportService($http, $interval, $alertMessage, Spell) {
 		var service = {
 			running : false,
 			spells : [],
@@ -101,7 +105,7 @@
 			startImport : function(mod) {
 				$http({
 					method : 'GET',
-					url : 'rest/spell/import',
+					url : Spell.baseUrl() + 'import',
 					params : {
 						modId : mod.id
 					}
@@ -129,7 +133,7 @@
 			gatherImportedSpells : function() {
 				$http({
 					method : 'GET',
-					url : 'rest/spell/import/gather'
+					url : Spell.baseUrl() + 'import/gather'
 				}).then(function(response) {
 					angular.forEach(response.data, function(value, index) {
 						service.spells.push(value);
@@ -155,7 +159,7 @@
 				}
 				$http({
 					method : 'GET',
-					url : 'rest/spell/import/cancel'
+					url : Spell.baseUrl() + 'import/cancel'
 				}).then(function(response) {
 					service.endImport();
 					$alertMessage.push('SPELL.IMPORT.CANCEL', 'warning');
