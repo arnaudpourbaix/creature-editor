@@ -1,76 +1,80 @@
-<form role="form" name="spellForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'spell', entity: 'SPELL.LABEL', name: 'resource' }">
-	<tabset>
-		<tab heading="General">
-			<div class="form-group">
-				<label for="spell.resource" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.RESOURCE</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.resource.$invalid}">
-					<input id="spell.resource" name="resource" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.RESOURCE' | translate }}" required data-ng-model="spell.resource" data-ng-trim="true" data-focus-me="true" />
-					<span class="help-block" data-ng-show="spellForm.resource.$error.required" data-translate>CONTROLS.REQUIRED</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.name" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.NAME</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.name.$invalid}">
-					<input id="spell.name" name="name" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.NAME' | translate }}" data-ng-model="spell.name" data-ng-trim="true" />
-					<span class="help-block" data-ng-show="spellForm.name.$error.required" data-translate>CONTROLS.REQUIRED</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.level" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.LEVEL</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.level.$invalid}">
-					<select class="form-control" data-ng-model="spell.level" required>
-						<option data-ng-repeat="i in [] | range:11" value="{{i}}" data-ng-selected="{{spell.level === i}}">
-							{{i}}
-						</option>
-					</select>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.description" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.DESCRIPTION</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.description.$invalid}">
-					<textarea name="description" rows="10" class="form-control" data-ng-model="spell.description" data-ng-maxlength="8000" disabled></textarea>			
-				</div>
-			</div>
-		</tab>
-		<tab heading="Flags">
-			<div class="form-group">
-				<label for="spell.type" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.TYPE</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.type.$invalid}">
-					<input id="spell.type" name="type" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.TYPE' | translate }}" data-ng-model="spell.type" disabled />
-					<span class="help-block" data-ng-show="spellForm.type.$error.required" data-translate>CONTROLS.REQUIRED</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.secondaryType" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.SECONDARY_TYPE</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.secondaryType.$invalid}">
-					<input id="spell.secondaryType" name="secondaryType" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.SECONDARY_TYPE' | translate }}" data-ng-model="spell.secondaryType" disabled />
-					<span class="help-block" data-ng-show="spellForm.secondaryType.$error.required" data-translate>CONTROLS.REQUIRED</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.school" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.SCHOOL</label>
-				<div class="col-sm-10" data-ng-class="{'has-error': spellForm.school.$invalid}">
-					<input id="spell.school" name="school" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.SCHOOL' | translate }}" data-ng-model="spell.school" disabled />
-					<span class="help-block" data-ng-show="spellForm.school.$error.required" data-translate>CONTROLS.REQUIRED</span>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.flags" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.FLAGS</label>
-				<div class="col-sm-10">
-					<div class="checkbox">
-						<label>{{flags}}</label>
+<div data-jq-window="window" class="spell-edit">
+	<div><div data-translate>SPELL.EDIT_TITLE</div></div>
+	<div class="spell-edit-body">
+		<form role="form" name="spellForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'spell', entity: 'SPELL.LABEL', name: 'resource' }">
+			<tabset> 
+				<tab heading="General">
+					<div class="form-group">
+						<label for="spell.resource" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.RESOURCE</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.resource.$invalid}">
+							<input id="spell.resource" name="resource" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.RESOURCE' | translate }}" required
+								data-ng-model="spell.resource" data-ng-trim="true" data-focus-me="true" /> <span class="help-block" data-ng-show="spellForm.resource.$error.required"
+								data-translate>CONTROLS.REQUIRED</span>
+						</div>
 					</div>
-				</div>
-			</div>
-			<div class="form-group">
-				<label for="spell.exclusionFlags" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.EXCLUSION_FLAGS</label>
-				<div class="col-sm-10">
-					<div class="checkbox">
-						<label>{{exclusionFlags}}</label>
+					<div class="form-group">
+						<label for="spell.name" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.NAME</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.name.$invalid}">
+							<input id="spell.name" name="name" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.NAME' | translate }}" data-ng-model="spell.name"
+								data-ng-trim="true" /> <span class="help-block" data-ng-show="spellForm.name.$error.required" data-translate>CONTROLS.REQUIRED</span>
+						</div>
 					</div>
-				</div>
-			</div>
-		</tab>
-	</tabset>
-	<crud-buttons />
-</form>
+					<div class="form-group">
+						<label for="spell.level" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.LEVEL</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.level.$invalid}">
+							<select class="form-control" data-ng-model="spell.level" required>
+								<option data-ng-repeat="i in [] | range:11" value="{{i}}" data-ng-selected="{{spell.level === i}}">{{i}}</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.description" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.DESCRIPTION</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.description.$invalid}">
+							<textarea name="description" rows="10" class="form-control" data-ng-model="spell.description" data-ng-maxlength="8000" disabled></textarea>
+						</div>
+					</div>
+				</tab> 
+				<tab heading="Flags">
+					<div class="form-group">
+						<label for="spell.type" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.TYPE</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.type.$invalid}">
+							<input id="spell.type" name="type" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.TYPE' | translate }}" data-ng-model="spell.type" disabled />
+							<span class="help-block" data-ng-show="spellForm.type.$error.required" data-translate>CONTROLS.REQUIRED</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.secondaryType" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.SECONDARY_TYPE</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.secondaryType.$invalid}">
+							<input id="spell.secondaryType" name="secondaryType" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.SECONDARY_TYPE' | translate }}"
+								data-ng-model="spell.secondaryType" disabled /> <span class="help-block" data-ng-show="spellForm.secondaryType.$error.required" data-translate>CONTROLS.REQUIRED</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.school" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.SCHOOL</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.school.$invalid}">
+							<input id="spell.school" name="school" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.SCHOOL' | translate }}" data-ng-model="spell.school"
+								disabled /> <span class="help-block" data-ng-show="spellForm.school.$error.required" data-translate>CONTROLS.REQUIRED</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.flags" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.FLAGS</label>
+						<div class="col-sm-10">
+							<div class="checkbox">
+								<label>{{flags}}</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.exclusionFlags" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.EXCLUSION_FLAGS</label>
+						<div class="col-sm-10">
+							<div class="checkbox">
+								<label>{{exclusionFlags}}</label>
+							</div>
+						</div>
+					</div>
+				</tab> 
+			</tabset>
+			<crud-buttons />
+		</form>
+	</div>
+</div>

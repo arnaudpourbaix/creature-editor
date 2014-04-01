@@ -4,10 +4,14 @@
 
 	var module = angular.module('creatureEditor.spell.services', [ 'ngResource' ]);
 
-	module.factory('Spell', [ '$resource', 'appSettings', function SpellFactory($resource, appSettings) {
-		var baseUrl = appSettings.restBaseUrl + 'spell/';
-
-		var res = $resource(baseUrl + ':id', {}, {
+	module.factory('spellSettings', [ 'appSettings', function spellSettings(appSettings) {
+		return {
+			url : appSettings.restBaseUrl + 'spell/'
+		};
+	} ]);
+	
+	module.factory('Spell', [ '$resource', 'spellSettings', function SpellFactory($resource, spellSettings) {
+		var res = $resource(spellSettings.url + ':id', {}, {
 			'save' : {
 				method : 'PUT'
 			},
@@ -24,11 +28,11 @@
 				}
 			},
 			'getByName' : {
-				url : baseUrl + 'name/:name',
+				url : spellSettings.url + 'name/:name',
 				method : 'GET'
 			},
 			'getFlags' : {
-				url : baseUrl + 'flags',
+				url : spellSettings.url + 'flags',
 				method : 'GET',
 				isArray : true
 			}
@@ -37,16 +41,12 @@
 		res.prototype.$id = function() {
 			return this.id;
 		};
-
-		res.prototype.baseUrl = function() {
-			return baseUrl;
-		};
 		
 		return res;
 	} ]);
 
-	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http',
-			function SpellService(Spell, SpellImportService, $http) {
+	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'spellSettings',
+			function SpellService(Spell, SpellImportService, $http, spellSettings) {
 				var service = {};
 
 				service.getNew = function() {
@@ -76,7 +76,7 @@
 				service.getFlags = function() {
 					return $http({
 						method : 'GET',
-						url : Spell.baseUrl() + 'flags'
+						url : spellSettings.url + 'flags'
 					}).then(function(result) {
 						return result.data;
 					});
@@ -85,7 +85,7 @@
 				service.getExclusionFlags = function() {
 					return $http({
 						method : 'GET',
-						url : Spell.baseUrl() + 'exclusionFlags'
+						url : spellSettings.url + 'exclusionFlags'
 					}).then(function(result) {
 						return result.data;
 					});
@@ -94,7 +94,7 @@
 				return service;
 			} ]);
 
-	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', 'Spell', function SpellImportService($http, $interval, $alertMessage, Spell) {
+	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', 'spellSettings', function SpellImportService($http, $interval, $alertMessage, spellSettings) {
 		var service = {
 			running : false,
 			spells : [],
@@ -105,7 +105,7 @@
 			startImport : function(mod) {
 				$http({
 					method : 'GET',
-					url : Spell.baseUrl() + 'import',
+					url : spellSettings.url + 'import',
 					params : {
 						modId : mod.id
 					}
@@ -133,7 +133,7 @@
 			gatherImportedSpells : function() {
 				$http({
 					method : 'GET',
-					url : Spell.baseUrl() + 'import/gather'
+					url : spellSettings.url + 'import/gather'
 				}).then(function(response) {
 					angular.forEach(response.data, function(value, index) {
 						service.spells.push(value);
@@ -159,7 +159,7 @@
 				}
 				$http({
 					method : 'GET',
-					url : Spell.baseUrl() + 'import/cancel'
+					url : spellSettings.url + 'import/cancel'
 				}).then(function(response) {
 					service.endImport();
 					$alertMessage.push('SPELL.IMPORT.CANCEL', 'warning');

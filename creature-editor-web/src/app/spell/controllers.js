@@ -11,6 +11,7 @@
 				$scope.mods = mods;
 				$scope.flags = flags;
 				$scope.exclusionFlags = exclusionFlags;
+				$scope.modId = null;
 
 				$scope.layout = {
 					options : {
@@ -23,18 +24,6 @@
 					}, {
 						id : 'spell-import',
 						height : 100,
-					} ]
-				};
-
-				$scope.splitter = {
-					width : 1160,
-					height : 620,
-					panels : [ {
-						size : 1060,
-						min : 400
-					}, {
-						size : 100,
-						min : 100
 					} ]
 				};
 				
@@ -200,7 +189,13 @@
 
 	module.controller('SpellEditController', [ '$scope', '$q', '$translateWrapper', '$state', '$stateParams', 'SpellService',
 			function SpellEditController($scope, $q, $translateWrapper, $state, $stateParams, SpellService) {
-				angular.element('.spell-splitter').jqxSplitter('collapse');
+		
+				$scope.window = {
+					options : {
+						width: 900,
+						height: 800
+					}
+				};
 
 				$scope.create = $stateParams.spellId === 'new';
 				if ($scope.create) {

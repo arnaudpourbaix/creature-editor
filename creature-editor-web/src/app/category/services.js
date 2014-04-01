@@ -4,10 +4,14 @@
 
 	var module = angular.module('creatureEditor.category.services', [ 'ngResource' ]);
 
-	module.factory('Category', [ '$resource', 'appSettings', function CategoryFactory($resource, appSettings) {
-		var baseUrl = appSettings.restBaseUrl + 'category/';
-
-		var res = $resource(baseUrl + ':id', {}, {
+	module.factory('categorySettings', [ 'appSettings', function categorySettings(appSettings) {
+		return {
+			url : appSettings.restBaseUrl + 'category/'
+		};
+	} ]);
+	
+	module.factory('Category', [ '$resource', 'categorySettings', function CategoryFactory($resource, categorySettings) {
+		var res = $resource(categorySettings.url + ':id', {}, {
 			'save' : {
 				method : 'PUT'
 			},
@@ -24,7 +28,7 @@
 				}
 			},
 			'getByName' : {
-				url : baseUrl + 'name/:name',
+				url : categorySettings.url + 'name/:name',
 				method : 'GET'
 			}
 		});
@@ -36,7 +40,7 @@
 		return res;
 	} ]);
 
-	module.service('CategoryService', [ 'Category', 'appSettings', function CategoryService(Category, appSettings) {
+	module.service('CategoryService', [ 'Category', function CategoryService(Category) {
 		var service = {
 			'getNew' : function(parent) {
 				var category = new Category({

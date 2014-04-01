@@ -4,10 +4,14 @@
 
 	var module = angular.module('creatureEditor.mod.services', [ 'ngResource' ]);
 
-	module.factory('Mod', [ '$resource', 'appSettings', function ModFactory($resource, appSettings) {
-		var baseUrl = appSettings.restBaseUrl + 'mod/';
-
-		var res = $resource(baseUrl + ':id', {}, {
+	module.factory('modSettings', [ 'appSettings', function modSettings(appSettings) {
+		return {
+			url : appSettings.restBaseUrl + 'mod/'
+		};
+	} ]);
+	
+	module.factory('Mod', [ '$resource', 'modSettings', function ModFactory($resource, modSettings) {
+		var res = $resource(modSettings.url + ':id', {}, {
 			'save' : {
 				method : 'PUT'
 			},
@@ -24,7 +28,7 @@
 				}
 			},
 			'getByName' : {
-				url : baseUrl + 'name/:name',
+				url : modSettings.url + 'name/:name',
 				method : 'GET'
 			}
 		});
@@ -36,7 +40,7 @@
 		return res;
 	} ]);
 
-	module.service('ModService', [ 'Mod', 'appSettings', function ModService(Mod, appSettings) {
+	module.service('ModService', [ 'Mod', function ModService(Mod) {
 		var service = {
 			'getNew' : function() {
 				var mod = new Mod({

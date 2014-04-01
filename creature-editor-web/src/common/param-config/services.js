@@ -3,10 +3,15 @@
 
 	var module = angular.module('param-config.services', [ 'ngResource' ]);
 
-	module.factory('Parameter', [ '$resource', 'appSettings', function SpellFactory($resource, appSettings) {
-		var baseUrl = appSettings.restBaseUrl + 'parameter/';
-
-		var res = $resource(baseUrl + ':id', {}, {
+	module.factory('paramSettings', [ 'appSettings', function paramSettings(appSettings) {
+		return {
+			url : appSettings.restBaseUrl + 'parameter/',
+			typeUrl : appSettings.restBaseUrl + 'parameterType/'
+		};
+	} ]);
+	
+	module.factory('Parameter', [ '$resource', 'paramSettings', function SpellFactory($resource, paramSettings) {
+		var res = $resource(paramSettings.url + ':id', {}, {
 			'save' : {
 				method : 'PUT',
 				params: { type: '@datatype' }
@@ -20,20 +25,18 @@
 		return res;
 	} ]);
 
-	module.factory('ParameterType', [ '$resource', 'appSettings', function SpellFactory($resource, appSettings) {
-		var baseUrl = appSettings.restBaseUrl + 'parameterType/';
-
-		var res = $resource(baseUrl + ':id', {}, {});
+	module.factory('ParameterType', [ '$resource', 'paramSettings', function SpellFactory($resource, paramSettings) {
+		var res = $resource(paramSettings.typeUrl + ':id', {}, {});
 
 		return res;
 	} ]);
 
-	module.service('ParameterService', [ '$http', 'appSettings', function ParameterService($http, appSettings) {
+	module.service('ParameterService', [ '$http', 'paramSettings', function ParameterService($http, paramSettings) {
 		var service = {
 			checkFolder : function(folder) {
 				return $http({
 					method : 'GET',
-					url : appSettings.restBaseUrl + 'parameter/checkFolder',
+					url : paramSettings.url + 'checkFolder',
 					params : {
 						folder : folder
 					}
