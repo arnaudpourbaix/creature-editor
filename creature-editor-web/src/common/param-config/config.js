@@ -56,6 +56,13 @@
 						height : 350
 					},
 					title : parameter.name,
+					resolve : {
+						param : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
+							return Parameter.get({
+								id : $stateParams.id
+							}).$promise;
+						} ]
+					},
 					inject : {
 						parameter : parameter
 					}

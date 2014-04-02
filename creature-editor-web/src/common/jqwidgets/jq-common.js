@@ -41,7 +41,7 @@
 						service.checkOptionnalParams(result, optionalProps);
 						return result;
 					};
-					
+
 					/**
 					 * @ngdoc function
 					 * @name $jqCommon.checkRequiredParams
@@ -52,8 +52,8 @@
 					 * 
 					 * @param {object}
 					 *           params object to control.
-					 * @param {array} or {string}
-					 *           requiredProps required properties.
+					 * @param {array}
+					 *           or {string} requiredProps required properties.
 					 */
 					service.checkRequiredParams = function(params, requiredProps) {
 						if (!requiredProps) {
@@ -75,8 +75,8 @@
 					 * @description controls optional properties.
 					 * @param {object}
 					 *           params object to control.
-					 * @param {array} or {string}
-					 *           optionalProps optional properties array.
+					 * @param {array}
+					 *           or {string} optionalProps optional properties array.
 					 */
 					service.checkOptionnalParams = function(params, requiredProps, optionalProps) {
 						if (!optionalProps) {
@@ -87,7 +87,7 @@
 							params[prop] = params[prop] || null;
 						});
 					};
-					
+
 					/**
 					 * @ngdoc function
 					 * @name $jqCommon.checkTemplateParams
@@ -106,7 +106,7 @@
 							throw new Error('Too many template options ! Choose between template and templateUrl.');
 						}
 					};
-					
+
 					/**
 					 * @ngdoc function
 					 * @name $jqCommon.getTemplatePromise
@@ -128,39 +128,39 @@
 
 					/**
 					 * @ngdoc function
-					 * @name $jqCommon.getResolvedPromises
+					 * @name $jqCommon.resolveDependencies
 					 * @module jqwidgets.common
 					 * @function
 					 * 
-					 * @description Get ....
+					 * @description it will return a deferred with all dependencies. Each promise will be resolved before resolution.
 					 * @param {object}
-					 *           options Must contains template or templateUrl property.
-					 * @returns {array} array of mapped results.
+					 *           or {array} dependencies dependencies (can be an array or an object).
+					 * @returns {deferred} array of mapped results.
 					 */
-					service.getResolvedPromises = function(promises) {
+					service.resolveDependencies = function(dependencies) {
 						var promisesArr = [];
-						angular.forEach(promises, function(value) {
+						angular.forEach(dependencies, function(value) {
 							if (angular.isFunction(value) || angular.isArray(value)) {
 								promisesArr.push($q.when($injector.invoke(value)));
 							}
 						});
 						return promisesArr;
 					};
-					
+
 					/**
 					 * @ngdoc function
 					 * @name $jqCommon.instanciateController
 					 * @module jqwidgets.common
 					 * @function
 					 * 
-					 * @description Instanciate a controller.
+					 * @description Instanciate a controller and returns a deferred to track when it's done.
 					 * @param {string}
 					 *           controller Controller's name.
 					 * @param {array}
-					 *           dependencies Dependencies to inject.
+					 *           dependencies Dependencies to inject. Promises within dependencies will be resolved.
 					 * @param {object}
 					 *           scope Controller's scope, if not provided, a new scope is created from root scope.
-					 * @returns
+					 * @returns {deferred} deferred is resolved when controller is instanciated
 					 */
 					service.instanciateController = function(controller, dependencies, scope) {
 						if (!controller) {
