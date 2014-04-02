@@ -11,22 +11,10 @@
 		};
 		var windowInstances = [], windowSequence = 0;
 
-		function log(message) {
-			// console.debug(message);
-		}
-
-		function WindowWrapper(windowOptions, sequence) {
+		function WindowWrapper(windowOptions) {
 			var windowResultDeferred = $q.defer();
 			var windowOpenedDeferred = $q.defer();
-			var containerId, jqSelector, resultData;
-
-			function getTemplatePromise(options) {
-				return options.template ? $q.when(angular.element(options.template)) : $http.get(options.templateUrl, {
-					cache : $templateCache
-				}).then(function(result) {
-					return result.data;
-				});
-			}
+			var jqSelector, windowScope, resultData;
 
 			function getResolveTitle(title) {
 				// can resolve function that return a text or a promise, but it doesn't support dependencies injection yet
@@ -37,33 +25,33 @@
 				}
 			}
 			
-			function getResolvePromises(resolves) {
-				var promisesArr = [];
-				angular.forEach(resolves, function(value, key) {
-					if (angular.isFunction(value) || angular.isArray(value)) {
-						promisesArr.push($q.when($injector.invoke(value)));
-					}
-				});
-				return promisesArr;
-			}
-			
-			function instanciateController(windowOptions, windowScope, tplAndVars) {
-				if (!windowOptions.controller) {
-					return;
-				}
-				var resolveIter = 2; // 0: view template, 1: title
-				var ctrlLocals = {
-					$scope : windowScope,
-					$windowInstance : self
-				};
-				angular.forEach(windowOptions.resolve, function(value, key) {
-					ctrlLocals[key] = tplAndVars[resolveIter++];
-				});
-				angular.forEach(windowOptions.inject, function(value, key) {
-					ctrlLocals[key] = value;
-				});
-				$controller(windowOptions.controller, ctrlLocals);
-			}
+//			function getResolvePromises(resolves) {
+//				var promisesArr = [];
+//				angular.forEach(resolves, function(value, key) {
+//					if (angular.isFunction(value) || angular.isArray(value)) {
+//						promisesArr.push($q.when($injector.invoke(value)));
+//					}
+//				});
+//				return promisesArr;
+//			}
+//			
+//			function instanciateController(windowOptions, windowScope, tplAndVars) {
+//				if (!windowOptions.controller) {
+//					return;
+//				}
+//				var resolveIter = 2; // 0: view template, 1: title
+//				var ctrlLocals = {
+//					$scope : windowScope,
+//					$windowInstance : self
+//				};
+//				angular.forEach(windowOptions.resolve, function(value, key) {
+//					ctrlLocals[key] = tplAndVars[resolveIter++];
+//				});
+//				angular.forEach(windowOptions.inject, function(value, key) {
+//					ctrlLocals[key] = value;
+//				});
+//				$controller(windowOptions.controller, ctrlLocals);
+//			}
 			
 			function close() {
 				jqSelector.remove();
@@ -74,8 +62,7 @@
 				}
 			}
 			
-			function open(tplAndVars) {
-				var windowScope = windowOptions.scope || $rootScope.$new();
+			function open() {
 				var settings = angular.extend({}, $jqCommon.options(), options, windowOptions.options);
 				if (settings.height > 600) {
 					settings.maxHeight = settings.height;
@@ -83,25 +70,17 @@
 				if (settings.width > 600) {
 					settings.maxWidth = settings.width;
 				}
-				if (tplAndVars) {
-					instanciateController(windowOptions, windowScope, tplAndVars);
-					angular.extend(settings, {
-						title : tplAndVars[1],
-						content : $compile(tplAndVars[0])(windowScope)
-					});
-				}
-				if (angular.isDefined(sequence)) {
-					containerId = 'jqWindow' + sequence;
-					$(document.body).append('<div class="jq-window" id="' + containerId + '"><div></div><div></div></div>');
-					jqSelector = $('#' + containerId);
-				} else {
-					jqSelector = windowOptions.element;
-				}
+				jqSelector = windowOptions.element;
+				console.log('final settings', settings);
 				jqSelector.jqxWindow(settings);
 				jqSelector.on('close', function(event) {
-					// windowScope.$apply(function() {
+					if (!windowScope.$$phase) {
+						windowScope.$apply(function() {
+							close();
+						});
+					} else {
 						close();
-					// });
+					}
 					return false;
 				});
 			}
@@ -120,23 +99,34 @@
 				jqSelector.jqxWindow('close');
 			};
 			
-			self.containerId = function() {
-				return containerId;
-			};
-			
 			(function constructor() {
+				windowScope = windowOptions.scope || $rootScope.$new();
 				if (windowOptions.element) { // window opened by directive
+					console.log('window opened by directive');
 					open();
-					return;
+				} else {
+					console.log('window opened by code');
+					//$q.when(windowOptions.resolve)
+					$jqCommon.getView(windowOptions, windowOptions.controller, windowOptions.resolve, windowScope).then(function(view) {
+						angular.extend(windowOptions, {
+							//title : tplAndVars[1],
+							content : view
+						});
+						var containerId = 'jqWindow' + windowOptions.sequence;
+						$(document.body).append('<div class="jq-window" id="' + containerId + '"><div></div><div></div></div>');
+						windowOptions.element = $('#' + containerId);
+						open();
+					});
+					
+//					var templateAndResolvePromise = $q.all([ getTemplatePromise(windowOptions) ].concat([ getResolveTitle(windowOptions.title) ]).concat(getResolvePromises(windowOptions.resolve)));
+//					templateAndResolvePromise.then(function resolveSuccess(tplAndVars) {
+//						open(tplAndVars);
+//						windowOpenedDeferred.resolve(true);
+//					}, function resolveError(reason) {
+//						windowOpenedDeferred.reject(false);
+//						windowResultDeferred.reject(reason);
+//					});
 				}
-				var templateAndResolvePromise = $q.all([ getTemplatePromise(windowOptions) ].concat([ getResolveTitle(windowOptions.title) ]).concat(getResolvePromises(windowOptions.resolve)));
-				templateAndResolvePromise.then(function resolveSuccess(tplAndVars) {
-					open(tplAndVars);
-					windowOpenedDeferred.resolve(true);
-				}, function resolveError(reason) {
-					windowOpenedDeferred.reject(false);
-					windowResultDeferred.reject(reason);
-				});
 			})();
 			
 			return self;
@@ -149,23 +139,22 @@
 		};
 		
 		service.open = function(windowOptions) {
-			// verify options
-			if (!windowOptions.template && !windowOptions.templateUrl) {
-				throw new Error('One of template or templateUrl options is required.');
-			}
-			windowOptions.resolve = windowOptions.resolve || {};
-
-			var sequence = windowSequence++;
-			var windowInstance = new WindowWrapper(windowOptions, sequence);
-			windowInstance.result.finally(function() {
-				delete windowInstances[sequence];
+			var settings = $jqCommon.getParams(windowOptions, 'options');
+			$jqCommon.checkTemplateParams(settings);
+			angular.extend(settings, {
+				sequence: windowSequence++
 			});
-			windowInstances[sequence] = windowInstance;
+			var windowInstance = new WindowWrapper(settings);
+			windowInstance.result.finally(function() {
+				delete windowInstances[settings.sequence];
+			});
+			windowInstances[settings.sequence] = windowInstance;
 			return windowInstance;
 		};
 
-		service.create = function(element, scope, params) {
-			var settings = angular.extend({}, params, {
+		service.create = function(element, scope, windowOptions) {
+			var settings = $jqCommon.getParams(windowOptions, 'options');
+			angular.extend(settings, {
 				scope: scope,
 				element: element
 			});

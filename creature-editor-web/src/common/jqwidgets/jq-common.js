@@ -12,8 +12,8 @@
 			options.theme = value;
 		};
 
-		this.$get = [ '$q', '$http', '$templateCache', '$rootScope', '$controller', '$compile',
-				function jqCommonService($q, $http, $templateCache, $rootScope, $controller, $compile) {
+		this.$get = [ '$q', '$http', '$templateCache', '$rootScope', '$controller', '$compile', '$injector',
+				function jqCommonService($q, $http, $templateCache, $rootScope, $controller, $compile, $injector) {
 					var service = {};
 
 					service.options = function() {
@@ -36,21 +36,77 @@
 					 * @returns {object} params object including missing optional properties.
 					 */
 					service.getParams = function(params, requiredProps, optionalProps) {
-						var paramKeys = _.keys(params);
-						if (angular.isArray(requiredProps)) {
-							var difference = _.difference(requiredProps, paramKeys);
-							if (difference.length) {
-								throw new Error("missing required parameters: " + difference.toString());
-							}
+						var result = angular.copy(params);
+						service.checkRequiredParams(result, requiredProps);
+						service.checkOptionnalParams(result, optionalProps);
+						return result;
+					};
+					
+					/**
+					 * @ngdoc function
+					 * @name $jqCommon.checkRequiredParams
+					 * @module jqwidgets.common
+					 * @function
+					 * 
+					 * @description controls required properties.
+					 * 
+					 * @param {object}
+					 *           params object to control.
+					 * @param {array} or {string}
+					 *           requiredProps required properties.
+					 */
+					service.checkRequiredParams = function(params, requiredProps) {
+						if (!requiredProps) {
+							return;
 						}
-						if (angular.isArray(optionalProps)) {
-							angular.forEach(optionalProps, function(prop, index) {
-								params[prop] = params[prop] || null;
-							});
+						var props = angular.isArray(requiredProps) ? requiredProps : [].concat(requiredProps);
+						var difference = _.difference(props, _.keys(params));
+						if (difference.length) {
+							throw new Error("missing required parameters: " + difference.toString());
 						}
-						return params;
 					};
 
+					/**
+					 * @ngdoc function
+					 * @name $jqCommon.getParams
+					 * @module jqwidgets.common
+					 * @function
+					 * 
+					 * @description controls optional properties.
+					 * @param {object}
+					 *           params object to control.
+					 * @param {array} or {string}
+					 *           optionalProps optional properties array.
+					 */
+					service.checkOptionnalParams = function(params, requiredProps, optionalProps) {
+						if (!optionalProps) {
+							return;
+						}
+						var props = angular.isArray(optionalProps) ? optionalProps : [].concat(optionalProps);
+						angular.forEach(props, function(prop, index) {
+							params[prop] = params[prop] || null;
+						});
+					};
+					
+					/**
+					 * @ngdoc function
+					 * @name $jqCommon.checkTemplateParams
+					 * @module jqwidgets.common
+					 * @function
+					 * 
+					 * @description controls that template is specified (must have template or templateUrl property).
+					 * @param {object}
+					 *           params object to control.
+					 */
+					service.checkTemplateParams = function(params) {
+						if (!params.template && !params.templateUrl) {
+							throw new Error('Missing template ! Add template or templateUrl option.');
+						}
+						if (params.template && params.templateUrl) {
+							throw new Error('Too many template options ! Choose between template and templateUrl.');
+						}
+					};
+					
 					/**
 					 * @ngdoc function
 					 * @name $jqCommon.getTemplatePromise
@@ -60,7 +116,7 @@
 					 * @description Get template promise from a template string or url.
 					 * @param {object}
 					 *           options Must contains template or templateUrl property.
-					 * @returns {object} Template promise.
+					 * @returns {promise} Template promise.
 					 */
 					service.getTemplatePromise = function(options) {
 						return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
@@ -70,6 +126,27 @@
 						});
 					};
 
+					/**
+					 * @ngdoc function
+					 * @name $jqCommon.getResolvedPromises
+					 * @module jqwidgets.common
+					 * @function
+					 * 
+					 * @description Get ....
+					 * @param {object}
+					 *           options Must contains template or templateUrl property.
+					 * @returns {array} array of mapped results.
+					 */
+					service.getResolvedPromises = function(promises) {
+						var promisesArr = [];
+						angular.forEach(promises, function(value) {
+							if (angular.isFunction(value) || angular.isArray(value)) {
+								promisesArr.push($q.when($injector.invoke(value)));
+							}
+						});
+						return promisesArr;
+					};
+					
 					/**
 					 * @ngdoc function
 					 * @name $jqCommon.instanciateController
@@ -113,7 +190,7 @@
 					 *           dependencies Dependencies to inject.
 					 * @param {object}
 					 *           scope Controller's scope, if not provided, a new scope is created from root scope.
-					 * @returns {element} dom element compiled with angular's scope.
+					 * @returns {promise} dom element compiled with angular's scope.
 					 */
 					service.getView = function(templateOptions, controller, dependencies, scope) {
 						return service.getTemplatePromise(templateOptions).then(function(template) {
