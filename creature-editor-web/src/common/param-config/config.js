@@ -52,26 +52,26 @@
 					templateUrl : "param-config/parameter-edit.tpl.html",
 					controller : 'ParamConfigEditController',
 					options : {
+						title : parameter.name,
 						width : 600,
 						height : 350
 					},
-					title : parameter.name,
 					resolve : {
-						param : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
+						parameter : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
 							return Parameter.get({
-								id : $stateParams.id
+								id : 'PROBABILITY_ACTION_SPELL'
 							}).$promise;
-						} ]
-					},
-					inject : {
-						parameter : parameter
+						} ],
+						nums : [ 1, 2, 4, 8 ]
 					}
 				});
 				modal.result.then(function(result) {
+					console.log('close and update');
 					$state.go('^', {}, {
 						reload : true
 					});
 				}, function() {
+					console.log('close');
 					$state.go('^');
 				});
 			} ]

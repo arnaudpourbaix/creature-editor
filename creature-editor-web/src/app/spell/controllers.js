@@ -230,6 +230,7 @@
 
 				$scope.onCancel = function() {
 					console.log('cancel');
+					$scope.window.instance.dismiss();
 					$state.go('^');
 				};
 
@@ -241,23 +242,27 @@
 						// angular.extend(item, $scope.mod);
 					}
 					console.log('save');
+					$scope.window.instance.close();
 					$state.go('^');
 				};
 
 				$scope.onSaveError = function() {
 					console.error('save error');
-					$state.go('^');
+					//$scope.window.instance.dismiss();
+					//$state.go('^');
 				};
 
 				$scope.onRemove = function() {
 					// var item = ModService.getById($scope.mods, $scope.mod.id);
 					// $scope.mods.splice($scope.mods.indexOf(item), 1);
 					console.log('remove');
+					$scope.window.instance.close();
 					$state.go('^');
 				};
 
 				$scope.onRemoveError = function() {
 					console.error('remove error');
+					$scope.window.instance.dismiss();
 					$state.go('^');
 				};
 

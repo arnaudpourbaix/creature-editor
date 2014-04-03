@@ -25,39 +25,13 @@
 				}
 			}
 			
-//			function getResolvePromises(resolves) {
-//				var promisesArr = [];
-//				angular.forEach(resolves, function(value, key) {
-//					if (angular.isFunction(value) || angular.isArray(value)) {
-//						promisesArr.push($q.when($injector.invoke(value)));
-//					}
-//				});
-//				return promisesArr;
-//			}
-//			
-//			function instanciateController(windowOptions, windowScope, tplAndVars) {
-//				if (!windowOptions.controller) {
-//					return;
-//				}
-//				var resolveIter = 2; // 0: view template, 1: title
-//				var ctrlLocals = {
-//					$scope : windowScope,
-//					$windowInstance : self
-//				};
-//				angular.forEach(windowOptions.resolve, function(value, key) {
-//					ctrlLocals[key] = tplAndVars[resolveIter++];
-//				});
-//				angular.forEach(windowOptions.inject, function(value, key) {
-//					ctrlLocals[key] = value;
-//				});
-//				$controller(windowOptions.controller, ctrlLocals);
-//			}
-			
 			function close() {
 				jqSelector.remove();
 				if (resultData) {
+					console.log('close window');
 					windowResultDeferred.resolve(resultData);
 				} else {
+					console.log('dismiss window');
 					windowResultDeferred.reject(resultData);
 				}
 			}
@@ -71,7 +45,6 @@
 					settings.maxWidth = settings.width;
 				}
 				jqSelector = windowOptions.element;
-				console.log('final settings', settings);
 				jqSelector.jqxWindow(settings);
 				jqSelector.on('close', function(event) {
 					if (!windowScope.$$phase) {
@@ -83,6 +56,7 @@
 					}
 					return false;
 				});
+				windowOpenedDeferred.resolve(true);
 			}
 			
 			var self = {};
@@ -91,7 +65,7 @@
 			self.opened = windowOpenedDeferred.promise;
 
 			self.close = function(result) {
-				resultData = result;
+				resultData = result || true;
 				jqSelector.jqxWindow('close');
 			};
 
@@ -102,30 +76,22 @@
 			(function constructor() {
 				windowScope = windowOptions.scope || $rootScope.$new();
 				if (windowOptions.element) { // window opened by directive
-					console.log('window opened by directive');
+					windowOptions.instance = self;
 					open();
 				} else {
-					console.log('window opened by code');
-					//$q.when(windowOptions.resolve)
-					$jqCommon.getView(windowOptions, windowOptions.controller, windowOptions.resolve, windowScope).then(function(view) {
-						angular.extend(windowOptions, {
-							//title : tplAndVars[1],
+					var deps = angular.extend({}, windowOptions.resolve, { $windowInstance: self });
+					$jqCommon.getView(windowOptions, windowOptions.controller, deps, windowScope).then(function(view) {
+						angular.extend(windowOptions.options, {
 							content : view
 						});
 						var containerId = 'jqWindow' + windowOptions.sequence;
 						$(document.body).append('<div class="jq-window" id="' + containerId + '"><div></div><div></div></div>');
 						windowOptions.element = $('#' + containerId);
 						open();
+					}, function(error) {
+						windowOpenedDeferred.reject(error);
+						windowResultDeferred.reject(error);
 					});
-					
-//					var templateAndResolvePromise = $q.all([ getTemplatePromise(windowOptions) ].concat([ getResolveTitle(windowOptions.title) ]).concat(getResolvePromises(windowOptions.resolve)));
-//					templateAndResolvePromise.then(function resolveSuccess(tplAndVars) {
-//						open(tplAndVars);
-//						windowOpenedDeferred.resolve(true);
-//					}, function resolveError(reason) {
-//						windowOpenedDeferred.reject(false);
-//						windowResultDeferred.reject(reason);
-//					});
 				}
 			})();
 			
@@ -158,8 +124,7 @@
 				scope: scope,
 				element: element
 			});
-			console.log('settings', settings);
-			new WindowWrapper(settings);
+			return new WindowWrapper(settings);
 		};
 		
 		return service;
@@ -170,7 +135,9 @@
 			restrict : 'AE',
 			link : function(scope, element, attributes) {
 				var params = scope.$eval(attributes.jqWindow);
-				$jqWindow.create(element, scope, params);
+				var windowInstance = $jqWindow.create(element, scope, params);
+				//scope.$parent[params].instance = windowInstance;
+				params.instance = windowInstance;
 			}
 		};
 	} ]);

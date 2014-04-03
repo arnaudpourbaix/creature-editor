@@ -133,18 +133,25 @@
 					 * @function
 					 * 
 					 * @description it will return a deferred with all dependencies. Each promise will be resolved before resolution.
-					 * @param {object}
-					 *           or {array} dependencies dependencies (can be an array or an object).
-					 * @returns {deferred} array of mapped results.
+					 * @param {object} dependencies object.
+					 * @returns {promise} resolved dependencies object.
 					 */
 					service.resolveDependencies = function(dependencies) {
-						var promisesArr = [];
+						var promises = [];
 						angular.forEach(dependencies, function(value) {
-							if (angular.isFunction(value) || angular.isArray(value)) {
-								promisesArr.push($q.when($injector.invoke(value)));
+							if (angular.isFunction(value) || (angular.isArray(value) && angular.isFunction(value[value.length - 1]))) {
+								promises.push($q.when($injector.invoke(value)));
+							} else {
+								promises.push($q.when(value));
 							}
 						});
-						return promisesArr;
+						return $q.all(promises).then(function(data) {
+							var result = {}, i = 0;
+							angular.forEach(dependencies, function(value, key) {
+								result[key] = data[i++];
+							});
+							return result;
+						});
 					};
 
 					/**
@@ -160,19 +167,25 @@
 					 *           dependencies Dependencies to inject. Promises within dependencies will be resolved.
 					 * @param {object}
 					 *           scope Controller's scope, if not provided, a new scope is created from root scope.
-					 * @returns {deferred} deferred is resolved when controller is instanciated
+					 * @returns {promise} resolved when controller is instanciated
 					 */
 					service.instanciateController = function(controller, dependencies, scope) {
+						var deferred = $q.defer();
 						if (!controller) {
-							throw new Error("missing controller!");
+							deferred.resolve();
+							return deferred;
 						}
-						var ctrlLocals = {
-							$scope : scope || $rootScope.$new()
-						};
-						angular.forEach(dependencies, function(value, key) {
-							ctrlLocals[key] = value;
+						service.resolveDependencies(dependencies).then(function(result) {
+							var ctrlLocals = {
+								$scope : scope || $rootScope.$new()
+							};
+							angular.forEach(result, function(value, key) {
+								ctrlLocals[key] = value;
+							});
+							$controller(controller, ctrlLocals);
+							deferred.resolve();
 						});
-						$controller(controller, ctrlLocals);
+						return deferred.promise;
 					};
 
 					/**
@@ -193,12 +206,9 @@
 					 * @returns {promise} dom element compiled with angular's scope.
 					 */
 					service.getView = function(templateOptions, controller, dependencies, scope) {
-						return service.getTemplatePromise(templateOptions).then(function(template) {
-							scope = scope || $rootScope.$new();
-							if (controller) {
-								service.instanciateController(controller, dependencies, scope);
-							}
-							return $compile(template)(scope);
+						var $scope = scope || $rootScope.$new();
+						return $q.all([ service.getTemplatePromise(templateOptions), service.instanciateController(controller, dependencies, $scope)]).then(function(result) {
+							return $compile(result[0])($scope);
 						});
 					};
 
