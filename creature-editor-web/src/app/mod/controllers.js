@@ -24,7 +24,7 @@
 
 				$scope.remove = function(mod) {
 					mod.$delete().then(function(response) {
-						$scope.removeFromList($scope.mods, 'id', mod.id);
+						$scope.removeFromList($scope.mods, 'id', mod.$id());
 						$translateWrapper('MOD.LABEL').then(function(label) {
 							$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
 								entity : label,
@@ -74,7 +74,7 @@
 									if (column === 1) {
 										$scope.remove(mod);
 									} else {
-										$scope.edit(mod.id);
+										$scope.edit(mod.$id());
 									}
 								}
 							}
@@ -105,7 +105,7 @@
 			if ($scope.create) {
 				$scope.mods.push($scope.mod);
 			} else {
-				var item = ModService.getById($scope.mods, $scope.mod.id);
+				var item = ModService.getById($scope.mods, $scope.mod.$id());
 				angular.extend(item, $scope.mod);
 			}
 			$state.go('^');
@@ -116,7 +116,7 @@
 		};
 
 		$scope.onRemove = function() {
-			var item = ModService.getById($scope.mods, $scope.mod.id);
+			var item = ModService.getById($scope.mods, $scope.mod.$id());
 			$scope.mods.splice($scope.mods.indexOf(item), 1);
 			$state.go('^');
 		};

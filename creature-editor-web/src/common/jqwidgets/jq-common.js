@@ -12,8 +12,8 @@
 			options.theme = value;
 		};
 
-		this.$get = [ '$q', '$http', '$templateCache', '$rootScope', '$controller', '$compile', '$injector',
-				function jqCommonService($q, $http, $templateCache, $rootScope, $controller, $compile, $injector) {
+		this.$get = [ '$q', '$http', '$templateCache', '$rootScope', '$controller', '$compile', '$injector', '$parse',
+				function jqCommonService($q, $http, $templateCache, $rootScope, $controller, $compile, $injector, $parse) {
 					var service = {};
 
 					service.options = function() {
@@ -211,11 +211,43 @@
 							return $compile(result[0])($scope);
 						});
 					};
-
+					
+					/**
+					 * @ngdoc function
+					 * @name $jqCommon.getScopeData
+					 * @module jqwidgets.common
+					 * @function
+					 * 
+					 * @description Get scope data value. Throw an exception if undefined.
+					 * @param {string}
+					 *           name data name within a scope.
+					 * @param {object}
+					 *           scope scope containing the data.
+					 * @returns {promise} dom element compiled with angular's scope.
+					 */
+					service.getScopeData = function(name, scope) {
+						var data = $parse(name);
+						var value = data(scope);
+						if (angular.isUndefined(value)) {
+							throw new Error('Undefined data in scope :' + name);
+						}
+						return value;
+					};
+					
 					return service;
 				} ];
 	});
 
+	
+	/**
+	 * @ngdoc directive
+	 * @name ngScopeElement
+	 * @module jqwidgets.common
+	 * @directive
+	 * 
+	 * @description Assign a DOM element to a scope.
+	 * 
+	 */
 	module.directive("ngScopeElement", function() {
 		return {
 			restrict : "A",

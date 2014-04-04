@@ -1,1 +1,6 @@
-<div data-ng-if="parameterGrid != null" class="parameter-list" data-jq-grid="parameterGrid"></div>
+<div data-jq-splitter="splitter" class="param-config-splitter">
+	<div><div class="param-config-list">
+		<div data-ng-if="parameterGrid != null" data-jq-grid="parameterGrid"></div>
+	</div></div>
+	<div><div class="param-config-edit" data-ui-view="param-config-edit"></div></div>
+</div>

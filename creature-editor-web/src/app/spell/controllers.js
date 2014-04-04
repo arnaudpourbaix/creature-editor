@@ -65,7 +65,7 @@
 				$scope.spells = spells;
 
 				$scope.$watch('importService.running', function() {
-					if ($scope.importService.running && $scope.importService.mod.id === $scope.modId) {
+					if ($scope.importService.running && $scope.importService.mod.$id() === $scope.modId) {
 						$scope.spells = $scope.importService.spells;
 						$scope.$broadcast('jqGrid-new-data');
 					}
@@ -140,16 +140,14 @@
 							options : {
 								width : 1000,
 								height : 590,
-								pageable : true,
-								pagerButtonsCount : 10,
-								pageSize : 20
+								pageable : true
 							},
 							events : {
 								cellClick : function($scope, spell, column) {
 									if (column === 7) {
 										$scope.remove(spell);
 									} else {
-										$scope.edit(spell.id);
+										$scope.edit(spell.$id());
 									}
 								}
 							}
@@ -164,7 +162,7 @@
 
 				$scope.remove = function(spell) {
 					spell.$delete().then(function(response) {
-						$scope.removeFromList($scope.spells, 'id', spell.id);
+						$scope.removeFromList($scope.spells, 'id', spell.$id());
 						$translateWrapper('SPELL.LABEL').then(function(label) {
 							$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
 								entity : label,
@@ -238,7 +236,7 @@
 					if ($scope.create) {
 						// $scope.mods.push($scope.mod);
 					} else {
-						// var item = ModService.getById($scope.mods, $scope.mod.id);
+						// var item = ModService.getById($scope.mods, $scope.mod.$id());
 						// angular.extend(item, $scope.mod);
 					}
 					console.log('save');
@@ -253,7 +251,7 @@
 				};
 
 				$scope.onRemove = function() {
-					// var item = ModService.getById($scope.mods, $scope.mod.id);
+					// var item = ModService.getById($scope.mods, $scope.mod.$id());
 					// $scope.mods.splice($scope.mods.indexOf(item), 1);
 					console.log('remove');
 					$scope.window.instance.close();

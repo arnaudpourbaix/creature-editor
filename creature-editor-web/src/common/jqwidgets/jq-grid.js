@@ -16,6 +16,8 @@
 							filterable : true,
 							selectionMode : 'singlerow',
 							pagermode : 'simple',
+							pagerButtonsCount : 10,
+							pageSize : 20,
 							enabletooltips : true
 						};
 

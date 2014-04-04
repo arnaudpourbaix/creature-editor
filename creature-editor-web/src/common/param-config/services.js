@@ -1,4 +1,6 @@
-(function() {
+/* global _ */
+
+(function(_) {
 	'use strict';
 
 	var module = angular.module('param-config.services', [ 'ngResource' ]);
@@ -30,21 +32,27 @@
 
 		return res;
 	} ]);
-
+	
 	module.service('ParameterService', [ '$http', 'paramSettings', function ParameterService($http, paramSettings) {
-		var service = {
-			checkFolder : function(folder) {
-				return $http({
-					method : 'GET',
-					url : paramSettings.url + 'checkFolder',
-					params : {
-						folder : folder
-					}
-				});
-			}
+		var service = {};
+		
+		service.checkFolder = function(folder) {
+			return $http({
+				method : 'GET',
+				url : paramSettings.url + 'checkFolder',
+				params : {
+					folder : folder
+				}
+			});
 		};
 
+		service.getById = function(params, id) {
+			return _.find(params, function(param) { /* jshint -W116 */
+				return param.$id() == id;
+			});
+		};
+		
 		return service;
 	} ]);
 
-})();
+})(_);

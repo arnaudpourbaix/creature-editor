@@ -12,11 +12,9 @@
 		this.$get = [ '$jqCommon', function jqDropdownlistService($jqCommon) {
 			var service = {
 				create : function(element, scope, params) {
-					if (!scope[params.data]) {
-						throw new Error("undefined data in scope: " + params.data);
-					}
+					var data = $jqCommon.getScopeData(params.data, scope);
 					var settings = angular.extend({}, $jqCommon.options(), options, params.options, {
-						source : scope[params.data],
+						source : data,
 						displayMember : params.displayMember,
 						valueMember : params.valueMember
 					});
@@ -27,7 +25,7 @@
 		} ];
 	});
 
-	module.directive('jqDropDownList', [ '$compile', '$timeout', '$jqCommon', '$jqDropdownlist', function JqDropDownListDirective($compile, $timeout, $jqCommon, $jqDropdownlist) {
+	module.directive('jqDropDownList', [ '$compile', '$timeout', '$parse', '$jqCommon', '$jqDropdownlist', function JqDropDownListDirective($compile, $timeout, $parse, $jqCommon, $jqDropdownlist) {
 		return {
 			restrict : 'AE',
 			require : 'ngModel',
@@ -40,12 +38,13 @@
 					}
 				}
 				function getItemIndex(id) { /* jshint -W116 */
-					return _.findIndex($scope[params.data], function(item) {
+					var data = $jqCommon.getScopeData(params.data, $scope);
+					return _.findIndex(data, function(item) {
 						return item[params.valueMember] == id;
 					});
 				}
 				function selectItem(id) {
-					$scope.$parent[attributes.ngModel] = id;
+					modelValue.assign($scope.$parent, id);
 					if (angular.isString(params.select)) {
 						$scope[params.select](id);
 					}
@@ -72,15 +71,16 @@
 					});
 				};
 
+				var modelValue = $parse(attributes.ngModel);
 				var params = getParams();
 				bindEvents(params);
 				
 				var selectedId = $scope.$eval(attributes.jqSelectedItem);
 				if (selectedId != null) {
-					$scope.$parent[attributes.ngModel] = selectedId;
+					modelValue.assign($scope.$parent, selectedId);
 					params.options.selectedIndex = getItemIndex(selectedId);
-				} else if ($scope.$parent[attributes.ngModel] != null) {
-					params.options.selectedIndex = $scope.$parent[attributes.ngModel];
+				} else if (modelValue($scope) != null) {
+					params.options.selectedIndex = getItemIndex(modelValue($scope));
 				}
 				
 				$jqDropdownlist.create(element, $scope, params);

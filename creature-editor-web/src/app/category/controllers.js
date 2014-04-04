@@ -32,15 +32,15 @@
 
 				$scope.addCategory = function(category) {
 					$state.go('categories.edit', {
-						categoryParentId : category ? category.id : 'root',
+						categoryParentId : category ? category.$id() : 'root',
 						categoryId : 'new'
 					});
 				};
 
 				$scope.editCategory = function(category) {
 					$state.go('categories.edit', {
-						categoryParentId : category.parent ? category.parent.id : 'root',
-						categoryId : category.id
+						categoryParentId : category.parent ? category.parent.$id() : 'root',
+						categoryId : category.$id()
 					});
 				};
 
@@ -143,7 +143,7 @@
 					if ($scope.create) {
 						$scope.categories.push($scope.category);
 					} else {
-						var item = CategoryService.getById($scope.categories, $scope.category.id);
+						var item = CategoryService.getById($scope.categories, $scope.category.$id());
 						angular.extend(item, $scope.category);
 					}
 					$state.go('^');
@@ -154,7 +154,7 @@
 				};
 
 				$scope.onRemove = function() {
-					var item = CategoryService.getById($scope.categories, $scope.category.id);
+					var item = CategoryService.getById($scope.categories, $scope.category.$id());
 					$scope.categories.splice($scope.categories.indexOf(item), 1);
 					$state.go('^');
 				};

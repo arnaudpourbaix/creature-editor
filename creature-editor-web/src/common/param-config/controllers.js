@@ -1,49 +1,71 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('param-config.controllers', [ 'param-config.services', 'alert-message', 'crud', 'ui.bootstrap' ]);
+	var module = angular.module('param-config.controllers', [ 'param-config.services', 'crud', 'alert-message', 'translate-wrapper' ]);
 
 	module.controller('ParamConfigController', [ '$scope', 'types', function ParamConfigController($scope, types) {
 		$scope.types = types;
+		
+		$scope.layout = {
+			options : {
+				width : 1200,
+				height : 800
+			},
+			windows : [ {
+				id : 'param-config-list',
+				height : 800
+			} ]
+		};
 	} ]);
 
-	module.controller('ParamConfigListController', [ '$scope', '$stateParams', '$location', '$translate', 'parameters', 'crudListMethods', '$alertMessage', '$q', '$interpolate',
-			function ParamConfigListController($scope, $stateParams, $location, $translate, parameters, crudListMethods, $alertMessage, $q, $interpolate) {
+	module.controller('ParamConfigListController', [ '$scope', '$location', '$translateWrapper', 'parameters', 'crudListMethods', '$alertMessage', '$interpolate', '$stateParams',
+			function ParamConfigListController($scope, $location, $translateWrapper, parameters, crudListMethods, $alertMessage, $interpolate, $stateParams) {
 				angular.extend($scope, crudListMethods($location.url()));
+				
+				$scope.splitter = {
+					width : 1180,
+					height : 700,
+					panels : [ {
+						size : 720,
+						min : 200
+					}, {
+						size : 420,
+						min : 100
+					} ]
+				};
 
 				$scope.typeId = $stateParams.typeId;
 
 				$scope.parameters = parameters;
-
+				
 				var setParameterGrid = function() {
-					$q.all([ $translate('PARAMETER.FIELDS.NAME'), $translate('PARAMETER.FIELDS.LABEL'), $translate('PARAMETER.FIELDS.VALUE') ]).then(function(labels) {
+					$translateWrapper([ 'PARAMETER.FIELDS.NAME', 'PARAMETER.FIELDS.LABEL', 'PARAMETER.FIELDS.VALUE' ]).then(function(labels) {
 						$scope.parameterGrid = {
 							data : 'parameters',
 							columns : [ {
-								text : labels[0],
+								text : labels['PARAMETER.FIELDS.NAME'],
 								datafield : 'name',
 								type : 'string',
 								align : 'center',
+								hidden : true,
 								width : 250
 							}, {
-								text : labels[1],
+								text : labels['PARAMETER.FIELDS.LABEL'],
 								datafield : 'label',
 								type : 'string',
 								align : 'center',
-								width : 400
+								width : 300
 							}, {
-								text : labels[2],
+								text : labels['PARAMETER.FIELDS.VALUE'],
 								datafield : 'value',
 								type : 'string',
 								align : 'center',
-								width : 150
+								width : 380
 							} ],
 							options : {
-								width : 800,
-								height : 400,
-								pageable : true,
-								pagerButtonsCount : 10,
-								pageSize : 15
+								width : 700,
+								height : 590,
+								pageable : true
 							},
 							events : {
 								cellClick : function($scope, parameter, column) {
@@ -61,35 +83,46 @@
 
 			} ]);
 
-	module.controller('ParamConfigEditController', [ '$scope', '$windowInstance', '$translate', 'parameter',
-			function ParamConfigEditController($scope, $windowInstance, $translate, parameter) {
-				$scope.parameter = parameter;
-				$scope.parameterValues = parameter.parameterValues;
+	module.controller('ParamConfigEditController', [ '$scope', '$state', '$stateParams', '$translateWrapper', 'ParameterService', function ParamConfigEditController($scope, $state, $stateParams, $translateWrapper, ParameterService) {
+		$scope.parameter = angular.copy(ParameterService.getById($scope.parameters, $stateParams.id));
+		
+		$translateWrapper('PARAMETER.VALUE_SELECT').then(function(translation) {
+			$scope.valuesSelect = {
+				data : 'parameter.parameterValues',
+				displayMember : 'description',
+				valueMember : 'value',
+				options : {
+					placeHolder : translation,
+					autoOpen : true,
+					width : '300px'
+				}
+			};
+		});
+		
+		$scope.onCancel = function() {
+			$state.go('^');
+		};
 
-				$translate('PARAMETER.VALUE_SELECT').then(function(translation) {
-					$scope.valuesSelect = {
-						data : 'parameterValues',
-						displayMember : 'description',
-						valueMember : 'value',
-						options : {
-							placeHolder : translation,
-							autoOpen : true,
-							width : '300px'
-						}
-					};
-				});
+		$scope.onSave = function() {
+			var item = ParameterService.getById($scope.parameters, $scope.parameter.$id());
+			angular.extend(item, $scope.parameter);
+			$state.go('^');
+		};
 
-				$scope.onSave = function(parameter) {
-					$windowInstance.close({
-						parameter : parameter
-					});
-				};
+		$scope.onSaveError = function() {
+			$state.go('^');
+		};
 
-				$scope.onSaveError = function(parameter) {
-					$windowInstance.close({
-						parameter : parameter
-					});
-				};
-			} ]);
+		$scope.onRemove = function() {
+			var item = ParameterService.getById($scope.parameters, $scope.parameter.$id());
+			$scope.parameters.splice($scope.parameters.indexOf(item), 1);
+			$state.go('^');
+		};
+
+		$scope.onRemoveError = function() {
+			$state.go('^');
+		};
+
+	} ]);
 
 })();

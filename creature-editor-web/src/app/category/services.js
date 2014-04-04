@@ -42,7 +42,7 @@
 
 	module.service('CategoryService', [ 'Category', function CategoryService(Category) {
 		var service = {
-			'getNew' : function(parent) {
+			getNew : function(parent) {
 				var category = new Category({
 					id : null,
 					name : null,
@@ -50,7 +50,7 @@
 				});
 				return category;
 			},
-			'getById' : function(categories, id) {
+			getById : function(categories, id) {
 				return _.find(categories, function(category) { /* jshint -W116 */
 					return category.id == id;
 				});

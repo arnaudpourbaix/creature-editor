@@ -42,14 +42,14 @@
 
 	module.service('ModService', [ 'Mod', function ModService(Mod) {
 		var service = {
-			'getNew' : function() {
+			getNew : function() {
 				var mod = new Mod({
 					id : null,
 					name : null
 				});
 				return mod;
 			},
-			'getById' : function(mods, id) {
+			getById : function(mods, id) {
 				return _.find(mods, function(mod) { /* jshint -W116 */
 					return mod.id == id;
 				});

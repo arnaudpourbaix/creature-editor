@@ -90,7 +90,6 @@
 					userOnSave(result, status, headers, config);
 				};
 				var onSaveError = function(result) {
-					//console.error('onSaveError', result.data);
 					if (notification) {
 						sendNotification('CRUD.SAVE_ERROR', 'danger', params, resource);
 					}
@@ -103,11 +102,10 @@
 					userOnRemove(result, status, headers, config);
 				};
 				var onRemoveError = function(result) {
-					//console.error('onRemoveError', result.data);
 					if (notification) {
 						sendNotification('CRUD.REMOVE_ERROR', 'danger', params, resource);
 					}
-					userOnRemoveError(result.data);
+					userOnRemoveError(result);
 				};
 
 				// The following functions should be triggered by elements on the form

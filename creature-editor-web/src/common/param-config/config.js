@@ -10,7 +10,6 @@
 	module.config([ '$stateProvider', function ConfigurationStateConfig($stateProvider) {
 
 		$stateProvider.state('param-config', {
-			abstract : true,
 			url : '/configuration',
 			controller : 'ParamConfigController',
 			templateUrl : 'param-config/param-config.tpl.html',
@@ -21,14 +20,14 @@
 			}
 		});
 
-		$stateProvider.state('param-config.typeSelect', {
-			url : ''
-		});
-
-		$stateProvider.state('param-config.paramList', {
+		$stateProvider.state('param-config.list', {
 			url : '/:typeId',
-			controller : 'ParamConfigListController',
-			templateUrl : 'param-config/parameter-list.tpl.html',
+			views : {
+				'param-config-list' : {
+					controller : 'ParamConfigListController',
+					templateUrl : 'param-config/parameter-list.tpl.html',
+				}
+			},
 			resolve : {
 				parameters : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
 					return Parameter.query({
@@ -38,43 +37,14 @@
 			}
 		});
 
-		$stateProvider.state('param-config.paramList.edit', {
+		$stateProvider.state('param-config.list.edit', {
 			url : '/:id',
-			resolve : {
-				parameter : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
-					return Parameter.get({
-						id : $stateParams.id
-					}).$promise;
-				} ]
-			},
-			onEnter : [ '$state', '$stateParams', '$jqWindow', 'parameter', function($state, $stateParams, $jqWindow, parameter) {
-				var modal = $jqWindow.open({
-					templateUrl : "param-config/parameter-edit.tpl.html",
+			views : {
+				'param-config-edit' : {
 					controller : 'ParamConfigEditController',
-					options : {
-						title : parameter.name,
-						width : 600,
-						height : 350
-					},
-					resolve : {
-						parameter : [ 'Parameter', '$stateParams', function(Parameter, $stateParams) {
-							return Parameter.get({
-								id : 'PROBABILITY_ACTION_SPELL'
-							}).$promise;
-						} ],
-						nums : [ 1, 2, 4, 8 ]
-					}
-				});
-				modal.result.then(function(result) {
-					console.log('close and update');
-					$state.go('^', {}, {
-						reload : true
-					});
-				}, function() {
-					console.log('close');
-					$state.go('^');
-				});
-			} ]
+					templateUrl : "param-config/parameter-edit.tpl.html"
+				}
+			}
 		});
 
 	} ]);
