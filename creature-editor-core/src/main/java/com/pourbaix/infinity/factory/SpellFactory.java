@@ -105,7 +105,9 @@ public class SpellFactory {
 		int effectOffset = DynamicArray.getInt(buffer, 106);
 		fetchSpellAbilities(spell, buffer, effectOffset);
 		fetchSpellEffects(spell, buffer, effectOffset);
-		//		logger.debug(spell.toString());
+		if (spell.getGlobalEffects() != null) {
+			logger.debug(spell.toString());
+		}
 		return getSpell(spell);
 	}
 

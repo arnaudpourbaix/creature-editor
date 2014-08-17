@@ -35,6 +35,11 @@ public class RawSpell {
 		sb.append(", secondary type: ").append(secondaryType.getLabel());
 		sb.append(", flags: ").append(flags.toString());
 		sb.append(", exclusionFlags: ").append(exclusionFlags.toString());
+		if (!CollectionUtils.isEmpty(globalEffects)) {
+			for (Effect globalEffect : globalEffects) {
+				sb.append(Constant.CARRIAGE_RETURN).append(globalEffect.toString());
+			}
+		}
 		if (!CollectionUtils.isEmpty(abilities)) {
 			for (Ability ability : abilities) {
 				if (ability.getEffects() != null) {

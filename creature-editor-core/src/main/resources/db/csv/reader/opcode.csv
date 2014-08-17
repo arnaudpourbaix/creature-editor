@@ -1,323 +1,325 @@
 id;name;description
-0;AC vs. Damage Type Modifier;"Applies the modifier value specified by the 'AC Modifier' field to the category specified by the 'Type' field." 
-1;Attacks Per Round Modifier;"Alters a characters Attacks per Round, by changing the Key by the modifier value specified by the 'Key Value' field, in the style specified by 'Type' field." 
-2;Cure sleep;"Removes the state_sleeping flag from the targeted creature(s). This effect ignores durations attributed to it. Does not remove the state_helpless flag."
-3;Berserk;"Applies the berserk effect to the targeted creature(s). Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag. This opcode only affects party members."
-4;Cure berserk;"Removes the state_beserk flag from the targeted creature(s). This effect only affects Player Characters. This effect ignores durations attributed to it."
-5;Charm creature;"Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids." 
-6;Charisma Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
-7;Set Character colors by Palette;""
-8;Set color by RGB;""
-9;Set color glow pulse;""
-10;Constitution Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-11;Cure poison;"Removes the poison effect from the targeted creature(s). This effect ignores durations attributed to it."
-12;Damage;"Damages the target by the value specified by the 'Damage Amount' field, with the damage type specified by the 'Type' field. The Dice values can be used to inflict varying damage amounts."
-13;Instant Death;"Instantly kills the targeted creature(s), in the style specified by the 'Death Type' value."
-14;Defrost (Graphics);"Removes the frozen_death state from the targeted creature(s)."
-15;Dexterity Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
-16;Haste;"Applies the Haste effect, in the style specified by the 'Type' value.  This effect will cancel out the slow opcode."
-17;Current HP Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
-18;Maximum HP Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-19;Intelligence Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field." 
-20;Invisibility;"Applies the invisibility effect, in the style specified by the 'Type' value."
-21;Lore Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-22;Luck bonus;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect does not set STATE_LUCK."
-23;Reset morale;"Sets the Morale stat of the targetted creature(s) to 10."
-24;Panic;"Applies the horror effect to the targeted creature(s)."
-25;Poison;"Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field."
-26;Remove curse;"Removes cursed items from the targeted creature(s)."
-27;Acid resistance modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-28;Cold resistance modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-29;Electricity resistance modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-30;Fire resistance modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-31;Magic damage resistance modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-32;Raise dead;"Raises the targeted creature(s) from the dead. This effect ignores durations attributed to it."
-33;Save vs. death modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-34;Save vs. wand modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-35;Save vs. polymorph modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-36;Save vs. breath modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-37;Save vs. spell modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-38;Silence;"Applies the silence effect to the targeted creature(s). A silenced creature cannot cast spells, use special abilities or initiate dialog. The engine is hard-coded to allow SPWI219 (Vocalize) and SPIN649 (Teleport to Pocket Plane) to be cast by a silenced creature."
-39;Sleep;"Applies the unconsciousness effect to the targeted creature(s). NB. A permanent timing mode will set the state_helpless flag."
-40;Slow;"Applies the slow effect to the targeted creature(s). This effect will cancel out the haste opcode. NB. This effect doubles the casting time of all spells."
-41;Sparkle;"Displays the sparkle effect specified by the 'Type' field, in the colour specified by the 'Colour' field. The colour field may be connected to sprkclr.2da."
-42;Wizard Spell Slots Modifier;"Alters the number of wizard spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field."
-43;Stone to flesh;"Changes the targeted creature(s) from stone to flesh."
-44;Strength Modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. "
-45;Stun;"Stuns the targeted creature(s)."
-46;Cure stun;"Unstuns the targeted creature(s). This effect ignores durations attributed to it."
-47;Remove invisibility;"Removes the invisibility effect from the targeted creature(s). This effect ignores durations attributed to it."
-48;Cure silence;"Removes the silence effect and the silenced state from the targeted creature(s). This effect ignores durations attributed to it."
-49;Wisdom bonus;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-50;Color glow by RGB (brief);""
-51;Character tint solid;""
-52;Character tint bright;""
-53;Animation change;""
-54;Base THAC0 bonus;""
-55;Slay;""
-56;Reverse alignment;""
-57;Change alignment;""
-58;Dispel effects;""
-59;Move silently bonus;""
-60;Casting failure;""
-61;Unknown (3D);""
-62;Bonus priest spells;""
-63;Infravision;""
-64;Remove infravision;""
-65;Blur;""
-66;Translucency;""
-67;Summon creature;""
-68;Unsummon creature;""
-69;Nondetection;""
-70;Remove nondetection;""
-71;Change gender;""
-72;Change AI type;""
-73;Attack damage bonus;""
-74;Blindness;""
-75;Cure blindness;""
-76;Feeblemindedness;""
-77;Cure feeblemindedness;""
-78;Disease;""
-79;Cure disease;""
-80;Deafness;""
-81;Cure deafness;""
-82;Set AI script;""
-83;Immunity to projectile;""
-84;Magical fire resistance bonus;""
-85;Magical cold resistance bonus;""
-86;Slashing resistance bonus;""
-87;Crushing resistance bonus;""
-88;Piercing resistance bonus;""
-89;Missile resistance bonus;""
-90;Open locks bonus;""
-91;Find traps bonus;""
-92;Pick pockets bonus;""
-93;Fatigue bonus;""
-94;Intoxication bonus;""
-95;Tracking bonus;""
-96;Change level;""
-97;Exceptional strength bonus;""
-98;Regeneration;""
-99;Modify duration;""
-100;Protection from creature type;""
-101;Immunity to effect;""
-102;Immunity to spell level;""
-103;Change name;""
-104;XP bonus;""
-105;Remove gold;""
-106;Morale break;""
-107;Change portrait;""
-108;Reputation bonus;""
-109;Paralyze;""
-110;Retreat from;""
-111;Create weapon;""
-112;Remove item;""
-113;Equip weapon;""
-114;Dither;""
-115;Detect alignment;""
-116;Detect invisible;""
-117;Clairvoyance;""
-118;Show creatures;""
-119;Mirror image;""
-120;Immunity to weapons;""
-121;Visual animation effect;""
-122;Create inventory item;""
-123;Remove inventory item;""
-124;Teleport;""
-125;Unlock;""
-126;Movement rate bonus;""
-127;Summon monsters;""
-128;Confusion;""
-129;Aid (non-cumulative);""
-130;Bless (non-cumulative);""
-131;Chant (non-cumulative);""
-132;Draw upon holy might (non-cumulative);""
-133;Luck (non-cumulative);""
-134;Petrification;""
-135;Polymorph;""
-136;Force visible;""
-137;Bad chant (non-cumulative);""
-138;Set animation sequence;""
-139;Display string;""
-140;Casting glow;""
-141;Lighting effects;""
-142;Display portrait icon;""
-143;Create item in slot;""
-144;Disable button;""
-145;Disable spellcasting;""
-146;Cast spell;""
-147;Learn spell;""
-148;Cast spell at point;""
-149;Identify;""
-150;Find traps;""
-151;Replace self;""
-152;Play movie;""
-153;Sanctuary;""
-154;Entangle overlay;""
-155;Minor globe overlay;""
-156;Protection from normal missiles overlay;""
-157;Web effect;""
-158;Grease overlay;""
-159;Mirror image effect;""
-160;Remove sanctuary;""
-161;Remove fear;""
-162;Remove paralysis;""
-163;Free action;""
-164;Remove intoxication;""
-165;Pause caster;""
-166;Magic resistance bonus;""
-167;Missile THAC0 bonus;""
-168;Remove creature;""
-169;Prevent portrait icon;""
-170;Play damage animation;""
-171;Give innate ability;""
-172;Remove spell;""
-173;Poison resistance bonus;""
-174;Play sound;""
-175;Hold creature;""
-176;Movement rate bonus 2;""
-177;Use EFF file;""
-178;THAC0 vs. type bonus;""
-179;Damage vs. type bonus;""
-180;Disallow item;""
-181;Disallow item type;""
-182;Apply effect on equip item;""
-183;Apply effect on equip type;""
-184;No collision detection;""
-185;Hold creature 2;""
-186;Move creature;""
-187;Set local variable;""
-188;Increase spells cast per round;""
-189;Increase casting speed factor;""
-190;Increase attack speed factor;""
-191;Casting level bonus;""
-192;Find familiar;""
-193;Invisibility detection;""
-194;Ignore dialogue pause;""
-195;Drain HP on death;""
-196;Familiar;""
-197;Physical mirror;""
-198;Reflect specified effect;""
-199;Reflect spell level;""
-200;Spell turning;""
-201;Spell deflection;""
-202;Reflect spell school;""
-203;Reflect spell type;""
-204;Protection from spell school;""
-205;Protection from spell type;""
-206;Protection from spell;""
-207;Reflect specified spell;""
-208;Minimum HP;""
-209;Power word, kill;""
-210;Power word, stun;""
-211;Imprisonment;""
-212;Freedom;""
-213;Maze;""
-214;Select spell;""
-215;Play visual effect;""
-216;Level drain;""
-217;Power word, sleep;""
-218;Stoneskin effect;""
-219;Attack roll penalty;""
-220;Remove spell school protections;""
-221;Remove spell type protections;""
-222;Teleport field;""
-223;Spell school deflection;""
-224;Restoration;""
-225;Detect magic;""
-226;Spell type deflection;""
-227;Spell school turning;""
-228;Spell type turning;""
-229;Remove protection by school;""
-230;Remove protection by type;""
-231;Time stop;""
-232;Cast spell on condition;""
-233;Modify proficiencies;""
-234;Create contingency;""
-235;Wing buffet;""
-236;Project image;""
-237;Set image type;""
-238;Disintegrate;""
-239;Farsight;""
-240;Remove portrait icon;""
-241;Control creature;""
-242;Cure confusion;""
-243;Drain item charges;""
-244;Drain wizard spells;""
-245;Check for berserk;""
-246;Berserk effect;""
-247;Attack nearest creature;""
-248;Melee hit effect;""
-249;Ranged hit effect;""
-250;Maximum damage each hit;""
-251;Change bard song;""
-252;Set trap;""
-253;Set automap note;""
-254;Remove automap note;""
-255;Create item (days);""
-256;Spell sequencer;""
-257;Create spell sequencer;""
-258;Activate spell sequencer;""
-259;Spell trap;""
-260;Unknown (104);""
-261;Wondrous recall;""
-262;Visual range bonus;""
-263;Backstab bonus;""
-264;Drop item;""
-265;Set global variable;""
-266;Remove protection from spell;""
-267;Disable display string;""
-268;Clear fog of war;""
-269;Shake screen;""
-270;Unpause caster;""
-271;Disable creature;""
-272;Use EFF file on condition;""
-273;Zone of sweet air;""
-274;Phase;""
-275;Hide in shadows bonus;""
-276;Detect illusions bonus;""
-277;Set traps bonus;""
-278;THAC0 bonus;""
-279;Enable button;""
-280;Wild magic;""
-281;Wild surge bonus;""
-282;Modify script state;""
-283;Use EFF file as curse;""
-284;Melee THAC0 bonus;""
-285;Melee weapon damage bonus;""
-286;Missile weapon damage bonus;""
-287;Remove feet circle;""
-288;Fist THAC0 bonus;""
-289;Fist damage bonus;""
-290;Change title;""
-291;Disable visual effects;""
-292;Immunity to backstab;""
-293;Set persistent AI;""
-294;Set existence delay;""
-295;Disable permanent death;""
-296;Immunity to specific animation;""
-297;Immunity to turn undead;""
-298;Pocket plane;""
-299;Chaos shield effect;""
-300;Modify collision behavior;"This effect allows the targetted creature(s) to push other creatures out of the way while moving. Constant Value should be set to 1. The effect modifies stat 190 to param 2."
-301;Critical Hit Modifier;"This effect improves the Critical Hit chances. Critical hits will occur on a roll (on a 1d20) greater or equal to: 20 - 'Statistic Modifier'"
-302;Can use any item;"The targeted creature(s) can use any item. The Constant Value parameter should be set to 1. The effect modifies stat 191."
-303;Backstab every hit;"The targeted creature(s) will backstab with every hit. The Constant Value parameter should be set to 1. The effect modifies stat 192."
-304;Mass raise dead;"This effect will raise multiple dead PCs and NPCs."
-305;Off-hand THAC0 modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-306;Main hand THAC0 modifier;"Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field."
-307;Ranger Tracking Ability;"Activates the Tracking Ability. A string from tracking.2da is shown, and arrows appear along the screen edge pointing to any creatures within range. The units of the range parameter are unknown. The arrow effect may be hardcoded to spell SPCL922. NB: The file 'tracking.2da' lists the string reference that shows what information is learned from using this effect for each area."
-308;Immunity to Tracking;"Protects the targetted creature(s) from the Tracking arrows effect (has no affect on the area string displayed). The effect modifies stat 195 to the value of param type."
-309;Script: Modify Local Variable;"Set both the local variable specified by the resource key to the value specified by the 'Value' field. "
-310;Immunity to time stop;"The targeted creature(s) becomes immune to time-stop. The Constant Value parameter should be set to 1. The effect modifies stat 197."
-311;Wish;"This effect casts a wish spell (SPWISH01 - SPWISH25), selected based on the casting creatures Wisdom attribute."
-312;Immunity to sequester;"This effect crashes the game."
-313;High-Level Ability Denotation;"This effect denotes that the high level ability specified by the resource key has been gained. Used for pre-requisites/count limits."
-314;Golem Stoneskin;"Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field. NB: Do not use this effect in conjunction with the Juggernaut Golem Manual as it will corrupt the use of that item."
-315;Remove animation;"This effect will remove the animation of the targeted creature(s). The Constant Value parameter should be set to a non-zero value. The effect modifies stat 201."
-316;Rest;"This effect will refresh spells and remove any fatigue."
-317;Haste 2;"Applies the Haste effect, in the style specified by the 'Type' value."
-318;Unknown;""
-319;Restrict item;"This effect restricts the item to creature(s) matching the object identifiers. The string to display when an invalid creature attempts to use the item is held in 0x2c."
-320;Change weather;"Changes the weather of the current area to the weather specified by 'Weather'."
-321;Remove effects by resource;"Removes effects from the resource specified by the resouce key, in the style specified by the 'Type' field."
+0;AC vs. Damage Type Modifier;Applies the modifier value specified by the 'AC Modifier' field to the category specified by the 'Type' field. 
+1;Attacks Per Round Modifier;Alters a characters Attacks per Round, by changing the Key by the modifier value specified by the 'Key Value' field, in the style specified by 'Type' field. 
+2;Cure sleep;Removes the state_sleeping flag from the targeted creature(s). This effect ignores durations attributed to it. Does not remove the state_helpless flag.
+3;Berserk;Applies the berserk effect to the targeted creature(s). Target will uncontrollably attack enemies if any are in view, and will occasionally attack neutral creatures. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. It also sets the STATE_BERSERK flag. This opcode only affects party members.
+4;Cure berserk;Removes the state_beserk flag from the targeted creature(s). This effect only affects Player Characters. This effect ignores durations attributed to it.
+5;Charm creature;Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids. 
+6;Charisma Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. 
+7;Set Character colors by Palette;
+8;Set color by RGB;
+9;Set color glow pulse;
+10;Constitution Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+11;Cure poison;Removes the poison effect from the targeted creature(s). This effect ignores durations attributed to it.
+12;Damage;Damages the target by the value specified by the 'Damage Amount' field, with the damage type specified by the 'Type' field. The Dice values can be used to inflict varying damage amounts.
+13;Instant Death;Instantly kills the targeted creature(s), in the style specified by the 'Death Type' value.
+14;Defrost (Graphics);Removes the frozen_death state from the targeted creature(s).
+15;Dexterity Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. 
+16;Haste;Applies the Haste effect, in the style specified by the 'Type' value.  This effect will cancel out the slow opcode.
+17;Current HP Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. 
+18;Maximum HP Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+19;Intelligence Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. 
+20;Invisibility;Applies the invisibility effect, in the style specified by the 'Type' value.
+21;Lore Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+22;Luck bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect does not set STATE_LUCK.
+23;Reset morale;Sets the Morale stat of the targetted creature(s) to 10.
+24;Panic;Applies the horror effect to the targeted creature(s).
+25;Poison;Damages the target by the 'Damage Amount' value, in the style specified by the 'Type' field.
+26;Remove curse;Removes cursed items from the targeted creature(s).
+27;Acid resistance modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+28;Cold resistance modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+29;Electricity resistance modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+30;Fire resistance modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+31;Magic damage resistance modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+32;Raise dead;Raises the targeted creature(s) from the dead. This effect ignores durations attributed to it.
+33;Save vs. death modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+34;Save vs. wand modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+35;Save vs. polymorph modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+36;Save vs. breath modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+37;Save vs. spell modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+38;Silence;Applies the silence effect to the targeted creature(s). A silenced creature cannot cast spells, use special abilities or initiate dialog. The engine is hard-coded to allow SPWI219 (Vocalize) and SPIN649 (Teleport to Pocket Plane) to be cast by a silenced creature.
+39;Sleep;Applies the unconsciousness effect to the targeted creature(s). NB. A permanent timing mode will set the state_helpless flag.
+40;Slow;Applies the slow effect to the targeted creature(s). This effect will cancel out the haste opcode. NB. This effect doubles the casting time of all spells.
+41;Sparkle;Displays the sparkle effect specified by the 'Type' field, in the colour specified by the 'Colour' field. The colour field may be connected to sprkclr.2da.
+42;Wizard Spell Slots Modifier;Alters the number of wizard spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.
+43;Stone to flesh;Changes the targeted creature(s) from stone to flesh.
+44;Strength Modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. 
+45;Stun;Stuns the targeted creature(s).
+46;Cure stun;Unstuns the targeted creature(s). This effect ignores durations attributed to it.
+47;Remove invisibility;Removes the invisibility effect from the targeted creature(s). This effect ignores durations attributed to it.
+48;Cure silence;Removes the silence effect and the silenced state from the targeted creature(s). This effect ignores durations attributed to it.
+49;Wisdom bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+50;Color glow by RGB (brief);The targeted creature(s) entire animation glows the colour specified by the 'RGB Colour' field, at the speed specified by the (3rd byte of the) 'Speed' field.  
+51;Character tint solid;Alters the colour of the area specified by the 'Location and Speed' field, to the colour specified by the 'RGB Colour' field.  
+52;Character tint bright;Alters the colour of the area specified by the 'Location' field, to the colour specified by the 'RGB Colour' field.  
+53;Animation change;Alters the animation of the targeted creature(s) to the animation specified by the 'Animation ID' field, in the style specified by the 'Type' field. 
+54;Base THAC0 bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+55;Slay;Kills the targeted creature(s) with HD less than those specified by the Dice values, if the target(s) match the IDS mask.  
+56;Reverse alignment;Inverts the alignment of the targeted creature(s). 
+57;Change alignment;Alters the alignment of the targeted creature(s) to the value specified by 'Alignment'.  
+58;Dispel effects;Dispels magic from the targeted creature(s) (excepting magical weapons eg. Spirtual Hammer). Depending on the value of the 'Type' field, the 'Level' field can be used to set the level of the effect.  
+59;Move silently bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field, altering a the Move Silently skill.  
+60;Casting failure;The targeted creature(s) will fail to cast the type of spell specified by the 'Type' field, 'Percent Chance' percent of the time.  
+61;Unknown (3D);Crash the game
+62;Bonus priest spells;Alters the number of priest spell slots available to the targeted creature(s), as specified by the 'Slot Amount Modifier' field, at the level specified by the 'Spell Level' field.  
+63;Infravision;Gives the targeted creature(s) infravision. 
+64;Remove infravision;Removes infravision from the targeted creature(s).  This effect ignores durations attributed to it.  NB. This will not remove racial infravision. 
+65;Blur;Applies the blur effect to the targeted creature(s). Graphical displacement is affected by movement rate. 
+66;Translucency;Fades the targeted creature(s) by the value in the amount specified by the 'Fade Amount' field. 
+67;Summon creature;Summons a creature, with EA set to the 'Control' field. The Resource key should be set to the filename of the creature to summon.  
+68;Unsummon creature;Unsummons a creature, with feedback controlled by 'Text Notification'. The Resource key should be set to the filename of the animation to play when unsummoning the creature, and defaults to SPGFLSH1 if left empty.  
+69;Nondetection;Applies the non-detection effect to the targeted creature(s), setting STATE_NONDETECTION while active. This effect is negated by effect #70 Cure: Non-Detection. While in the non-detection state, the creature is immune to effects #47: Cure Invisibility and #116: Remove invisibilty, though they are affected by effects that remove illusionary protections by school or secondary type. 
+70;Remove nondetection;Removes the Non-Detection effect from the targeted creature(s).  This effect ignores durations attributed to it. 
+71;Change gender;Alters the gender of the targetted creature(s) to the value specified by the 'Gender.ids' field, in the style specified by the 'Type' value.  
+72;Set IDS State ;Alters the IDS state of the targeted creature(s) specified by the 'IDS File' field, to the value specified by the 'IDS Entry' field.  
+73;Attack damage bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. The effect is an additive modifier, like adding +10 damage.  
+74;Blindness;Applies the blindness effect to the targeted creature(s). This sets VISUALRANGE to 2, sets STATE_BLIND to true and incurs a cummulative 10 point base THAC0 penalty. 
+75;Cure blindness;Removes the blindness effect from the targeted creature(s).  This effect ignores durations attributed to it.
+76;Feeblemindedness;Applies the feeblemind effect to the targeted creature(s) - creatures are unselectable, immobile and do not respond to combat.  This effect ignores durations attributed to it. NB. A creatures scripts do not run while the creature is feebleminded. 
+77;Cure feeblemindedness;Removes the feeblemind effect from the targeted creature(s). This effect ignores durations attributed to it. 
+78;Disease;Set the Damage parameter as the amount of damage, and the Disease Type parameter as how the disease functions.  
+79;Cure disease;Removes the disease effect from the targeted creature(s). This effect ignores durations attributed to it. 
+80;Deafness;Applies the Deafness effect on the targeted creature(s) - creatures suffer a 50% casting failure rate. This is cumulative with Miscast Magic. 
+81;Cure deafness;Remove the deafness effect from the targeted creature(s). 
+82;Set AI script;Sets the script type specified by the 'Type' value to the contents of the resource key.  
+83;Immunity to projectile;Gives the targeted creature(s) immunity to the weapon type specified by the 'Type' value.  
+84;Magical fire resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+85;Magical cold resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+86;Slashing resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+87;Crushing resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+88;Piercing resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+89;Missile resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+90;Open locks bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+91;Find traps bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+92;Pick pockets bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+93;Fatigue bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+94;Intoxication bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+95;Tracking bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+96;Change level;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+97;Exceptional strength bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+98;Regeneration;Restores HP to the value of 'Regeneration Amount' in the style specified by the 'Type' field, to the targeted creature(s).  
+99;Modify duration;Alters spell durations of the targeted creature(s), to the percentage specified by the 'Duration Modifier' field, affecting the spell type specified by the 'Type' field. Timing mode 0 is the only timing mode reliably affected. Timings handled through PRO files are ignored.  
+100;Protection from creature type;Gives the targeted creature(s) protection from the creature type specified by the 'IDS File' and 'IDS Entry' fields.  
+101;Immunity to effect;Gives the targeted creature(s) protection from the opcode specified by the 'opcode' field. 
+102;Immunity to spell level;Gives the targeted creature(s) protection from spells up to the level specified by the 'Spell Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Spell Level' parameter in the extended header that is being called.  
+103;Change name;  Alters the name of the targeted creature(s) to the strref specified by the 'String Reference' field. When used with a duration timing, after the duration, the name will be set to a blank entry.
+104;XP bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+105;Remove gold;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+106;Morale break;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+107;Change portrait;Sets the portrait of the targeted creature(s) to that specified in the resource key, based on the 'Type' value. This effect ignores durations attributed to it.  
+108;Reputation bonus;Sets the individual reputation of the targeted creature(s) to the value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  This does not affect the main reputation of the Party. Though it can affect ranger/paladinhood of any target.  
+109;Paralyze;Applies the hold effect to the targeted creature(s), if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'.  
+110;Retreat from;This opcode has no effect. 
+111;Create weapon;Creates the item specified by the resource key. The number of items created is controlled by the 'Amount' field. The item is created in the Magical Weapon slot. 
+112;Remove item;Removes a single instance (or stack) of the item specified by the resource key from the targeted creature(s). Items in container items (e.g. Bags of Holding) will not be removed. If a creature has multiple instances of the item, the one in the lowest slot number (see slots.ids) is removed. EFF_M02 is hard-coded to play when an item is removed. This effect should be used to remove equipped items (use effect 123 for inventory items). 
+113;Equip weapon;This opcode has no effect. 
+114;Dither;This opcode has no effect. 
+115;Detect alignment;Detects the alignment specified by the 'Alignment Mask' field.  
+116;Detect invisible;Removes invisibility from the targeted creature(s).  This effect ignores durations attributed to it. 
+117;Clairvoyance;Reveals the current area. NB. This does not remove the fog of war. 
+118;Show creatures;This opcode has no effect. 
+119;Mirror image;Applies the mirror image effect to the targeted creature(s). The number of images is dicated by the level of the caster. 
+120;Immunity to weapons;Gives the targeted creature(s) immunity to melee weapons as specified by the 'Type' field. The 'Enchantment' field is used if 'Type' is set to 0.  
+121;Visual animation effect;This opcode has no effect. 
+122;Create inventory item;Creates the item specified by the resource key. The number of items created is controlled by the 'Charges' field. The number of secondary charge is determined by P3. The number of tertiary charges is determined by P4 (external eff's). The item is created in the Inventory. 
+123;Remove inventory item;Removes the item specified by the resource key from the targeted creature(s). This effect should be used to remove inventory items (use effect 112 for equipped items). 
+124;Teleport;Teleports the targeted creature(s). 
+125;Unlock;Applies the knock effect to the targeted creature(s). 
+126;Movement rate bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  The engine allows values for 'Statistic Modifier' from 0 (immobile) to 255 (instantaneous), though behaviour is only consistent in the range 0 - 30.  
+127;Summon monsters;Summons a number of monsters. Each creature files has a Creature Power Level number (at 0x18). The amount of monsters summoned by this effect is equal to the 'Number' field / Creature Power Level.  
+128;Confusion;Applies the confusion effect the targeted creature(s). The creature will run around uncontrollable, randomly attacking. 
+129;Aid (non-cumulative);Applies a bless effect, a bonus to HP and a bonus to saving throws to the targeted creature(s). The bonus is a number of 8-sided dice, with the number of dice controlled by the 'Statistic Modifier' value. 
+130;Bless (non-cumulative);Modifies the THAC0, damage and morale of the target creature(s) by the amount specified by the 'Modifier' parameter. 
+131;Chant (non-cumulative);Applies the chant effect to the targeted creature(s). Chant affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. The effect sets STATE_CHANT. Modifier' must be in the [-6,5] range.  Multiple chant effects are not cumulative.  
+132;Draw upon holy might (non-cumulative);Raises the strength, constitution and dexterity of the targeted creature(s) by the value specified by the 'Statistic Modifier' field. A negative value of 'Statistic Modifier' sets the strength, constitution and dexterity of the targeted creature(s) to 25. 
+133;Luck (non-cumulative);Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field to the targetted creatures luck. Luck affects the minimum damage caused by a weapon (up to the normal maximum damage of the weapon) and the attack roll modifier (up to a maximum of 20, excluding natural attack roll modifiers, e.g. high STR, invisibility etc) by 'Statistic Modifier' amount. 'Statistic Modifier' also affects the damge rolls of opponents (in feature blocks, not extension headers). The effect sets STATE_LUCK. 
+134;Petrification;Applies the petrification effect to the targeted creature(s). This effects kills & removes PC's from the party, and ends the game if used on the Protagonist. 
+135;Polymorph;Polymorphs the targeted creature(s) into the creature specified by the resource key, in the style specified by the 'Type' field.  
+136;Force visible;Renders the targeted creature(s) partially visible (does not remove improved invisibility, but the targeted is visible and attackable, but not targetable by spells).  The effect has no meaning on visible targets. This effect has no duration. 
+137;Bad chant (non-cumulative);Applies the chant effect to the targeted creature(s).  This effect works as the reverse of chant. The effect sets STATE_CHANTBAD. 
+138;Set animation sequence;The targeted creature(s) shows the animation sequence specified by the 'Animation Sequence' field. 
+139;Display string;Displays the strref specified by the 'String Reference' value. 
+140;Casting glow;Creates a 2D animation for casting glow. These effects are usually used for casting glows based on the spell school.  
+141;Lighting effects;Shows the lighting effect (a .bam file) specified by the 'Type' value at the location specified by 'Target'. These effects are usually used for spell hits based on the spell school.  
+142;Display portrait icon;Shows the icon specified by the 'Icon' field on the targeted creature(s) portrait.  All values are drawn directly from STATES.BAM in the GUIBam.bif starting at sequence 65.  
+143;Create item in slot;Creates the item specified by the resource key in the slot specified by the 'Slot' field, on the targeted creature(s). 
+144;Disable button;Disabled the button specified by the 'Button' field. The resource field acts as a matching key to the resource field of the Enable Button, allowing separate enable/disable reasons.  
+145;Disable spellcasting;"Disables spell casting abilities of the targeted creature(s), in the style specified by the 'Spell Type;' field.  "
+146;Cast spell;Casts the spell specified by the resource key at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.  
+147;Learn spell;The targeted creature(s) tries to learn the spell specified by the resource key. Learning is successful when 1D100 <= the INT-dependent LEARN_SPELL value in INTBON.2DA.  The LEARN_SPELL value is modified for mage specialists, with +15 for same school spells, and -15 for non-same school spells. 
+148;Cast spell at point;Casts the spell specified by the resource key, at the level specified by the 'Casting Level' field, in the style specified by the 'Type' field. A 'Casting Level' of 0 casts at the level of the casting creature.  
+149;Identify;This opcode has no effect. 
+150;Find traps;Applies the find traps effect to the targeted creature(s). 
+151;Replace self;Replaces the targeted creature(s) with creature specified by the resource key, in the style specified by the 'Type' value.  
+152;Play movie;Plays the movie specified by the resource key.  
+153;Sanctuary;Applies the sanctuary effect to the targeted creature(s).  This effect sets stat #63 (SANCTUARY) to 1.
+154;Entangle overlay;Applies the entangle visual effect to the targeted creature(s). Does not actually prevent the target from moving.  This effect sets stat #62 (ENTANGLE) to 1. 
+155;Minor globe overlay;Applies the minor globe visual effect to the targeted creature(s). This effect sets stat #64 (MINORGLOBE) to 1. 
+156;Protection from normal missiles overlay;Applies the protection from normal missiles cylinder visual effect to the targeted creature(s).  This effect sets stat #65 (SHIELDGLOBE) to 1. 
+157;Web effect;Applies the web effect to the targeted creature(s). The affected creature becomes immobile and its AI scripts stop running. This effect sets stats #58 (HELD) and #67 (WEB) to 1. It also sets the STATE_HELPLESS flag. 
+158;Grease overlay;Applies the grease visual effect to the targeted creature(s). Does not actually affect the target's movement rate. This effect sets stat #66 (GREASE) to 1. 
+159;Mirror image effect;Applies the mirror image effect to the targeted creature(s), creating a number of images equal to the 'Amount' value. 
+160;Remove sanctuary;Removes the sanctuary effect from the targeted creature(s). 
+161;Remove fear;Removes the horror effect from the targeted creature(s).  This effect ignores durations attributed to it. 
+162;Remove paralysis;Removes the paralysis effect (opcodes 109 and 175) from the targeted creature(s). This effect should be used with an instant timing mode. 
+163;Free action;Applies the free action effect to the targeted creature(s), restoring the creatures movement rate to its default value if the current movement rate value is below the default for the animation type. 
+164;Remove intoxication;Clears the drunkeness stat (as modified by opcode 94). 
+165;Pause caster;Applies the pause effect to the targeted creature(s). Characters are still selectable. This effect sets stat #70 (CasterHold) to 1. 
+166;Magic resistance bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+167;Missile THAC0 bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+168;Remove creature;Removes the creature specified by the resource key (giving no experience). 
+169;Prevent portrait icon;Prevents the icon specified by the 'Icon' field from being displayed. All values are drawn directly from STATES.BAM in the GUIBam.bif starting at sequence 65.  
+170;Play damage animation;Plays the damage animation specified by the 'Animation' field.  
+171;Give innate ability;Gives the spell specified by the resource key to the targeted creature(s). 
+172;Remove spell;Removes the spell specified by the resource key from the targeted creature(s) spellbook (but does not affect spells already memorised).  Both parameters should be 0 (zero). 
+173;Poison resistance bonus;Sets the Poison Resistance of the target creature(s) to the value specified by 'Statistic Modifier'. 
+174;Play sound;Plays the sound effect specified by the resource key.  
+175;Hold creature;Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running.  
+176;Movement rate bonus 2;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. The engine allows values for 'Statistic Modifier' from 0 (immobile) to 255 (instantaneous), though behaviour is only consistent in the range 0 - 30.  (As #126, but unaffected by Free Action).
+177;Use EFF file;Applies the eff file specified by the resource key to the targeted creature(s), if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. NB. When using an eff to alter thac0/dmg bonus, set param1 = 0, and param2 = 2.  
+178;THAC0 vs. type bonus;Alters the targeted creature(s) THAC0 against the creature type specified by the 'IDS Entry' field in the specified 'IDS File'. The actual modifier value is placed in the Parameter 3 field in an external effect.  
+179;Damage vs. type bonus;Alters the targeted creature(s) damage against the creature type specified by the 'IDS Entry' field in the specified 'IDS File'. The actual modifier value is placed in the Parameter 3 field in an external effect - dice values are ignored. 
+180;Disallow item;The targeted creatures(s) cannot use the item specified by the resource key. The strref specified by the 'String Reference' field is displayed when an attempt to use the item is made. 
+181;Disallow item type;The targeted creature(s) cannot use the item type specified by the 'Item Type' field for the purpose specified by the 'Restriction' field.  
+182;Apply effect on equip item;The use of this effect is unknown, and effect of its parameters are undefined. 
+183;Apply effect on equip type;Applies the effect specified by the resource key to the targeted creature(s) when an item of the item type specified by the 'Type' field is equipped. ***This effect has never been seen to work.*** 
+184;No collision detection;Allows creatures to be placed in impassable areas, based on the value of the 'Jump' field.  
+185;Hold creature 2;Applies a yellow fade in graphic effect to the targeted creature(s), and shows the Hold icon, if the targeted creature(s) match the value specified by the 'IDS Entry' field, in the specified 'IDS File'. The affected creature becomes immobile and its AI scripts stop running. This effect is not removed by effect 162.  
+186;Move creature;Marks the targetted creature(s) as travelling to the area specified by the resource key. The creature appears in the specified area after a delay (specified by the 'Delay' field), with the orientation specified by the 'Orientation' field. The creature appears at the point specified by the Caster Point fields (external EFF files only). 
+187;Set local variable;This effect stores a various data types, usually a variable in the 'variable' field.  
+188;Increase spells cast per round;Set the 'Constant' field to 1 if you want no time needed between spells.  This effect sets stat #76 (AURACLEANSING) to param #2.
+189;Increase casting speed factor;Alters the casting time of spells by the value specified by the 'Speed Modifier' field. This effect is cummulative. Positive values decrease the casting time, negative values increase the casting time. This effect sets stat #77 (MENTALSPEED) to param #1. 
+190;Increase attack speed factor;Alters the weapon's attack speed by the value specified by the 'Speed Modifier' field. This effect is not cumulative. Attack speed ranges from 0 (good) to 10 (bad). This effect acts as a bonus, so a high 'Speed Modifier' is good. This effect sets stat #78 (PHYSICALSPEED) to param #1. 
+191;Casting level bonus;Applies the value specified by the 'Modifier' field as a bonus to casting spell levels, of a type specified by the 'Type' field.  
+192;Find familiar;Summons a familiar for the Protagonist player. The familiar summoned is based on the alignment of the Protagonist, and values stored in the GAM file. The 'Upgrade Marker' field is used internally to indicate the familiar has received the ToB upgrades.  
+193;Invisibility detection;Allows invisible creatures to be attacked (via scripts) and makes it possible to target improved invisible creatures with spells. The Constant Value parameter should be set to 1 or 2. This effect sets stat #81 (SEEINVISIBLE) to param #2. 
+194;Ignore dialogue pause;Allows the targeted creature(s) to carry on their actions during dialogs which pause action. The Constant Value parameter should be set to 1. 
+195;Drain HP on death;When a creature with this effect applied to it dies, the Protagonist enacts the damage animation, loses 1 Constitution point, and has their HP modified as dictated by the 'HP Modifier' field.  
+196;Familiar;If this effect is found on any creature in the GAM file, the engine will block summoning of more familiars. The effect should be set with a timing mode of 9. 
+197;Physical mirror;The targeted creature(s) will reflect the projectile specified by the 'Reflected Projectile' field back to the attacker.  Values for 'Reflected Projectile' are taken from projectl.ids. 
+198;Reflect specified effect;The targeted creature(s) will reflect attacks containing the opcode specified by the 'Opcode' field. NB. This can cause a crash if two creatures end up reflecting to each other.
+199;Reflect spell level;The targeted creature(s) will reflect spells from the spell level specified in the 'Reflected Level' field. 
+200;Spell turning;The targeted creature(s) will reflect a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called. 
+201;Spell deflection;The targeted creature(s) will absorb a number of spells (specified by the 'Amount' field), from the spell level specified in the 'Level' field. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called. 
+202;Reflect spell school;The targeted creature(s) will turn spells from the school specified by the 'Spell School' field.  
+203;Reflect spell type;The targeted creature(s) will turn spells with a secondary type matching that specified by the 'Secondary Type' field.  
+204;Protection from spell school;Gives the targeted creature(s) immunity to spells from the school specified by the 'Spell School' field.  
+205;Protection from spell type;Gives the targeted creature(s) immunity to the spell type specified by the 'Type' field.  
+206;Protection from spell;Gives the targeted creature(s) immunity from the spell specified in the resource key. The strref specified by the 'String Reference' field is displayed when the spell is absorbed. 
+207;Reflect specified spell;The targeted creature(s) will reflect the spell specified by the resource key. 
+208;Minimum HP;The targeted creature(s) HP value will not drop below the value specified by the 'Minimum Value' field. This effect sets stat #83 (MINHITPOINTS) to param #1. 
+209;Power word, kill;Instantly kills the targeted creature(s), if the targeted creature(s) has less than 60 HP. 
+210;Power word, stun;Applies the stun effect to the targeted creature(s), if the targeted creature(s) has less than 90 HP.  
+211;Imprisonment;Applies the imprisonment effect to the targeted creature(s). The field at 0xcc can be used to prevent death related effects (e.g. removal from party) running on the targetted creature(s). 
+212;Freedom;Applies the freedom effect to the targeted creature(s). The freedom effect frees creatures trapped by the imprisonment effect. 
+213;Maze;Applies the maze effect to the targeted creature(s).  
+214;Select spell;Uses the 2da specified by the resource key to display multiple spell options, based on the 'Type' field.  
+215;Play visual effect;Plays the BAM/VVC specified by the resource key, in the style specified by the 'Effect State' value.  
+216;Level drain;Drains levels from the targeted creature(s) as specified by the 'Amount' field. 'Amount' can be positive or negative, negative values will alter level and spellbook slots, but not experience.  
+217;Power word, sleep;Applies the unconsciousness effect to the targeted creature(s), if the targeted creature(s) has less than 20 HP. The effect always lasts 5 rounds, and ignores the duration field. 
+218;Stoneskin effect;Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field. 
+219;Attack roll penalty;Gives the targeted creature(s) a 2 point bonus AC against the creature type specified by the 'IDS Entry' in the IDS file specified by the 'IDS File' field.  
+220;Remove spell school protections;Removes spells from the school specified by the 'School Type' field from the targeted creature(s), up to the level specified by the 'Maximum level' field.  
+221;Remove spell type protections;Removes spells with a secondary type matching that specified by he 'Secondary Type' field from the targeted creature(s), up to the level specified by the 'Maximum level' field.  
+222;Teleport field;Applies the teleport field to the targeted creature(s). The 'Max Range' field sets the maximum range of the teleporting effect.
+223;Spell school deflection;
+224;Restoration;Applies the restoration effect to the targeted creature(s), resetting the level of the target. 
+225;Detect magic;Highlights the targeted creature(s) if they are affected by dispellable magic. The effect appears to be without duration. 
+226;Spell type deflection;
+227;Spell school turning;
+228;Spell type turning;
+229;Remove protection by school;Removes a single spell effect of the school specified by the 'School Type' field up to the 'Max Level' value, from the targeted creature(s).  
+230;Remove protection by type;Removes one spell effect of the school specified by the 'School Type' field up to the 'Max Level' value, from the targeted creature(s).  
+231;Time stop;Applies the time stop effect. The timestop effect lasts half as long as the Duration specified for the effect. 
+232;Cast spell on condition;Casts the spell specified by the resource field on the target specified by the 'Target' field, when the condition from the 'Condition' field is true. The conditions are akin to various triggers.  
+233;Modify proficiencies;Sets the weapon proficiency points for the weapon type specified in the 'Type' field, to the value specified by the 'Amount' field, for the targeted creature(s). NB: The Proficiency Modifier effect cannot increment proficiency points, it can only SET them. NB. The Proficiency Modifier cannot decrement the proficiency points.  
+234;Create contingency;Creates a contingency. The 'Maximum Level' field indicates the maximum spell level that can be used in the contingency. The 'Amount/Type' field indicates the number of spells that can be used in the contingency, and the type of the contingency.  
+235;Wing buffet;Applies the wing buffet effect centred on the casting creature(s), buffeting the targeted creature(s) at the speed specified by the 'Speed' field, in the direction specified by the 'Direction' field.  
+236;Project image;Creates an image of the caster, in the style specified by the 'Type' field. The type can be accessed via CheckStat, stat ID: PUPPETTYPE. NB. When creating an image for use as in Mislead, the image will have a script assigned, with scriptname of 'CASTERSCRIPTM' where CASTERERSCRIPT is the death variable of the casting creature.  
+237;Set image type;This effect stores information in a Projected Image/Simulacrum. The type can be accessed via CheckStat, stat PUPPETMASTERTYPE. Applying this effect to a non-image creature will set that creature to behave as an image (e.g. image casting, invisibility and talking behaviour).  
+238;Disintegrate;Disintegrates the targeted creature(s), if the targeted creature(s) match the 'IDS Entry' and in the specified 'IDS File', and if the targeted creature(s) hit-dice is less than those specified by the Dice Values.  
+239;Farsight;Allows viewing of the current area, based on the 'Type' field.  
+240;Remove portrait icon;Removes the icon specified by the 'Icon' field.  
+241;Control creature;Charms the targeted creature(s) according to value in the 'Charm Type' field, if the target is matched by the value in the 'General Type' field. Values for 'General Type' are from General.ids. (As opcode #5)
+242;Cure confusion;Removes the confusion, rigid thinking and fear effect from the targeted creature(s). 
+243;Drain item charges;Magical items matching the 'Item Type' value on the targeted creature(s) will have their charges drained by Number to Drain. Non-recharging items drained of all their charges are destroyed.  
+244;Drain wizard spells;Drains spells from a wizards memory. This effect always drains the highest level possible spell first and drains the number set by the Number to Drain parameter. 
+245;Check for berserk;This effect enables a 1% chance of the targetted creature(s) going berserk on each attack it makes. This affect sets the berserk stat changes and then attaches affect 246. 
+246;Berserk effect;This effect appears to be a combination of opcode #3 and the berserking portrait icon. This affect attaches affect 247. 
+247;Attack nearest creature;Applies the attack nearest creature effect on the targeted creature(s). This effect causes the targeted creature(s) to attack the nearest creature. The affected creature becomes berserk and its AI scripts stop running. Grants a +2 bonus to hit and damage with all weapons. Unlike opcode #3, this one can affect enemies as well. The 'Constant Value' parameter should be non-zero. This effect sets stat #144 (BERSERKSTAGE2) to param #2. It also sets the STATE_BERSERK flag. 
+248;Melee hit effect;Sets the effect specified by the resource key as a melee effect. The specified effect will be applied to the target of each successful melee attack. The resource key references a .eff not a .spl.
+249;Ranged hit effect;Sets the effect specified by the resource key as a ranged effect. The specified effect will be applied to the target of each successful ranged attack. The resource key references a .eff not a .spl.
+250;Maximum damage each hit;Applies the 'Damage Modifier' value to the damage caused by the targetted creature(s). The effect works as a minimum damage value, i.e. at least 'Damage Modifier' damage will always be caused (on a successful hit). 
+251;Change bard song;Sets the Bard Song of the targeted creature to the spell specified by the resource key. Note: The default Bard Song applies the following effects: All effects are added to the entire party with timing 4096 (end at ticks) and duration (nGameTime + 100)  
+252;Set trap;Attempts to set the spell specified by the resource key as a trap. This effect will fail if the targeted creature(s) does not have sufficient points in the 'Set Traps' skill. 
+253;Set automap note;Applies the set map marker effect. The String Reference parameter is a string reference to the dialog.tlk file that sets what the marker says when the marker is read. The Target of this effect should be set to Self to function correctly. NB. This effect works in SoA but not ToB 
+254;Remove automap note;Applies the remove map marker effect. This effect removes the map marker (if any) at the position the effect is cast. The Target of this effect should be set to Pre-Target to function correctly. NB. This effect works in SoA but not ToB 
+255;Create item (days);Creates the item specified by the resource key. The number of items created is controlled by the 'Charges' field. The number of secondary charge is determined by P3. The number of tertiary charges is determined by P4 (external eff's). The item is created in the Inventory, and has the 'can not steal' bit set. NB. The difference from opcode #122 is that when used in an external .eff, the duration (from the calling file) is specified in days. 
+256;Spell sequencer;This effect stores the spell resources for an active spell sequencer. The three spell resources are stored in the resource key, VVC field, and eff 3rd parameter. 
+257;Create spell sequencer;Creates a spell sequencer. The 'Maximum Level' field indicates the maximum spell level that can be used in the sequencer. The 'Amount' field indicates the number of spells that can be used in the sequencer. The filename of a spell containing this effect should be no more than 7 characters. 
+258;Activate spell sequencer;Activates a spell sequencer. The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect, which must be an innate ability. The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters.  The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the D character. 
+259;Spell trap;Applies the spell-trap effect to the targeted creature(s), absorbing a number of spells as specified by the 'Amount' field, of the level specified by the 'Level' field, and recalling previously cast spells. A spell is assigned to a spell level by the power level of the first effect greater than the 'Level' parameter in the extended header that is being called. 
+260;Activate spell sequencer (point);Activates a spell sequencer at a target point. The resource key must be set to the filename of the spell which contains the Spell Sequencer Creation effect, which must be an innate ability.  The spell which contains the Spell Sequencer Creation effect can have a maximum filename of 7 characters. The spell which contains the Spell Sequencer Activation effect must have the same filename, suffixed with the D character.  
+261;Wondrous recall;Applies the restore lost spell effect to the targeted creature(s). This effect will restore 1 spell to memory, at the level specified by the 'Spell Level' field, and of the type specified by the 'Spell Type' filed. If there is no free slot at the specified level, the effect restores a spell at the next lowest level possible.  
+262;Visual range bonus;Applies the visual range effect to the targeted creature(s). This effect modifies the visual range of the targeted creature(s). The Visual Range parameter seems to be in the 0-15 interval.  
+263;Backstab bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+264;Drop item;Applies the drop weapons effect to the targeted creature(s), in the style specified by the 'Type' field. This effect causes the targeted creature(s) to drop a piece of equipment. It won't affect items marked as 'critical'  
+265;Set global variable;Alters the global variable specified by the resource key, in the style specified by the 'Type' field, by the value specified by the 'Value' field. NB. You can use the VVC field of external EFF files for an additional 8 characters of variable name. NB. Since the Resource Key can only be 8 characters long maximum, you can not set a Local Variable with this effect this has a name longer than this amount. NB. You can use the 3rd resource field of EFF files for an additional 8 characters. NB. All timing modes act as permanent for this effect. 
+266;Remove protection from spell;Removes the protection from specific spell (as granted by #206) from the targeted creature(s) based on a matching resource key. 
+267;Disable display string;Prevents the strref specified by the 'String Reference' field being displayed by the targeted creature(s). 
+268;Clear fog of war;Applies the clear fog of war effect on the targeted creature(s). The targeted creature(s) will be able to explore like a PC does. This effect sets stat #148 (EXPLORE) to 1. 
+269;Shake screen;Applies the shake windows effect, with an intensity specified by the 'Strength' field 
+270;Unpause caster;Removes the pause effect (#165) from the targeted creature(s). 
+271;Disable creature;Removes the animation of the targeted creature(s). 
+272;Use EFF file on condition;Applies the eff specified by the resource key to the targeted creature(s) as specified by the 'Type' field. 'Type' mode 4 makes use of Parameter 3, and so can only be used in external eff files.  
+273;Zone of sweet air;Removes projectiles listed in clearair.2da. 
+274;Phase;Teleports the affected creature(s) to a random enemy (i.e. party members would teleport to a red circled creature, red circled creatures teleport to the party). If there are no enemies within visual range, no effect will occur. 
+275;Hide in shadows bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+276;Detect illusions bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+277;Set traps bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+278;THAC0 bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+279;Enable button;Enables the button specified by the 'Button Type' field. The resource field acts as a matching key to the resource field of the Enable Button, allowing separate enable/disable reasons.  
+280;Wild magic;Applies the wild magic effect to the targeted creature(s). This effect causes other spells to be subject to wild magic throws.  
+281;Wild surge bonus;"This effect will alter the wild-surge roll, making the resultant effect either more or less beneficial. 
+Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field. "
+282;Modify script state;"Modifies Scripting state to the given value. Scripting State range from 0 to 35. The scripting state can be checked via scripts (see stats.ids), subtract 156 from the stat value to get the scripting state. This effect does not have proper bounds checking, and can therefore be used in unintended ways. For example scripting state 13 equals with the NO_CIRCLE attribute (stat=169), and scripting state 1139 ties to PICKPOCKET (stat=29).
+"
+283;Use EFF file as curse;Applies the eff file specified by the resource key to the targeted creature(s), if the targeted creature(s) match the 'IDS Entry' in the specified 'IDS File'. The eff can be removed via the Remove Curse opcode (in addition to other standard methods).  
+284;Melee THAC0 bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+285;Melee weapon damage bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+286;Missile weapon damage bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+287;Remove feet circle;Removes the selection circle from the targeted creature(s). The effect modifies stat 169. 
+288;Fist THAC0 bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+289;Fist damage bonus;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.  
+290;Change title;Changes the title of the targeted creature(s), to the strref specified by the 'String Reference' field, at the location specified by the 'Position' field.  
+291;Disable visual effects;Disables the glowing disk from some effect on the targeted creature(s). Does not affect those visual effects which use BAM files - eg. Fire Shield (red). The Constant Value parameter should be set to 1. The effect modifies stat 174 to param2. 
+292;Immunity to backstab;Makes the targeted creature(s) immune to backstabbing. The Constant Value parameter should be set to 1. The effect modifies stat 175 to param2. 
+293;Set persistent AI;The targeted creature(s) will still run scripts when off-screen and out of combat. The Constant Value parameter should be set to 1. The effect modifies stat 183 to param2. 
+294;Set existence delay;Existance is the verbal constant group from 69 to 74 (or 70-74). These sounds are randomly played (for non global, alive characters, when not in cutscene or dialog). This stat tunes the frequency of these random strings.  
+295;Disable permanent death;This targeted creature(s) will never suffer a permanent death (and will therefore always remain resurrectable) - exceptions include petrification and freeze-death. The Constant Value parameter should be set to 1, and timing mode should be 9 (Permanent after Death). The effect modifies stat 186.
+296;Immunity to specific animation;Provides the targeted creature(s) with immunity to the animation specified by the resource key 
+297;Immunity to turn undead;Makes the targeted creature(s) immune to the Turn Undead effect. Constant Value should be non-zero. The effect modifies stat 187. 
+298;Pocket plane;Executes script cut250a.bcs. By default this script teleports the party to the Pocket Plane area (AR4500).  The Constant Value parameter should be set to 1.
+299;Chaos shield effect;This effect defends against wild surges and displays an associated icon as specified by the 'Icon' parameter. 
+300;Modify collision behavior;This effect allows the targetted creature(s) to push other creatures out of the way while moving. Constant Value should be set to 1. The effect modifies stat 190 to param 2.
+301;Critical Hit Modifier;This effect improves the Critical Hit chances. Critical hits will occur on a roll (on a 1d20) greater or equal to: 20 - 'Statistic Modifier'
+302;Can use any item;The targeted creature(s) can use any item. The Constant Value parameter should be set to 1. The effect modifies stat 191.
+303;Backstab every hit;The targeted creature(s) will backstab with every hit. The Constant Value parameter should be set to 1. The effect modifies stat 192.
+304;Mass raise dead;This effect will raise multiple dead PCs and NPCs.
+305;Off-hand THAC0 modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+306;Main hand THAC0 modifier;Applies the modifier value specified by the 'Statistic Modifier' field in the style specified by the 'Type' field.
+307;Ranger Tracking Ability;Activates the Tracking Ability. A string from tracking.2da is shown, and arrows appear along the screen edge pointing to any creatures within range. The units of the range parameter are unknown. The arrow effect may be hardcoded to spell SPCL922. NB: The file 'tracking.2da' lists the string reference that shows what information is learned from using this effect for each area.
+308;Immunity to Tracking;Protects the targetted creature(s) from the Tracking arrows effect (has no affect on the area string displayed). The effect modifies stat 195 to the value of param type.
+309;Script: Modify Local Variable;Set both the local variable specified by the resource key to the value specified by the 'Value' field. 
+310;Immunity to time stop;The targeted creature(s) becomes immune to time-stop. The Constant Value parameter should be set to 1. The effect modifies stat 197.
+311;Wish;This effect casts a wish spell (SPWISH01 - SPWISH25), selected based on the casting creatures Wisdom attribute.
+312;Immunity to sequester;This effect crashes the game.
+313;High-Level Ability Denotation;This effect denotes that the high level ability specified by the resource key has been gained. Used for pre-requisites/count limits.
+314;Golem Stoneskin;Gives the targeted creature(s) a number of protections from physical attacks, as specified by the 'Amount' field. NB: Do not use this effect in conjunction with the Juggernaut Golem Manual as it will corrupt the use of that item.
+315;Remove animation;This effect will remove the animation of the targeted creature(s). The Constant Value parameter should be set to a non-zero value. The effect modifies stat 201.
+316;Rest;This effect will refresh spells and remove any fatigue.
+317;Haste 2;Applies the Haste effect, in the style specified by the 'Type' value.
+318;Unknown;
+319;Restrict item;This effect restricts the item to creature(s) matching the object identifiers. The string to display when an invalid creature attempts to use the item is held in 0x2c.
+320;Change weather;Changes the weather of the current area to the weather specified by 'Weather'.
+321;Remove effects by resource;Removes effects from the resource specified by the resouce key, in the style specified by the 'Type' field.

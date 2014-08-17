@@ -68,7 +68,7 @@
 						width: 500,
 						height: 150
 					},
-					inject: {
+					resolve: {
 						mod : mod
 					}
 				});

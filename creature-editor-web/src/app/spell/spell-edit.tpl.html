@@ -20,6 +20,13 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="spell.identifier" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.IDENTIFIER</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.identifier.$invalid}">
+							<input id="spell.identifier" name="identifier" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.IDENTIFIER' | translate }}" data-ng-model="spell.identifier"
+								data-ng-trim="true" />
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="spell.level" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.LEVEL</label>
 						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.level.$invalid}">
 							<select class="form-control" data-ng-model="spell.level" required>
@@ -30,7 +37,7 @@
 					<div class="form-group">
 						<label for="spell.description" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.DESCRIPTION</label>
 						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.description.$invalid}">
-							<textarea name="description" rows="10" class="form-control" data-ng-model="spell.description" data-ng-maxlength="8000" disabled></textarea>
+							<textarea name="description" rows="20" class="form-control" data-ng-model="spell.description" data-ng-maxlength="8000" disabled></textarea>
 						</div>
 					</div>
 				</tab> 
@@ -71,6 +78,19 @@
 								<label>{{exclusionFlags}}</label>
 							</div>
 						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.range" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.RANGE</label>
+						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.range.$invalid}">
+							<input id="spell.range" name="range" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.RANGE' | translate }}" data-ng-model="spell.range"
+								data-ng-trim="true" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="spell.hurtAllies" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.RANGE</label>
+						<input id="spell.hurtAllies" name="hurtAllies" type="hidden" data-ng-model="spell.hurtAllies" required />
+						<button type="button" class="btn btn-default" data-ng-model="spell.hurtAllies" data-btn-radio="true" data-translate>PARAMETER.ON</button>
+						<button type="button" class="btn btn-default" data-ng-model="spell.hurtAllies" data-btn-radio="false" data-translate>PARAMETER.OFF</button>
 					</div>
 				</tab> 
 			</tabset>
