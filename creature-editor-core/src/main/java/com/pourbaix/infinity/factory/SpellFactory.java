@@ -15,6 +15,7 @@ import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
+import com.pourbaix.infinity.domain.Effect;
 import com.pourbaix.infinity.domain.IdentifierEntry;
 import com.pourbaix.infinity.domain.RawSpell;
 import com.pourbaix.infinity.resource.StringResource;
@@ -46,6 +47,9 @@ public class SpellFactory {
 	private static final String INVALID_SPELL_SECONDARY_TYPE = "INVALID_SPELL_SECONDARY_TYPE";
 	private static final String INVALID_SPELL_DESCRIPTION = "INVALID_SPELL_DESCRIPTION";
 
+	/**
+	 * These arrays are only used by RawSpell objects
+	 */
 	private static final String[] FLAGS = { "None", "", "", "", "", "", "", "", "", "", "", "Hostile/Breaks Invisibility", "No LOS required", "Allow spotting",
 			"Outdoors only", "Non-magical ability", "Trigger/Contingency", "Non-combat ability", "", "", "", "", "", "", "", "Ex: can target invisible",
 			"Ex: castable when silenced" };
@@ -105,9 +109,6 @@ public class SpellFactory {
 		int effectOffset = DynamicArray.getInt(buffer, 106);
 		fetchSpellAbilities(spell, buffer, effectOffset);
 		fetchSpellEffects(spell, buffer, effectOffset);
-		if (spell.getGlobalEffects() != null) {
-			logger.debug(spell.toString());
-		}
 		return getSpell(spell);
 	}
 
@@ -123,7 +124,14 @@ public class SpellFactory {
 		spell.setSchool(rawSpell.getSchool());
 		spell.setFlags(rawSpell.getFlags().getValue());
 		spell.setExclusionFlags(rawSpell.getExclusionFlags().getValue());
+		parseEffects(spell, rawSpell);
 		return spell;
+	}
+
+	private void parseEffects(Spell spell, RawSpell rawSpell) {
+		for (Effect effect : rawSpell.getGlobalEffects()) {
+
+		}
 	}
 
 	private void fetchSpellAbilities(RawSpell spell, byte buffer[], int effectOffset) throws FactoryException {

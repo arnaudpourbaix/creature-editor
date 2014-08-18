@@ -158,6 +158,8 @@
 			</column>
 			<column name="flags" type="bigint" />
 			<column name="exclusion_flags" type="bigint" />
+			<column name="offensive_flags" type="bigint" />
+			<column name="defensive_flags" type="bigint" />
 			<column name="range" type="int" />
 			<column name="school" type="int" />
 			<column name="hurt_allies" type="BOOLEAN">

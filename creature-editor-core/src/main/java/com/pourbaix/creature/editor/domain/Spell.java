@@ -62,6 +62,12 @@ public class Spell implements java.io.Serializable {
 	@Column(name = "EXCLUSION_FLAGS")
 	private Long exclusionFlags;
 
+	@Column(name = "OFFENSIVE_FLAGS")
+	private Long offensiveFlags;
+
+	@Column(name = "DEFENSIVE_FLAGS")
+	private Long defensiveFlags;
+
 	@Column(name = "RANGE")
 	private Integer range;
 
@@ -204,6 +210,22 @@ public class Spell implements java.io.Serializable {
 
 	public void setFlags(Long flags) {
 		this.flags = flags;
+	}
+
+	public Long getOffensiveFlags() {
+		return offensiveFlags;
+	}
+
+	public void setOffensiveFlags(Long offensiveFlags) {
+		this.offensiveFlags = offensiveFlags;
+	}
+
+	public Long getDefensiveFlags() {
+		return defensiveFlags;
+	}
+
+	public void setDefensiveFlags(Long defensiveFlags) {
+		this.defensiveFlags = defensiveFlags;
 	}
 
 }
