@@ -1,6 +1,9 @@
 package com.pourbaix.infinity.factory;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -10,11 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.creature.editor.domain.Spell;
+import com.pourbaix.creature.editor.domain.SpellOffensiveFlagEnum;
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
 import com.pourbaix.infinity.datatype.UnknownValueException;
+import com.pourbaix.infinity.domain.Ability;
 import com.pourbaix.infinity.domain.Effect;
 import com.pourbaix.infinity.domain.IdentifierEntry;
 import com.pourbaix.infinity.domain.RawSpell;
@@ -124,12 +129,27 @@ public class SpellFactory {
 		spell.setSchool(rawSpell.getSchool());
 		spell.setFlags(rawSpell.getFlags().getValue());
 		spell.setExclusionFlags(rawSpell.getExclusionFlags().getValue());
-		parseEffects(spell, rawSpell);
+		parseEffects(spell, rawSpell.getGlobalEffects());
+		for (Ability ability : rawSpell.getAbilities()) {
+			parseEffects(spell, ability.getEffects());
+		}
 		return spell;
 	}
 
-	private void parseEffects(Spell spell, RawSpell rawSpell) {
-		for (Effect effect : rawSpell.getGlobalEffects()) {
+	private Set<String> collection = new HashSet<>();
+
+	private void parseEffects(Spell spell, List<Effect> effects) {
+		for (Effect effect : effects) {
+			if (effect.getOpcodeId() == 12) {
+				String value = effect.getParam2().getValue();
+				if (!collection.contains(value)) {
+					System.out.println(value);
+				}
+				collection.add(value);
+			}
+			if (effect.getOpcodeId() == 5 || effect.getOpcodeId() == 241) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.CharmCreature);
+			}
 
 		}
 	}

@@ -15,6 +15,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.spring.CoreConfig;
+import com.pourbaix.infinity.resource.key.Keyfile;
+import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.service.GameService;
 import com.pourbaix.infinity.service.ReaderService;
 import com.pourbaix.infinity.service.ServiceException;
@@ -36,6 +38,28 @@ public class ReaderServiceTest {
 
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
+
+	//	@Test
+	public void getSpells() {
+		try {
+			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("spl")) {
+				System.out.println("=> " + entry.getResourceName());
+				Spell spell = readerService.getSpell(entry);
+			}
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void spellSpin771() {
+		try {
+			Spell spell = readerService.getSpell("spin771.spl");
+			assertEquals(1, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
 
 	@Test
 	public void spellFireBall() {

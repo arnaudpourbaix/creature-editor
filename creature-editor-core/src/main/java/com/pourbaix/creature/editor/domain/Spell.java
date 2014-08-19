@@ -12,6 +12,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.pourbaix.creature.editor.service.SpellDataService;
 import com.pourbaix.infinity.datatype.SchoolEnum;
 import com.pourbaix.infinity.datatype.SpellSecondaryTypeEnum;
 import com.pourbaix.infinity.datatype.SpellTypeEnum;
@@ -82,6 +85,8 @@ public class Spell implements java.io.Serializable {
 	private Integer effects;
 
 	public Spell() {
+		this.offensiveFlags = 0l;
+		this.defensiveFlags = 0l;
 	}
 
 	public String toString() {
@@ -90,6 +95,28 @@ public class Spell implements java.io.Serializable {
 		sb.append(", level=").append(level);
 		sb.append(", identifier=").append(identifier);
 		return sb.toString();
+	}
+
+	public boolean isOffensiveFlagSet(final SpellOffensiveFlagEnum name) {
+		SpellOffensiveFlag flag = Iterables.find(SpellDataService.offensiveFlags, new Predicate<SpellOffensiveFlag>() {
+			public boolean apply(SpellOffensiveFlag input) {
+				return input.getName() == name;
+			}
+		});
+		long bitnr = (long) Math.pow((double) 2, (double) flag.getBit());
+		return (offensiveFlags & bitnr) == bitnr;
+	}
+
+	public void setOffensiveFlag(final SpellOffensiveFlagEnum name) {
+		SpellOffensiveFlag flag = Iterables.find(SpellDataService.offensiveFlags, new Predicate<SpellOffensiveFlag>() {
+			public boolean apply(SpellOffensiveFlag input) {
+				return input.getName() == name;
+			}
+		});
+		long bitnr = (long) Math.pow((double) 2, (double) flag.getBit());
+		if (!((offensiveFlags & bitnr) == bitnr)) {
+			this.offensiveFlags += bitnr;
+		}
 	}
 
 	public Integer getId() {

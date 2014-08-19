@@ -4,6 +4,7 @@ public class EffectParameter {
 
 	private String name;
 	private String value;
+	private int rawValue;
 
 	public String getName() {
 		return name;
@@ -19,6 +20,14 @@ public class EffectParameter {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public int getRawValue() {
+		return rawValue;
+	}
+
+	public void setRawValue(int rawValue) {
+		this.rawValue = rawValue;
 	}
 
 }

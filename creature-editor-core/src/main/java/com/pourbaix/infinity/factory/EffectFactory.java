@@ -126,6 +126,7 @@ public class EffectFactory {
 			for (OpcodeParameterValue value : parameter.getValues()) {
 				if (value.getValue() == paramValue) {
 					effectParameter.setValue(value.getLabel());
+					effectParameter.setRawValue(value.getValue());
 				}
 			}
 		}
