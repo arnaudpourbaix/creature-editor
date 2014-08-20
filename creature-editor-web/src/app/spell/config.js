@@ -22,6 +22,9 @@
 				} ],
 				exclusionFlags : [ 'SpellService', function(SpellService) {
 					return SpellService.getExclusionFlags();
+				} ],
+				offensiveFlags : [ 'SpellService', function(SpellService) {
+					return SpellService.getOffensiveFlags();
 				} ]
 			}
 		});

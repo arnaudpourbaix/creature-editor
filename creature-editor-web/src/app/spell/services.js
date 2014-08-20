@@ -9,7 +9,7 @@
 			url : appSettings.restBaseUrl + 'spell/'
 		};
 	} ]);
-	
+
 	module.factory('Spell', [ '$resource', 'spellSettings', function SpellFactory($resource, spellSettings) {
 		var res = $resource(spellSettings.url + ':id', {}, {
 			'save' : {
@@ -41,58 +41,66 @@
 		res.prototype.$id = function() {
 			return this.id;
 		};
-		
+
 		return res;
 	} ]);
 
-	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'spellSettings',
-			function SpellService(Spell, SpellImportService, $http, spellSettings) {
-				var service = {};
+	module.service('SpellService', [ 'Spell', 'SpellImportService', '$http', 'spellSettings', function SpellService(Spell, SpellImportService, $http, spellSettings) {
+		var service = {};
 
-				service.getNew = function() {
-					var spell = new Spell({
-						id : null,
-						name : null
-					});
-					return spell;
-				};
+		service.getNew = function() {
+			var spell = new Spell({
+				id : null,
+				name : null
+			});
+			return spell;
+		};
 
-				service.getById = function(spells, id) {
-					return _.find(spells, function(spell) { /* jshint -W116 */
-						return spell.id == id;
-					});
-				};
+		service.getById = function(spells, id) {
+			return _.find(spells, function(spell) { /* jshint -W116 */
+				return spell.id == id;
+			});
+		};
 
-				service.getSpells = function(modId) {
-					if (SpellImportService.running && modId === SpellImportService.modId) {
-						return SpellImportService.spells;
-					} else {
-						return Spell.query({
-							modId : modId
-						}).$promise;
-					}
-				};
+		service.getSpells = function(modId) {
+			if (SpellImportService.running && modId === SpellImportService.modId) {
+				return SpellImportService.spells;
+			} else {
+				return Spell.query({
+					modId : modId
+				}).$promise;
+			}
+		};
 
-				service.getFlags = function() {
-					return $http({
-						method : 'GET',
-						url : spellSettings.url + 'flags'
-					}).then(function(result) {
-						return result.data;
-					});
-				};
+		service.getFlags = function() {
+			return $http({
+				method : 'GET',
+				url : spellSettings.url + 'flags'
+			}).then(function(result) {
+				return result.data;
+			});
+		};
 
-				service.getExclusionFlags = function() {
-					return $http({
-						method : 'GET',
-						url : spellSettings.url + 'exclusionFlags'
-					}).then(function(result) {
-						return result.data;
-					});
-				};
+		service.getExclusionFlags = function() {
+			return $http({
+				method : 'GET',
+				url : spellSettings.url + 'exclusionFlags'
+			}).then(function(result) {
+				return result.data;
+			});
+		};
 
-				return service;
-			} ]);
+		service.getOffensiveFlags = function() {
+			return $http({
+				method : 'GET',
+				url : spellSettings.url + 'offensiveFlags'
+			}).then(function(result) {
+				return result.data;
+			});
+		};
+
+		return service;
+	} ]);
 
 	module.service('SpellImportService', [ '$http', '$interval', '$alertMessage', 'spellSettings', function SpellImportService($http, $interval, $alertMessage, spellSettings) {
 		var service = {

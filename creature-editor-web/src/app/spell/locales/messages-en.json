@@ -13,6 +13,8 @@
 			"SECONDARY_TYPE" : "Secondary Type",
 			"FLAGS" : "Flags",
 			"EXCLUSION_FLAGS" : "Exclusion flags",
+			"OFFENSIVE_FLAGS" : "Offensive flags",
+			"DEFENSIVE_FLAGS" : "Defensive flags",
 			"RANGE" : "Range",
 			"HURT_ALLIES" : "Hurt allies"
 		},

@@ -17,6 +17,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import com.pourbaix.creature.editor.domain.Spell;
 import com.pourbaix.creature.editor.domain.SpellExclusionFlag;
 import com.pourbaix.creature.editor.domain.SpellFlag;
+import com.pourbaix.creature.editor.domain.SpellOffensiveFlag;
 import com.pourbaix.creature.editor.repository.SpellRepository;
 import com.pourbaix.creature.editor.service.SpellDataService;
 import com.pourbaix.creature.editor.spell.SpellImportService;
@@ -93,6 +94,11 @@ public class SpellController {
 	@RequestMapping("/spell/exclusionFlags")
 	public List<SpellExclusionFlag> getExclusionFlags() {
 		return SpellDataService.exclusionFlags;
+	}
+
+	@RequestMapping("/spell/offensiveFlags")
+	public List<SpellOffensiveFlag> getOffensiveFlags() {
+		return SpellDataService.offensiveFlags;
 	}
 
 	@RequestMapping(value = "/spell/read/{resource}", method = RequestMethod.GET, produces = "application/json")

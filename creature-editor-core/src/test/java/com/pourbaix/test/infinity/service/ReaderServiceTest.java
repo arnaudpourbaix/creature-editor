@@ -39,11 +39,11 @@ public class ReaderServiceTest {
 	@Rule
 	public ExpectedException exception = ExpectedException.none();
 
-	//	@Test
+	@Test
 	public void getSpells() {
 		try {
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("spl")) {
-				System.out.println("=> " + entry.getResourceName());
+				//System.out.println("=> " + entry.getResourceName());
 				Spell spell = readerService.getSpell(entry);
 			}
 		} catch (ServiceException e) {
@@ -66,6 +66,16 @@ public class ReaderServiceTest {
 		try {
 			Spell spell = readerService.getSpell("spwi304.spl");
 			assertEquals(3, spell.getLevel());
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
+	public void spellHoldMonster() {
+		try {
+			Spell spell = readerService.getSpell("spwi507.spl");
+			assertEquals(5, spell.getLevel());
 		} catch (ServiceException e) {
 			fail(e.getMessage());
 		}

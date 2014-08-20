@@ -409,7 +409,7 @@ module.exports = function(grunt) {
 			 */
 			jssrc : {
 				files : [ '<%= app_files.js %>' ],
-				tasks : [ 'jshint:src', 'copy:buildAppJs', 'karma:unit:run' ]
+				tasks : [ 'jshint:src', 'copy:buildAppJs'/* , 'karma:unit:run' */]
 			},
 
 			jsonsrc : {
@@ -469,7 +469,7 @@ module.exports = function(grunt) {
 	 * `delta` (that's why the configuration var above is `delta`) and then add a new task called `watch` that does a clean build before watching for changes.
 	 */
 	grunt.renameTask('watch', 'delta');
-	grunt.registerTask('watch', [ 'build', 'karma:unit', 'delta' ]);
+	grunt.registerTask('watch', [ 'build', /* 'karma:unit', */'delta' ]);
 
 	/**
 	 * The default task is to build and compile.
@@ -479,7 +479,7 @@ module.exports = function(grunt) {
 	/**
 	 * The `build` task gets your app ready to run for development and testing.
 	 */
-	grunt.registerTask('build', [ 'buildnotest', 'karmaconfig', 'karma:continuous' ]);
+	grunt.registerTask('build', [ 'buildnotest'/* , 'karmaconfig', 'karma:continuous' */]);
 
 	grunt.registerTask('buildnotest', [ 'clean', 'html2js', 'jshint', 'recess:build', 'copy:buildAppAssets', 'copy:buildVendorAssets', 'copy:buildAppJs', 'copy:buildAppJson',
 			'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 'index:build' ]);
@@ -490,7 +490,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('compile', [ 'concat:compileCss', 'recess:compile', 'copy:compileAssets', 'ngmin', 'copy:compileAppJson', 'concat:compileVendorJs', 'concat:compileJs',
 			'uglify', 'index:compile' ]);
 
-	grunt.registerTask('server', [ 'configureProxies', 'connect:livereload', 'open', 'watch' ]);
+	grunt.registerTask('server', [ 'configureProxies', 'connect:livereload', /* 'open', */'watch' ]);
 
 	grunt.registerTask('production', [ 'configureProxies', 'connect:livereload', 'open', 'build', 'compile', 'delta' ]);
 

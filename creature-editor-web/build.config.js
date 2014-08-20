@@ -46,7 +46,7 @@ module.exports = {
 				'vendor/angular-ui-router/release/angular-ui-router.js', 'vendor/angular-route/angular-route.min.js', 'vendor/angular-translate/angular-translate.min.js',
 				'vendor/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js', 'vendor/angular-translate-storage-local/angular-translate-storage-local.min.js',
 				'vendor/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 'vendor/lodash/dist/lodash.min.js', 'vendor/restangular/dist/restangular.min.js',
-				'src/assets/jqwidgets/jqx-all.js' ],
+				'src/assets/jqwidgets/jqx-all.js', 'src/assets/Long.js' ],
 		css : [ 'vendor/font-awesome/css/font-awesome.min.css', 'vendor/animate.css/animate.min.css' ],
 		assets : [ 'bootstrap/dist/fonts/*', 'bootstrap/dist/css/bootstrap.min.css', 'bootstrap/dist/css/bootstrap-theme.min.css', 'roboto-fontface/*.css', 'roboto-fontface/fonts/*' ]
 
