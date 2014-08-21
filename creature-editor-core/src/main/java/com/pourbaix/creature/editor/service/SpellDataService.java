@@ -3,6 +3,8 @@ package com.pourbaix.creature.editor.service;
 import org.springframework.stereotype.Service;
 
 import com.google.common.collect.ImmutableList;
+import com.pourbaix.creature.editor.domain.SpellDefensiveFlag;
+import com.pourbaix.creature.editor.domain.SpellDefensiveFlagEnum;
 import com.pourbaix.creature.editor.domain.SpellExclusionFlag;
 import com.pourbaix.creature.editor.domain.SpellExclusionFlagEnum;
 import com.pourbaix.creature.editor.domain.SpellFlag;
@@ -55,4 +57,33 @@ public class SpellDataService {
 					SpellOffensiveFlagEnum.Imprisonment, "Imprisonment"), new SpellOffensiveFlag(37, SpellOffensiveFlagEnum.Maze, "Maze"),
 			new SpellOffensiveFlag(38, SpellOffensiveFlagEnum.LevelDrain, "Level drain"));
 
+	public static final ImmutableList<SpellDefensiveFlag> defensiveFlags = ImmutableList.of(new SpellDefensiveFlag(1, SpellDefensiveFlagEnum.CureSleep,
+			"Cure Sleep"), new SpellDefensiveFlag(1, SpellDefensiveFlagEnum.CurePoison, "Cure Poison"), new SpellDefensiveFlag(2,
+			SpellDefensiveFlagEnum.CureConfusion, "Cure Confusion"), new SpellDefensiveFlag(3, SpellDefensiveFlagEnum.CureStun, "Cure Stun"),
+			new SpellDefensiveFlag(4, SpellDefensiveFlagEnum.CureSilence, "Cure Silence"), new SpellDefensiveFlag(5, SpellDefensiveFlagEnum.CureBlindness,
+					"Cure Blindness"), new SpellDefensiveFlag(6, SpellDefensiveFlagEnum.CureFeeblemindedness, "Cure Feeblemindedness"), new SpellDefensiveFlag(
+					7, SpellDefensiveFlagEnum.CureDisease, "Cure Disease"), new SpellDefensiveFlag(8, SpellDefensiveFlagEnum.CureDeafness, "Cure Deafness"),
+			new SpellDefensiveFlag(9, SpellDefensiveFlagEnum.Haste, "Haste"), new SpellDefensiveFlag(10, SpellDefensiveFlagEnum.HPModifier, "HP Modifier"),
+			new SpellDefensiveFlag(11, SpellDefensiveFlagEnum.Invisibility, "Invisibility"), new SpellDefensiveFlag(12, SpellDefensiveFlagEnum.ResetMorale,
+					"Reset Morale"), new SpellDefensiveFlag(13, SpellDefensiveFlagEnum.RemoveInvisibility, "Remove Invisibility"), new SpellDefensiveFlag(14,
+					SpellDefensiveFlagEnum.DispelEffects, "Dispel Effects"), new SpellDefensiveFlag(15, SpellDefensiveFlagEnum.NonDetection, "Non Detection"),
+			new SpellDefensiveFlag(16, SpellDefensiveFlagEnum.ProjectileImmunity, "Projectile Immunity"), new SpellDefensiveFlag(17,
+					SpellDefensiveFlagEnum.Regeneration, "Regeneration"), new SpellDefensiveFlag(18, SpellDefensiveFlagEnum.SpellLevelImmunity,
+					"Spell Level Immunity"), new SpellDefensiveFlag(19, SpellDefensiveFlagEnum.Clairvoyance, "Clairvoyance"), new SpellDefensiveFlag(20,
+					SpellDefensiveFlagEnum.MirrorImage, "Mirror Image"),
+			new SpellDefensiveFlag(21, SpellDefensiveFlagEnum.WeaponsImmunity, "Weapons Immunity"), new SpellDefensiveFlag(22, SpellDefensiveFlagEnum.Aid,
+					"Aid"), new SpellDefensiveFlag(23, SpellDefensiveFlagEnum.Bless, "Bless"),
+			new SpellDefensiveFlag(24, SpellDefensiveFlagEnum.Chant, "Chant"), new SpellDefensiveFlag(25, SpellDefensiveFlagEnum.DrawUponHolyMight,
+					"Draw Upon Holy Might"), new SpellDefensiveFlag(26, SpellDefensiveFlagEnum.Sanctuary, "Sanctuary"), new SpellDefensiveFlag(27,
+					SpellDefensiveFlagEnum.ProtectionFromNormalMissiles, "Protection From Normal Missiles"), new SpellDefensiveFlag(28,
+					SpellDefensiveFlagEnum.FreeAction, "Free Action"), new SpellDefensiveFlag(29, SpellDefensiveFlagEnum.InvisibilityDetection,
+					"Invisibility Detection"), new SpellDefensiveFlag(30, SpellDefensiveFlagEnum.SpellLevelReflection, "Spell Level Reflection"),
+			new SpellDefensiveFlag(31, SpellDefensiveFlagEnum.SpellTurning, "Spell Turning"), new SpellDefensiveFlag(32,
+					SpellDefensiveFlagEnum.SpellDeflection, "Spell Deflection"), new SpellDefensiveFlag(33, SpellDefensiveFlagEnum.Freedom, "Freedom"),
+			new SpellDefensiveFlag(34, SpellDefensiveFlagEnum.StoneskinEffect, "Stoneskin Effect"), new SpellDefensiveFlag(35,
+					SpellDefensiveFlagEnum.Restoration, "Restoration"), new SpellDefensiveFlag(36, SpellDefensiveFlagEnum.SweetAirZone, "Sweet Air Zone"),
+			new SpellDefensiveFlag(37, SpellDefensiveFlagEnum.BackstabEveryHit, "Backstab Every Hit"), new SpellDefensiveFlag(38,
+					SpellDefensiveFlagEnum.DetectInvisible, "Detect Invisible")
+
+	);
 }

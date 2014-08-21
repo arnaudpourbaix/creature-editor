@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.pourbaix.creature.editor.domain.Spell;
+import com.pourbaix.creature.editor.domain.SpellDefensiveFlag;
 import com.pourbaix.creature.editor.domain.SpellExclusionFlag;
 import com.pourbaix.creature.editor.domain.SpellFlag;
 import com.pourbaix.creature.editor.domain.SpellOffensiveFlag;
@@ -99,6 +100,11 @@ public class SpellController {
 	@RequestMapping("/spell/offensiveFlags")
 	public List<SpellOffensiveFlag> getOffensiveFlags() {
 		return SpellDataService.offensiveFlags;
+	}
+
+	@RequestMapping("/spell/defensiveFlags")
+	public List<SpellDefensiveFlag> getDefensiveFlags() {
+		return SpellDataService.defensiveFlags;
 	}
 
 	@RequestMapping(value = "/spell/read/{resource}", method = RequestMethod.GET, produces = "application/json")

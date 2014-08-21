@@ -119,6 +119,18 @@ public class Spell implements java.io.Serializable {
 		}
 	}
 
+	public void setDefensiveFlag(final SpellDefensiveFlagEnum name) {
+		SpellDefensiveFlag flag = Iterables.find(SpellDataService.defensiveFlags, new Predicate<SpellDefensiveFlag>() {
+			public boolean apply(SpellDefensiveFlag input) {
+				return input.getName() == name;
+			}
+		});
+		long bitnr = (long) Math.pow((double) 2, (double) flag.getBit());
+		if (!((defensiveFlags & bitnr) == bitnr)) {
+			this.defensiveFlags += bitnr;
+		}
+	}
+
 	public Integer getId() {
 		return this.id;
 	}

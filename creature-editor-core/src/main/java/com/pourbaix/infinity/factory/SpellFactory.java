@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.creature.editor.domain.Spell;
+import com.pourbaix.creature.editor.domain.SpellDefensiveFlagEnum;
 import com.pourbaix.creature.editor.domain.SpellOffensiveFlagEnum;
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.SchoolEnum;
@@ -136,88 +137,177 @@ public class SpellFactory {
 
 	private void parseEffects(Spell spell, List<Effect> effects) {
 		for (Effect effect : effects) {
-			if (effect.getOpcodeId() == 12) {
-				int value = effect.getParam2().getRawValue();
-				if (value <= 3) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Crushing);
-				} else if (value >= 65536 && value <= 65539) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Acid);
-				} else if (value >= 131072 && value <= 131075) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Cold);
-				} else if (value >= 262144 && value <= 262147) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Electricity);
-				} else if (value >= 524288 && value <= 524291) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Fire);
-				} else if (value >= 1048576 && value <= 1048579) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Piercing);
-				} else if (value >= 2097152 && value <= 2097155) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Poison);
-				} else if (value >= 4194304 && value <= 4194307) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Magic);
-				} else if (value >= 8388608 && value <= 8388611) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Missile);
-				} else if (value >= 16777216 && value <= 16777218) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.Slashing);
-				} else if (value >= 33554432 && value <= 33554435) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.MagicFire);
-				} else if (value >= 67108864 && value <= 67108867) {
-					spell.setOffensiveFlag(SpellOffensiveFlagEnum.MagicCold);
-				}
-			} else if (effect.getOpcodeId() == 5) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.CharmCreature);
-			} else if (effect.getOpcodeId() == 13) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.InstantDeath);
-			} else if (effect.getOpcodeId() == 24) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Panic);
-			} else if (effect.getOpcodeId() == 25) {
+			parseOffensiveEffects(spell, effect);
+			parseDefensiveEffects(spell, effect);
+		}
+	}
+
+	private void parseOffensiveEffects(Spell spell, Effect effect) {
+		if (effect.getOpcodeId() == 12) {
+			int value = effect.getParam2().getRawValue();
+			if (value <= 3) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Crushing);
+			} else if (value >= 65536 && value <= 65539) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Acid);
+			} else if (value >= 131072 && value <= 131075) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Cold);
+			} else if (value >= 262144 && value <= 262147) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Electricity);
+			} else if (value >= 524288 && value <= 524291) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Fire);
+			} else if (value >= 1048576 && value <= 1048579) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Piercing);
+			} else if (value >= 2097152 && value <= 2097155) {
 				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Poison);
-			} else if (effect.getOpcodeId() == 38) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Silence);
-			} else if (effect.getOpcodeId() == 39) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Sleep);
-			} else if (effect.getOpcodeId() == 40) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Slow);
-			} else if (effect.getOpcodeId() == 45) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Stun);
-			} else if (effect.getOpcodeId() == 55) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Slay);
-			} else if (effect.getOpcodeId() == 60) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.CastingFailure);
-			} else if (effect.getOpcodeId() == 74) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Blindness);
-			} else if (effect.getOpcodeId() == 76) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Feeblemindedness);
-			} else if (effect.getOpcodeId() == 80) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Deafness);
-			} else if (effect.getOpcodeId() == 109) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Paralyze);
-			} else if (effect.getOpcodeId() == 128) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Confusion);
-			} else if (effect.getOpcodeId() == 134) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Petrification);
-			} else if (effect.getOpcodeId() == 135) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Polymorph);
-			} else if (effect.getOpcodeId() == 175) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.HoldCreature);
-			} else if (effect.getOpcodeId() == 185) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.HoldCreature2);
-			} else if (effect.getOpcodeId() == 209) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.PowerWordKill);
-			} else if (effect.getOpcodeId() == 210) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.PowerWordStun);
-			} else if (effect.getOpcodeId() == 211) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Imprisonment);
-			} else if (effect.getOpcodeId() == 213) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Maze);
-			} else if (effect.getOpcodeId() == 216) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.LevelDrain);
-			} else if (effect.getOpcodeId() == 217) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.PowerWordSleep);
-			} else if (effect.getOpcodeId() == 238) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Disintegrate);
-			} else if (effect.getOpcodeId() == 241) {
-				spell.setOffensiveFlag(SpellOffensiveFlagEnum.CharmCreature);
+			} else if (value >= 4194304 && value <= 4194307) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Magic);
+			} else if (value >= 8388608 && value <= 8388611) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Missile);
+			} else if (value >= 16777216 && value <= 16777218) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.Slashing);
+			} else if (value >= 33554432 && value <= 33554435) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.MagicFire);
+			} else if (value >= 67108864 && value <= 67108867) {
+				spell.setOffensiveFlag(SpellOffensiveFlagEnum.MagicCold);
 			}
+		} else if (effect.getOpcodeId() == 5) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.CharmCreature);
+		} else if (effect.getOpcodeId() == 13) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.InstantDeath);
+		} else if (effect.getOpcodeId() == 24) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Panic);
+		} else if (effect.getOpcodeId() == 25) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Poison);
+		} else if (effect.getOpcodeId() == 38) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Silence);
+		} else if (effect.getOpcodeId() == 39) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Sleep);
+		} else if (effect.getOpcodeId() == 40) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Slow);
+		} else if (effect.getOpcodeId() == 45) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Stun);
+		} else if (effect.getOpcodeId() == 55) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Slay);
+		} else if (effect.getOpcodeId() == 60) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.CastingFailure);
+		} else if (effect.getOpcodeId() == 74) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Blindness);
+		} else if (effect.getOpcodeId() == 76) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Feeblemindedness);
+		} else if (effect.getOpcodeId() == 80) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Deafness);
+		} else if (effect.getOpcodeId() == 109) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Paralyze);
+		} else if (effect.getOpcodeId() == 128) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Confusion);
+		} else if (effect.getOpcodeId() == 134) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Petrification);
+		} else if (effect.getOpcodeId() == 135) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Polymorph);
+		} else if (effect.getOpcodeId() == 175) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.HoldCreature);
+		} else if (effect.getOpcodeId() == 185) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.HoldCreature2);
+		} else if (effect.getOpcodeId() == 209) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.PowerWordKill);
+		} else if (effect.getOpcodeId() == 210) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.PowerWordStun);
+		} else if (effect.getOpcodeId() == 211) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Imprisonment);
+		} else if (effect.getOpcodeId() == 213) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Maze);
+		} else if (effect.getOpcodeId() == 216) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.LevelDrain);
+		} else if (effect.getOpcodeId() == 217) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.PowerWordSleep);
+		} else if (effect.getOpcodeId() == 238) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.Disintegrate);
+		} else if (effect.getOpcodeId() == 241) {
+			spell.setOffensiveFlag(SpellOffensiveFlagEnum.CharmCreature);
+		}
+	}
+
+	private void parseDefensiveEffects(Spell spell, Effect effect) {
+		if (effect.getOpcodeId() == 2) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CureSleep);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
+		} else if (effect.getOpcodeId() == 11) {
+			spell.setDefensiveFlag(SpellDefensiveFlagEnum.CurePoison);
 		}
 	}
 
