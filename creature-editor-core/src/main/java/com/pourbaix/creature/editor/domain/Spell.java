@@ -78,6 +78,9 @@ public class Spell implements java.io.Serializable {
 	@Enumerated
 	private SchoolEnum school;
 
+	@Column(name = "SINGLE_TARGET", nullable = false)
+	private boolean singleTarget = true;
+
 	@Column(name = "HURT_ALLIES", nullable = false)
 	private boolean hurtAllies;
 
@@ -265,6 +268,14 @@ public class Spell implements java.io.Serializable {
 
 	public void setDefensiveFlags(Long defensiveFlags) {
 		this.defensiveFlags = defensiveFlags;
+	}
+
+	public boolean isSingleTarget() {
+		return singleTarget;
+	}
+
+	public void setSingleTarget(boolean singleTarget) {
+		this.singleTarget = singleTarget;
 	}
 
 }

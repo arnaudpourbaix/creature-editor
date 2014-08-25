@@ -32,7 +32,7 @@ public class Projectile {
 	}
 
 	public boolean affectAllies() {
-		return !areaOfEffectFlags.isFlagSet(6);
+		return areaOfEffectFlags != null && !areaOfEffectFlags.isFlagSet(6);
 	}
 
 	public int getFeetTriggerRadius() {

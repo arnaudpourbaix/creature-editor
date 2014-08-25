@@ -88,6 +88,14 @@
 						</div>
 					</div>
 					<div class="form-group">
+						<label for="spell.defensiveFlags" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.DEFENSIVE_FLAGS</label>
+						<div class="col-sm-10">
+							<div class="checkbox">
+								<label>{{defensiveFlags}}</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
 						<label for="spell.range" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.RANGE</label>
 						<div class="col-sm-10" data-ng-class="{'has-error': spellForm.range.$invalid}">
 							<input id="spell.range" name="range" class="form-control" type="text" placeholder="{{ 'SPELL.FIELDS.RANGE' | translate }}" data-ng-model="spell.range"
@@ -95,8 +103,14 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="spell.hurtAllies" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.RANGE</label>
-						<input id="spell.hurtAllies" name="hurtAllies" type="hidden" data-ng-model="spell.hurtAllies" required />
+						<label for="spell.singleTarget" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.SINGLE_TARGET</label>
+						<input id="spell.singleTarget" name="singleTarget" type="text" data-ng-model="spell.singleTarget" required />
+						<button type="button" class="btn btn-default" data-ng-model="spell.singleTarget" data-btn-radio="true" data-translate>PARAMETER.ON</button>
+						<button type="button" class="btn btn-default" data-ng-model="spell.singleTarget" data-btn-radio="false" data-translate>PARAMETER.OFF</button>
+					</div>
+					<div class="form-group">
+						<label for="spell.hurtAllies" class="col-sm-2 control-label" data-translate>SPELL.FIELDS.HURT_ALLIES</label>
+						<input id="spell.hurtAllies" name="hurtAllies" type="text" data-ng-model="spell.hurtAllies" required />
 						<button type="button" class="btn btn-default" data-ng-model="spell.hurtAllies" data-btn-radio="true" data-translate>PARAMETER.ON</button>
 						<button type="button" class="btn btn-default" data-ng-model="spell.hurtAllies" data-btn-radio="false" data-translate>PARAMETER.OFF</button>
 					</div>

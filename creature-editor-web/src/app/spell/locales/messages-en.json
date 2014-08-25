@@ -16,6 +16,7 @@
 			"OFFENSIVE_FLAGS" : "Offensive flags",
 			"DEFENSIVE_FLAGS" : "Defensive flags",
 			"RANGE" : "Range",
+			"SINGLE_TARGET" : "Single target",
 			"HURT_ALLIES" : "Hurt allies"
 		},
 		"COLUMNS" : {

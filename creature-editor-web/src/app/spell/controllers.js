@@ -4,49 +4,51 @@
 
 	var module = angular.module('creatureEditor.spell.controllers', [ 'creatureEditor.spell.services', 'alert-message', 'crud', 'ui.bootstrap' ]);
 
-	module.controller('SpellController', function SpellController($scope, $translateWrapper, $state, SpellImportService, mods, flags, exclusionFlags, offensiveFlags) {
+	module.controller('SpellController',
+			function SpellController($scope, $translateWrapper, $state, SpellImportService, mods, flags, exclusionFlags, offensiveFlags, defensiveFlags) {
 
-		$scope.importService = SpellImportService;
-		$scope.mods = mods;
-		$scope.flags = flags;
-		$scope.exclusionFlags = exclusionFlags;
-		$scope.offensiveFlags = offensiveFlags;
-		$scope.modId = null;
+				$scope.importService = SpellImportService;
+				$scope.mods = mods;
+				$scope.flags = flags;
+				$scope.exclusionFlags = exclusionFlags;
+				$scope.offensiveFlags = offensiveFlags;
+				$scope.defensiveFlags = defensiveFlags;
+				$scope.modId = null;
 
-		$scope.layout = {
-			options : {
-				width : 1200,
-				height : 800
-			},
-			windows : [ {
-				id : 'spell-list',
-				height : 700
-			}, {
-				id : 'spell-import',
-				height : 100,
-			} ]
-		};
+				$scope.layout = {
+					options : {
+						width : 1200,
+						height : 800
+					},
+					windows : [ {
+						id : 'spell-list',
+						height : 700
+					}, {
+						id : 'spell-import',
+						height : 100,
+					} ]
+				};
 
-		$translateWrapper('MOD.SELECT_MOD').then(function(translation) {
-			$scope.modsSelect = {
-				data : 'mods',
-				displayMember : 'name',
-				valueMember : 'id',
-				select : 'selectMod',
-				options : {
-					placeHolder : translation,
-					width : '200px'
-				}
-			};
-		});
+				$translateWrapper('MOD.SELECT_MOD').then(function(translation) {
+					$scope.modsSelect = {
+						data : 'mods',
+						displayMember : 'name',
+						valueMember : 'id',
+						select : 'selectMod',
+						options : {
+							placeHolder : translation,
+							width : '200px'
+						}
+					};
+				});
 
-		$scope.selectMod = function(modId) {
-			$state.go('spells.list', {
-				modId : $scope.modId
+				$scope.selectMod = function(modId) {
+					$state.go('spells.list', {
+						modId : $scope.modId
+					});
+				};
+
 			});
-		};
-
-	});
 
 	module.controller('SpellListController', function SpellListController($scope, $stateParams, $location, $translateWrapper, spells, crudListMethods, $alertMessage, $interpolate) {
 		angular.extend($scope, crudListMethods($location.url()));
@@ -218,6 +220,10 @@
 
 		getFlags($scope.offensiveFlags, $scope.spell.offensiveFlags).then(function(result) {
 			$scope.offensiveFlags = result;
+		});
+
+		getFlags($scope.defensiveFlags, $scope.spell.defensiveFlags).then(function(result) {
+			$scope.defensiveFlags = result;
 		});
 
 		$scope.onCancel = function() {

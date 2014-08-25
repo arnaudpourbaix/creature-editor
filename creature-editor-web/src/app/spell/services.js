@@ -99,6 +99,15 @@
 			});
 		};
 
+		service.getDefensiveFlags = function() {
+			return $http({
+				method : 'GET',
+				url : spellSettings.url + 'defensiveFlags'
+			}).then(function(result) {
+				return result.data;
+			});
+		};
+
 		return service;
 	} ]);
 

@@ -162,6 +162,9 @@
 			<column name="defensive_flags" type="bigint" />
 			<column name="range" type="int" />
 			<column name="school" type="int" />
+			<column name="single_target" type="BOOLEAN">
+				<constraints nullable="false"/>
+			</column>
 			<column name="hurt_allies" type="BOOLEAN">
 				<constraints nullable="false"/>
 			</column>

@@ -25,6 +25,9 @@
 				} ],
 				offensiveFlags : [ 'SpellService', function(SpellService) {
 					return SpellService.getOffensiveFlags();
+				} ],
+				defensiveFlags : [ 'SpellService', function(SpellService) {
+					return SpellService.getDefensiveFlags();
 				} ]
 			}
 		});
