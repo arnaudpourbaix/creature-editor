@@ -14,4 +14,8 @@
 		<loadData encoding="UTF-8" separator=";" quotchar="&quot;" file="db/csv/script/action.csv" tableName="action" />
 	</changeSet>
 
+	<changeSet author="apourbaix" id="script-initData2">
+		<loadData encoding="UTF-8" separator=";" quotchar="&quot;" file="db/csv/script/action_keyword.csv" tableName="action_keyword" />
+	</changeSet>
+
 </databaseChangeLog>

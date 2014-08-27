@@ -2,6 +2,7 @@ package com.pourbaix.creature.editor.domain;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,6 +31,7 @@ public class Trigger implements java.io.Serializable {
 
 	@Column(name = "LABEL", length = 1500)
 	private String label;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "trigger")
 	private Set<TriggerKeyword> triggerKeywords = new HashSet<TriggerKeyword>(0);
 

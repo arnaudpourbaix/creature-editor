@@ -1,9 +1,14 @@
 package com.pourbaix.creature.editor.domain;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -28,6 +33,9 @@ public class Action implements java.io.Serializable {
 
 	@Column(name = "LABEL", length = 1500)
 	private String label;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "action")
+	private Set<ActionKeyword> actionKeywords = new HashSet<ActionKeyword>(0);
 
 	public Action() {
 	}
@@ -74,6 +82,14 @@ public class Action implements java.io.Serializable {
 
 	public void setLabel(String label) {
 		this.label = label;
+	}
+
+	public Set<ActionKeyword> getActionKeywords() {
+		return actionKeywords;
+	}
+
+	public void setActionKeywords(Set<ActionKeyword> actionKeywords) {
+		this.actionKeywords = actionKeywords;
 	}
 
 }

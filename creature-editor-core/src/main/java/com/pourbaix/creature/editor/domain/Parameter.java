@@ -17,7 +17,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "PARAMETER", schema = "PUBLIC", catalog = "PUBLIC")
-@DiscriminatorColumn(name = "datatype", discriminatorType = DiscriminatorType.STRING)
+@DiscriminatorColumn(name = "DATATYPE", discriminatorType = DiscriminatorType.STRING)
 public class Parameter implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +34,7 @@ public class Parameter implements java.io.Serializable {
 	@JoinColumn(name = "TYPE_ID")
 	private ParameterType parameterType;
 
-	@Column(name = "DATATYPE", length = 10)
+	@Column(name = "DATATYPE", length = 10, insertable = false, updatable = false)
 	@Enumerated(value = EnumType.STRING)
 	private ParameterDatatypeEnum datatype;
 

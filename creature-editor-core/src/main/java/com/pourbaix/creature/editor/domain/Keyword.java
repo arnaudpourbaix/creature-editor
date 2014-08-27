@@ -1,13 +1,19 @@
 package com.pourbaix.creature.editor.domain;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -17,6 +23,7 @@ import javax.persistence.UniqueConstraint;
  */
 @Entity
 @Table(name = "KEYWORD", schema = "PUBLIC", catalog = "PUBLIC", uniqueConstraints = @UniqueConstraint(columnNames = "NAME"))
+@NamedEntityGraph(name = "Keyword.lists", attributeNodes = @NamedAttributeNode("actionKeywords"))
 public class Keyword implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -30,19 +37,24 @@ public class Keyword implements java.io.Serializable {
 	private String name;
 
 	@Column(name = "TYPE", nullable = false, length = 15)
-	private String type;
+	@Enumerated(EnumType.STRING)
+	private KeywordTypeEnum type;
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
 	private Set<TriggerKeyword> triggerKeywords = new HashSet<TriggerKeyword>(0);
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "keyword")
+	private Set<ActionKeyword> actionKeywords = new HashSet<ActionKeyword>(0);
 
 	public Keyword() {
 	}
 
-	public Keyword(String name, String type) {
+	public Keyword(String name, KeywordTypeEnum type) {
 		this.name = name;
 		this.type = type;
 	}
 
-	public Keyword(String name, String type, Set<TriggerKeyword> triggerKeywords) {
+	public Keyword(String name, KeywordTypeEnum type, Set<TriggerKeyword> triggerKeywords) {
 		this.name = name;
 		this.type = type;
 		this.triggerKeywords = triggerKeywords;
@@ -64,11 +76,11 @@ public class Keyword implements java.io.Serializable {
 		this.name = name;
 	}
 
-	public String getType() {
+	public KeywordTypeEnum getType() {
 		return this.type;
 	}
 
-	public void setType(String type) {
+	public void setType(KeywordTypeEnum type) {
 		this.type = type;
 	}
 
@@ -78,6 +90,14 @@ public class Keyword implements java.io.Serializable {
 
 	public void setTriggerKeywords(Set<TriggerKeyword> triggerKeywords) {
 		this.triggerKeywords = triggerKeywords;
+	}
+
+	public Set<ActionKeyword> getActionKeywords() {
+		return actionKeywords;
+	}
+
+	public void setActionKeywords(Set<ActionKeyword> actionKeywords) {
+		this.actionKeywords = actionKeywords;
 	}
 
 }

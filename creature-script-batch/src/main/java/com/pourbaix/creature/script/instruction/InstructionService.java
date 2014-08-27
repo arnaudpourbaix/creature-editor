@@ -10,7 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import com.pourbaix.creature.editor.domain.Action;
+import com.pourbaix.creature.editor.domain.ActionKeyword;
 import com.pourbaix.creature.editor.domain.Keyword;
+import com.pourbaix.creature.editor.domain.KeywordTypeEnum;
 import com.pourbaix.creature.editor.domain.Trigger;
 import com.pourbaix.creature.editor.repository.ActionRepository;
 import com.pourbaix.creature.editor.repository.KeywordRepository;
@@ -59,34 +61,37 @@ public class InstructionService {
 	public void parseGeneratedInstruction(final GeneratedInstruction instruction, RawKeywordParam rawKeywordParam) throws InstructionException {
 		Keyword keyword = keywordRepository.findByName(rawKeywordParam.getKeyword().toUpperCase());
 		if (keyword != null) {
-			parseGeneratedInstruction(instruction, rawKeywordParam, keyword);
+			parseKeywordInstruction(instruction, rawKeywordParam, keyword);
 			return;
 		}
 		Action action = actionRepository.findByName(rawKeywordParam.getKeyword());
 		if (action != null) {
-			parseGeneratedInstruction(instruction, rawKeywordParam, action);
+			parseActionInstruction(instruction, rawKeywordParam, action);
 			return;
 		}
 		Trigger trigger = triggerRepository.findByName(rawKeywordParam.getKeyword());
 		if (trigger != null) {
-			parseGeneratedInstruction(instruction, rawKeywordParam, trigger);
+			parseTriggerInstruction(instruction, rawKeywordParam, trigger);
 			return;
 		}
 		throw new InstructionException(InstructionException.UNKNOWN_KEYWORD_ERROR_MESSAGE + ": " + rawKeywordParam.getKeyword());
 	}
 
-	public void parseGeneratedInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Keyword keyword)
+	public void parseKeywordInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Keyword keyword)
+			throws InstructionException {
+		logger.debug(rawKeywordParam.toString());
+		if (keyword.getType() == KeywordTypeEnum.Action) {
+			ActionKeyword action = keyword.getActionKeywords().iterator().next();
+			Action a = action.getAction();
+		}
+	}
+
+	public void parseActionInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Action action)
 			throws InstructionException {
 		logger.debug(rawKeywordParam.toString());
 	}
 
-	public void parseGeneratedInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Action action)
-			throws InstructionException {
-		logger.debug(rawKeywordParam.toString());
-
-	}
-
-	public void parseGeneratedInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Trigger trigger)
+	public void parseTriggerInstruction(final GeneratedInstruction instruction, final RawKeywordParam rawKeywordParam, Trigger trigger)
 			throws InstructionException {
 		logger.debug(rawKeywordParam.toString());
 	}

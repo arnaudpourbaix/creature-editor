@@ -2,7 +2,6 @@ package com.pourbaix.creature.script.spring;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import com.pourbaix.creature.script.context.CheckContext;
