@@ -180,6 +180,15 @@ public class ReaderServiceTest {
 	}
 
 	@Test
+	public void creatureSarevok() {
+		try {
+			readerService.getCreature("SAREVO.CRE");
+		} catch (ServiceException e) {
+			fail(e.getMessage());
+		}
+	}
+
+	@Test
 	public void creaturekryskel2() {
 		try {
 			readerService.getCreature("KRYSKEL2.CRE");

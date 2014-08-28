@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.pourbaix.creature.editor.domain.Creature;
+import com.pourbaix.infinity.datatype.DimensionalArrayEnum;
 import com.pourbaix.infinity.datatype.Flag;
 import com.pourbaix.infinity.datatype.IdsEnum;
 import com.pourbaix.infinity.datatype.ResourceRef;
 import com.pourbaix.infinity.datatype.TextString;
+import com.pourbaix.infinity.domain.DimensionalArrayFile;
 import com.pourbaix.infinity.domain.RawCreature;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
@@ -28,6 +30,9 @@ public class CreatureFactory {
 
 	@Resource
 	private IdentifierFactory identifierFactory;
+
+	@Resource
+	private DimensionalArrayFileFactory dimensionalArrayFileFactory;
 
 	private static final String MISSING_CREATURE_FILE = "MISSING_CREATURE_FILE";
 	private static final String INVALID_CREATURE_FILE = "INVALID_CREATURE_FILE";
@@ -142,7 +147,6 @@ public class CreatureFactory {
 		creature.setRacialEnemy(DynamicArray.getUnsignedByte(buffer, 0x241));
 		creature.setRacialEnemyLabel(identifierFactory.getFirstValueByKey(IdsEnum.Race.getResource(), (long) creature.getRacialEnemy()));
 		creature.setMoraleRecoveryTime(DynamicArray.getShort(buffer, 0x242));
-		//creature.setKit((byte) DynamicArray.getByte(buffer, 0x75)); //FIXME
 		creature.setScriptOverride(new ResourceRef(buffer, 0x248, "", "BCS").getResourceName());
 		creature.setScriptClass(new ResourceRef(buffer, 0x250, "", "BCS").getResourceName());
 		creature.setScriptRace(new ResourceRef(buffer, 0x258, "", "BCS").getResourceName());
@@ -167,6 +171,8 @@ public class CreatureFactory {
 		creature.setDeathVariable(new TextString(buffer, 0x280, 32, "").toString());
 		creature.setDialogFile(new ResourceRef(buffer, 0x2cc, "", "DLG").getResourceName());
 
+		parseKit(creature, buffer);
+
 		logger.debug(creature.toString());
 		return getCreature(creature);
 	}
@@ -177,4 +183,9 @@ public class CreatureFactory {
 		return creature;
 	}
 
+	private void parseKit(RawCreature creature, byte buffer[]) throws FactoryException {
+		DimensionalArrayFile kit2da = dimensionalArrayFileFactory.getDimensionalArray(DimensionalArrayEnum.Kit);
+		//new Kit2daBitmap(buffer, 0x244);
+		//creature.setKit((byte) DynamicArray.getByte(buffer, 0x75)); //FIXME
+	}
 }
