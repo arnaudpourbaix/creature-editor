@@ -83,7 +83,8 @@ public class RawCreature {
 	private int racialEnemy;
 	private String racialEnemyLabel;
 	private short moraleRecoveryTime;
-	private int kit;
+	private long kitId;
+	private String kitLabel;
 	private String scriptOverride;
 	private String scriptClass;
 	private String scriptRace;
@@ -742,12 +743,20 @@ public class RawCreature {
 		this.moraleRecoveryTime = moraleRecoveryTime;
 	}
 
-	public int getKit() {
-		return kit;
+	public long getKitId() {
+		return kitId;
 	}
 
-	public void setKit(int kit) {
-		this.kit = kit;
+	public void setKitId(long kitId) {
+		this.kitId = kitId;
+	}
+
+	public String getKitLabel() {
+		return kitLabel;
+	}
+
+	public void setKitLabel(String kitLabel) {
+		this.kitLabel = kitLabel;
 	}
 
 	public String getScriptOverride() {

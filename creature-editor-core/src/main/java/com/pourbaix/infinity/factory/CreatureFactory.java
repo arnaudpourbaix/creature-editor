@@ -15,6 +15,8 @@ import com.pourbaix.infinity.datatype.IdsEnum;
 import com.pourbaix.infinity.datatype.ResourceRef;
 import com.pourbaix.infinity.datatype.TextString;
 import com.pourbaix.infinity.domain.DimensionalArrayFile;
+import com.pourbaix.infinity.domain.DimensionalArrayFileException;
+import com.pourbaix.infinity.domain.DimensionalArrayRow;
 import com.pourbaix.infinity.domain.RawCreature;
 import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
@@ -184,9 +186,24 @@ public class CreatureFactory {
 	}
 
 	private void parseKit(RawCreature creature, byte buffer[]) throws FactoryException {
-		int kitId = DynamicArray.getInt(buffer, 0x244);
-		DimensionalArrayFile kit2da = dimensionalArrayFileFactory.getDimensionalArray(DimensionalArrayEnum.Kit);
-		//new Kit2daBitmap(buffer, 0x244);
-		//creature.setKit((byte) DynamicArray.getByte(buffer, 0x75)); //FIXME
+		int offset = 0x244;
+		long value;
+		if (buffer[offset + 3] == 0x40) {
+			value = (long) buffer[offset + 2];
+		} else {
+			value = (long) (DynamicArray.getUnsignedShort(buffer, offset + 2) + 0x10000 * DynamicArray.getUnsignedShort(buffer, offset));
+			if (value < 0) {
+				value += 4294967296L;
+			}
+		}
+		try {
+			DimensionalArrayFile kit2da = dimensionalArrayFileFactory.getDimensionalArray(DimensionalArrayEnum.Kit);
+			DimensionalArrayRow row = kit2da.findByColumn("unusable", value);
+			creature.setKitId(DynamicArray.getInt(buffer, offset));
+			creature.setKitLabel(row.getColumns().get(1));
+
+		} catch (DimensionalArrayFileException e) {
+			e.printStackTrace();
+		}
 	}
 }
