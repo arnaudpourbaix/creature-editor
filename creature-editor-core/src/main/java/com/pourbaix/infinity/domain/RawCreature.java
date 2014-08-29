@@ -116,6 +116,7 @@ public class RawCreature {
 		sb.append(", name: ").append(name).append("/").append(tooltip);
 		sb.append(", experience value: ").append(experienceValue);
 		sb.append(", power level/xp: ").append(powerLevelOrExperience);
+		sb.append(", levels: ").append(level1).append("/").append(level2).append("/").append(level3);
 		sb.append(", status: ").append(status);
 		sb.append(", hit points: ").append(currentHitPoint).append("/").append(maximumHitPoint);
 		sb.append(", animation: ").append(animationLabel);

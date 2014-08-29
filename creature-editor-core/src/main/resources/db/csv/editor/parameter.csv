@@ -1,5 +1,5 @@
 name;required;type_id;datatype;value;min_value;max_value;label;description
-GAME_DIRECTORY;true;GENERAL;FOLDER;"C:/Games/BeamDog/Games/00766";NULL;NULL;"Game's directory";""
+GAME_DIRECTORY;true;GENERAL;FOLDER;"C:/Games/BGEE/Data/00766";NULL;NULL;"Game's directory";""
 GAME_VERSION;true;GENERAL;LIST;"BG1EE";NULL;NULL;"Game's version";""
 DEFAULT_LANGUAGE;true;GENERAL;LIST;en_Us;NULL;NULL;"Default's language";"en_Us" 
 TOBEX_ACTIVE;true;SCRIPT;BOOLEAN;true;NULL;NULL;"TobEx activation";"TobEx adds a lot to scripts, it should be active to get better results ingame"

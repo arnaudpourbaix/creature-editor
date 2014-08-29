@@ -3,6 +3,7 @@ package com.pourbaix.infinity.factory;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
 import com.pourbaix.infinity.datatype.DimensionalArrayEnum;
 import com.pourbaix.infinity.domain.DimensionalArrayFile;
 import com.pourbaix.infinity.resource.key.Keyfile;
@@ -64,7 +66,29 @@ public class DimensionalArrayFileFactory {
 			throw new FactoryException(INVALID_DIMENSIONAL_ARRAY_FILE, entry.getResourceName());
 		}
 		List<String> rows = Arrays.asList(text.split("\n"));
+		Iterator<String> rowIterator = rows.iterator();
+		rowIterator.next(); // first row contains the file signature
+		rowIterator.next(); // second row contains the "default value" for the file
+
 		DimensionalArrayFile dimensionalArrayFile = new DimensionalArrayFile();
+
+		parseHeaders(dimensionalArrayFile, rowIterator.next()); // third row contains column headings
+		parseRows(dimensionalArrayFile, rowIterator);
+
 		return dimensionalArrayFile;
 	}
+
+	private void parseHeaders(DimensionalArrayFile dimensionalArrayFile, String header) {
+		List<String> headers = Arrays.asList(header.split("[\\t\\s]+"));
+		dimensionalArrayFile.setHeaders(Lists.newArrayList(headers));
+	}
+
+	private void parseRows(DimensionalArrayFile dimensionalArrayFile, Iterator<String> rowIterator) {
+		while (rowIterator.hasNext()) {
+			String row = rowIterator.next();
+			List<String> columns = Arrays.asList(row.split("[\\t\\s]+"));
+			dimensionalArrayFile.addRow(Lists.newArrayList(columns));
+		}
+	}
+
 }

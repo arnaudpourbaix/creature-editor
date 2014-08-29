@@ -184,6 +184,7 @@ public class CreatureFactory {
 	}
 
 	private void parseKit(RawCreature creature, byte buffer[]) throws FactoryException {
+		int kitId = DynamicArray.getInt(buffer, 0x244);
 		DimensionalArrayFile kit2da = dimensionalArrayFileFactory.getDimensionalArray(DimensionalArrayEnum.Kit);
 		//new Kit2daBitmap(buffer, 0x244);
 		//creature.setKit((byte) DynamicArray.getByte(buffer, 0x75)); //FIXME
