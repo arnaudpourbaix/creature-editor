@@ -31,6 +31,9 @@ public class Creature implements java.io.Serializable {
 	@Column(name = "ID", unique = true, nullable = false)
 	private Integer id;
 
+	@Column(name = "RESOURCE", unique = true, nullable = false)
+	private String resource;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
@@ -42,13 +45,12 @@ public class Creature implements java.io.Serializable {
 	@JoinTable(name = "CREATURE_CATEGORY", schema = "PUBLIC", catalog = "PUBLIC", joinColumns = { @JoinColumn(name = "CREATURE_ID", nullable = false, updatable = false) }, inverseJoinColumns = { @JoinColumn(name = "CATEGORY_ID", nullable = false, updatable = false) })
 	private Set<Category> categories = new HashSet<Category>(0);
 
-	public Creature() {
+	public String getResource() {
+		return resource;
 	}
 
-	public Creature(Game game, Set<AttributeValue> attributeValues, Set<Category> categories) {
-		this.game = game;
-		this.attributeValues = attributeValues;
-		this.categories = categories;
+	public void setResource(String resource) {
+		this.resource = resource;
 	}
 
 	public Integer getId() {

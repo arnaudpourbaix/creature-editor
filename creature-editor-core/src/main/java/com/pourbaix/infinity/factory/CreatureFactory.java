@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.pourbaix.creature.editor.domain.AttributeEnum;
+import com.pourbaix.creature.editor.domain.AttributeValue;
 import com.pourbaix.creature.editor.domain.Creature;
 import com.pourbaix.infinity.datatype.DimensionalArrayEnum;
 import com.pourbaix.infinity.datatype.Flag;
@@ -36,6 +38,9 @@ public class CreatureFactory {
 	@Resource
 	private DimensionalArrayFileFactory dimensionalArrayFileFactory;
 
+	@Resource
+	private AttributeFactory attributeFactory;
+	
 	private static final String MISSING_CREATURE_FILE = "MISSING_CREATURE_FILE";
 	private static final String INVALID_CREATURE_FILE = "INVALID_CREATURE_FILE";
 	private static final String INVALID_CREATURE_NAME = "INVALID_CREATURE_NAME";
@@ -181,10 +186,82 @@ public class CreatureFactory {
 
 	private Creature getCreature(RawCreature rawCreature) {
 		Creature creature = new Creature();
-		//		creature.setResource(rawCreature.getResource().replace(".SPL", ""));
+		creature.setResource(rawCreature.getResource().replace(".CRE", ""));
+		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+		addAttribute(creature, rawCreature, AttributeEnum.TOOLTIP, rawCreature.getTooltip());
+		addAttribute(creature, rawCreature, AttributeEnum.FLAGS, rawCreature.getFlags().getValue());
+		addAttribute(creature, rawCreature, AttributeEnum.XP_VALUE, rawCreature.getExperienceValue());
+		addAttribute(creature, rawCreature, AttributeEnum.XP, rawCreature.getPowerLevelOrExperience());
+		addAttribute(creature, rawCreature, AttributeEnum.GOLD, rawCreature.getGold());
+		addAttribute(creature, rawCreature, AttributeEnum.STATUS, rawCreature.getStatus());
+		addAttribute(creature, rawCreature, AttributeEnum.CURRENT_HP, rawCreature.getCurrentHitPoint());
+		addAttribute(creature, rawCreature, AttributeEnum.MAXIMUM_HP, rawCreature.getMaximumHitPoint());
+		addAttribute(creature, rawCreature, AttributeEnum.ANIMATION, rawCreature.getAnimationId());
+		addAttribute(creature, rawCreature, AttributeEnum.REPUTATION, rawCreature.getReputation());
+		addAttribute(creature, rawCreature, AttributeEnum.HIDE_IN_SHADOWS, rawCreature.getHideInShadows());
+		addAttribute(creature, rawCreature, AttributeEnum.NATURAL_ARMOR_CLASS, rawCreature.getNaturalAC());
+		addAttribute(creature, rawCreature, AttributeEnum.EFFECTIVE_ARMOR_CLASS, rawCreature.getEffectiveAC());
+		addAttribute(creature, rawCreature, AttributeEnum.CRUSHING_ARMOR_CLASS, rawCreature.getCrushingAC());
+		addAttribute(creature, rawCreature, AttributeEnum.MISSILE_ARMOR_CLASS, rawCreature.getMissileAC());
+		addAttribute(creature, rawCreature, AttributeEnum.PIERCING_ARMOR_CLASS, rawCreature.getPiercingAC());
+		addAttribute(creature, rawCreature, AttributeEnum.SLASHING_ARMOR_CLASS, rawCreature.getSlashingAC());
+		addAttribute(creature, rawCreature, AttributeEnum.THAC0, rawCreature.getThac0());
+		addAttribute(creature, rawCreature, AttributeEnum.NUMBER_OF_ATTACKS, rawCreature.getAttackNumber());
+		addAttribute(creature, rawCreature, AttributeEnum.SAVE_VERSUS_DEATH, rawCreature.getSaveDeath());
+		addAttribute(creature, rawCreature, AttributeEnum.SAVE_VERSUS_WANDS, rawCreature.getSaveWand());
+		addAttribute(creature, rawCreature, AttributeEnum.SAVE_VERSUS_POLYMORPH, rawCreature.getSavePolymorph());
+		addAttribute(creature, rawCreature, AttributeEnum.SAVE_VERSUS_BREATH, rawCreature.getSaveBreath());
+		addAttribute(creature, rawCreature, AttributeEnum.SAVE_VERSUS_SPELLS, rawCreature.getSaveSpell());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_FIRE, rawCreature.getResistFire());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_COLD, rawCreature.getResistCold());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_ELECTRICITY, rawCreature.getResistElectricity());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_ACID, rawCreature.getResistAcid());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_MAGIC, rawCreature.getResistMagic());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_MAGIC_FIRE, rawCreature.getResistMagicFire());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_MAGIC_COLD, rawCreature.getResistMagicCold());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_SLASHING, rawCreature.getResistSlashing());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_CRUSHING, rawCreature.getResistCrushing());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_PIERCING, rawCreature.getResistPiercing());
+		addAttribute(creature, rawCreature, AttributeEnum.RESIST_MISSILE, rawCreature.getResistMissile());
+		addAttribute(creature, rawCreature, AttributeEnum.DETECT_ILLUSION, rawCreature.getDetectIllusion());
+		
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+//		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
+		
 		return creature;
 	}
 
+	private void addAttribute(Creature creature, RawCreature rawCreature, AttributeEnum attribute, String value) {
+		AttributeValue attributeValue = attributeFactory.getAttributeValue(creature, attribute, value);
+		creature.getAttributeValues().add(attributeValue);
+	}
+
+	private void addAttribute(Creature creature, RawCreature rawCreature, AttributeEnum attribute, long value) {
+		AttributeValue attributeValue = attributeFactory.getAttributeValue(creature, attribute, value);
+		creature.getAttributeValues().add(attributeValue);
+	}
+	
 	private void parseKit(RawCreature creature, byte buffer[]) throws FactoryException {
 		int offset = 0x244;
 		long value;
@@ -203,7 +280,7 @@ public class CreatureFactory {
 			creature.setKitLabel(row.getColumns().get(1));
 
 		} catch (DimensionalArrayFileException e) {
-			e.printStackTrace();
+			throw new FactoryException(e.getCode(), e.getParam());
 		}
 	}
 }

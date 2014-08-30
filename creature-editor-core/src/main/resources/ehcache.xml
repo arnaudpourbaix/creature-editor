@@ -35,5 +35,9 @@
 	</cache>
 	<cache name="com.pourbaix.infinity.domain.OpcodeParameterValue" maxElementsInMemory="10000" eternal="true" overflowToDisk="false" />
 	<cache name="com.pourbaix.infinity.domain.OpcodeParameterLink" maxElementsInMemory="1000" eternal="true" overflowToDisk="false" />
+	
+	<cache name="com.pourbaix.creature.editor.domain.Attribute" maxElementsInMemory="200" eternal="true" overflowToDisk="false" />
+	<cache name="com.pourbaix.creature.editor.domain.GameEdition" maxElementsInMemory="10" eternal="true" overflowToDisk="false" />
+	
 
 </ehcache>

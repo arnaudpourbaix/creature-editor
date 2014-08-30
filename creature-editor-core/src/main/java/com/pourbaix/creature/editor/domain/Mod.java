@@ -36,6 +36,7 @@ public class Mod implements java.io.Serializable {
 
 	@Column(name = "NAME", nullable = false, length = 100)
 	private String name;
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "mod", cascade = CascadeType.REMOVE)
 	private Set<Spell> spells = new HashSet<Spell>(0);
 

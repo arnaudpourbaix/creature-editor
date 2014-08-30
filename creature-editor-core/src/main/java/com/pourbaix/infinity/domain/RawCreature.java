@@ -62,7 +62,6 @@ public class RawCreature {
 	private byte spikedProficiency;
 	private byte axeProficiency;
 	private byte missileProficiency;
-
 	private byte turnUndeadLevel;
 	private byte trackingSkill;
 	private String trackingTarget;

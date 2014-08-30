@@ -70,10 +70,10 @@
 	</changeSet>
 
 	<changeSet author="apourbaix" id="script-002">
-		<addForeignKeyConstraint constraintName="fk_pk_trigger_keyword_trigger" baseTableName="trigger_keyword" baseColumnNames="trigger_id" referencedTableName="trigger" referencedColumnNames="name" />
-		<addForeignKeyConstraint constraintName="fk_pk_trigger_keyword_keyword" baseTableName="trigger_keyword" baseColumnNames="keyword_id" referencedTableName="keyword" referencedColumnNames="id" />
-		<addForeignKeyConstraint constraintName="fk_pk_action_keyword_action" baseTableName="action_keyword" baseColumnNames="action_id" referencedTableName="action" referencedColumnNames="name" />
-		<addForeignKeyConstraint constraintName="fk_pk_action_keyword_keyword" baseTableName="action_keyword" baseColumnNames="keyword_id" referencedTableName="keyword" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_pk_trigger_keyword__trigger" baseTableName="trigger_keyword" baseColumnNames="trigger_id" referencedTableName="trigger" referencedColumnNames="name" />
+		<addForeignKeyConstraint constraintName="fk_pk_trigger_keyword__keyword" baseTableName="trigger_keyword" baseColumnNames="keyword_id" referencedTableName="keyword" referencedColumnNames="id" />
+		<addForeignKeyConstraint constraintName="fk_pk_action_keyword__action" baseTableName="action_keyword" baseColumnNames="action_id" referencedTableName="action" referencedColumnNames="name" />
+		<addForeignKeyConstraint constraintName="fk_pk_action_keyword__keyword" baseTableName="action_keyword" baseColumnNames="keyword_id" referencedTableName="keyword" referencedColumnNames="id" />
 	</changeSet>
 
 </databaseChangeLog>

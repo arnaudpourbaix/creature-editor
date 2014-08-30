@@ -1,6 +1,7 @@
-id;code;name
-1;1;1st edition
-2;2;2nd edition
-3;3;3rd edition
-4;3.5;3rd edition revised
-5;4;4th edition
+id;name
+FIRST_EDITION;1st edition
+SECOND_EDITION;2nd edition
+THIRD_EDITION;3rd edition
+THIRD_EDITION_REVISED;3rd edition revised
+FOURTH_EDITION;4th edition
+D20_SYSTEM;d20 System 

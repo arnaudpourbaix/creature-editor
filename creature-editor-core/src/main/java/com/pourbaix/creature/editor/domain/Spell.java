@@ -32,6 +32,7 @@ public class Spell implements java.io.Serializable {
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
 	private Integer id;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "MOD_ID", nullable = false)
 	private Mod mod;
