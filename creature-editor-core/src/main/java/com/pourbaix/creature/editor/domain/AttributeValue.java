@@ -51,11 +51,10 @@ public class AttributeValue implements java.io.Serializable {
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(attribute.getShortLabel()).append(": ");
-		if (attribute.getType() == AttributeTypeEnum.string || attribute.getType() == AttributeTypeEnum.stringref) {
-			sb.append(stringValue);
-		} else if (attribute.getType() == AttributeTypeEnum.number) {
-			sb.append(numberValue);
+		if (stringValue != null && (attribute.getType() == AttributeTypeEnum.string || attribute.getType() == AttributeTypeEnum.stringref)) {
+			sb.append(attribute.getShortLabel()).append(": ").append(stringValue);
+		} else if (numberValue != null && attribute.getType() == AttributeTypeEnum.number) {
+			sb.append(attribute.getShortLabel()).append(": ").append(numberValue);
 		}
 		return sb.toString();
 	}

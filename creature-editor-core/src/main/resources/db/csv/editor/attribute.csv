@@ -7,6 +7,7 @@ XP;Power level/Experience;Creature Power Level for summoning spells / Experience
 GOLD;Gold;Gold;number;0;100000;null;null
 FLAGS;Flags;Flags;bit;null;null;null;null
 STATUS;Permanent status flags;Permanent status flags;bit;null;null;null;null
+LORE;Lore;Lore;number;0;100;null;null
 THAC0;THAC0;THAC0;number;-20;25;null;null
 NUMBER_OF_ATTACKS;Number of attacks;Number of attacks;number;0;10;null;null
 FATIGUE;Fatigue;Fatigue;number;0;100;null;null
@@ -18,6 +19,7 @@ GENERAL;General;General;ids;null;null;null;general
 RACE;Race;Race;ids;null;null;null;race
 CLASS;Class;Class;ids;null;null;null;class
 KIT;Kit;Kit;array;null;null;null;kitlist
+SPECIFIC;Specific;Specific;ids;null;null;null;specific
 RACIAL_ENEMY;Racial enemy;Racial enemy;ids;null;null;null;race
 ALIGNMENT;Alignment;Alignment;ids;null;null;null;alignmen
 ALLEGIANCE;Allegiance;Allegiance;ids;null;null;null;ea
@@ -60,7 +62,7 @@ RESIST_SLASHING;Resist slashing;Resist slashing;number;0;150;null;null
 RESIST_CRUSHING;Resist crushing;Resist crushing;number;0;150;null;null
 RESIST_PIERCING;Resist piercing;Resist piercing;number;0;150;null;null
 RESIST_MISSILE;Resist missile;Resist missile;number;0;150;null;null
-STEALTH;Stealth;Stealth;number;0;100;null;null
+STEALTH;Move silently;Move silently;number;0;100;null;null
 HIDE_IN_SHADOWS;Hide in shadows;Hide in Shadows;number;0;100;null;null
 DETECT_ILLUSION;Detect illusion;Detect illusion;number;0;100;null;null
 SET_TRAPS;Set traps;Set traps;number;0;100;null;null
@@ -83,7 +85,7 @@ GENERAL_SCRIPT;General script;Creature script - General;script;null;null;null;nu
 DEFAULT_SCRIPT;Default script;Creature script - Default;script;null;null;null;null
 REPUTATION;Reputation;Reputation;number;0;20;null;null
 GLOBAL_IDENTIFIER;Global identifier;Global identifier;number;null;null;null;null
-LOCAL_IDENTIFIER,;Local identifier;Local identifier;number;null;null;null;null
+LOCAL_IDENTIFIER;Local identifier;Local identifier;number;null;null;null;null
 RESOURCE;Resource;Resource;string;null;null;8;null
 TURN_UNDEAD_LEVEL;Turn undead level;Turn undead level;number;0;50;null;null
 TRACKING_TARGET;Tracking target;Tracking target;string;null;null;8;null

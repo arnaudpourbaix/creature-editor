@@ -15,7 +15,7 @@ public class RawCreature {
 	private String status;
 	private short currentHitPoint;
 	private short maximumHitPoint;
-	private int animationId;
+	private int animation;
 	private String animationLabel;
 	private byte effectFlag; // 0: Version 1 EFF, 1: Version 2 EFF
 	private byte reputation;
@@ -82,7 +82,7 @@ public class RawCreature {
 	private int racialEnemy;
 	private String racialEnemyLabel;
 	private short moraleRecoveryTime;
-	private long kitId;
+	private long kit;
 	private String kitLabel;
 	private String scriptOverride;
 	private String scriptClass;
@@ -206,12 +206,12 @@ public class RawCreature {
 		this.maximumHitPoint = maximumHitPoint;
 	}
 
-	public int getAnimationId() {
-		return animationId;
+	public int getAnimation() {
+		return animation;
 	}
 
-	public void setAnimationId(int animationId) {
-		this.animationId = animationId;
+	public void setAnimation(int animation) {
+		this.animation = animation;
 	}
 
 	public String getAnimationLabel() {
@@ -742,12 +742,12 @@ public class RawCreature {
 		this.moraleRecoveryTime = moraleRecoveryTime;
 	}
 
-	public long getKitId() {
-		return kitId;
+	public long getKit() {
+		return kit;
 	}
 
-	public void setKitId(long kitId) {
-		this.kitId = kitId;
+	public void setKit(long kit) {
+		this.kit = kit;
 	}
 
 	public String getKitLabel() {
