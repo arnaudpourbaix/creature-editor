@@ -1,17 +1,11 @@
 <!DOCTYPE html>
-<html data-ng-app="creatureEditor" data-ng-controller="MainController" data-translate-cloak>
+<html ng-app="creatureEditorWeb">
 <head>
-<title data-translate>APP_TITLE</title>
+<title></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<link href="app.less" type="text/css" rel="stylesheet/less">
 
-<meta name="description" content="Creature Editor v<%= version %>">
-
-<!-- Roboto font-face -->
-<link rel="stylesheet" type="text/css" href="assets/roboto-fontface/roboto-fontface.css" />
-
-<!-- Bootstrap -->
-<link rel="stylesheet" type="text/css" href="assets/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" type="text/css" href="assets/bootstrap/dist/css/bootstrap-theme.min.css" />
-  
 <!-- compiled CSS -->
 <% styles.forEach(function(file) { %>
 <link rel="stylesheet" type="text/css" href="<%= file %>" />
@@ -21,32 +15,15 @@
 <script type="text/javascript" src="<%= file %>"></script>
 <% }); %>
 
-<!-- jQWidgets -->
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.base.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.web.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.bootstrap.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.android.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.arctic.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.blackberry.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.darkblue.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.energyblue.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.fresh.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.highcontrast.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.metrodark.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.mobile.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.summer.css" />
-<link rel="stylesheet" type="text/css" href="assets/jqwidgets/styles/jqx.ui-darkness.css" />
-
 </head>
 <body>
-	<div id="wrap">
-		<div data-ng-include="'main/header.tpl.html'"></div>
-		<div data-ng-include="'loading-animation/loading-animation.tpl.html'"></div>
-	    <div class="container">
-			<div class="main-view" data-ui-view></div>
-		</div>        
-		<div id="push"></div>
+	<div>
+		<div id="content" class="container">
+			<div class="row">
+				<div ui-view></div>
+			</div>
+		</div>
 	</div>
-	<!--<div data-ng-include="'main/footer.tpl.html'"></div>-->
+
 </body>
 </html>

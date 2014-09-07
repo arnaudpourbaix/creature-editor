@@ -1,30 +1,10 @@
-var lrSnippet = require('grunt-contrib-livereload/lib/utils').livereloadSnippet;
-
-var proxySnippet = require('grunt-connect-proxy/lib/utils').proxyRequest;
-
-var mountFolder = function(connect, dir) {
-	"use strict";
-	return connect.static(require('path').resolve(dir));
-};
+/*jslint node: true */
+'use strict';
 
 module.exports = function(grunt) {
-	"use strict";
-	grunt.loadNpmTasks('grunt-contrib-connect');
-	grunt.loadNpmTasks('grunt-connect-proxy');
-	grunt.loadNpmTasks('grunt-contrib-livereload');
-	grunt.loadNpmTasks('grunt-open');
-	grunt.loadNpmTasks('grunt-contrib-clean');
-	grunt.loadNpmTasks('grunt-contrib-copy');
-	grunt.loadNpmTasks('grunt-contrib-jshint');
-	grunt.loadNpmTasks('grunt-contrib-concat');
-	grunt.loadNpmTasks('grunt-contrib-watch');
-	grunt.loadNpmTasks('grunt-contrib-uglify');
-	grunt.loadNpmTasks('grunt-conventional-changelog');
-	grunt.loadNpmTasks('grunt-bump');
-	grunt.loadNpmTasks('grunt-recess');
-	grunt.loadNpmTasks('grunt-karma');
-	grunt.loadNpmTasks('grunt-ngmin');
-	grunt.loadNpmTasks('grunt-html2js');
+
+	// load all grunt tasks
+	require('load-grunt-tasks')(grunt);
 
 	/**
 	 * utility function to get all app JavaScript sources.
@@ -44,287 +24,164 @@ module.exports = function(grunt) {
 		});
 	}
 
-	var userConfig = require('./build.config.js');
+	var app_folders = {
+		src : 'src',
+		vendor : 'bower_components',
+		build : 'target/build',
+		compile : 'target/compile',
+	};
 
-	var taskConfig = {
-		pkg : grunt.file.readJSON("package.json"),
+	// Project configuration.
+	grunt.initConfig({
+		pkg: require('./package.json'),
+		output_filename: '<%= pkg.name %>-<%= pkg.version %>',
+		output_filename_css: '<%= output_filename %>.css',
+		output_filename_js: '<%= output_filename %>.js',
+		
+		app_folders : app_folders,
+
+		/**
+		 * This is a collection of file patterns that refer to our app code. These file paths are used in the configuration of build tasks. `js` is all project javascript (except
+		 * tests). `ctpl` contains our reusable components `src/common` template HTML files `atpl` contains the same, but for our app's code. `html` is just our main HTML file,
+		 * `less` is our main stylesheet `unit` contains our app's unit tests.
+		 */
+		app_files : {
+			js : [ '<%= app_folders.src %>/**/*.js', '!<%= app_folders.src %>/**/*.spec.js', '!<%= app_folders.src %>/assets/**/*.js' ],
+			json : [ '<%= app_folders.src %>/**/*.json', '!<%= app_folders.src %>/assets/**/*.json' ],
+			jsunit : [ '<%= app_folders.src %>/**/*.spec.js' ],
+
+			atpl : [ '<%= app_folders.src %>/app/**/*.tpl.html' ],
+			ctpl : [ '<%= app_folders.src %>/common/**/*.tpl.html' ],
+
+			index : [ '<%= app_folders.src %>/index.html' ],
+			css : [ '<%= app_folders.src %>/**/*.css', '!<%= app_folders.src %>/assets/**/*.css' ],
+			less : '<%= app_folders.src %>/app.less'
+		},
+
+		/**
+		 * This is a collection of files used during testing only.
+		 */
+		test_files : {
+			js : [ '<%=vendor_dir%>angular-mocks/angular-mocks.js' ]
+		},
+
+		/**
+		 * This is the same as `app_files`, except it contains patterns that reference vendor code that we need to place into the build process somewhere. While the `app_files`
+		 * property ensures all standardized files are collected for compilation, it is the user's job to ensure non-standardized (i.e. vendor-related) files are handled
+		 * appropriately in `vendor_files.js`. The `vendor_files.js` property holds files to be automatically concatenated and minified with our project source files. The
+		 * `vendor_files.css` property holds any CSS files to be automatically included in our app.
+		 */
+		vendor_files : {
+			js : [ 
+			      '<%= app_folders.vendor %>/jquery/dist/jquery.min.js', 
+			      '<%= app_folders.vendor %>/angular/angular.js', 
+			      '<%= app_folders.vendor %>/angular-cookies/angular-cookies.min.js',
+					'<%= app_folders.vendor %>/angular-resource/angular-resource.min.js', 
+					'<%= app_folders.vendor %>/angular-animate/angular-animate.min.js', 
+					'<%= app_folders.vendor %>/angular-translate/angular-translate.min.js',
+					'<%= app_folders.vendor %>/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js', 
+					'<%= app_folders.vendor %>/angular-translate-storage-local/angular-translate-storage-local.min.js',
+					'<%= app_folders.vendor %>/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 
+					'<%= app_folders.vendor %>/angular-ui-utils/ui-utils.min.js',
+					'<%= app_folders.vendor %>/angular-ui-router/release/angular-ui-router.js', 
+					'<%= app_folders.vendor %>/angular-bootstrap/ui-bootstrap-tpls.min.js', 
+					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
+					'<%= app_folders.src %>/assets/jqwidgets/jqx-all.js', 
+					'<%= app_folders.src %>/assets/Long.js' 
+				],
+			css : [ 
+			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css' 
+			   ],
+			assets : [ 
+			     '<%= app_folders.vendor %>/bootstrap/dist/fonts/*', 
+			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css', 
+			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap-theme.min.css', 
+			     '<%= app_folders.vendor %>/roboto-fontface/*.css',
+			     '<%= app_folders.vendor %>/roboto-fontface/fonts/*' 
+			   ]
+
+		},
 
 		connect : {
-			proxies : [ { // redirect /rest calls to web application server (tomcat)
-				context : '/rest',
-				host : 'localhost',
-				port : 8090,
-				https : false,
-				changeOrigin : false,
-				rewrite : {
-					'rest' : 'editor/rest'
+			main : {
+				options : {
+					hostname : '0.0.0.0',
+					port : 9000,
+					base : '<%= app_folders.build %>'
 				}
-			} ],
+			 ,
+			 proxies : [ { // redirect /rest calls to web application server (tomcat)
+				 context : '/rest',
+				 host : 'localhost',
+				 port : 8090,
+				 https : false,
+				 changeOrigin : false,
+				 rewrite : {
+					 'rest' : 'editor/rest'
+				 }
+			 } ]
+			}
+		},
+
+		watch : {
 			options : {
-				base : 'build',
-				port : 9000,
-				hostname : '0.0.0.0' // Change this to '0.0.0.0' to access the server from outside.
+				livereload : true,
+				livereloadOnError : false,
+				spawn : false
 			},
-			livereload : {
+			
+			gruntfile : {
+				files : 'Gruntfile.js',
+				tasks : [ 'build' ],
 				options : {
-					middleware : function(connect) {
-						return [ proxySnippet, lrSnippet, mountFolder(connect, 'build') ];
-					}
+					livereload : false
 				}
 			},
-			test : {
-				options : {
-					middleware : function(connect) {
-						return [ mountFolder(connect, 'build'), mountFolder(connect, 'test') ];
-					}
-				}
+
+			jssrc : {
+				files : [ '<%= app_files.js %>' ],
+				tasks : [ 'jshint:src', 'copy:buildAppJs' ]
+			},
+
+			vendorjs : {
+				files : [ '<%= vendor_files.js %>' ],
+				tasks : [ 'copy:buildVendorJs' ]
+			},
+			
+			css : {
+				files : [ 'webapp/**/*.css', '!webapp/assets/**/*.css' ],
+				tasks : [ 'copy:buildAppCss' ]
+			},
+			
+			less : {
+				files : [ 'webapp/**/*.less' ],
+				tasks : [ 'recess:build', 'concat:compileCss' ]
+			},
+			
+			jsonsrc : {
+				files : [ '<%= app_files.json %>' ],
+				tasks : [ 'copy:buildAppJson' ]
+			},
+
+			assets : {
+				files : [ 'webapp/assets/**/*' ],
+				tasks : [ 'copy:buildAppAssets' ]
+			},
+
+			html : {
+				files : [ '<%= app_files.index %>' ],
+				tasks : [ 'index:build' ]
+			},
+
+			tpls : {
+				files : [ '<%= app_files.atpl %>', '<%= app_files.ctpl %>' ],
+				tasks : [ 'html2js' ]
 			}
+			
 		},
 
-		open : {
-			server : {
-				url : 'http://localhost:<%=connect.options.port%>'
-			}
-		},
-
-		/**
-		 * The banner is the comment that is placed at the top of our compiled source files. It is first processed as a Grunt template, where the `<%=` pairs are evaluated based on
-		 * this very configuration object.
-		 */
-		meta : {
-			banner : '/**\n * <%= pkg.name %> - v<%= pkg.version %> - <%= grunt.template.today("yyyy-mm-dd") %>\n *\n * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n'
-					+ ' */\n'
-		},
-
-		/**
-		 * Creates a changelog on a new version.
-		 */
-		changelog : {
-			options : {
-				dest : 'CHANGELOG.md',
-				template : 'changelog.tpl'
-			}
-		},
-
-		/**
-		 * Increments the version number.
-		 */
-		bump : {
-			options : {
-				files : [ "package.json", "bower.json" ],
-				commit : false,
-				commitMessage : 'chore(release): v%VERSION%',
-				commitFiles : [ "package.json", "bower.json" ],
-				createTag : false,
-				tagName : 'v%VERSION%',
-				tagMessage : 'Version %VERSION%',
-				push : false,
-				pushTo : 'origin'
-			}
-		},
-
-		clean : [ '<%=build_dir%>', '<%=compile_dir%>' ],
-
-		copy : {
-			buildAppJs : {
-				files : [ {
-					src : [ '<%= app_files.js %>' ],
-					dest : '<%= build_dir %>/',
-					cwd : '.',
-					expand : true
-				} ]
-			},
-			buildAppJson : {
-				files : [ {
-					src : [ '<%= app_files.json %>' ],
-					dest : '<%= build_dir %>/',
-					cwd : '.',
-					expand : true
-				} ]
-			},
-			buildVendorJs : {
-				files : [ {
-					src : [ '<%= vendor_files.js %>' ],
-					dest : '<%= build_dir %>/',
-					cwd : '.',
-					expand : true
-				} ]
-			},
-			buildAppCss : {
-				files : [ {
-					src : [ '<%= app_files.css %>' ],
-					dest : '<%= build_dir %>/',
-					cwd : '.',
-					expand : true
-				} ]
-			},
-			buildVendorCss : {
-				files : [ {
-					src : [ '<%= vendor_files.css %>' ],
-					dest : '<%= build_dir %>/',
-					cwd : '.',
-					expand : true
-				} ]
-			},
-			buildAppAssets : {
-				files : [ {
-					src : [ '**' ],
-					dest : '<%= build_dir %>/assets/',
-					cwd : 'src/assets',
-					expand : true
-				} ]
-			},
-			buildVendorAssets : {
-				files : [ {
-					src : [ '<%= vendor_files.assets %>' ],
-					dest : '<%= build_dir %>/assets',
-					cwd : 'vendor',
-					expand : true
-				// , flatten : true
-				} ]
-			},
-			compileAppJson : {
-				files : [ {
-					src : [ '**/*.json' ],
-					dest : '<%= compile_dir %>',
-					cwd : '<%= build_dir %>',
-					expand : true
-				} ]
-			},
-			compileAssets : {
-				files : [ {
-					src : [ '**' ],
-					dest : '<%= compile_dir %>/assets',
-					cwd : '<%= build_dir %>/assets',
-					expand : true
-				} ]
-			}
-		},
-
-		concat : {
-			/**
-			 * The `compile_css` target concatenates compiled CSS and vendor CSS together.
-			 */
-			compileCss : {
-				src : [ '<%= vendor_files.css %>', '<%= recess.build.dest %>' ],
-				dest : '<%= recess.build.dest %>'
-			},
-			/**
-			 * The `compileJs` target is the concatenation of our application source code.
-			 */
-			compileJs : {
-				options : {
-					banner : '<%= meta.banner %>'
-				},
-				src : [ 'module.prefix', '<%= build_dir %>/src/**/*.js', '<%= html2js.app.dest %>', '<%= html2js.common.dest %>', 'module.suffix' ],
-				dest : '<%= compile_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.js'
-			},
-			/**
-			 * The `compileVendorJs` target is the concatenation of all specified vendor source code into a single file.
-			 */
-			compileVendorJs : {
-				src : [ '<%= vendor_files.js %>' ],
-				dest : '<%= compile_dir %>/assets/<%= pkg.name %>-vendors-<%= pkg.version %>.js'
-			}
-		},
-
-		/**
-		 * `ng-min` annotates the sources before minifying. That is, it allows us to code without the array syntax.
-		 */
-		ngmin : {
-			compile : {
-				files : [ {
-					src : [ '<%= app_files.js %>' ],
-					cwd : '<%= build_dir %>',
-					dest : '<%= build_dir %>',
-					expand : true
-				} ]
-			}
-		},
-
-		/**
-		 * Minify the sources.
-		 */
-		uglify : {
-			compile : {
-				options : {
-					banner : '<%= meta.banner %>'
-				},
-				files : {
-					'<%= concat.compileJs.dest %>' : '<%= concat.compileJs.dest %>'
-				}
-			}
-		},
-
-		/**
-		 * `recess` handles our LESS compilation and uglification automatically. Only our `app.less` file is included in compilation; all other files must be imported from this file.
-		 */
-		recess : {
-			build : {
-				src : [ '<%= app_files.less %>' ],
-				dest : '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css',
-				options : {
-					compile : true,
-					compress : false,
-					noUnderscores : false,
-					noIDs : false,
-					zeroUnits : false
-				}
-			},
-			compile : {
-				src : [ '<%= recess.build.dest %>' ],
-				dest : '<%= recess.build.dest %>',
-				options : {
-					compile : true,
-					compress : true,
-					noUnderscores : false,
-					noIDs : false,
-					zeroUnits : false
-				}
-			}
-		},
-
-		/**
-		 * `jshint` defines the rules of our linter as well as which files we should check. All javascript sources, and all our unit tests are linted based on the policies listed in
-		 * `options`. But we can also specify exclusionary patterns by prefixing them with an exclamation point (!); this is useful when code comes from a third party but is
-		 * nonetheless inside `src/`.
-		 */
-		jshint : {
-			src : [ '<%= app_files.js %>' ],
-			test : [ '<%= app_files.jsunit %>' ],
-			options : {
-				jshintrc : '.jshintrc'
-			}
-		},
-
-		/**
-		 * HTML2JS is a Grunt plugin that takes all of your template files and places them into JavaScript files as strings that are added to AngularJS's template cache. This means
-		 * that the templates too become part of the initial payload as one JavaScript file.
-		 */
-		html2js : {
-			/**
-			 * These are the templates from `src/app`.
-			 */
-			app : {
-				options : {
-					base : 'src/app'
-				},
-				src : [ '<%= app_files.atpl %>' ],
-				dest : '<%= build_dir %>/templates-app.js'
-			},
-
-			/**
-			 * These are the templates from `src/common`.
-			 */
-			common : {
-				options : {
-					base : 'src/common'
-				},
-				src : [ '<%= app_files.ctpl %>' ],
-				dest : '<%= build_dir %>/templates-common.js'
-			}
-		},
-
+		clean : [ '<%= app_folders.build %>' ],
+		
 		/**
 		 * The `index` task compiles the `index.html` file as a Grunt template. CSS and JS files co-exist here but they get split apart later.
 		 */
@@ -334,180 +191,240 @@ module.exports = function(grunt) {
 			 * the `<head>` of `index.html`. The `src` property contains the list of included files.
 			 */
 			build : {
-				dir : '<%= build_dir %>',
-				src : [ '<%= vendor_files.js %>', '<%= build_dir %>/src/**/*.js', '<%= html2js.common.dest %>', '<%= html2js.app.dest %>', '<%= app_files.css %>',
-						'<%= vendor_files.css %>', '<%= recess.build.dest %>' ]
+				dir : '<%= app_folders.build %>',
+				src : [ '<%= vendor_files.js %>', '<%= app_folders.build %>/src/**/*.js', '<%= app_files.css %>', '<%= vendor_files.css %>', '<%= app_folders.build %>/assets/<%= output_filename_css %>' ]
+			// src : [ , '<%= html2js.common.dest %>', '<%= html2js.app.dest %>', , '<%= less.development.files.dest %>' ]
 			},
 
 			/**
 			 * When it is time to have a completely compiled application, we can alter the above to include only a single JavaScript and a single CSS file.
 			 */
 			compile : {
-				dir : '<%= compile_dir %>',
+				dir : '<%= app_folders.compile %>',
 				src : [ '<%= concat.compileVendorJs.dest %>', '<%= concat.compileJs.dest %>', '<%= recess.compile.dest %>' ]
 			}
 		},
 
-		/**
-		 * The Karma configurations.
-		 */
+		copy : {
+			buildAppJs : {
+				files : [ {
+					src : [ '<%= app_files.js %>' ],
+					dest : '<%= app_folders.build %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			buildVendorJs : {
+				files : [ {
+					src : [ '<%= vendor_files.js %>' ],
+					dest : '<%= app_folders.build %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			buildAppCss : {
+				files : [ {
+					src : [ '<%= app_files.css %>' ],
+					dest : '<%= app_folders.build %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			buildVendorCss : {
+				files : [ {
+					src : [ '<%= vendor_files.css %>' ],
+					dest : '<%= app_folders.build %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			buildAppAssets : {
+				files : [ {
+					src : [ '**' ],
+					dest : '<%= app_folders.build %>/assets/',
+					cwd : 'src/assets',
+					expand : true
+				} ]
+			},
+			buildVendorAssets : {
+				files : [ {
+					src : [ '<%= vendor_files.assets %>' ],
+					dest : '<%= app_folders.build %>/assets',
+					cwd : 'vendor',
+					expand : true
+				// , flatten : true
+				} ]
+			},
+			buildAppJson : {
+				files : [ {
+					src : [ '<%= app_files.json %>' ],
+					dest : '<%= app_folders.build %>/',
+					cwd : '.',
+					expand : true
+				} ]
+			},
+			compileAppJson : {
+				files : [ {
+					src : [ '**/*.json' ],
+					dest : '<%= compile %>',
+					cwd : '<%= app_folders.build %>',
+					expand : true
+				} ]
+			},
+			compileAssets : {
+				files : [ {
+					src : [ '**' ],
+					dest : '<%= compile %>/assets',
+					cwd : '<%= app_folders.build %>/assets',
+					expand : true
+				} ]
+			}
+		},
+
+		less: {
+			development: {
+				options: {
+				},
+				files: {
+					"<%= app_folders.build %>/assets/<%= output_filename_css %>" : "<%= app_files.less %>"
+					//"<%= app_folders.build %>/assets/<%= pkg.name %>-<%= pkg.version %>.css": "<%= app_files.less %>"
+					//"<%= app_folders.build %>/assets/appli.css": "<%= app_files.less %>"
+				}
+			},
+			production: {
+				options: {
+					cleancss: true,
+					compress: true
+				},
+				files: {
+					"<%= app_folders.build %>/assets/appli.css": "<%= app_files.less %>"
+				}
+			}
+		},		
+		
+		jshint : {
+			main : {
+				options : {
+					jshintrc : '.jshintrc'
+				},
+				src : ''
+			}
+		},
+
+		// Add vendor prefixed styles
+		autoprefixer : {
+			options : {
+				browsers : [ 'last 1 version' ]
+			},
+			dist : {
+				files : [ {
+					expand : true,
+					cwd : '.tmp/styles/',
+					src : '{,*/}*.css',
+					dest : '.tmp/styles/'
+				} ]
+			}
+		},
+
+		ngtemplates : {
+			main : {
+				options : {
+					module : '<%= pkg.name %>',
+					htmlmin : '<%= htmlmin.main.options %>'
+				},
+				src : [ '' ],
+				dest : 'temp/templates.js'
+			}
+		},
+
+		cssmin : {
+			main : {
+				src : [ 'temp/app.css', '<%= dom_munger.data.appcss %>' ],
+				dest : 'dist/app.full.min.css'
+			}
+		},
+
+		concat : {
+			main : {
+				src : [ '<%= dom_munger.data.appjs %>', '<%= ngtemplates.main.dest %>' ],
+				dest : 'temp/app.full.js'
+			}
+		},
+
+		ngAnnotate : {
+			main : {
+				src : 'temp/app.full.js',
+				dest : 'temp/app.full.js'
+			}
+		},
+
+		uglify : {
+			main : {
+				src : 'temp/app.full.js',
+				dest : 'dist/app.full.min.js'
+			}
+		},
+
+		htmlmin : {
+			main : {
+				options : {
+					collapseBooleanAttributes : true,
+					collapseWhitespace : true,
+					removeAttributeQuotes : true,
+					removeComments : true,
+					removeEmptyAttributes : true,
+					removeScriptTypeAttributes : true,
+					removeStyleLinkTypeAttributes : true
+				},
+				files : {
+					'dist/index.html' : 'dist/index.html'
+				}
+			}
+		},
+
+		imagemin : {
+			main : {
+				files : [ {
+					expand : true,
+					cwd : 'dist/',
+					src : [ '**/{*.png,*.jpg}' ],
+					dest : 'dist/'
+				} ]
+			}
+		},
+
 		karma : {
 			options : {
-				configFile : '<%= build_dir %>/karma-unit.js'
-			},
-			unit : {
-				port : 9877,
-				background : true
-			},
-			continuous : {
+				frameworks : [ 'jasmine' ],
+				files : [ // this files data is also updated in the watch handler, if updated change there too
+				'bower_components/angular-mocks/angular-mocks.js' ],
+				logLevel : 'ERROR',
+				reporters : [ 'mocha' ],
+				autoWatch : false, // watching is handled by grunt-contrib-watch
 				singleRun : true
-			}
-		},
-
-		/**
-		 * This task compiles the karma template so that changes to its file array don't have to be managed manually.
-		 */
-		karmaconfig : {
-			unit : {
-				dir : '<%= build_dir %>',
-				src : [ '<%= vendor_files.js %>', '<%= html2js.app.dest %>', '<%= html2js.common.dest %>', '<%= test_files.js %>' ]
-			}
-		},
-
-		/**
-		 * And for rapid development, we have a watch set up that checks to see if any of the files listed below change, and then to execute the listed tasks when they do. This just
-		 * saves us from having to type "grunt" into the command-line every time we want to see what we're working on; we can instead just leave "grunt watch" running in a background
-		 * terminal. Set it and forget it, as Ron Popeil used to tell us. But we don't need the same thing to happen for all the files.
-		 */
-		delta : {
-			/**
-			 * By default, we want the Live Reload to work for all tasks; this is overridden in some tasks (like this file) where browser resources are unaffected. It runs by default
-			 * on port 35729, which your browser plugin should auto-detect.
-			 */
-			options : {
-				livereload : true
 			},
-
-			/**
-			 * When the Gruntfile changes, we just want to lint it. In fact, when your Gruntfile changes, it will automatically be reloaded!
-			 */
-			gruntfile : {
-				files : 'Gruntfile.js',
-				tasks : [ 'jshint:gruntfile' ],
-				options : {
-					livereload : false
-				}
+			all_tests : {
+				browsers : [ 'PhantomJS', 'Chrome', 'Firefox' ]
 			},
-
-			config : {
-				files : 'build.config.js',
-				tasks : [ 'buildnotest' ]
+			during_watch : {
+				browsers : [ 'PhantomJS' ]
 			},
-
-			/**
-			 * When our JavaScript source files change, we want to run lint them and run our unit tests.
-			 */
-			jssrc : {
-				files : [ '<%= app_files.js %>' ],
-				tasks : [ 'jshint:src', 'copy:buildAppJs'/* , 'karma:unit:run' */]
-			},
-
-			jsonsrc : {
-				files : [ '<%= app_files.json %>' ],
-				tasks : [ 'copy:buildAppJson' ]
-			},
-
-			/**
-			 * When assets are changed, copy them. Note that this will *not* copy new files, so this is probably not very useful.
-			 */
-			assets : {
-				files : [ 'src/assets/**/*' ],
-				tasks : [ 'copy:buildAppAssets' ]
-			},
-
-			/**
-			 * When index.html changes, we need to compile it.
-			 */
-			html : {
-				files : [ '<%= app_files.html %>' ],
-				tasks : [ 'index:build' ]
-			},
-
-			/**
-			 * When our templates change, we only rewrite the template cache.
-			 */
-			tpls : {
-				files : [ '<%= app_files.atpl %>', '<%= app_files.ctpl %>' ],
-				tasks : [ 'html2js' ]
-			},
-
-			/**
-			 * When the CSS files change, we need to compile and minify them.
-			 */
-			less : {
-				files : [ 'src/**/*.less' ],
-				tasks : [ 'recess:build', 'concat:compileCss' ]
-			},
-
-			/**
-			 * When a JavaScript unit test file changes, we only want to lint it and run the unit tests. We don't want to do any live reloading.
-			 */
-			jsunit : {
-				files : [ '<%= app_files.jsunit %>' ],
-				tasks : [ 'jshint:test', 'karma:unit:run' ],
-				options : {
-					livereload : false
-				}
-			}
 		}
-	};
-
-	grunt.initConfig(grunt.util._.extend(taskConfig, userConfig));
-
-	/**
-	 * In order to make it safe to just compile or copy *only* what was changed, we need to ensure we are starting from a clean, fresh build. So we rename the `watch` task to
-	 * `delta` (that's why the configuration var above is `delta`) and then add a new task called `watch` that does a clean build before watching for changes.
-	 */
-	grunt.renameTask('watch', 'delta');
-	grunt.registerTask('watch', [ 'build', /* 'karma:unit', */'delta' ]);
-
-	/**
-	 * The default task is to build and compile.
-	 */
-	grunt.registerTask('default', [ 'build', 'compile' ]);
-
-	/**
-	 * The `build` task gets your app ready to run for development and testing.
-	 */
-	grunt.registerTask('build', [ 'buildnotest'/* , 'karmaconfig', 'karma:continuous' */]);
-
-	grunt.registerTask('buildnotest', [ 'clean', 'html2js', 'jshint', 'recess:build', 'copy:buildAppAssets', 'copy:buildVendorAssets', 'copy:buildAppJs', 'copy:buildAppJson',
-			'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 'index:build' ]);
-
-	/**
-	 * The `compile` task gets your app ready for deployment by concatenating and minifying your code.
-	 */
-	grunt.registerTask('compile', [ 'concat:compileCss', 'recess:compile', 'copy:compileAssets', 'ngmin', 'copy:compileAppJson', 'concat:compileVendorJs', 'concat:compileJs',
-			'uglify', 'index:compile' ]);
-
-	grunt.registerTask('server', [ 'configureProxies', 'connect:livereload', /* 'open', */'watch' ]);
-
-	grunt.registerTask('production', [ 'configureProxies', 'connect:livereload', 'open', 'build', 'compile', 'delta' ]);
+	});
 
 	/**
 	 * The index.html template includes the stylesheet and javascript sources based on dynamic names calculated in this Gruntfile. This task assembles the list into variables for
 	 * the template to use and then runs the compilation.
 	 */
 	grunt.registerMultiTask('index', 'Process index.html template', function() {
-		// console.log(this.filesSrc);
-		var dirRE = new RegExp('^(' + grunt.config('build_dir') + '|' + grunt.config('compile_dir') + ')\/', 'g');
+		var dirRE = new RegExp('^(' + grunt.config('app_folders.build') + '|' + grunt.config('app_folders.compile') + ')\/', 'g');
 		var jsFiles = filterForJS(this.filesSrc).map(function(file) {
 			return file.replace(dirRE, '');
 		});
 		var cssFiles = filterForCSS(this.filesSrc).map(function(file) {
 			return file.replace(dirRE, '');
 		});
-		grunt.file.copy('src/index.html', this.data.dir + '/index.html', {
+		grunt.file.copy(grunt.config('app_files.index'), this.data.dir + '/index.html', {
 			process : function(contents, path) {
 				return grunt.template.process(contents, {
 					data : {
@@ -520,22 +437,10 @@ module.exports = function(grunt) {
 		});
 	});
 
-	/**
-	 * In order to avoid having to specify manually the files needed for karma to run, we use grunt to manage the list for us. The `karma/*` files are compiled as grunt templates
-	 * for use by Karma. Yay!
-	 */
-	grunt.registerMultiTask('karmaconfig', 'Process karma config templates', function() {
-		var jsFiles = filterForJS(this.filesSrc);
-
-		grunt.file.copy('karma/karma-unit.tpl.js', grunt.config('build_dir') + '/karma-unit.js', {
-			process : function(contents, path) {
-				return grunt.template.process(contents, {
-					data : {
-						scripts : jsFiles
-					}
-				});
-			}
-		});
-	});
+	grunt.registerTask('build', [ 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 'less:development', 'index:build' ]);
+	// grunt.registerTask('build', [ 'jshint', 'clean:before', 'less', 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin', 'clean:after' ]);
+	// grunt.registerTask('serve', [ 'jshint', 'connect', 'watch' ]);
+	grunt.registerTask('serve', [ 'build', 'connect', 'watch' ]);
+	grunt.registerTask('test', [ 'karma:all_tests' ]);
 
 };

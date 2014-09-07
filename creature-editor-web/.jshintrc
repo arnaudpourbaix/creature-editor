@@ -1,29 +1,31 @@
 {
-	"camelcase" : true,
-	"curly": true,
-	"eqeqeq": true,
-	"latedef": true,
-	"noarg": true,
-	"undef": true,
-	"unused": false,
-	"trailing": true,
-	"strict": true,
-	"laxbreak": true,
-	
-	"eqnull": true,
-	
-	"browser": true,
-	"devel": true,
-	
-	"globals": {
-    	"jquery": true,
-    	"$": true,
-    	"angular": true,
-    	"describe": true,
-    	"beforeEach": true,
-    	"it": true,
-    	"expect": true,
-    	"require": true,
-    	"module": true
-	}	
+    "curly": true,
+    "eqeqeq": true,
+    "immed": true,
+    "latedef": true,
+    "newcap": true,
+    "noarg": true,
+    "sub": true,
+    "undef": true,
+    "boss": true,
+    "eqnull": true,
+    "browser": true,
+    "smarttabs": true,
+    "globals": {
+        "jQuery": true,
+        "angular": true,
+        "console": true,
+        "$": true,
+        "_": true,
+        "moment": true,
+        "describe": true,
+        "beforeEach": true,
+        "module": true,
+        "inject": true,
+        "it": true,
+        "expect": true,
+        "xdescribe": true,
+        "xit": true,
+        "spyOn": true
+    }
 }
