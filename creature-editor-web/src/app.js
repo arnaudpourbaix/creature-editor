@@ -1,7 +1,7 @@
-angular.module('creatureEditorWeb', ['ui.bootstrap','ui.utils','ui.router','ngAnimate']);
+angular.module('creatureEditorWeb', [ 'templates-app', 'templates-common', 'ui.bootstrap','ui.utils','ui.router','ngAnimate']);
 
 angular.module('creatureEditorWeb').config(function($stateProvider, $urlRouterProvider) {
-
+	
     /* Add New States Above */
     //$urlRouterProvider.otherwise('/home');
 

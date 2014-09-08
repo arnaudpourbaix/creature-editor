@@ -3,7 +3,11 @@
 
 module.exports = function(grunt) {
 
-	// load all grunt tasks
+	var mountFolder = function(connect, dir) {
+		"use strict";
+		return connect.static(require('path').resolve(dir));
+	};	
+	
 	require('load-grunt-tasks')(grunt);
 
 	/**
@@ -31,7 +35,6 @@ module.exports = function(grunt) {
 		compile : 'target/compile',
 	};
 
-	// Project configuration.
 	grunt.initConfig({
 		pkg: require('./package.json'),
 		output_filename: '<%= pkg.name %>-<%= pkg.version %>',
@@ -103,14 +106,12 @@ module.exports = function(grunt) {
 		},
 
 		connect : {
-			main : {
-				options : {
+			options : {
 					hostname : '0.0.0.0',
 					port : 9000,
 					base : '<%= app_folders.build %>'
-				}
-			 ,
-			 proxies : [ { // redirect /rest calls to web application server (tomcat)
+			},
+			proxies : [ { // redirect /rest calls to web application server (tomcat)
 				 context : '/rest',
 				 host : 'localhost',
 				 port : 8090,
@@ -119,8 +120,18 @@ module.exports = function(grunt) {
 				 rewrite : {
 					 'rest' : 'editor/rest'
 				 }
-			 } ]
-			}
+			} ],
+			main : {
+				options : {
+					middleware : function(connect) {
+						return [ 
+						         require('grunt-connect-proxy/lib/utils').proxyRequest, 
+						         require('connect-livereload')(), 
+						         mountFolder(connect, grunt.config('app_folders.build')) 
+						       ];
+					}
+				}
+			}			
 		},
 
 		watch : {
@@ -130,44 +141,19 @@ module.exports = function(grunt) {
 				spawn : false
 			},
 			
-			gruntfile : {
-				files : 'Gruntfile.js',
-				tasks : [ 'build' ],
-				options : {
-					livereload : false
-				}
-			},
+//			gruntfile : {
+//				files : 'Gruntfile.js',
+//				tasks : [ 'build' ],
+//				options : {
+//					livereload : false
+//				}
+//			},
 
 			jssrc : {
 				files : [ '<%= app_files.js %>' ],
 				tasks : [ 'jshint:src', 'copy:buildAppJs' ]
 			},
-
-			vendorjs : {
-				files : [ '<%= vendor_files.js %>' ],
-				tasks : [ 'copy:buildVendorJs' ]
-			},
 			
-			css : {
-				files : [ 'webapp/**/*.css', '!webapp/assets/**/*.css' ],
-				tasks : [ 'copy:buildAppCss' ]
-			},
-			
-			less : {
-				files : [ 'webapp/**/*.less' ],
-				tasks : [ 'recess:build', 'concat:compileCss' ]
-			},
-			
-			jsonsrc : {
-				files : [ '<%= app_files.json %>' ],
-				tasks : [ 'copy:buildAppJson' ]
-			},
-
-			assets : {
-				files : [ 'webapp/assets/**/*' ],
-				tasks : [ 'copy:buildAppAssets' ]
-			},
-
 			html : {
 				files : [ '<%= app_files.index %>' ],
 				tasks : [ 'index:build' ]
@@ -176,7 +162,32 @@ module.exports = function(grunt) {
 			tpls : {
 				files : [ '<%= app_files.atpl %>', '<%= app_files.ctpl %>' ],
 				tasks : [ 'html2js' ]
+			},
+
+			less : {
+				files : [ '<%= app_files.less %>' ],
+				tasks : [ 'less:development', 'autoprefixer' ]
+			},
+			
+			css : {
+				files : [ '<%= app_files.css %>' ],
+				tasks : [ 'copy:buildAppCss' ]
+			},
+		
+			jsonsrc : {
+				files : [ '<%= app_files.json %>' ],
+				tasks : [ 'copy:buildAppJson' ]
 			}
+
+//			assets : {
+//				files : [ '<%= app_folders.src %>/assets/**/*' ],
+//				tasks : [ 'copy:buildAppAssets' ]
+//			},
+//			
+//			vendorjs : {
+//				files : [ '<%= vendor_files.js %>' ],
+//				tasks : [ 'copy:buildVendorJs' ]
+//			}
 			
 		},
 
@@ -192,8 +203,10 @@ module.exports = function(grunt) {
 			 */
 			build : {
 				dir : '<%= app_folders.build %>',
-				src : [ '<%= vendor_files.js %>', '<%= app_folders.build %>/src/**/*.js', '<%= app_files.css %>', '<%= vendor_files.css %>', '<%= app_folders.build %>/assets/<%= output_filename_css %>' ]
-			// src : [ , '<%= html2js.common.dest %>', '<%= html2js.app.dest %>', , '<%= less.development.files.dest %>' ]
+				src : [ '<%= vendor_files.js %>', '<%= app_folders.build %>/src/**/*.js',
+				        '<%= html2js.app.dest %>', '<%= html2js.common.dest %>',  
+				        '<%= app_files.css %>', '<%= vendor_files.css %>', '<%= app_folders.build %>/assets/<%= output_filename_css %>' ]
+			// src : [ , '<%= less.development.files.dest %>' ]
 			},
 
 			/**
@@ -287,8 +300,6 @@ module.exports = function(grunt) {
 				},
 				files: {
 					"<%= app_folders.build %>/assets/<%= output_filename_css %>" : "<%= app_files.less %>"
-					//"<%= app_folders.build %>/assets/<%= pkg.name %>-<%= pkg.version %>.css": "<%= app_files.less %>"
-					//"<%= app_folders.build %>/assets/appli.css": "<%= app_files.less %>"
 				}
 			},
 			production: {
@@ -301,39 +312,41 @@ module.exports = function(grunt) {
 				}
 			}
 		},		
-		
-		jshint : {
-			main : {
-				options : {
-					jshintrc : '.jshintrc'
-				},
-				src : ''
-			}
-		},
 
 		// Add vendor prefixed styles
 		autoprefixer : {
 			options : {
 				browsers : [ 'last 1 version' ]
 			},
-			dist : {
+			main: {
 				files : [ {
-					expand : true,
-					cwd : '.tmp/styles/',
-					src : '{,*/}*.css',
-					dest : '.tmp/styles/'
+					src : "<%= app_folders.build %>/assets/<%= output_filename_css %>",
+					dest : "<%= app_folders.build %>/assets/<%= output_filename_css %>"
 				} ]
 			}
 		},
+		
+		jshint : {
+			options : {
+				jshintrc : '.jshintrc'
+			},
+			src : '<%= app_files.js %>'
+		},
 
-		ngtemplates : {
-			main : {
+		html2js : {
+			app : {
 				options : {
-					module : '<%= pkg.name %>',
-					htmlmin : '<%= htmlmin.main.options %>'
+					base : '<%= app_folders.src %>/app'
 				},
-				src : [ '' ],
-				dest : 'temp/templates.js'
+				src : [ '<%= app_files.atpl %>' ],
+				dest : '<%= app_folders.build %>/templates-app.js'
+			},
+			common : {
+				options : {
+					base : '<%= app_folders.src %>/app'
+				},
+				src : [ '<%= app_files.ctpl %>' ],
+				dest : '<%= app_folders.build %>/templates-common.js'
 			}
 		},
 
@@ -437,10 +450,11 @@ module.exports = function(grunt) {
 		});
 	});
 
-	grunt.registerTask('build', [ 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 'less:development', 'index:build' ]);
-	// grunt.registerTask('build', [ 'jshint', 'clean:before', 'less', 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin', 'clean:after' ]);
+	grunt.registerTask('build', [ 'jshint', 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 
+	                              'less:development', 'autoprefixer', 'html2js', 'index:build' ]);
+	// grunt.registerTask('build', [ 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin' ]);
 	// grunt.registerTask('serve', [ 'jshint', 'connect', 'watch' ]);
-	grunt.registerTask('serve', [ 'build', 'connect', 'watch' ]);
+	grunt.registerTask('serve', [ 'build', 'connect:main', 'watch' ]);
 	grunt.registerTask('test', [ 'karma:all_tests' ]);
 
 };
