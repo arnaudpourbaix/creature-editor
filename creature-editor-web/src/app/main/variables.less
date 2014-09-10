@@ -1,0 +1,367 @@
+@overlay-color: black;
+@overlay-opacity: 0.5;
+
+/**
+ * Mixins
+ */
+.main-overlay {
+    position: fixed;
+    width: 10000px;
+    height: 10000px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+	background-color: @overlay-color;
+	opacity: @overlay-opacity;
+}
+.main-overlay-add{
+    opacity: 0;
+
+    &.main-overlay-add-active {
+        transition: opacity .35s;
+        opacity: @overlay-opacity;
+    }
+}
+
+
+/**
+ * Keyframes
+ */
+@-webkit-keyframes WfadeInFromNone {
+    0% {
+        display:none;
+        visibility:hidden;
+        opacity: 0;
+        margin-top:-50px;
+    }
+
+    1% {
+        visibility:visible;
+        display: block ;
+        opacity: 0;
+
+    }
+
+    100% {
+        display: block ;
+        visibility:visible;
+        opacity: 1;
+        margin-top:0px;
+    }
+}
+
+
+@-webkit-keyframes WfadeOutFromNone {
+    0% {
+        display:none;
+        visibility:hidden;
+        opacity: 0;
+        margin-top:50px;
+        width:400px;
+    }
+
+    1% {
+        visibility:visible;
+        display: block ;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        visibility:visible;
+        opacity: 1;
+        margin-top:0px;
+    }
+}
+
+
+@keyframes fadeInFromNone {
+    0% {
+        display:none;
+        visibility:hidden;
+        opacity: 0;
+        margin-top:-50px;
+    }
+
+    1% {
+        visibility:visible;
+        display: block ;
+        opacity: 0;
+
+    }
+
+    100% {
+        display: block ;
+        visibility:visible;
+        opacity: 1;
+        margin-top:0px;
+    }
+}
+
+
+@keyframes fadeOutFromNone {
+    0% {
+        display:none;
+        visibility:hidden;
+        opacity: 0;
+        margin-top:50px;
+        width:400px;
+    }
+
+    1% {
+        visibility:visible;
+        display: block ;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        visibility:visible;
+        opacity: 1;
+        margin-top:0px;
+    }
+}
+
+@-webkit-keyframes WDropDownFromNone {
+    0% {
+        top:-35px;
+        opacity:1;
+        max-height:40px;
+        width:240px;
+    }
+    20% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:240px;
+    }
+    90% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:240px;
+    }
+    100% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:40px;
+    }
+}
+
+@-moz-keyframes MDropDownFromNone {
+    0% {
+        top:-35px;
+        opacity:1;
+        max-height:40px;
+        width:240px;
+    }
+    20% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:240px;
+    }
+    90% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:240px;
+    }
+    100% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:40px;
+    }
+}
+@keyframes DropDownFromNone {
+    0% {
+        top:-35px;
+        opacity:1;
+        max-height:40px;
+        width:240px;
+    }
+    20% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:240px;
+    }
+    90% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:240px;
+    }
+    100% {
+        top:-10px;
+        opacity:1;
+        height:40px;
+        width:40px;
+    }
+}
+
+@-webkit-keyframes WDropDown {
+    0% {
+        top:-10px;
+        max-height:40px;
+        height:auto;
+        opacity:1;
+        width:40px;
+    }
+
+    100% {
+        top:-10px;
+        max-height:100%;
+        height:auto;
+        opacity:1;
+        width:240px;
+    }
+}
+@-moz-keyframes MDropDown {
+    0% {
+        top:-10px;
+        max-height:40px;
+        height:auto;
+        opacity:1;
+        width:40px;
+    }
+
+    100% {
+        top:-10px;
+        max-height:100%;
+        height:auto;
+        opacity:1;
+        width:240px;
+    }
+}
+@keyframes DropDown {
+    0% {
+        top:-10px;
+        max-height:40px;
+        opacity:1;
+        width:40px;
+    }
+    100% {
+        top:-10px;
+        max-height:100%;
+        opacity:1;
+        width:240px;
+    }
+}
+@-webkit-keyframes WDropDown2 {
+    0% {
+        margin-top:0px;
+        opacity:0;
+        max-height:40px;
+        width:40px;
+    }
+    100% {
+        margin-top:30px;
+        opacity:1;
+        max-height:100%;
+        width:240px;
+    }
+}
+@-moz-keyframes MDropDown2 {
+    0% {
+        margin-top:0px;
+        opacity:0;
+        max-height:100%;
+        width:40px;
+    }
+    100% {
+        margin-top:30px;
+        opacity:1;
+        max-height:40px;
+        width:220px;
+    }
+}
+@keyframes DropDown2 {
+    0% {
+        margin-top:0px;
+        opacity:0;
+        max-height:100%;
+        width:40px;
+    }
+    100% {
+        margin-top:30px;
+        opacity:1;
+        max-height:40px;
+        width:240px;
+    }
+}
+
+@-webkit-keyframes Whide {
+    0% {
+        visibility:inherit;
+        margin-left:15px;
+    }
+    90% {
+        visibility:inherit;
+        margin-left:15px;
+    }
+    100% {
+        visibility:hidden;
+        margin-left:15px;
+    }
+}
+@-moz-keyframes Mhide {
+    0% {
+        visibility:inherit;
+        margin-left:15px;
+    }
+    90% {
+        visibility:inherit;
+        margin-left:15px;
+    }
+    100% {
+        visibility:hidden;
+        margin-left:15px;
+    }
+}
+@keyframes Ahide {
+    0% {
+        visibility:inherit;
+        margin-left:15px;
+    }
+    90% {
+        visibility:inherit;
+        margin-left:15px;
+    }
+    100% {
+        visibility:hidden;
+        margin-left:15px;
+    }
+}
+
+
+
+@-webkit-keyframes Wshow {
+    0% {
+        visibility:hidden;
+    }
+    100% {
+        visibility:visible;
+    }
+}
+@-moz-keyframes Mshow {
+    0% {
+        visibility:hidden;
+    }
+
+    100% {
+        visibility:visible;
+    }
+}
+@keyframes Ashow {
+    0% {
+        visibility:hidden;
+    }
+    90% {
+        visibility:visible;
+    }
+}

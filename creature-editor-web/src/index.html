@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="creatureEditorWeb">
+<html ng-app="editor">
 <head>
 <title></title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,16 +16,14 @@
 <% }); %>
 
 </head>
-<body>
-	<div>
-		<div id="content" class="container">
-			<div data-ng-include="'test.tpl.html'"></div>
-			<div class="row">
-				Hello world ! it's working !
-				<div ui-view></div>
+<body data-ng-controller="MainController">
+      <div id="app">
+		<div class="app-wrapper">
+   			<div class="main-content-wrapper">
+   				<div data-ng-include="'error/error.tpl.html'"></div>
+      			<div class="main" data-ui-view></div>
 			</div>
 		</div>
-	</div>
-
+      </div>
 </body>
 </html>

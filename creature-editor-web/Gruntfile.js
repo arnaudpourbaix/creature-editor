@@ -81,16 +81,19 @@ module.exports = function(grunt) {
 			      '<%= app_folders.vendor %>/angular-cookies/angular-cookies.min.js',
 					'<%= app_folders.vendor %>/angular-resource/angular-resource.min.js', 
 					'<%= app_folders.vendor %>/angular-animate/angular-animate.min.js', 
+					'<%= app_folders.vendor %>/angular-sanitize/angular-sanitize.min.js',
 					'<%= app_folders.vendor %>/angular-translate/angular-translate.min.js',
 					'<%= app_folders.vendor %>/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js', 
 					'<%= app_folders.vendor %>/angular-translate-storage-local/angular-translate-storage-local.min.js',
 					'<%= app_folders.vendor %>/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 
 					'<%= app_folders.vendor %>/angular-ui-utils/ui-utils.min.js',
-					'<%= app_folders.vendor %>/angular-ui-router/release/angular-ui-router.js', 
+					'<%= app_folders.vendor %>/angular-ui-router/release/angular-ui-router.js',
+					'<%= app_folders.vendor %>/angular-local-storage/angular-local-storage.min.js',
 					'<%= app_folders.vendor %>/angular-bootstrap/ui-bootstrap-tpls.min.js', 
 					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
 					'<%= app_folders.src %>/assets/jqwidgets/jqx-all.js', 
-					'<%= app_folders.src %>/assets/Long.js' 
+					'<%= app_folders.src %>/assets/Long.js',
+					'<%= app_folders.vendor %>/log4javascript/log4javascript.js'
 				],
 			css : [ 
 			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css' 
