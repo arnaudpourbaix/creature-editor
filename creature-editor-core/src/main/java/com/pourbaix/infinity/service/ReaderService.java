@@ -98,6 +98,15 @@ public class ReaderService {
 		}
 	}
 
+	public Creature getCreature(ResourceEntry entry) throws ServiceException {
+		try {
+			Creature creature = creatureFactory.getCreature(entry);
+			return creature;
+		} catch (FactoryException e) {
+			throw new ServiceException(e.getCode(), e.getParam());
+		}
+	}
+	
 	public List<IdentifierFile> getIdentifierFiles() throws ServiceException {
 		List<IdentifierFile> ids = new ArrayList<>();
 		for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("ids")) {
