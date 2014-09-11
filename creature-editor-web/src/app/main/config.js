@@ -6,7 +6,7 @@ angular.module('editor.main.config', [])
  */
 .constant('appSettings', { 
 	timeout : 20000, 
-	restBaseUrl : '../protected/rest/' 
+	restBaseUrl : 'rest/' 
 })
 
 /**
@@ -15,7 +15,7 @@ angular.module('editor.main.config', [])
  */
 .config(function($urlRouterProvider, $stateProvider) {
 	"use strict";
-	$urlRouterProvider.otherwise('/');
+	$urlRouterProvider.otherwise('/creature');
 	$stateProvider.state('root', {
 		url : '/',
 		onEnter : function() {

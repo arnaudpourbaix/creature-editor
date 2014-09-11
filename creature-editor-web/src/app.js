@@ -15,6 +15,7 @@ angular.module('editor', [
 	'an-error', 
 	'an-log4javascript', 
 	'editor.main',
+	'editor.creature',
 	'templates-app', 
 	'templates-common' 
 	

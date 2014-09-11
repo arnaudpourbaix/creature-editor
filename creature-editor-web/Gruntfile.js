@@ -56,9 +56,10 @@ module.exports = function(grunt) {
 			atpl : [ '<%= app_folders.src %>/app/**/*.tpl.html' ],
 			ctpl : [ '<%= app_folders.src %>/common/**/*.tpl.html' ],
 
-			index : [ '<%= app_folders.src %>/index.html' ],
 			css : [ '<%= app_folders.src %>/**/*.css', '!<%= app_folders.src %>/assets/**/*.css' ],
-			less : '<%= app_folders.src %>/app.less'
+			less : [ '<%= app_folders.src %>/**/*.less' ],
+			index_html : [ '<%= app_folders.src %>/index.html' ],
+			index_less : '<%= app_folders.src %>/app.less'
 		},
 
 		/**
@@ -96,7 +97,8 @@ module.exports = function(grunt) {
 					'<%= app_folders.vendor %>/log4javascript/log4javascript.js'
 				],
 			css : [ 
-			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css' 
+			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
+			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css'
 			   ],
 			assets : [ 
 			     '<%= app_folders.vendor %>/bootstrap/dist/fonts/*', 
@@ -121,7 +123,7 @@ module.exports = function(grunt) {
 				 https : false,
 				 changeOrigin : false,
 				 rewrite : {
-					 'rest' : 'editor/rest'
+					 'rest' : 'creature-editor-web/rest'
 				 }
 			} ],
 			main : {
@@ -158,7 +160,7 @@ module.exports = function(grunt) {
 			},
 			
 			html : {
-				files : [ '<%= app_files.index %>' ],
+				files : [ '<%= app_files.index_html %>' ],
 				tasks : [ 'index:build' ]
 			},
 
@@ -302,7 +304,7 @@ module.exports = function(grunt) {
 				options: {
 				},
 				files: {
-					"<%= app_folders.build %>/assets/<%= output_filename_css %>" : "<%= app_files.less %>"
+					"<%= app_folders.build %>/assets/<%= output_filename_css %>" : "<%= app_files.index_less %>"
 				}
 			},
 			production: {
@@ -311,7 +313,7 @@ module.exports = function(grunt) {
 					compress: true
 				},
 				files: {
-					"<%= app_folders.build %>/assets/appli.css": "<%= app_files.less %>"
+					"<%= app_folders.build %>/assets/appli.css": "<%= app_files.index_less %>"
 				}
 			}
 		},		
@@ -346,7 +348,7 @@ module.exports = function(grunt) {
 			},
 			common : {
 				options : {
-					base : '<%= app_folders.src %>/app'
+					base : '<%= app_folders.src %>/common'
 				},
 				src : [ '<%= app_files.ctpl %>' ],
 				dest : '<%= app_folders.build %>/templates-common.js'
@@ -440,7 +442,7 @@ module.exports = function(grunt) {
 		var cssFiles = filterForCSS(this.filesSrc).map(function(file) {
 			return file.replace(dirRE, '');
 		});
-		grunt.file.copy(grunt.config('app_files.index'), this.data.dir + '/index.html', {
+		grunt.file.copy(grunt.config('app_files.index_html'), this.data.dir + '/index.html', {
 			process : function(contents, path) {
 				return grunt.template.process(contents, {
 					data : {
@@ -456,8 +458,7 @@ module.exports = function(grunt) {
 	grunt.registerTask('build', [ 'jshint', 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 
 	                              'less:development', 'autoprefixer', 'html2js', 'index:build' ]);
 	// grunt.registerTask('build', [ 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin' ]);
-	// grunt.registerTask('serve', [ 'jshint', 'connect', 'watch' ]);
-	grunt.registerTask('serve', [ 'build', 'connect:main', 'watch' ]);
+	grunt.registerTask('serve', [ 'build', 'configureProxies', 'connect:main', 'watch' ]);
 	grunt.registerTask('test', [ 'karma:all_tests' ]);
 
 };

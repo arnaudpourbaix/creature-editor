@@ -1,0 +1,22 @@
+{
+	"CATEGORY" : {
+		"LABEL" : "Category",
+		"LIST_TITLE" : "Categories",
+		"EDIT_TITLE" : "Category details",
+		"FIELDS" : {
+			"PARENT_NAME" : "Parent",
+			"NAME" : "Name"
+		},
+		"COLUMNS" : {
+			"ACTION" : "Actions",
+			"DELETE" : "Delete"
+		},
+		"CONTEXTUAL" : {
+			"ADD" : "Add",
+			"EDIT" : "Edit",
+			"DELETE" : "Delete"
+		},
+		"EDIT_TITLE" : "{{name}}",
+		"NEW_TITLE" : "New category"
+	}
+}
