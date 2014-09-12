@@ -292,11 +292,18 @@ public class CreatureFactory {
 				value += 4294967296L;
 			}
 		}
+		if (value == 0) {
+			return;
+		}
 		try {
 			DimensionalArrayFile kit2da = dimensionalArrayFileFactory.getDimensionalArray(DimensionalArrayEnum.Kit);
 			DimensionalArrayRow row = kit2da.findByColumn("unusable", value);
-			creature.setKit(DynamicArray.getInt(buffer, offset));
-			creature.setKitLabel(row.getColumns().get(1));
+			if (row != null) {
+				creature.setKit(DynamicArray.getInt(buffer, offset));
+				creature.setKitLabel(row.getColumns().get(1));
+			} else {
+				logger.error("no kit found for " + creature.getResource());
+			}
 
 		} catch (DimensionalArrayFileException e) {
 			throw new FactoryException(e.getCode(), e.getParam());

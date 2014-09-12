@@ -78,7 +78,7 @@ public class CreatureImportService implements Runnable {
 		this.exception = null;
 		this.modId = modId;
 		gameService.openGame();
-		resources = readerService.getSpellResources();
+		resources = readerService.getCreatureResources();
 		deferredResult.setResult(resources.size());
 		running = true;
 		thread = new Thread(this, "import");

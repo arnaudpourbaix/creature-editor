@@ -59,6 +59,87 @@
 		return service;
 	})
 	
+	.service('CreatureImportService', function($http, $interval, creatureSettings) {
+		var service = {
+			running : false,
+			creatures : [],
+			mod : null,
+			progressValue : 0,
+			interval : null,
+
+			startImport : function(mod) {
+				$http({
+					method : 'GET',
+					url : creatureSettings.url + 'import',
+					params : {
+						modId : mod.id
+					}
+				}).then(function(response) {
+					service.mod = mod;
+					service.creatures = [];
+					service.creatureCount = parseInt(response.data, 10);
+					if (service.creatureCount === -1) {
+						//$console.logMessage.push('CREATURE.ERRORS.IMPORT_ALREADY_RUNNING', 'danger');
+						console.log('CREATURE.ERRORS.IMPORT_ALREADY_RUNNING');
+						return;
+					}
+					service.running = true;
+					//service.interval = $interval(service.gatherImportedCreatures, 2000);
+				}, function(response) {
+					//$console.logMessage.push('CREATURE.ERRORS.' + response.data.code, 'danger');
+					console.log(response.data.code);
+				});
+			},
+
+			endImport : function() {
+				$interval.cancel(service.interval);
+				service.running = false;
+				service.progressValue = 0;
+			},
+
+			gatherImportedCreatures : function() {
+				$http({
+					method : 'GET',
+					url : creatureSettings.url + 'import/gather'
+				}).then(function(response) {
+					angular.forEach(response.data, function(value, index) {
+						service.creatures.push(value);
+					});
+					service.progressValue = parseInt(100 / service.creatureCount * service.creatures.length, 10);
+					if (service.creatures.length === service.creatureCount) {
+//						$console.logMessage.push('CREATURE.IMPORT.SUCCESS', 'success', {
+//							name : service.mod.name
+//						});
+						console.log('success');
+						service.endImport();
+					}
+				}, function(response) {
+					service.endImport();
+//					$console.logMessage.push('CREATURE.ERRORS.' + response.data.code, 'danger', {
+//						creature : response.data.param
+//					});
+					console.log('error');
+				});
+			},
+
+			cancelImport : function() {
+				if (!service.running) {
+					return;
+				}
+				$http({
+					method : 'GET',
+					url : creatureSettings.url + 'import/cancel'
+				}).then(function(response) {
+					service.endImport();
+					//$console.logMessage.push('CREATURE.IMPORT.CANCEL', 'warning');
+					console.log('cancel');
+				});
+			}
+		};
+
+		return service;
+	})
+	
 	;
 
 })();

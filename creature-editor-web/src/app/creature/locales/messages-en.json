@@ -1,8 +1,8 @@
 {
-	"CATEGORY" : {
-		"LABEL" : "Category",
-		"LIST_TITLE" : "Categories",
-		"EDIT_TITLE" : "Category details",
+	"CREATURE" : {
+		"LABEL" : "Creature",
+		"LIST_TITLE" : "Creatures",
+		"EDIT_TITLE" : "Creature details",
 		"FIELDS" : {
 			"PARENT_NAME" : "Parent",
 			"NAME" : "Name"

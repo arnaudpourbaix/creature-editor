@@ -123,7 +123,7 @@ module.exports = function(grunt) {
 				 https : false,
 				 changeOrigin : false,
 				 rewrite : {
-					 'rest' : 'creature-editor-web/rest'
+					 'rest' : 'editor/rest'
 				 }
 			} ],
 			main : {
@@ -455,7 +455,8 @@ module.exports = function(grunt) {
 		});
 	});
 
-	grunt.registerTask('build', [ 'jshint', 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss', 
+	grunt.registerTask('build', [ 'jshint', 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss',
+	                              'copy:buildAppJson',
 	                              'less:development', 'autoprefixer', 'html2js', 'index:build' ]);
 	// grunt.registerTask('build', [ 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin' ]);
 	grunt.registerTask('serve', [ 'build', 'configureProxies', 'connect:main', 'watch' ]);

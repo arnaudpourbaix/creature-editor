@@ -45,6 +45,11 @@ public class ReaderService {
 		return Keyfile.getInstance().getResourceEntriesByExtension("spl");
 	}
 
+	public List<ResourceEntry> getCreatureResources() throws ServiceException {
+		return Keyfile.getInstance().getResourceEntriesByExtension("cre");
+	}
+	
+	
 	public List<Spell> getSpells() throws ServiceException {
 		try {
 			List<Spell> spells = new ArrayList<>();
@@ -99,6 +104,7 @@ public class ReaderService {
 	}
 
 	public Creature getCreature(ResourceEntry entry) throws ServiceException {
+		logger.trace("getCreature:" + entry.getResourceName());
 		try {
 			Creature creature = creatureFactory.getCreature(entry);
 			return creature;
