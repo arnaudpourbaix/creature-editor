@@ -9,61 +9,51 @@
 
 	.controller('ParameterListController', function($scope, $location, $translate, parameters, crudListMethods, $alertMessage, $interpolate, $stateParams) {
 		angular.extend($scope, crudListMethods($location.url()));
-		
+
 		$scope.typeId = $stateParams.typeId;
 
 		$scope.parameters = parameters;
-		
-		$scope.columns = [
-		    {
-					displayName: $translate.instant('PARAMETER.FIELDS.NAME'),
-					field: 'name',
-					sortable: true,
-					width: 'auto',
-					minWidth: 300
-		    },
-		    {
-					displayName: $translate.instant('PARAMETER.FIELDS.LABEL'),
-					field: 'label',
-					sortable: true,
-					width: 'auto',
-					minWidth: 200
-		    },
-		    {
-					displayName: $translate.instant('PARAMETER.FIELDS.VALUE'),
-					field: 'value',
-					sortable: false,
-					width: 'auto',
-					minWidth: 300
-		    },
-		    {
-					displayName: $translate.instant('PARAMETER.FIELDS.ACTION'),
-					sortable: false,
-					width: 'auto',
-					minWidth: 60,
-					cellTemplate: 'parameter/parameter-grid-buttons.tpl.html'
-		    }
+
+		$scope.columns = [ {
+			text : $translate.instant('PARAMETER.FIELDS.NAME'),
+			dataField : 'name',
+			width : 300
+		}, {
+			text : $translate.instant('PARAMETER.FIELDS.LABEL'),
+			dataField : 'label',
+			width : 200
+		}, {
+			text : $translate.instant('PARAMETER.FIELDS.VALUE'),
+			dataField : 'value',
+			width : 300
+		}
+		// ,
+		// {
+		// displayName: $translate.instant('PARAMETER.FIELDS.ACTION'),
+		// sortable: false,
+		// width: 'auto',
+		// minWidth: 60,
+		// cellTemplate: 'parameter/parameter-grid-buttons.tpl.html'
+		// }
 		];
-		
-		$scope.gridOptions = {
-				data: 'parameters',
-				columnDefs: 'columns',
-				i18n: 'fr',
-				enableColumnResize: true,
-				rowHeight : 35,
-				multiSelect: false
+
+		$scope.settings = {
+			altrows : true,
+			width : 900,
+			height : 500,
+			source : $scope.parameters,
+			columns : $scope.columns
 		};
-		
+
 		$scope.edit = function() {
 			console.log('edit');
 		};
-		
 
 	})
 
 	.controller('ParameterEditController', function($scope, $state, $stateParams, $translate, ParameterService) {
 		$scope.parameter = angular.copy(ParameterService.getById($scope.parameters, $stateParams.id));
-		
+
 		$scope.valuesSelect = {
 			data : 'parameter.parameterValues',
 			displayMember : 'description',
@@ -74,7 +64,7 @@
 				width : '300px'
 			}
 		};
-		
+
 		$scope.onCancel = function() {
 			$state.go('^');
 		};
@@ -100,7 +90,7 @@
 		};
 
 	})
-	
+
 	;
 
 })();

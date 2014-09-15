@@ -30,7 +30,6 @@
     "font-awesome": "~4.0",
     "roboto-fontface": "~0.2.0",
     "angular-local-storage": "~0.0.7",
-    "log4javascript": "~1.4.9",
-    "ng-grid": "~2.0.13"
+    "log4javascript": "~1.4.9"
   }
 }

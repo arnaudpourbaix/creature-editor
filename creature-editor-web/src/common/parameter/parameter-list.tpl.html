@@ -1,4 +1,22 @@
 <div class="parameter-list">
-	<div class="grid" data-ng-grid="gridOptions"></div>
+	<jqx-grid jqx-settings="settings"></jqx-grid>
+	<!-- 
+	<table id="dataTable" data-jq-grid>
+		<thead>
+			<tr>
+				<th data-translate>PARAMETER.FIELDS.NAME</th>
+				<th data-translate>PARAMETER.FIELDS.LABEL</th>
+				<th data-translate>PARAMETER.FIELDS.VALUE</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr data-ng-repeat="parameter in parameters">
+				<td>{{parameter.name}}</td>
+				<td>{{parameter.label}}</td>
+				<td>{{parameter.value}}</td>
+			</tr>
+		</tbody>
+	</table>
+	 -->	
 	<div data-ui-view="parameter-edit"></div>
 </div>

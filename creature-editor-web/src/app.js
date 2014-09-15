@@ -10,7 +10,7 @@ angular.module('editor', [
 	'ui.router', 
 	'ui.bootstrap',
 	'ui.utils',
-	'ngGrid',
+	'jqwidgets',
 
 	// Templates
 	'templates-app', 

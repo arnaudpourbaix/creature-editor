@@ -89,7 +89,6 @@ module.exports = function(grunt) {
 					'<%= app_folders.vendor %>/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 
 					'<%= app_folders.vendor %>/angular-ui-utils/ui-utils.min.js',
 					'<%= app_folders.vendor %>/angular-ui-router/release/angular-ui-router.js',
-					'<%= app_folders.vendor %>/ng-grid/build/ng-grid.min.js',
 					'<%= app_folders.vendor %>/angular-local-storage/angular-local-storage.min.js',
 					'<%= app_folders.vendor %>/angular-bootstrap/ui-bootstrap-tpls.min.js', 
 					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
@@ -99,8 +98,7 @@ module.exports = function(grunt) {
 				],
 			css : [ 
 			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
-			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css',
-			     '<%= app_folders.vendor %>/ng-grid/ng-grid.min.css'
+			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css'
 			   ],
 			assets : [ 
 			     '<%= app_folders.vendor %>/bootstrap/dist/fonts/*', 
@@ -184,13 +182,13 @@ module.exports = function(grunt) {
 			jsonsrc : {
 				files : [ '<%= app_files.json %>' ],
 				tasks : [ 'copy:buildAppJson' ]
-			}
+			},
 
-//			assets : {
-//				files : [ '<%= app_folders.src %>/assets/**/*' ],
-//				tasks : [ 'copy:buildAppAssets' ]
-//			},
-//			
+			assets : {
+				files : [ '<%= app_folders.src %>/assets/**/*' ],
+				tasks : [ 'copy:buildAppAssets' ]
+			}
+			
 //			vendorjs : {
 //				files : [ '<%= vendor_files.js %>' ],
 //				tasks : [ 'copy:buildVendorJs' ]
@@ -458,7 +456,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('build', [ 'jshint', 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss',
-	                              'copy:buildAppJson',
+	                              'copy:buildAppJson', 'copy:buildAppAssets',
 	                              'less:development', 'autoprefixer', 'html2js', 'index:build' ]);
 	// grunt.registerTask('build', [ 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin' ]);
 	grunt.registerTask('serve', [ 'build', 'configureProxies', 'connect:main', 'watch' ]);
