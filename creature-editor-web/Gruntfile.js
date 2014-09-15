@@ -77,7 +77,7 @@ module.exports = function(grunt) {
 		 */
 		vendor_files : {
 			js : [ 
-			      '<%= app_folders.vendor %>/jquery/dist/jquery.min.js', 
+			      '<%= app_folders.vendor %>/jquery/jquery.min.js', 
 			      '<%= app_folders.vendor %>/angular/angular.js', 
 			      '<%= app_folders.vendor %>/angular-cookies/angular-cookies.min.js',
 					'<%= app_folders.vendor %>/angular-resource/angular-resource.min.js', 
@@ -89,6 +89,7 @@ module.exports = function(grunt) {
 					'<%= app_folders.vendor %>/angular-translate-loader-partial/angular-translate-loader-partial.min.js', 
 					'<%= app_folders.vendor %>/angular-ui-utils/ui-utils.min.js',
 					'<%= app_folders.vendor %>/angular-ui-router/release/angular-ui-router.js',
+					'<%= app_folders.vendor %>/ng-grid/build/ng-grid.min.js',
 					'<%= app_folders.vendor %>/angular-local-storage/angular-local-storage.min.js',
 					'<%= app_folders.vendor %>/angular-bootstrap/ui-bootstrap-tpls.min.js', 
 					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
@@ -98,7 +99,8 @@ module.exports = function(grunt) {
 				],
 			css : [ 
 			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
-			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css'
+			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css',
+			     '<%= app_folders.vendor %>/ng-grid/ng-grid.min.css'
 			   ],
 			assets : [ 
 			     '<%= app_folders.vendor %>/bootstrap/dist/fonts/*', 

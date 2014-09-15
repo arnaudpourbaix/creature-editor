@@ -29,7 +29,7 @@ angular.module('editor.main.config', [])
  */
 .config(function($anErrorProvider, appSettings) {
 	"use strict";
-	$anErrorProvider.defaults.active = true; // enable errors catching (should always be enabled in production)
+	$anErrorProvider.defaults.active = false; // enable errors catching (should always be enabled in production)
 })
 
 /**

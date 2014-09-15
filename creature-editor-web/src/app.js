@@ -10,13 +10,22 @@ angular.module('editor', [
 	'ui.router', 
 	'ui.bootstrap',
 	'ui.utils',
-	
-	// Internal dependencies
-	'an-error', 
-	'an-log4javascript', 
-	'editor.main',
-	'editor.creature',
+	'ngGrid',
+
+	// Templates
 	'templates-app', 
-	'templates-common' 
+	'templates-common',
+	
+	// Common modules
+	'an-error', 
+	'an-log4javascript',
+	'alert-message',
+	'translate-wrapper',
+	'crud',
+	'parameter', 
+	
+	// Application modules
+	'editor.main',
+	'editor.creature'
 	
 ]);

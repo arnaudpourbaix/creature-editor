@@ -1,0 +1,27 @@
+{
+	"PARAMETER" : {
+		"LABEL" : "Parameter",
+		"LIST_TITLE" : "Parameters",
+		"FIELDS" : {
+			"ACTION": "Action",
+			"EDIT": "Edit",
+			"NAME" : "Name",
+			"LABEL" : "Label",
+			"DESCRIPTION" : "Description",
+			"VALUE" : "Value",
+			"STATE" : "State"
+		},
+		"VALUE_SELECT" : "Select a value",
+		"EDIT_TITLE" : "Parameter details",
+		"FOLDER_PATH" : "Folder path",
+		"ON" : "On",
+		"OFF" : "Off",
+		"CONTROLS" : {
+			"REQUIRED" : "Required",
+			"FOLDER" : "Must be a valid folder",
+			"NUMBER" : "Must be a number",
+			"MIN" : "Must be higher or equal than {{min}}",
+			"MAX" : "Must be lower or equal than {{max}}"
+		}
+	}
+}

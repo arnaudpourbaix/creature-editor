@@ -1,0 +1,8 @@
+<div class="parameter">
+	<ul class="nav nav-tabs" data-role="tablist">
+		<li data-ng-repeat="type in types" data-ng-class="{ 'active': $state.includes('parameter.list') && $stateParams.typeId == type.id }">
+			<a data-ui-sref="parameter.list({ typeId: type.id })">{{ type.label }}</a>
+		</li>
+	</ul>
+	<div data-ui-view="parameter-list"></div>
+</div>

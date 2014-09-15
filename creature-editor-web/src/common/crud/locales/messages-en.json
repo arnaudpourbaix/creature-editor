@@ -1,0 +1,13 @@
+{
+	"CRUD" : {
+		"ADD_BUTTON" : "Add",
+		"SAVE_BUTTON" : "Save",
+		"REMOVE_BUTTON" : "Remove",
+		"REVERT_BUTTON" : "Revert changes",
+		"CANCEL_BUTTON" : "Cancel",
+		"SAVE_SUCCESS" : "{{entity}} '{{name}}' was saved successfully.",
+		"SAVE_ERROR" : "{{entity}} '{{name}}' was not saved, an error occured.",
+		"REMOVE_SUCCESS" : "{{entity}} '{{name}}' was removed successfully.",
+		"REMOVE_ERROR" : "{{entity}} '{{name}}' was not removed, an error occured."
+	}
+}
