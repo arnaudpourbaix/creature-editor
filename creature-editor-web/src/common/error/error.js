@@ -66,7 +66,7 @@
  * 
  * It is even possible to manually open error modal with a custom message:
  * <pre>
- * UserService.user().then(null, function(response) {
+ * UserService.userLogin().then(null, function(response) {
  *    $anError.open("ERROR.NOT_LOGIN", { translate: true, defaultMessage: false, reloadButton: false, restartButton: false });			
  * });
  * </pre>
@@ -102,9 +102,9 @@ angular.module('an-error', [ 'pascalprecht.translate' ])
 	var defaults = this.defaults = {
 			active: false,
 			showElement : {
-				defaultMessage: true,
-				reloadButton: true,
-				restartButton: true
+				defaultMessage: true, 	// {boolean} - Show default message
+				reloadButton: true, 	// {boolean} - Show reload button
+				restartButton: true		// {boolean} - Show restart button
 			},
 			messageCodes : {
 				defaultMessage: 'ERROR_MODAL.DEFAULT_MESSAGE'	// {string} - Default message i18n code
@@ -215,7 +215,7 @@ angular.module('an-error', [ 'pascalprecht.translate' ])
  * @description
  * ErrorController is a controller used by error's modal.
  */
-.controller('ErrorController', function ErrorController($scope, $anError) {
+.controller('ErrorController', function ErrorController($scope, $anError, $state) {
 	"use strict";
 	$scope.$anError = $anError;
 	
@@ -226,7 +226,10 @@ angular.module('an-error', [ 'pascalprecht.translate' ])
 	 * @description Reloads current document, just like a browser page's refresh.
 	 */
 	$scope.retry = function() {
-		document.location.reload();
+		$anError.close();
+        $state.transitionTo($state.$current, $state.$current.params, {
+            reload: true, inherit: true, notify: true
+        });
 	};
 	
 	/**
@@ -281,7 +284,9 @@ angular.module('an-error', [ 'pascalprecht.translate' ])
 				if (!exception.server) {
 					logger.fatal(message || "[no text]");
 				}
-				$anError.open(message);
+				if (!$anError.visible) {
+					$anError.open(message);
+				}
 			};
 
 			if (!exception.message) { // no need to continue if message is empty (it should not happen anyways)
@@ -305,7 +310,7 @@ angular.module('an-error', [ 'pascalprecht.translate' ])
 			} else if (exception.message.errorCode) {
 				// message is a simple object with an errorCode property (i18n translation)
 				errorCode = exception.message.errorCode;
-				messagePromise = $translate(errorCode);
+				messagePromise = $translate(errorCode, { param: exception.message.errorParam });
 			}
 			
 			messagePromise.then(errorProcess, function() {
