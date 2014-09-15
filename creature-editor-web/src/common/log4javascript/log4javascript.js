@@ -111,7 +111,7 @@
 		 */		
 		var defaults = this.defaults = {
 				level: log4javascript.Level.ERROR,
-				layout: new log4javascript.PatternLayout("%d{HH:mm:ss:SSS} - %-5p - %c{1} - %m{4}%n"),
+				layout: new log4javascript.PatternLayout("%d{HH:mm:ss:SSS} - %-5p - %c{4} - %m{4}%n"),
 				useBrowserConsole: false
 		};
 		
@@ -136,8 +136,8 @@
 		
 		/**
 		 * @description Returns a log4javascript level object from its name.<br>
-		 * Name is converted to uppercase for better flexibility in the configuration file.<br>
-		 * If empty, level `ERROR` will be used.
+		 * 		Name is converted to uppercase for better flexibility in the configuration file.<br>
+		 * 		If empty, level `ERROR` will be used.
 		 * @param {string} level Level's name `(ALL, TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF)`. 
 		 */
 		var getLevel = function(level) {
@@ -147,7 +147,7 @@
 		
 		/**
 		 * @description Returns a log4javascript appender object from its name.<br>
-		 *  Throws an exception if no match with available appenders.
+		 * 		Throws an exception if no match with available appenders.
 		 * @param {string} appender Appender's name `(Appender, AjaxAppender, AlertAppender, PopUpAppender, InPageAppender, BrowserConsoleAppender)` 
 		 */
 		var getAppender = function(appender) {
@@ -189,7 +189,7 @@
 		 * @param {Object} layout Layout's object. See {@link http://log4javascript.org/docs/manual.html#layouts documentation}.
 		 */		
 		this.layout = function(pattern) {
-			defaults.layout = pattern;
+			defaults.layout = new log4javascript.PatternLayout(pattern);
 		};
 	
 		/**
@@ -277,10 +277,10 @@
 			 * @description Defines a logger with a name.
 			 * @param {string} name Logger's name. 
 			 * @param {string=} level Level's name `(ALL, TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF)`.<br>
-			 * If `level` is omitted, `default level` will be used.
+			 * 		If `level` is omitted, `default level` will be used.
 			 * @param {string|array=} appenders Appender's names `(Appender, AjaxAppender, AlertAppender, PopUpAppender,`
-			 * `InPageAppender, BrowserConsoleAppender)`.<br> 
-			 * If `appenders` is omitted, this logger won't produce any log unless a parent logger has an appender. 
+			 *  	`InPageAppender, BrowserConsoleAppender)`.<br> 
+			 *  	If `appenders` is omitted, this logger won't produce any log unless a parent logger has an appender. 
 			 */
 			service.setLogger = function(name, level, appenders) {
 				var logger = log4javascript.getLogger(name);
@@ -300,7 +300,7 @@
 			 * @methodOf an-log4javascript.$anLogger
 			 * @description Defines a flexible appender that asynchronously sends log messages to a server via HTTP.
 			 * @param {string=} level Level's name `(ALL, TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF)`.<br>
-			 * If omitted, `default level` will be used
+			 * 		If omitted, `default level` will be used
 			 * @param {string} url The URL to which log messages should be sent. Note that this is subject to the usual Ajax restrictions: 
 			 *           the URL should be in the same domain as that of the page making the request. 
 			 * @param {boolean=} credentials Specifies whether cookies should be sent with each request. `false` by default.
@@ -338,9 +338,9 @@
 			 * If option `useBrowserConsole` is `true`, it returns browser's console object.<br>
 			 * In production mode, it returns a null logger.
 			 * @param {string} appender Appender's name `(Appender, AjaxAppender, AlertAppender, PopUpAppender,`<br> 
-			 * `InPageAppender, BrowserConsoleAppender)` 
+			 * 		`InPageAppender, BrowserConsoleAppender)` 
 			 * @param {string=} level Level's name `(ALL, TRACE, DEBUG, INFO, WARN, ERROR, FATAL, OFF)`.<br> 
-			 * If `level` is omitted, `default level` will be used.
+			 * 		If `level` is omitted, `default level` will be used.
 			 * @param {string=} name Logger's name. If omitted, `rootLogger` will be used 
 			 */
 			service.addAppender = function(appender, level, logger) {
