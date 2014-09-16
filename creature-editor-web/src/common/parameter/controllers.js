@@ -7,7 +7,7 @@
 		$scope.types = types;
 	})
 
-	.controller('ParameterListController', function($scope, $location, $translate, parameters, crudListMethods, $alertMessage, $interpolate, $stateParams) {
+	.controller('ParameterListController', function($scope, $location, $translate, parameters, crudListMethods, $alertMessage, $interpolate, $stateParams, $compile, $http, $templateCache) {
 		angular.extend($scope, crudListMethods($location.url()));
 
 		$scope.typeId = $stateParams.typeId;
@@ -27,26 +27,17 @@
 			dataField : 'value',
 			width : 300
 		}
-		// ,
-		// {
-		// displayName: $translate.instant('PARAMETER.FIELDS.ACTION'),
-		// sortable: false,
-		// width: 'auto',
-		// minWidth: 60,
-		// cellTemplate: 'parameter/parameter-grid-buttons.tpl.html'
-		// }
 		];
 
 		$scope.settings = {
-			altrows : true,
-			width : 900,
-			height : 500,
-			source : $scope.parameters,
-			columns : $scope.columns
-		};
-
-		$scope.edit = function() {
-			console.log('edit');
+				altrows : true,
+				width : 900,
+				height : 400,
+				source : $scope.parameters,
+				columns : $scope.columns,
+				rowselect: function(event) {
+					$scope.selectedRow = event.args.row;
+				}
 		};
 
 	})

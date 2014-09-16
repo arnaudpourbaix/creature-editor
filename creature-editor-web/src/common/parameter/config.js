@@ -40,11 +40,32 @@
 
 		$stateProvider.state('parameter.list.edit', {
 			url : '/:id',
-			views : {
-				'parameter-edit' : {
+			onEnter : function($state, $stateParams, $modal, $timeout) {
+				var modal = $modal.open({
 					controller : 'ParameterEditController',
-					templateUrl : "parameter/parameter-edit.tpl.html"
-				}
+					templateUrl : "parameter/parameter-edit.tpl.html",
+					resolve : {
+//						mod : function(Mod) {
+//							if ($stateParams.modId !== 'new') {
+//								return Mod.get({
+//									id : $stateParams.modId
+//								}).$promise;
+//							} else {
+//								return new Mod({
+//									id : null,
+//									name : ''
+//								});
+//							}
+//						}
+					}
+				});
+//				modal.result.then(function(result) {
+//					$state.go('^', {}, {
+//						reload : true
+//					});
+//				}, function() {
+//					$state.go('^');
+//				});
 			}
 		});
 

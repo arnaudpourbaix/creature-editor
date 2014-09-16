@@ -1,22 +1,7 @@
 <div class="parameter-list">
 	<jqx-grid jqx-settings="settings"></jqx-grid>
-	<!-- 
-	<table id="dataTable" data-jq-grid>
-		<thead>
-			<tr>
-				<th data-translate>PARAMETER.FIELDS.NAME</th>
-				<th data-translate>PARAMETER.FIELDS.LABEL</th>
-				<th data-translate>PARAMETER.FIELDS.VALUE</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr data-ng-repeat="parameter in parameters">
-				<td>{{parameter.name}}</td>
-				<td>{{parameter.label}}</td>
-				<td>{{parameter.value}}</td>
-			</tr>
-		</tbody>
-	</table>
-	 -->	
+	<div class="grid-action-buttons">
+		<button class="btn btn-primary" data-translate data-ng-disabled="!selectedRow" data-ui-sref="parameter.list.edit({ id: selectedRow.name })">PARAMETER.FIELDS.EDIT</button>
+	</div>	
 	<div data-ui-view="parameter-edit"></div>
 </div>
