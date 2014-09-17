@@ -7,10 +7,10 @@
 		$scope.types = types;
 	})
 
-	.controller('ParameterListController', function($scope, $location, $translate, parameters, crudListMethods, $alertMessage, $interpolate, $stateParams, $compile, $http, $templateCache) {
+	.controller('ParameterListController', function($scope, $location, crudListMethods, $translate, parameters, $stateParams) {
 		angular.extend($scope, crudListMethods($location.url()));
 
-		$scope.typeId = $stateParams.typeId;
+		//$scope.typeId = $stateParams.typeId;
 
 		$scope.parameters = parameters;
 

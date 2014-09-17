@@ -3,13 +3,14 @@
 		"LABEL" : "Parameter",
 		"LIST_TITLE" : "Parameters",
 		"FIELDS" : {
-			"ACTION": "Action",
-			"EDIT": "Edit",
 			"NAME" : "Name",
 			"LABEL" : "Label",
 			"DESCRIPTION" : "Description",
 			"VALUE" : "Value",
 			"STATE" : "State"
+		},
+		"BUTTONS": {
+			"EDIT": "Edit"
 		},
 		"VALUE_SELECT" : "Select a value",
 		"EDIT_TITLE" : "Parameter details",

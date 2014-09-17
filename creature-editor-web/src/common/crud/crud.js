@@ -1,10 +1,7 @@
-(function() {
-	'use strict';
+angular.module('crud', [ 'crud.directives', 'crud.services', 'pascalprecht.translate' ])
 
-	var module = angular.module('crud', [ 'crud.directives', 'crud.services', 'pascalprecht.translate' ]);
-
-	module.config([ '$translatePartialLoaderProvider', function CrudConfig($translatePartialLoaderProvider) {
+.config(function($translatePartialLoaderProvider) { 'use strict';
 		$translatePartialLoaderProvider.addPart('common/crud');
-	} ]);
+})
 
-})();
+;

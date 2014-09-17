@@ -3,12 +3,12 @@
 
 	angular.module('parameter.services', [])
 
-	.factory('parameterSettings', [ 'appSettings', function(appSettings) {
+	.factory('parameterSettings', function(appSettings) {
 		return {
 			url : appSettings.restBaseUrl + 'parameter/',
 			typeUrl : appSettings.restBaseUrl + 'parameterType/'
 		};
-	} ])
+	})
 	
 	.factory('Parameter', function($resource, parameterSettings) {
 		var res = $resource(parameterSettings.url + ':id', {}, {
