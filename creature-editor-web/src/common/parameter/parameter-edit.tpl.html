@@ -1,4 +1,6 @@
 <form role="form" name="parameterForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' }">
+<div class="modal-header"></div>
+<div class="modal-body">
 	<div class="form-group">
 		<label for="parameter.name" class="col-sm-2 control-label" data-translate>PARAMETER.FIELDS.NAME</label>
 		<div class="col-sm-10" data-ng-class="{'has-error': parameterForm.name.$invalid}">
@@ -18,10 +20,14 @@
 			<textarea name="description" rows="3" class="form-control" data-ng-model="parameter.description" data-ng-maxlength="1000" disabled="disabled"></textarea>			
 		</div>
 	</div>
-	<div data-ng-if="parameter.datatype === 'STRING'" data-ng-include="'param-config/parameter-edit-string.tpl.html'"></div>
-	<div data-ng-if="parameter.datatype === 'INT'" data-ng-include="'param-config/parameter-edit-int.tpl.html'"></div>
-	<div data-ng-if="parameter.datatype === 'BOOLEAN'" data-ng-include="'param-config/parameter-edit-boolean.tpl.html'"></div>
-	<div data-ng-if="parameter.datatype === 'LIST'" data-ng-include="'param-config/parameter-edit-list.tpl.html'"></div>
-	<div data-ng-if="parameter.datatype === 'FOLDER'" data-ng-include="'param-config/parameter-edit-folder.tpl.html'"></div>
+	<div data-ng-if="parameter.datatype === 'STRING'" data-ng-include="'parameter/parameter-edit-string.tpl.html'"></div>
+	<div data-ng-if="parameter.datatype === 'INT'" data-ng-include="'parameter/parameter-edit-int.tpl.html'"></div>
+	<div data-ng-if="parameter.datatype === 'BOOLEAN'" data-ng-include="'parameter/parameter-edit-boolean.tpl.html'"></div>
+	<div data-ng-if="parameter.datatype === 'LIST'" data-ng-include="'parameter/parameter-edit-list.tpl.html'"></div>
+	<div data-ng-if="parameter.datatype === 'FOLDER'" data-ng-include="'parameter/parameter-edit-folder.tpl.html'"></div>
+</div>
+<div class="modal-footer">
 	<crud-buttons data-remove="false" />
+</div>
 </form>
+

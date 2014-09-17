@@ -44,28 +44,22 @@
 				var modal = $modal.open({
 					controller : 'ParameterEditController',
 					templateUrl : "parameter/parameter-edit.tpl.html",
+					size: 'lg',
 					resolve : {
-//						mod : function(Mod) {
-//							if ($stateParams.modId !== 'new') {
-//								return Mod.get({
-//									id : $stateParams.modId
-//								}).$promise;
-//							} else {
-//								return new Mod({
-//									id : null,
-//									name : ''
-//								});
-//							}
-//						}
+						parameter : function(Parameter) {
+							return Parameter.get({
+								id: $stateParams.id
+							}).$promise;
+						}
 					}
 				});
-//				modal.result.then(function(result) {
-//					$state.go('^', {}, {
-//						reload : true
-//					});
-//				}, function() {
-//					$state.go('^');
-//				});
+				modal.result.then(function(result) {
+					$state.go('^', {}, {
+						reload : true
+					});
+				}, function() {
+					$state.go('^');
+				});
 			}
 		});
 

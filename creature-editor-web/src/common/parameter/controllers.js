@@ -42,8 +42,8 @@
 
 	})
 
-	.controller('ParameterEditController', function($scope, $state, $stateParams, $translate, ParameterService) {
-		$scope.parameter = angular.copy(ParameterService.getById($scope.parameters, $stateParams.id));
+	.controller('ParameterEditController', function($scope, $state, parameter, $translate, ParameterService) {
+		$scope.parameter = parameter;
 
 		$scope.valuesSelect = {
 			data : 'parameter.parameterValues',
@@ -57,7 +57,7 @@
 		};
 
 		$scope.onCancel = function() {
-			$state.go('^');
+			$scope.$dismiss();
 		};
 
 		$scope.onSave = function() {
