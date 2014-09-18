@@ -10,21 +10,22 @@
 	.controller('ParameterListController', function($scope, $location, crudListMethods, $translate, parameters, $stateParams) {
 		angular.extend($scope, crudListMethods($location.url()));
 
-		//$scope.typeId = $stateParams.typeId;
-
 		$scope.parameters = parameters;
 
 		$scope.columns = [ {
 			text : $translate.instant('PARAMETER.FIELDS.NAME'),
 			dataField : 'name',
+			type : 'string',
 			width : 300
 		}, {
 			text : $translate.instant('PARAMETER.FIELDS.LABEL'),
 			dataField : 'label',
+			type : 'string',
 			width : 200
 		}, {
 			text : $translate.instant('PARAMETER.FIELDS.VALUE'),
 			dataField : 'value',
+			type : 'string',
 			width : 300
 		}
 		];
@@ -44,16 +45,17 @@
 
 	.controller('ParameterEditController', function($scope, $state, parameter, $translate, ParameterService) {
 		$scope.parameter = parameter;
+		
+		$scope.edit = { model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' };
 
 		$scope.valuesSelect = {
-			data : 'parameter.parameterValues',
-			displayMember : 'description',
-			valueMember : 'value',
-			options : {
-				placeHolder : $translate.instant('PARAMETER.VALUE_SELECT'),
-				autoOpen : true,
-				width : '300px'
-			}
+				width: 300,
+				height: 30,
+				autoDropDownHeight: true,
+				displayMember: "description",
+				valueMember: "value",
+				//placeHolder : $translate.instant('PARAMETER.VALUE_SELECT'),
+				source: $scope.parameter.parameterValues
 		};
 
 		$scope.onCancel = function() {
@@ -61,23 +63,11 @@
 		};
 
 		$scope.onSave = function() {
-			var item = ParameterService.getById($scope.parameters, $scope.parameter.$id());
-			angular.extend(item, $scope.parameter);
-			$state.go('^');
+			$scope.$close();
 		};
 
 		$scope.onSaveError = function() {
-			$state.go('^');
-		};
-
-		$scope.onRemove = function() {
-			var item = ParameterService.getById($scope.parameters, $scope.parameter.$id());
-			$scope.parameters.splice($scope.parameters.indexOf(item), 1);
-			$state.go('^');
-		};
-
-		$scope.onRemoveError = function() {
-			$state.go('^');
+			$scope.$dismiss();
 		};
 
 	})
