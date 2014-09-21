@@ -1,10 +1,3 @@
-/************* PANELS.LESS *****************/
-/*                                         */
-/*         déclaration des panels          */
-/*           app-panel & left-panel        */
-/*                                         */
-/************** PANELS.LESS ****************/
-
 .left-panel {
     position: fixed;
     top: 0;
@@ -159,7 +152,7 @@
         margin-bottom:20px;
     }
     h3.item-link.opened .fa-chevron-circle-down {
-    	transform: rotate(180deg);
+        transform: rotate(180deg);
     }
 
     h3.item-link:hover span:hover + .fa-chevron-circle-down {
@@ -217,20 +210,20 @@
 .left-panel{
     &.ng-enter, &.ng-hide-remove,
     &.ng-leave, &.ng-hide-add{
-		transition: transform 0.7s ease;
+        transition: transform 0.7s ease;
     }
     &.ng-enter, &.ng-leave.ng-leave-active, &.ng-hide-add.ng-hide-add-active, &.ng-hide-remove{
         transform: translateX(-1230px);
     }
     &.ng-enter.ng-enter-active, &.ng-leave, &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active{
-		transform: translateX(0);
+        transform: translateX(0);
     }
 }
 
 .left-panel .slide{
     &.ng-enter, &.ng-hide-remove,
     &.ng-leave, &.ng-hide-add{
-		transition: max-height 0.5s ease;
+        transition: max-height 0.5s ease;
     }
     &.ng-enter, &.ng-leave.ng-leave-active, &.ng-hide-add.ng-hide-add-active, &.ng-hide-remove{
         max-height: 0;

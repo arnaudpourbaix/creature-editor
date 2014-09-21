@@ -12,30 +12,39 @@
 
 		$scope.parameters = parameters;
 
-		$scope.columns = [ {
+		var source = {
+				localdata: $scope.parameters,
+				datafields: [
+				   { name: 'name', type: 'string' },
+				   { name: 'label', type: 'string' },
+				   { name: 'value', type: 'string' }
+				],
+				datatype: "array"
+		};
+		
+		var dataAdapter = new $.jqx.dataAdapter(source);
+
+		var columns = [ {
 			text : $translate.instant('PARAMETER.FIELDS.NAME'),
 			dataField : 'name',
-			type : 'string',
 			width : 300
 		}, {
 			text : $translate.instant('PARAMETER.FIELDS.LABEL'),
 			dataField : 'label',
-			type : 'string',
 			width : 200
 		}, {
 			text : $translate.instant('PARAMETER.FIELDS.VALUE'),
 			dataField : 'value',
-			type : 'string',
 			width : 300
 		}
 		];
-
+		
 		$scope.settings = {
 				altrows : true,
 				width : 900,
 				height : 400,
-				source : $scope.parameters,
-				columns : $scope.columns,
+				source : dataAdapter,
+				columns : columns,
 				rowselect: function(event) {
 					$scope.selectedRow = event.args.row;
 				}
@@ -43,7 +52,7 @@
 
 	})
 
-	.controller('ParameterEditController', function($scope, $state, parameter, $translate, ParameterService) {
+	.controller('ParameterEditController', function($scope, $state, parameter, $translate, ParameterService, toaster) {
 		$scope.parameter = parameter;
 		
 		$scope.edit = { model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' };

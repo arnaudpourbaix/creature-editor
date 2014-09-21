@@ -91,6 +91,7 @@ module.exports = function(grunt) {
 					'<%= app_folders.vendor %>/angular-ui-router/release/angular-ui-router.js',
 					'<%= app_folders.vendor %>/angular-local-storage/angular-local-storage.min.js',
 					'<%= app_folders.vendor %>/angular-bootstrap/ui-bootstrap-tpls.min.js', 
+					'<%= app_folders.vendor %>/AngularJS-Toaster/toaster.js', 
 					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
 					'<%= app_folders.src %>/assets/jqwidgets/jqx-all.js', 
 					'<%= app_folders.src %>/assets/Long.js',
@@ -98,7 +99,8 @@ module.exports = function(grunt) {
 				],
 			css : [ 
 			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
-			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css'
+			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css',
+			     '<%= app_folders.vendor %>/AngularJS-Toaster/toaster.css'
 			   ],
 			assets : [ 
 			     '<%= app_folders.vendor %>/bootstrap/dist/fonts/*', 

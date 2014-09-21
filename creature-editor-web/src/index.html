@@ -22,8 +22,9 @@
 
 </head>
 <body data-ng-controller="MainController">
+	<toaster-container toaster-options="{'position-class': 'toast-top-full-width'}"></toaster-container>
 	<div data-ng-include="'main/header.tpl.html'"></div>
 	<div data-ng-include="'error/error.tpl.html'"></div>
-	<div class="container" data-ui-view></div>
+	 <div class="container" data-ui-view></div>
 </body>
 </html>

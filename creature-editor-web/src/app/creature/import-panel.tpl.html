@@ -1,0 +1,12 @@
+<div data-ng-controller="CreatureImportController"> 
+	<div data-apx-panel="showPanel==='creature-import'" data-apx-panel-on-close="closePanel()">
+		<div class="left-panel axis">
+			<div class="left-panel-inner">
+				<form role="form" name="creatureImportForm" class="form-horizontal" novalidate>
+					<alert data-ng-show="mod != null" type="'danger'"><span data-translate data-translate-values="{ name : mod.name }">SPELL.IMPORT.WARNING_MESSAGE</span></alert>
+					<button type="button" class="btn btn-primary bottom-right" data-ng-click="confirm()" data-translate>SPELL.IMPORT.CONFIRM_BUTTON</button>
+				</form>
+			</div>
+		</div>
+	</div>		
+</div>

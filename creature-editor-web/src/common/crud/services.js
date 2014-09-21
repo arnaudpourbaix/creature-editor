@@ -1,4 +1,6 @@
-angular.module('crud.services', []).factory('crudListMethods', function($location) { 'use strict';
+angular.module('crud.services', [])
+
+.factory('crudListMethods', function($location) { 'use strict';
 	return function(pathPrefix) {
 		var mixin = {
 			'new' : function() {
@@ -17,4 +19,6 @@ angular.module('crud.services', []).factory('crudListMethods', function($locatio
 		};
 		return mixin;
 	};
-});
+})
+
+;

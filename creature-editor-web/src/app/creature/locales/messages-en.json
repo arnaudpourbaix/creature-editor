@@ -3,8 +3,12 @@
 		"LABEL" : "Creature",
 		"LIST_TITLE" : "Creatures",
 		"EDIT_TITLE" : "Creature details",
+		"BUTTONS": {
+			"IMPORT": "Import",
+			"CANCEL": "Cancel"
+		},
 		"FIELDS" : {
-			"PARENT_NAME" : "Parent",
+			"RESOURCE" : "Resource",
 			"NAME" : "Name"
 		},
 		"COLUMNS" : {

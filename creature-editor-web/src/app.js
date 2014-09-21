@@ -11,15 +11,16 @@ angular.module('editor', [
 	'ui.bootstrap',
 	'ui.utils',
 	'jqwidgets',
+	'toaster',
 
 	// Templates
 	'templates-app', 
 	'templates-common',
 	
 	// Common modules
+	'apx-tools', 
 	'an-error', 
 	'an-log4javascript',
-	'alert-message',
 	'translate-wrapper',
 	'crud',
 	'parameter', 
