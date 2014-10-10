@@ -27,6 +27,7 @@ angular.module('editor', [
 	
 	// Application modules
 	'editor.main',
-	'editor.creature'
+	'editor.creature',
+	'editor.mod.services'
 	
 ]);

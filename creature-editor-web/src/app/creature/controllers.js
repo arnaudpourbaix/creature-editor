@@ -2,8 +2,8 @@
 	'use strict';
 
 	angular.module('editor.creature.controllers', [])
-
-	.controller('CreatureListController', function($scope, $translate, creatures, CreatureImportService) {
+	
+	.controller('CreatureListController', function($scope, $translate, CreatureImportService, apxPanel, creatures, mods) {
 			$scope.creatures = creatures;
 			
 			var source = {
@@ -38,27 +38,43 @@
 						$scope.selectedRow = event.args.row;
 					}
 			};
-			
-		    $scope.showPanel = false;
-		    $scope.openPanel = function(panelId){
-		        $scope.showPanel = panelId;
-		    };
-		    $scope.closePanel = function(){
-		        $scope.showPanel = false;
-		    };
-			
-			$scope.import = function() {
-				$scope.openPanel('creature-import');
-				//CreatureImportService.startImport({ id: 1 });
-			};
 
-			$scope.stopImport = function() {
-				CreatureImportService.cancelImport();
+			$scope.import = function() {
+				var panel = apxPanel.open({
+					templateUrl : 'creature/import-panel.tpl.html',
+					controller : 'CreatureImportController',
+					resolve : {
+						mods : function() {
+							return $scope.mods.$promise;
+						}
+					}
+				});
 			};
-				
+			
+			$scope.mods = mods;
+			$scope.import();
+			
 	})
 
-	.controller('CreatureImportController', function($scope, $translate, CreatureImportService) {
+	.controller('CreatureImportController', function($scope, $translate, CreatureImportService, $panelInstance, mods) {
+		
+		$scope.mods = mods;
+		
+		$scope.options = {
+				resource: null,
+				override: false,
+				full: false
+		};
+		
+		$scope.import = function() {
+			CreatureImportService.startImport($scope.options);
+		};
+
+		$scope.stopImport = function() {
+			CreatureImportService.cancelImport();
+		};
+		
+		
 	})
 	
 	;

@@ -1,12 +1,29 @@
-<div data-ng-controller="CreatureImportController"> 
-	<div data-apx-panel="showPanel==='creature-import'" data-apx-panel-on-close="closePanel()">
-		<div class="left-panel axis">
-			<div class="left-panel-inner">
-				<form role="form" name="creatureImportForm" class="form-horizontal" novalidate>
-					<alert data-ng-show="mod != null" type="'danger'"><span data-translate data-translate-values="{ name : mod.name }">SPELL.IMPORT.WARNING_MESSAGE</span></alert>
-					<button type="button" class="btn btn-primary bottom-right" data-ng-click="confirm()" data-translate>SPELL.IMPORT.CONFIRM_BUTTON</button>
-				</form>
+<form role="form" name="creatureImportForm" class="form-horizontal" novalidate>
+{{mods}}
+	<div class="form-group">
+		<label for="options.resource" class="col-sm-2 control-label" data-translate>CREATURE.IMPORT.FIELDS.RESOURCE</label>
+		<div class="col-sm-10">
+			<input id="options.resource" class="form-control" type="text" placeholder="{{ 'CREATURE.IMPORT.FIELDS.RESOURCE' | translate }}" 
+					data-ng-model="options.resource" data-ng-trim="true" data-focus-me="true" />
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label" data-translate>CREATURE.IMPORT.FIELDS.OVERRIDE</label>
+		<div class="col-sm-10">
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" data-ng-model="options.override" data-btn-radio="true" data-translate>MAIN.YES</button>
+				<button type="button" class="btn btn-default" data-ng-model="options.override" data-btn-radio="false" data-translate>MAIN.NO</button>
 			</div>
 		</div>
-	</div>		
-</div>
+	</div>
+	<div class="form-group">
+		<label class="col-sm-2 control-label" data-translate>CREATURE.IMPORT.FIELDS.FULL</label>
+		<div class="col-sm-10">
+			<div class="btn-group">
+				<button type="button" class="btn btn-default" data-ng-model="options.full" data-btn-radio="true" data-translate>MAIN.YES</button>
+				<button type="button" class="btn btn-default" data-ng-model="options.full" data-btn-radio="false" data-translate>MAIN.NO</button>
+			</div>
+		</div>
+	</div>
+	<button type="button" class="btn btn-primary bottom-right" data-ng-click="validate()" data-translate>CREATURE.IMPORT.BUTTONS.VALIDATE</button>
+</form>

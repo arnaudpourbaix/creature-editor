@@ -15,10 +15,15 @@
 			"ACTION" : "Actions",
 			"DELETE" : "Delete"
 		},
-		"CONTEXTUAL" : {
-			"ADD" : "Add",
-			"EDIT" : "Edit",
-			"DELETE" : "Delete"
+		"IMPORT" : {
+			"FIELDS" : {
+				"RESOURCE" : "Resource",
+				"OVERRIDE" : "Override",
+				"FULL" : "Full"
+			},
+			"BUTTONS": {
+				"VALIDATE": "Validate"
+			}
 		},
 		"EDIT_TITLE" : "{{name}}",
 		"NEW_TITLE" : "New category"

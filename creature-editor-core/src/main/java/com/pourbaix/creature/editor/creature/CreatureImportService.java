@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.pourbaix.creature.editor.domain.Creature;
 import com.pourbaix.creature.editor.repository.CreatureRepository;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
@@ -79,6 +81,13 @@ public class CreatureImportService implements Runnable {
 		this.modId = modId;
 		gameService.openGame();
 		resources = readerService.getCreatureResources();
+		resources = FluentIterable
+                .from(resources)
+                .filter(new Predicate<ResourceEntry>() {
+        			public boolean apply(ResourceEntry input) {
+        				return input.getResourceName().startsWith("AL");
+        			}
+        		}).toImmutableList();
 		deferredResult.setResult(resources.size());
 		running = true;
 		thread = new Thread(this, "import");

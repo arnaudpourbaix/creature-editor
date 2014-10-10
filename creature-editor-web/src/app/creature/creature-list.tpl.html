@@ -1,6 +1,6 @@
 <div class="creature">
-	<div data-ng-include="'creature/import-panel.tpl.html'"></div>
 	<div data-translate>CREATURE.LIST_TITLE</div>
+	{{mods}}
 	<button type="button" class="btn btn-primary" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
 	<button type="button" class="btn btn-danger" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
 	<jqx-grid jqx-settings="settings"></jqx-grid>

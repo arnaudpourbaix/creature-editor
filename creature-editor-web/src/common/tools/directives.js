@@ -8,67 +8,75 @@ angular.module('apx-tools.directives', [])
 	};
 })
 
-
- /**
-  * @ngdoc directive
-  * @name apx-tools.directive:anPanel
-  * @restrict A
-  * @priority 0
-  * @description
-  * Opens/closes a panel. <br>
-  * Add an overlay on the div to close it when clicked outsite. <br>
-  * The div have to be closed when scope.showPanel is set to false. <br>
-  * # Example
-  * <pre>
-  * <div apx-panel="myCondition" apx-panel-on-close="myCondition=false">
-  *     <!-- Panel content -->
-  * </div>
-  * <!-- This panel will be opened whenever myCondition is set to true -->
-  * <!-- It will be closed automatically when clicked outside or when myCondition is set to false. -->
-  * </pre>
-  */
-  .directive('apxPanel', function($animate, anTranscluder, $parse) { "use strict";
-      return {
-          restrict : 'A',
-          transclude: true,
-          template: '<div></div><div></div>',
-          link : function(scope, element, attributes,controller,transclude) {
-              var transcludeContainer = $(element.children()[0]);
-              var maskContainer       = $(element.children()[1]);
-              var condition           = attributes.apxPanel;
-              var closeAction         = attributes.apxPanelOnClose;
-              var transcluder         = anTranscluder(transcludeContainer, transclude);
-
-              element.css('z-index','1001');
-              transcludeContainer.css('z-index','1001');
-              transcludeContainer.css('position','relative');
-
-              maskContainer.click(function(){
-                  scope.$eval(closeAction);
-                  if($parse(condition)(scope)){
-                      console.warn('The close function should make the apxPanel condition falsy. The panel will not be closed');
-                  }
-                  scope.$digest();
-              });
-
-              scope.$watch(condition, function(val){
-                  if (val){
-                      transcluder.addTransclude();
-                      $animate.addClass(maskContainer,'main-overlay');
-                  } else {
-                      transcluder.removeTransclude();
-                      $animate.removeClass(maskContainer,'main-overlay');
-                  }
-              });
-
-              scope.$on('$destroy',function(){
-                  transcluder.removeTransclude();
-                  maskContainer.unbind('click');
-              });
-          }
-      };
+.directive("apxScopeElement", function() {
+	return {
+		restrict : "A",
+		compile : function(tElement, tAttrs, transclude) {
+			return {
+				pre : function preLink(scope, iElement, iAttrs) {
+					scope[iAttrs.apxScopeElement] = iElement;
+				}
+			};
+		}
+	};
 })
 
 
+.directive("panelWindow", function($panelStack, $timeout) {
+			return {
+				restrict : 'EA',
+				scope : {
+					index : '@',
+					animate : '='
+				},
+				replace : true,
+				transclude : true,
+				template : '<div tabindex="-1" class="left-panel" ng-class="{in: animate}" ng-style="{\'z-index\': 1050 + index*10, display: \'block\'}"><div class="left-panel-inner" ng-click="close($event)" ng-transclude></div></div>',
+				link : function(scope, element, attrs) {
+					element.addClass(attrs.windowClass || '');
+					scope.size = attrs.size;
+
+					$timeout(function() {
+						// trigger CSS transitions
+						scope.animate = true;
+						// focus a freshly-opened modal
+						element[0].focus();
+					});
+
+					scope.close = function(evt) {
+						var panel = $panelStack.getTop();
+						if (panel && panel.value.backdrop && panel.value.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
+							evt.preventDefault();
+							evt.stopPropagation();
+							$panelStack.dismiss(panel.key, 'backdrop click');
+						}
+					};
+				}
+			};
+		})
+
+.directive("panelBackdrop", function($timeout, $panelStack) {
+	return {
+		restrict : 'EA',
+		replace : true,
+		template : '<div class="modal-backdrop fade" ng-click="close($event)" ng-class="{in: animate}" ng-style="{\'z-index\': 1040 + (index && 1 || 0) + index*10}"></div>',
+		link : function(scope) {
+			scope.animate = false;
+			// trigger CSS transitions
+			$timeout(function() {
+				scope.animate = true;
+			});
+
+			scope.close = function(evt) {
+				var panel = $panelStack.getTop();
+				if (panel && panel.value.backdrop && panel.value.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
+					evt.preventDefault();
+					evt.stopPropagation();
+					$panelStack.dismiss(panel.key, 'backdrop click');
+				}
+			};
+		}
+	};
+})
 
 ;

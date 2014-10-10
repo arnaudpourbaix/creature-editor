@@ -13,9 +13,12 @@
 			controller : 'CreatureListController',
 			templateUrl : 'creature/creature-list.tpl.html',
 			resolve : {
-				creatures : [ 'Creature', function(Creature) {
+				creatures : function(Creature) {
 					return Creature.query().$promise;
-				} ]
+				},
+				mods: function(Mod) {
+					return Mod.query().$promise;
+				}
 			}
 		});
 
