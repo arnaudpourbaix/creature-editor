@@ -44,7 +44,7 @@
 		</createTable>
 	
 		<createTable tableName="game">
-			<column name="id" type="int" autoIncrement="true" >
+			<column name="id" type="VARCHAR2(10)">
 				<constraints primaryKey="true" />
 			</column>
 			<column name="name" type="VARCHAR2(50)">
@@ -87,7 +87,7 @@
 			<column name="resource" type="VARCHAR2(8)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="game_id" type="int" />
+			<column name="game_id" type="VARCHAR2(10)" />
 		</createTable>
 
 		<createTable tableName="attribute">

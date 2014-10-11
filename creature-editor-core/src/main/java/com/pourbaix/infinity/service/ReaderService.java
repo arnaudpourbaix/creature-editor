@@ -81,33 +81,33 @@ public class ReaderService {
 		}
 	}
 
-	public List<Creature> getCreatures() throws ServiceException {
+	public Creature getCreature(String resource) throws ServiceException {
+		try {
+			Creature creature = creatureFactory.getCreature(resource, false);
+			return creature;
+		} catch (FactoryException e) {
+			throw new ServiceException(e.getCode(), e.getParam());
+		}
+	}
+
+	public Creature getCreature(ResourceEntry entry, boolean onlyName) throws ServiceException {
+		logger.trace("getCreature:" + entry.getResourceName());
+		try {
+			Creature creature = creatureFactory.getCreature(entry, onlyName);
+			return creature;
+		} catch (FactoryException e) {
+			throw new ServiceException(e.getCode(), e.getParam());
+		}
+	}
+
+	public List<Creature> getCreatures(boolean onlyName) throws ServiceException {
 		try {
 			List<Creature> creatures = new ArrayList<>();
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("cre")) {
-				Creature creature = creatureFactory.getCreature(entry);
+				Creature creature = creatureFactory.getCreature(entry, false);
 				creatures.add(creature);
 			}
 			return creatures;
-		} catch (FactoryException e) {
-			throw new ServiceException(e.getCode(), e.getParam());
-		}
-	}
-
-	public Creature getCreature(String resource) throws ServiceException {
-		try {
-			Creature creature = creatureFactory.getCreature(resource);
-			return creature;
-		} catch (FactoryException e) {
-			throw new ServiceException(e.getCode(), e.getParam());
-		}
-	}
-
-	public Creature getCreature(ResourceEntry entry) throws ServiceException {
-		logger.trace("getCreature:" + entry.getResourceName());
-		try {
-			Creature creature = creatureFactory.getCreature(entry);
-			return creature;
 		} catch (FactoryException e) {
 			throw new ServiceException(e.getCode(), e.getParam());
 		}

@@ -22,6 +22,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CREATURE", schema = "PUBLIC", catalog = "PUBLIC")
+//@NamedEntityGraph(name = "Creature.lists", attributeNodes = @NamedAttributeNode("game"))
 public class Creature implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,7 +35,7 @@ public class Creature implements java.io.Serializable {
 	@Column(name = "RESOURCE", unique = true, nullable = false)
 	private String resource;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
 

@@ -63,19 +63,17 @@
 		var service = {
 			running : false,
 			creatures : [],
-			mod : null,
+			options : null,
 			progressValue : 0,
 			interval : null,
 
-			startImport : function(mod) {
+			startImport : function(options) {
 				$http({
-					method : 'GET',
+					method : 'POST',
 					url : creatureSettings.url + 'import',
-					params : {
-						modId : mod.id
-					}
+					data : options
 				}).then(function(response) {
-					service.mod = mod;
+					service.options = options;
 					service.creatures = [];
 					service.creatureCount = parseInt(response.data, 10);
 					if (service.creatureCount === -1) {

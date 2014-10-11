@@ -54,7 +54,7 @@ public class PersistenceConfig {
 		Map<String, String> jpaProperties = new HashMap<>();
 		jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
 		jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
-		jpaProperties.put(org.hibernate.cfg.Environment.SHOW_SQL, "true");
+		jpaProperties.put(org.hibernate.cfg.Environment.SHOW_SQL, "false");
 		jpaProperties.put("hibernate.cache.use_second_level_cache", "true");
 		jpaProperties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
 		jpaProperties.put("hibernate.cache.use_query_cache", "true");

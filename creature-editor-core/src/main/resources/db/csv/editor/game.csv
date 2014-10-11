@@ -1,4 +1,7 @@
 id;name
-1;Baldur's Gate Tutu
-2;Baldur's Gate Trilogy
-3;Baldur's Gate Enhanced Edition
+BG1;Baldur's Gate
+TUTU;Baldur's Gate Tutu
+BGT;Baldur's Gate Trilogy
+BG1EE;Baldur's Gate Enhanced Edition
+BG2;Baldur's Gate II
+BG2EE;Baldur's Gate II Enhanced Edition

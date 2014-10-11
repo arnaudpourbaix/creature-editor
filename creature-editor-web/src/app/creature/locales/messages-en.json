@@ -8,6 +8,7 @@
 			"CANCEL": "Cancel"
 		},
 		"FIELDS" : {
+			"GAME" : "Game",
 			"RESOURCE" : "Resource",
 			"NAME" : "Name"
 		},
@@ -17,9 +18,10 @@
 		},
 		"IMPORT" : {
 			"FIELDS" : {
+				"MOD" : "Mod",
 				"RESOURCE" : "Resource",
 				"OVERRIDE" : "Override",
-				"FULL" : "Full"
+				"ONLY_NAME" : "Only names"
 			},
 			"BUTTONS": {
 				"VALIDATE": "Validate"

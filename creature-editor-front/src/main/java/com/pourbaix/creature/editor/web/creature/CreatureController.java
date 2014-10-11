@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
+import com.pourbaix.creature.editor.creature.CreatureImportOptions;
 import com.pourbaix.creature.editor.creature.CreatureImportService;
 import com.pourbaix.creature.editor.domain.Creature;
 import com.pourbaix.creature.editor.repository.CreatureRepository;
@@ -33,18 +34,18 @@ public class CreatureController {
 	@Resource
 	private CreatureImportService creatureImportService;
 
-	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET)
 	public List<Creature> list() {
 		List<Creature> creatures = creatureRepository.findAll();
 		return creatures;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Creature getById(@PathVariable Integer id) {
 		return creatureRepository.findOne(id);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, produces = "application/json")
+	@RequestMapping(method = RequestMethod.PUT)
 	public Creature save(@RequestBody Creature creature) {
 		creatureRepository.save(creature);
 		return creature;
@@ -56,10 +57,10 @@ public class CreatureController {
 		creatureRepository.delete(id);
 	}
 
-	@RequestMapping(value = "/import", params = "modId", method = RequestMethod.GET, produces = "application/json")
-	public DeferredResult<Integer> importCreatures(Integer modId) throws ServiceException {
+	@RequestMapping(value = "/import", method = RequestMethod.POST)
+	public DeferredResult<Integer> importCreatures(@RequestBody CreatureImportOptions options) throws ServiceException {
 		final DeferredResult<Integer> result = new DeferredResult<>();
-		creatureImportService.startImport(result, modId);
+		creatureImportService.startImport(result, options);
 		return result;
 	}
 

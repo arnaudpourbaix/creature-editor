@@ -9,8 +9,8 @@
 			var source = {
 					localdata: $scope.creatures,
 					datafields: [
-					   { name: 'resource', type: 'string' },
-					   { name: 'game', type: 'string' }
+					   { name: 'game', type: 'string', map: 'game>id', mapChar : '>' },
+					   { name: 'resource', type: 'string' }
 					],
 					datatype: "array"
 			};
@@ -18,12 +18,16 @@
 			var dataAdapter = new $.jqx.dataAdapter(source);
 
 			var columns = [ {
-				text : $translate.instant('CREATURE.FIELDS.RESOURCE'),
-				dataField : 'resource',
+				text : $translate.instant('CREATURE.FIELDS.GAME'),
+				dataField : 'game',
 				width : 100
 			}, {
+				text : $translate.instant('CREATURE.FIELDS.RESOURCE'),
+				dataField : 'resource',
+				width : 200
+			}, {
 				text : $translate.instant('CREATURE.FIELDS.NAME'),
-				dataField : 'game',
+				dataField : 'name',
 				width : 200
 			}
 			];
@@ -52,7 +56,6 @@
 			};
 			
 			$scope.mods = mods;
-			$scope.import();
 			
 	})
 
@@ -61,12 +64,13 @@
 		$scope.mods = mods;
 		
 		$scope.options = {
-				resource: null,
+				mod: null,
+				resource: 'AL.*',
 				override: false,
-				full: false
+				onlyName: true
 		};
 		
-		$scope.import = function() {
+		$scope.validate = function() {
 			CreatureImportService.startImport($scope.options);
 		};
 

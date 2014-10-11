@@ -7,6 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.annotation.Resource;
 import javax.persistence.PersistenceException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.exception.DataException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,13 +42,12 @@ public class CreatureImportService implements Runnable {
 	private volatile boolean running = false;
 	private Thread thread;
 	private LinkedBlockingQueue<Creature> creatures;
-	private Integer modId;
+	private CreatureImportOptions options;
 	private List<ResourceEntry> resources;
 	private ServiceException exception;
 
 	public void run() {
-//		Mod mod = modRepository.findOne(modId);
-//		spellRepository.deleteByModId(modId);
+		//		spellRepository.deleteByModId(modId);
 		creatures = new LinkedBlockingQueue<>();
 		for (ResourceEntry resource : resources) {
 			if (!running) { // process has been cancelled
@@ -55,8 +55,8 @@ public class CreatureImportService implements Runnable {
 			}
 			Creature creature = null;
 			try {
-				creature = readerService.getCreature(resource);
-//				creature.setMod(mod);
+				creature = readerService.getCreature(resource, options.isOnlyName());
+				//creature.set
 				creatureRepository.save(creature);
 				creatures.add(creature);
 			} catch (ServiceException e) {
@@ -72,25 +72,25 @@ public class CreatureImportService implements Runnable {
 		running = false;
 	}
 
-	public void startImport(DeferredResult<Integer> deferredResult, Integer modId) throws ServiceException {
+	public void startImport(DeferredResult<Integer> deferredResult, final CreatureImportOptions options) throws ServiceException {
 		if (running) {
 			deferredResult.setResult(-1);
 			return;
 		}
 		this.exception = null;
-		this.modId = modId;
+		this.options = options;
 		gameService.openGame();
 		resources = readerService.getCreatureResources();
-		resources = FluentIterable
-                .from(resources)
-                .filter(new Predicate<ResourceEntry>() {
-        			public boolean apply(ResourceEntry input) {
-        				return input.getResourceName().startsWith("AL");
-        			}
-        		}).toImmutableList();
+		if (StringUtils.isNotEmpty(options.getResource())) {
+			resources = FluentIterable.from(resources).filter(new Predicate<ResourceEntry>() {
+				public boolean apply(ResourceEntry entry) {
+					return entry.getResourceName().matches(options.getResource());
+				}
+			}).toImmutableList();
+		}
 		deferredResult.setResult(resources.size());
 		running = true;
-		thread = new Thread(this, "import");
+		thread = new Thread(this, "import-creature");
 		thread.start();
 	}
 
