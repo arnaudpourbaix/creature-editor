@@ -23,6 +23,8 @@ It is split in 4 maven submodules that are managed by Spring Boot parent module.
 - batch program to generate creature's scripts.
 
 ## Prerequisites
+* Must have [Java JDK 1.7](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html).
+* Must have [Maven 3.x](http://maven.apache.org/).
 * Must have [node.js (at least v0.10.x)](http://nodejs.org/).
 * Must have [Grunt](https://github.com/gruntjs/grunt) node package installed globally.  `npm install -g grunt-cli`
 * Must have [Bower](https://github.com/twitter/bower) node package installed globally.  `npm install -g bower`
@@ -43,8 +45,9 @@ On Windows OS, Maven can't execute cmd files (npm and grunt). So they need to be
 4. Right click on project and select Maven > Update Project..., check all sub-modules
 
 ### Core project
-1. Start database, can be done using start.cmd in launcher folder (in parent project, right click on start.cmd and select Easy Shell > Run...)
+1. Start database, can be done using `start.cmd` in launcher folder (in parent project, right click on `start.cmd` and select Easy Shell > Run...)
 2. Create and run a maven configuration to create/update database: `liquibase:update`. This will create database and update it on further executions.
+3. Create a java configuration to start web application.
 
 ### Web project
 1. Project Properties, JavaScript, Include Path, Source, included, Edit, Add `src/app`
@@ -53,9 +56,6 @@ On Windows OS, Maven can't execute cmd files (npm and grunt). So they need to be
 4. `bower install`
 
 ### Run it
-1. Start Tomcat server
-2. Open a shell command in webapp project root directory 
-3. `grunt server`
-
-
-## Credits
+1. Start Web application
+2. Open a shell command in web project root directory 
+3. `grunt serve`
