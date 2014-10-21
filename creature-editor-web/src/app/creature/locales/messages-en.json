@@ -9,6 +9,7 @@
 		},
 		"FIELDS" : {
 			"GAME" : "Game",
+			"MOD" : "Mod",
 			"RESOURCE" : "Resource",
 			"NAME" : "Name"
 		},
@@ -18,7 +19,7 @@
 		},
 		"IMPORT" : {
 			"FIELDS" : {
-				"MOD" : "Mod",
+				"MOD" : "Moda",
 				"RESOURCE" : "Resource",
 				"OVERRIDE" : "Override",
 				"ONLY_NAME" : "Only names"

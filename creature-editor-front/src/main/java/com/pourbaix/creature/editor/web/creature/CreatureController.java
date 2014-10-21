@@ -18,7 +18,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import com.pourbaix.creature.editor.creature.CreatureImportOptions;
 import com.pourbaix.creature.editor.creature.CreatureImportService;
 import com.pourbaix.creature.editor.domain.Creature;
-import com.pourbaix.creature.editor.repository.CreatureRepository;
+import com.pourbaix.creature.editor.service.CreatureService;
 import com.pourbaix.infinity.service.ServiceException;
 
 @RestController
@@ -29,32 +29,32 @@ public class CreatureController {
 	private static final Logger logger = LoggerFactory.getLogger(CreatureController.class);
 
 	@Resource
-	private CreatureRepository creatureRepository;
+	private CreatureService creatureService;
 
 	@Resource
 	private CreatureImportService creatureImportService;
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<Creature> list() {
-		List<Creature> creatures = creatureRepository.findAll();
+		List<Creature> creatures = creatureService.list();
 		return creatures;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Creature getById(@PathVariable Integer id) {
-		return creatureRepository.findOne(id);
+		return creatureService.getById(id);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
 	public Creature save(@RequestBody Creature creature) {
-		creatureRepository.save(creature);
+		creatureService.save(creature);
 		return creature;
 	}
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
-		creatureRepository.delete(id);
+		creatureService.delete(id);
 	}
 
 	@RequestMapping(value = "/import", method = RequestMethod.POST)

@@ -47,7 +47,6 @@ public class CreatureImportService implements Runnable {
 	private ServiceException exception;
 
 	public void run() {
-		//		spellRepository.deleteByModId(modId);
 		creatures = new LinkedBlockingQueue<>();
 		for (ResourceEntry resource : resources) {
 			if (!running) { // process has been cancelled
@@ -56,7 +55,10 @@ public class CreatureImportService implements Runnable {
 			Creature creature = null;
 			try {
 				creature = readerService.getCreature(resource, options.isOnlyName());
-				//creature.set
+				creature.setMod(options.getMod());
+				if (options.isOverride()) {
+					creatureRepository.deleteByResourceAndGameAndMod(creature.getResource(), creature.getGame(), creature.getMod());
+				}
 				creatureRepository.save(creature);
 				creatures.add(creature);
 			} catch (ServiceException e) {

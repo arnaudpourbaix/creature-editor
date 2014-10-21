@@ -10,6 +10,7 @@
 					localdata: $scope.creatures,
 					datafields: [
 					   { name: 'game', type: 'string', map: 'game>id', mapChar : '>' },
+					   { name: 'mod', type: 'string', map: 'mod>name', mapChar : '>' },
 					   { name: 'resource', type: 'string' }
 					],
 					datatype: "array"
@@ -20,6 +21,10 @@
 			var columns = [ {
 				text : $translate.instant('CREATURE.FIELDS.GAME'),
 				dataField : 'game',
+				width : 100
+			}, {
+				text : $translate.instant('CREATURE.FIELDS.MOD'),
+				dataField : 'mod',
 				width : 100
 			}, {
 				text : $translate.instant('CREATURE.FIELDS.RESOURCE'),
@@ -64,7 +69,9 @@
 		$scope.mods = mods;
 		
 		$scope.options = {
-				mod: null,
+				mod: _.find(mods, function(mod) {
+					return mod.id === 1;
+				}),
 				resource: 'AL.*',
 				override: false,
 				onlyName: true

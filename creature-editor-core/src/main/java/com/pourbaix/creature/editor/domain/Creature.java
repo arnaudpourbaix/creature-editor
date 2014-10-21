@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,11 @@ public class Creature implements java.io.Serializable {
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creature")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "MOD_ID", nullable = false)
+	private Mod mod;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creature", cascade = CascadeType.ALL)
 	private Set<AttributeValue> attributeValues = new HashSet<AttributeValue>(0);
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -68,6 +73,14 @@ public class Creature implements java.io.Serializable {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	
+	public Mod getMod() {
+		return mod;
+	}
+
+	public void setMod(Mod mod) {
+		this.mod = mod;
 	}
 
 	public Set<AttributeValue> getAttributeValues() {
