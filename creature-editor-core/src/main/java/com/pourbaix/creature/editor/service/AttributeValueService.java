@@ -1,6 +1,8 @@
 package com.pourbaix.creature.editor.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -27,9 +29,16 @@ public class AttributeValueService {
 	@Resource
 	private AttributeValueRepository attributeValueRepository;
 	
-
-	public AttributeValue getCurrentAttributeValue(Creature creature, AttributeEnum name) {
-		Attribute attribute = attributeRepository.findOne(name);
+	public Set<AttributeValue> getCurrentAttributeValues(Creature creature, Set<AttributeEnum> attributeNames) {
+		Set<AttributeValue> attributeValues = new HashSet<AttributeValue>(attributeNames.size());
+		for (AttributeEnum attributeName : attributeNames) {
+			attributeValues.add(getCurrentAttributeValue(creature, attributeName));
+		}
+		return attributeValues;
+	}
+	
+	public AttributeValue getCurrentAttributeValue(Creature creature, AttributeEnum attributeName) {
+		Attribute attribute = attributeRepository.findOne(attributeName);
 		List<AttributeValue> values = attributeValueRepository.findByAttributeAndCreature(attribute, creature);
 		if (CollectionUtils.isEmpty(values)) {
 			return null;
