@@ -17,7 +17,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.pourbaix.creature.editor.domain.Creature;
-import com.pourbaix.creature.editor.repository.CreatureRepository;
+import com.pourbaix.creature.editor.service.CreatureService;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
 import com.pourbaix.infinity.service.GameService;
 import com.pourbaix.infinity.service.ReaderService;
@@ -35,7 +35,7 @@ public class CreatureImportService implements Runnable {
 	private ReaderService readerService;
 
 	@Resource
-	private CreatureRepository creatureRepository;
+	private CreatureService creatureService;
 
 	private static final String IMPORT_SAVING_ERROR = "IMPORT_SAVING_ERROR";
 
@@ -57,9 +57,9 @@ public class CreatureImportService implements Runnable {
 				creature = readerService.getCreature(resource, options.isOnlyName());
 				creature.setMod(options.getMod());
 				if (options.isOverride()) {
-					creatureRepository.deleteByResourceAndGameAndMod(creature.getResource(), creature.getGame(), creature.getMod());
+					creatureService.deleteByResourceAndGameAndMod(creature.getResource(), creature.getGame(), creature.getMod());
 				}
-				creatureRepository.save(creature);
+				creatureService.save(creature);
 				creatures.add(creature);
 			} catch (ServiceException e) {
 				logger.error(resource.getResourceName(), e.getMessage());

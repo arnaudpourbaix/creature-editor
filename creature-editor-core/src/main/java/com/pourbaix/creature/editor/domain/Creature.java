@@ -15,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CREATURE", schema = "PUBLIC", catalog = "PUBLIC")
-//@NamedEntityGraph(name = "Creature.lists", attributeNodes = @NamedAttributeNode("game"))
+@NamedEntityGraph(name = "Creature.lists", attributeNodes = @NamedAttributeNode("attributeValues"))
 public class Creature implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

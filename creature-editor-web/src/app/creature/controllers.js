@@ -4,6 +4,11 @@
 	angular.module('editor.creature.controllers', [])
 	
 	.controller('CreatureListController', function($scope, $translate, CreatureImportService, apxPanel, creatures, mods) {
+			angular.forEach(creatures, function(creature) {
+				creature.attributeValues = _.indexBy(creature.attributeValues, function(attributeValue) {
+					return attributeValue.attribute.id;
+				});
+			});
 			$scope.creatures = creatures;
 			
 			var source = {
@@ -11,7 +16,8 @@
 					datafields: [
 					   { name: 'game', type: 'string', map: 'game>id', mapChar : '>' },
 					   { name: 'mod', type: 'string', map: 'mod>name', mapChar : '>' },
-					   { name: 'resource', type: 'string' }
+					   { name: 'resource', type: 'string' },
+					   { name: 'name', type: 'string', map: 'attributeValues>NAME>stringValue', mapChar : '>' }
 					],
 					datatype: "array"
 			};
@@ -39,6 +45,7 @@
 			
 			$scope.settings = {
 					altrows : true,
+					sortable: true,
 					width : 900,
 					height : 400,
 					source : dataAdapter,
