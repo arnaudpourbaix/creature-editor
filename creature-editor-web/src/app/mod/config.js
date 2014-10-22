@@ -23,10 +23,8 @@ angular.module('editor.mod.config', [])
 				controller : 'ModEditController',
 				templateUrl : "mod/mod-edit.tpl.html",
 				resolve : {
-					mod : function(Mod, ModService) {
-						return Mod.get({
-							id: $stateParams.id
-						}).$promise;
+					mod : function(ModService) {
+						return ModService.get($stateParams.id);
 					}
 				}
 			});

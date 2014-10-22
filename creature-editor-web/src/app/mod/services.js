@@ -40,19 +40,17 @@ angular.module('editor.mod.services', [])
 .service('ModService', function(Mod) {
 	var service = {};
 	
-	service.getNew = function() {
+	service.get = function(id) {
 		var mod = new Mod({
 			id : null,
 			name : null
 		});
+		if (id !== 'new') {
+			mod = Mod.get({
+				id: id
+			}).$promise;
+		}
 		return mod;
-	};
-	
-	service.get = function(id) {
-		var promise = Mod.get({
-			id: id
-		}).$promise;
-		return promise;
 	};
 	
 	service.getById = function(mods, id) {
