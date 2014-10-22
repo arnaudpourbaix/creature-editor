@@ -52,7 +52,7 @@
 
 	})
 
-	.controller('ParameterEditController', function($scope, $state, parameter, $translate, ParameterService, toaster) {
+	.controller('ParameterEditController', function($scope, $state, parameter, $translate) {
 		$scope.parameter = parameter;
 		
 		$scope.edit = { model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' };
