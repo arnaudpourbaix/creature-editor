@@ -1,32 +1,28 @@
-/* global jQuery, _ */
-(function(window, $, _) {
-	'use strict';
+angular.module('jqwidgets.tabs', [])
 
-	var module = angular.module('jqwidgets.tabs', [ 'jqwidgets.common' ]);
+.provider('$jqTabs', function() {
+	var options = {};
 
-	module.provider('$jqTabs', function JqTabsProvider() {
-		var options = {};
+	this.$get = function($jqCommon, $compile, $translate, $timeout) {
+		var service = {};
 
-		this.$get = [ '$jqCommon', '$compile', '$translate', '$timeout', function jqTabsService($jqCommon, $compile, $translate, $timeout) {
-			var service = {};
-
-			service.options = function() {
-				return options;
-			};
-
-			return service;
-		} ];
-	});
-
-	module.directive('jqTabs', [ '$compile', '$timeout', '$jqCommon', '$jqTabs', function JqTabsDirective($compile, $timeout, $jqCommon, $jqTabs) {
-		return {
-			restrict : 'AE',
-			link : function(scope, element, attributes) {
-				var params = scope.$eval(attributes.jqTabs) || {};
-				var options = angular.extend({}, $jqCommon.options(), $jqTabs.options(), params);
-				element.jqxTabs(options);
-			}
+		service.options = function() {
+			return options;
 		};
-	} ]);
 
-}(window, jQuery, _));
+		return service;
+	};
+})
+
+.directive('jqTabs', function($compile, $timeout, $jqCommon, $jqTabs) {
+	return {
+		restrict : 'AE',
+		link : function(scope, element, attributes) {
+			var params = scope.$eval(attributes.jqTabs) || {};
+			var options = angular.extend({}, $jqCommon.options(), $jqTabs.options(), params);
+			element.jqxTabs(options);
+		}
+	};
+})
+
+;

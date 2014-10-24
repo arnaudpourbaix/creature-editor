@@ -1,17 +1,16 @@
-angular.module('jqwidgets', [ 
+angular.module('apx-jqwidgets', [ 
 	'pascalprecht.translate', 
-	'jqwidgets.common', 
-	'jqwidgets.data-adapter', 
-	'jqwidgets.window', 
-	'jqwidgets.grid',
-	'jqwidgets.dropdownlist', 
-	'jqwidgets.panel', 
-	'jqwidgets.tree', 
-	'jqwidgets.treegrid', 
-	'jqwidgets.tabs', 
-	'jqwidgets.menu', 
-	'jqwidgets.splitter', 
-	'jqwidgets.docking' 
+	'apx-jqwidgets.common', 
+	'apx-jqwidgets.data-adapter', 
+	'apx-jqwidgets.window', 
+	'apx-jqwidgets.grid',
+	'apx-jqwidgets.dropdownlist', 
+	'apx-jqwidgets.panel', 
+	'apx-jqwidgets.tree', 
+	'apx-jqwidgets.tabs', 
+	'apx-jqwidgets.menu', 
+	'apx-jqwidgets.splitter', 
+	'apx-jqwidgets.docking' 
 ])
 
 .config(function($translatePartialLoaderProvider) {
