@@ -15,6 +15,7 @@ creature-editor-web/bin
 creature-editor-web/target
 creature-editor-web/build
 creature-editor-web/node_modules
+creature-editor-web/bower_components
 creature-editor-web/vendor
 creature-script-core/.settings
 creature-script-core/.classpath

@@ -7,9 +7,9 @@
 			"PARENT_NAME" : "Parent",
 			"NAME" : "Name"
 		},
-		"COLUMNS" : {
-			"ACTION" : "Actions",
-			"DELETE" : "Delete"
+		"BUTTONS": {
+			"EDIT": "Edit",
+			"DELETE": "Delete"
 		},
 		"CONTEXTUAL" : {
 			"ADD" : "Add",

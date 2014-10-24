@@ -1,0 +1,34 @@
+{
+	"CREATURE" : {
+		"LABEL" : "Creature",
+		"LIST_TITLE" : "Creatures",
+		"EDIT_TITLE" : "Creature details",
+		"BUTTONS": {
+			"IMPORT": "Import",
+			"CANCEL": "Cancel"
+		},
+		"FIELDS" : {
+			"GAME" : "Game",
+			"MOD" : "Mod",
+			"RESOURCE" : "Resource",
+			"NAME" : "Name"
+		},
+		"COLUMNS" : {
+			"ACTION" : "Actions",
+			"DELETE" : "Delete"
+		},
+		"IMPORT" : {
+			"FIELDS" : {
+				"MOD" : "Mod",
+				"RESOURCE" : "Resource",
+				"OVERRIDE" : "Override",
+				"ONLY_NAME" : "Only names"
+			},
+			"BUTTONS": {
+				"VALIDATE": "Validate"
+			}
+		},
+		"EDIT_TITLE" : "{{name}}",
+		"NEW_TITLE" : "New category"
+	}
+}

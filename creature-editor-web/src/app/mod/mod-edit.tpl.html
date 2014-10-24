@@ -1,4 +1,6 @@
-<form role="form" name="modForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'mod', entity: 'MOD.LABEL', name: 'name' }">
+<form role="form" name="modForm" class="form-horizontal" novalidate data-crud-edit="edit">
+<div class="modal-header"></div>
+<div class="modal-body">
 	<div class="form-group">
 		<label for="mod.name" class="col-sm-2 control-label" data-translate>MOD.FIELDS.NAME</label>
 		<div class="col-sm-10" data-ng-class="{'has-error': modForm.name.$invalid}">
@@ -8,5 +10,8 @@
 			<span class="help-block" data-ng-show="modForm.name.$dirty && modForm.name.$error.unique" data-translate>CONTROLS.EXISTS</span>
 		</div>
 	</div>
+</div>
+<div class="modal-footer">
 	<crud-buttons />
+</div>
 </form>

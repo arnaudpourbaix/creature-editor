@@ -24,6 +24,7 @@ import com.pourbaix.infinity.resource.StringResource;
 import com.pourbaix.infinity.resource.StringResourceException;
 import com.pourbaix.infinity.resource.key.Keyfile;
 import com.pourbaix.infinity.resource.key.ResourceEntry;
+import com.pourbaix.infinity.service.GameService;
 import com.pourbaix.infinity.util.DynamicArray;
 
 @Service
@@ -41,6 +42,9 @@ public class CreatureFactory {
 	@Resource
 	private AttributeFactory attributeFactory;
 	
+	@Resource
+	private GameService gameService; 
+	
 	private static final String MISSING_CREATURE_FILE = "MISSING_CREATURE_FILE";
 	private static final String INVALID_CREATURE_FILE = "INVALID_CREATURE_FILE";
 	private static final String INVALID_CREATURE_NAME = "INVALID_CREATURE_NAME";
@@ -52,15 +56,15 @@ public class CreatureFactory {
 			"", "Allegiance tracking", "General tracking", "Race tracking", "Class tracking", "Specifics tracking", "Gender tracking", "Alignment tracking",
 			"Uninterruptible" };
 
-	public Creature getCreature(String entryName) throws FactoryException {
+	public Creature getCreature(String entryName, boolean onlyName) throws FactoryException {
 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(entryName);
 		if (entry == null) {
 			throw new FactoryException(MISSING_CREATURE_FILE, entryName);
 		}
-		return getCreature(entry);
+		return getCreature(entry, onlyName);
 	}
 
-	public Creature getCreature(ResourceEntry entry) throws FactoryException {
+	public Creature getCreature(ResourceEntry entry, boolean onlyName) throws FactoryException {
 		RawCreature creature = new RawCreature();
 		creature.setResource(entry.getResourceName());
 		byte buffer[];
@@ -78,6 +82,9 @@ public class CreatureFactory {
 			creature.setTooltip(StringResource.getInstance().getStringRef(buffer, 0x0c));
 		} catch (StringResourceException e) {
 			throw new FactoryException(INVALID_CREATURE_TOOLTIP, entry.getResourceName());
+		}
+		if (onlyName) {
+			return getCreature(creature, onlyName);
 		}
 		creature.setFlags(new Flag((long) DynamicArray.getInt(buffer, 0x10), 4, FLAGS));
 		creature.setExperienceValue(DynamicArray.getInt(buffer, 0x14));
@@ -180,14 +187,18 @@ public class CreatureFactory {
 
 		parseKit(creature, buffer);
 
-		return getCreature(creature);
+		return getCreature(creature, onlyName);
 	}
 
-	private Creature getCreature(RawCreature rawCreature) {
+	private Creature getCreature(RawCreature rawCreature, boolean onlyName) {
 		Creature creature = new Creature();
+		creature.setGame(gameService.getGame());
 		creature.setResource(rawCreature.getResource().replace(".CRE", ""));
 		addAttribute(creature, rawCreature, AttributeEnum.NAME, rawCreature.getName());
 		addAttribute(creature, rawCreature, AttributeEnum.TOOLTIP, rawCreature.getTooltip());
+		if (onlyName) {
+			return creature;
+		}
 		addAttribute(creature, rawCreature, AttributeEnum.FLAGS, rawCreature.getFlags().getValue());
 		addAttribute(creature, rawCreature, AttributeEnum.XP_VALUE, rawCreature.getExperienceValue());
 		addAttribute(creature, rawCreature, AttributeEnum.XP, rawCreature.getPowerLevelOrExperience());
@@ -292,11 +303,18 @@ public class CreatureFactory {
 				value += 4294967296L;
 			}
 		}
+		if (value == 0) {
+			return;
+		}
 		try {
 			DimensionalArrayFile kit2da = dimensionalArrayFileFactory.getDimensionalArray(DimensionalArrayEnum.Kit);
 			DimensionalArrayRow row = kit2da.findByColumn("unusable", value);
-			creature.setKit(DynamicArray.getInt(buffer, offset));
-			creature.setKitLabel(row.getColumns().get(1));
+			if (row != null) {
+				creature.setKit(DynamicArray.getInt(buffer, offset));
+				creature.setKitLabel(row.getColumns().get(1));
+			} else {
+				logger.error("no kit found for " + creature.getResource());
+			}
 
 		} catch (DimensionalArrayFileException e) {
 			throw new FactoryException(e.getCode(), e.getParam());

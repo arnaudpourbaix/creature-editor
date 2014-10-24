@@ -44,7 +44,7 @@
 		</createTable>
 	
 		<createTable tableName="game">
-			<column name="id" type="int" autoIncrement="true" >
+			<column name="id" type="VARCHAR2(10)">
 				<constraints primaryKey="true" />
 			</column>
 			<column name="name" type="VARCHAR2(50)">
@@ -87,7 +87,8 @@
 			<column name="resource" type="VARCHAR2(8)">
 				<constraints nullable="false"/>
 			</column>
-			<column name="game_id" type="int" />
+			<column name="game_id" type="VARCHAR2(10)" />
+			<column name="mod_id" type="int" />
 		</createTable>
 
 		<createTable tableName="attribute">
@@ -165,6 +166,7 @@
 		<addForeignKeyConstraint constraintName="fk_parameter_value__parameter" baseTableName="parameter_value" baseColumnNames="parameter_id" referencedTableName="parameter" referencedColumnNames="name" />
 		
 		<addForeignKeyConstraint constraintName="fk_creature__game" baseTableName="creature" baseColumnNames="game_id" referencedTableName="game" referencedColumnNames="id" /> 
+		<addForeignKeyConstraint constraintName="fk_creature__mod" baseTableName="creature" baseColumnNames="mod_id" referencedTableName="mod" referencedColumnNames="id" /> 
 		<addForeignKeyConstraint constraintName="fk_category__category" baseTableName="category" baseColumnNames="category_id" referencedTableName="category" referencedColumnNames="id" />
 		<addForeignKeyConstraint constraintName="fk_attribute_value__attribute" baseTableName="attribute_value" baseColumnNames="attribute_id" referencedTableName="attribute" referencedColumnNames="id" />
 		<addForeignKeyConstraint constraintName="fk_attribute_value__creature" baseTableName="attribute_value" baseColumnNames="creature_id" referencedTableName="creature" referencedColumnNames="id" />

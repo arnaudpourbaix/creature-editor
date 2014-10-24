@@ -1,7 +1,2 @@
-(function() {
-	'use strict';
-
-	angular.module('creatureEditor.category', [ 'creatureEditor.category.config', 'creatureEditor.category.services', 'creatureEditor.category.directives',
-			'creatureEditor.category.controllers', 'jqwidgets' ]);
-
-})();
+angular.module('editor.category', [ 'editor.category.config', 'editor.category.services', 'editor.category.directives',	'editor.category.controllers' ]);
+//angular.module('editor.category', []);

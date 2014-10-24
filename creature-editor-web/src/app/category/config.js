@@ -1,35 +1,32 @@
-(function() {
-	'use strict';
+angular.module('editor.category.config', [])
 
-	var module = angular.module('creatureEditor.category.config', [ 'creatureEditor.category.services', 'pascalprecht.translate', 'ui.router' ]);
+.config(function($translatePartialLoaderProvider) {
+	$translatePartialLoaderProvider.addPart('app/category');
+})
 
-	module.config([ '$translatePartialLoaderProvider', function run($translatePartialLoaderProvider) {
-		$translatePartialLoaderProvider.addPart('app/category');
-	} ]);
+.config(function($stateProvider) {
 
-	module.config([ '$stateProvider', function CategoryStateConfig($stateProvider) {
-
-		$stateProvider.state('categories', {
-			url : '/categories',
-			controller : 'CategoryListController',
-			templateUrl : 'category/category-list.tpl.html',
-			resolve : {
-				categories : [ 'Category', function(Category) {
-					return Category.query().$promise;
-				} ]
+	$stateProvider.state('category', {
+		url : '/category',
+		controller : 'CategoryListController',
+		templateUrl : 'category/category-list.tpl.html',
+		resolve : {
+			categories : function(Category) {
+				return Category.query().$promise;
 			}
-		});
+		}
+	});
 
-		$stateProvider.state('categories.edit', {
-			url : '/:categoryParentId/:categoryId',
-			views : {
-				'category-edit' : {
-					controller : 'CategoryEditController',
-					templateUrl : 'category/category-edit.tpl.html'
-				}
+	$stateProvider.state('category.edit', {
+		url : '/:categoryParentId/:categoryId',
+		views : {
+			'category-edit' : {
+				controller : 'CategoryEditController',
+				templateUrl : 'category/category-edit.tpl.html'
 			}
-		});
+		}
+	});
 
-	} ]);
+})
 
-})();
+;

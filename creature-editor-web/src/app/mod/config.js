@@ -1,35 +1,43 @@
-(function() {
-	'use strict';
+angular.module('editor.mod.config', [])
 
-	var module = angular.module('creatureEditor.mod.config', [ 'creatureEditor.mod.services', 'pascalprecht.translate', 'ui.router' ]);
+.config(function($translatePartialLoaderProvider) {
+	$translatePartialLoaderProvider.addPart('app/mod');
+})
 
-	module.config([ '$translatePartialLoaderProvider', function ModTranslateConfig($translatePartialLoaderProvider) {
-		$translatePartialLoaderProvider.addPart('app/mod');
-	} ]);
-
-	module.config([ '$stateProvider', function ModStateConfig($stateProvider) {
-
-		$stateProvider.state('mods', {
-			url : '/mods',
-			controller : 'ModListController',
-			templateUrl : 'mod/mod-list.tpl.html',
-			resolve : {
-				mods : [ 'Mod', function(Mod) {
-					return Mod.query().$promise;
-				} ]
+.config(function($stateProvider) {
+	$stateProvider.state('mod', {
+		url : '/mod',
+		controller : 'ModListController',
+		templateUrl : 'mod/mod-list.tpl.html',
+		resolve : {
+			mods : function(Mod) {
+				return Mod.query().$promise;
 			}
-		});
+		}
+	});
 
-		$stateProvider.state('mods.edit', {
-			url : '/:modId',
-			views : {
-				'mod-edit' : {
-					controller : 'ModEditController',
-					templateUrl : 'mod/mod-edit.tpl.html'
+	$stateProvider.state('mod.edit', {
+		url : '/:id',
+		onEnter : function($state, $stateParams, $modal, $timeout) {
+			var modal = $modal.open({
+				controller : 'ModEditController',
+				templateUrl : "mod/mod-edit.tpl.html",
+				resolve : {
+					mod : function(ModService) {
+						return ModService.get($stateParams.id);
+					}
 				}
-			}
-		});
-		
-	} ]);
+			});
+			modal.result.then(function(result) {
+				$state.go('^', {}, {
+					reload : true
+				});
+			}, function() {
+				$state.go('^');
+			});
+		}
+	});
+	
+})
 
-})();
+;

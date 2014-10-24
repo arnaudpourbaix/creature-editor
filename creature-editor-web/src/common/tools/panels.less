@@ -1,0 +1,104 @@
+@white: #fff;
+@blue: #0095d8;
+@background-overlay-color: black;
+@background-overlay-opacity: 0.5;
+
+.background-overlay {
+    position: fixed;
+    width: 10000px;
+    height: 10000px;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+	background-color: @background-overlay-color;
+	opacity: @background-overlay-opacity;
+}
+.background-overlay-add{
+    opacity: 0;
+
+    &.main-overlay-add-active {
+        transition: opacity .35s;
+        opacity: @background-overlay-opacity;
+    }
+}
+
+.apx-panel-container {
+	position: relative;
+	z-index: 10001;
+}
+
+.left-panel {
+    position: fixed;
+    top: 0;
+    bottom:0;
+    left: 0;
+    right: 0;
+    z-index: 2000;
+    width: 500px;
+    padding: 1rem 0;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    background: @white;
+    border: 3px solid @white;
+
+    .left-panel-inner {
+        top: 10px;
+        bottom: 0px;
+        width: 491px;
+        overflow-y: auto;
+        position: absolute;
+        padding-right:0.5rem;
+        padding-left:0.5rem;
+    }
+
+    .bloc {
+        min-width: 215px;
+        float: left;
+        border: 1px solid transparent;
+        display: inline-block;
+        margin-left: 12px;
+        margin-bottom: 10px;
+        min-height: 368px;
+
+        &:hover {
+            border: 1px solid black;
+        }
+
+        a {
+            color: black;
+        }
+    }
+
+    h2, h3, h4 {
+        color: @blue;
+        padding-left: 1rem;
+    }
+}
+
+// ANIMATIONS
+.left-panel{
+    &.ng-enter, &.ng-hide-remove,
+    &.ng-leave, &.ng-hide-add{
+        transition: transform 0.7s ease;
+    }
+    &.ng-enter, &.ng-leave.ng-leave-active, &.ng-hide-add.ng-hide-add-active, &.ng-hide-remove{
+        transform: translateX(-1230px);
+    }
+    &.ng-enter.ng-enter-active, &.ng-leave, &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active{
+        transform: translateX(0);
+    }
+}
+
+.left-panel .slide{
+    &.ng-enter, &.ng-hide-remove,
+    &.ng-leave, &.ng-hide-add{
+        transition: max-height 0.5s ease;
+    }
+    &.ng-enter, &.ng-leave.ng-leave-active, &.ng-hide-add.ng-hide-add-active, &.ng-hide-remove{
+        max-height: 0;
+    }
+    &.ng-enter.ng-enter-active, &.ng-leave, &.ng-hide-add, &.ng-hide-remove.ng-hide-remove-active{
+        max-height: 1200px;
+    }
+}

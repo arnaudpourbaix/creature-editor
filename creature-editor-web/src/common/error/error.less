@@ -1,0 +1,100 @@
+/************** BREADCRUMB.LESS *****************/
+/*                                              */
+/*  affichage de la modale d'erreur & messages  */
+/*        au niveau de l'application            */
+/*                                              */
+/*************** BREADCRUMB.LESS ****************/
+
+
+.error { 
+	color: #cc0000;
+	font-family: bebas_neuelight;
+	font-size: 22px;
+ 
+	#error-modal {
+		position: fixed;
+		top: 0; left: 0; bottom: 0; right: 0;
+		background-color: #000000;
+		z-index: 10001;
+		opacity: 0.5;  
+		top:0;
+		left:0;
+		right:0;
+		bottom:0;
+	}
+ 
+	.title {
+		color:@white;
+		background:#cc0000; 
+		border-radius: 5px;
+		padding:5px 10px;
+		font-size:30px;
+	} 
+	.custom {
+		color:@grey_title;
+	} 
+	.center {
+		text-align:center;
+		top:0%;
+		position:relative;
+		background:@white;
+		min-width:400px;
+		margin-left:auto;
+		margin-right:auto;
+		padding:20px;
+		border-radius: 5px;
+		
+		.an-breadcrumb {
+          display: inline-block;
+          padding-left: 0px;
+          position: relative;
+          right: 0;
+          left: 0;
+			
+			.an-selected-element { 
+				color: @blue_dark;
+				cursor:default;
+				&.an-breadcrumb-item .an-breadcrumb-item-wrapper { 
+					border:1px solid @blue_dark;
+                    color:@blue_dark;
+
+
+                        &:hover span{
+							background:@blue_light;
+							color:white;
+							cursor:pointer;
+						}
+				}
+				
+			}
+			.an-breadcrumb-item:hover .an-breadcrumb-item-wrapper {
+              background:@blue_light;
+              color:white;
+
+			}
+		} 
+	} 
+		
+	.error-outer {
+		margin: auto;
+		position: absolute;
+		z-index:10002;
+		top:0; left: 0; bottom: 0; right: 0;
+		height:100%;
+		display: table;
+	}
+	.bottom { 
+		width:100%;
+	}
+	.error-outer, .error-inner {
+		width: 500px; 
+	} 
+	.error-inner {
+		 
+		display: table-cell;
+		vertical-align: middle;
+		height:auto;
+	}
+	 
+}
+ 

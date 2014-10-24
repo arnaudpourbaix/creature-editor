@@ -14,6 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.pourbaix.creature.editor.domain.Game;
+import com.pourbaix.creature.editor.repository.GameRepository;
 import com.pourbaix.creature.editor.service.ParameterService;
 import com.pourbaix.infinity.context.ReaderContext;
 import com.pourbaix.infinity.resource.ResourceFactory;
@@ -44,6 +46,9 @@ public class GameService {
 
 	@Resource
 	private ParameterService parameterService;
+	
+	@Resource
+	private GameRepository gameRepository;
 
 	public void openGame() throws ServiceException {
 		if (readerContext.isGameOpened()) {
@@ -68,6 +73,10 @@ public class GameService {
 			return;
 		}
 		readerContext.setGameOpened(false);
+	}
+	
+	public Game getGame() {
+		return gameRepository.findOne(parameterService.getGameVersion());
 	}
 
 	private void checkGameDirectory() throws ServiceException {

@@ -1,57 +1,9 @@
-/**
- * Typography
- */
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
-html, body {
-	height: 100%;
-	/* The html and body elements cannot have any padding or margin. */
+body {
+  min-height: 2000px;
 }
 
- /* Wrapper for page content to push down footer */
- #wrap {
- 	min-height: 100%;
-	height: auto !important;
- 	height: 100%;
-	/* Negative indent footer by it's height */
-	margin: 0 auto -40px;
-}
-
-/* Set the fixed height of the footer here */
-#push, #footer {
-	height: 40px;
-}
-#footer {
-	background-color: #f5f5f5;
-}
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-	#footer {
-		margin-left: -20px;
-		margin-right: -20px;
-		padding-left: 20px;
-		padding-right: 20px;
-	}
-}
-
-#wrap > .container {
-	padding-top: 10px;
-}
-
-.main-view.ng-enter {
-  .lh-animation(fadeInDownBig 0.5s);
-}
-
-.tab-view.ng-enter {
-  .lh-animation(fadeIn 1s);
-}
-
-.help-block {
-	display: inline-block;
-	padding: 0.375em 0.25em;
-	margin-top: -1.3125em;
-	margin-bottom: 1em;
-	font-size: 0.75em;
-	font-weight: bold;
-	color: red;
+.navbar-static-top {
+  margin-bottom: 19px;
 }

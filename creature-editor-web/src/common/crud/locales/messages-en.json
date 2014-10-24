@@ -2,7 +2,7 @@
 	"CRUD" : {
 		"ADD_BUTTON" : "Add",
 		"SAVE_BUTTON" : "Save",
-		"REMOVE_BUTTON" : "Remove",
+		"REMOVE_BUTTON" : "Delete",
 		"REVERT_BUTTON" : "Revert changes",
 		"CANCEL_BUTTON" : "Cancel",
 		"SAVE_SUCCESS" : "{{entity}} '{{name}}' was saved successfully.",

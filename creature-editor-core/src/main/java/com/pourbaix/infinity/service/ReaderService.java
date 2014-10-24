@@ -45,6 +45,11 @@ public class ReaderService {
 		return Keyfile.getInstance().getResourceEntriesByExtension("spl");
 	}
 
+	public List<ResourceEntry> getCreatureResources() throws ServiceException {
+		return Keyfile.getInstance().getResourceEntriesByExtension("cre");
+	}
+	
+	
 	public List<Spell> getSpells() throws ServiceException {
 		try {
 			List<Spell> spells = new ArrayList<>();
@@ -76,11 +81,30 @@ public class ReaderService {
 		}
 	}
 
-	public List<Creature> getCreatures() throws ServiceException {
+	public Creature getCreature(String resource) throws ServiceException {
+		try {
+			Creature creature = creatureFactory.getCreature(resource, false);
+			return creature;
+		} catch (FactoryException e) {
+			throw new ServiceException(e.getCode(), e.getParam());
+		}
+	}
+
+	public Creature getCreature(ResourceEntry entry, boolean onlyName) throws ServiceException {
+		logger.trace("getCreature:" + entry.getResourceName());
+		try {
+			Creature creature = creatureFactory.getCreature(entry, onlyName);
+			return creature;
+		} catch (FactoryException e) {
+			throw new ServiceException(e.getCode(), e.getParam());
+		}
+	}
+
+	public List<Creature> getCreatures(boolean onlyName) throws ServiceException {
 		try {
 			List<Creature> creatures = new ArrayList<>();
 			for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("cre")) {
-				Creature creature = creatureFactory.getCreature(entry);
+				Creature creature = creatureFactory.getCreature(entry, false);
 				creatures.add(creature);
 			}
 			return creatures;
@@ -88,16 +112,7 @@ public class ReaderService {
 			throw new ServiceException(e.getCode(), e.getParam());
 		}
 	}
-
-	public Creature getCreature(String resource) throws ServiceException {
-		try {
-			Creature creature = creatureFactory.getCreature(resource);
-			return creature;
-		} catch (FactoryException e) {
-			throw new ServiceException(e.getCode(), e.getParam());
-		}
-	}
-
+	
 	public List<IdentifierFile> getIdentifierFiles() throws ServiceException {
 		List<IdentifierFile> ids = new ArrayList<>();
 		for (ResourceEntry entry : Keyfile.getInstance().getResourceEntriesByExtension("ids")) {

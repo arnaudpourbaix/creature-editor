@@ -6,9 +6,9 @@
 		"FIELDS" : {
 			"NAME" : "Name"
 		},
-		"COLUMNS" : {
-			"ACTION" : "Actions",
-			"DELETE" : "Delete"
+		"BUTTONS": {
+			"EDIT": "Edit",
+			"DELETE": "Delete"
 		},
 		"EDIT_TITLE" : "{{name}}",
 		"NEW_TITLE" : "New mod"

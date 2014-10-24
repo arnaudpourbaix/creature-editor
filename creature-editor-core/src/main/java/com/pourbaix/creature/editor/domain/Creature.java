@@ -5,6 +5,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -22,6 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CREATURE", schema = "PUBLIC", catalog = "PUBLIC")
+@NamedEntityGraph(name = "Creature.lists", attributeNodes = @NamedAttributeNode("attributeValues"))
 public class Creature implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -34,11 +38,15 @@ public class Creature implements java.io.Serializable {
 	@Column(name = "RESOURCE", unique = true, nullable = false)
 	private String resource;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "GAME_ID")
 	private Game game;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creature")
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "MOD_ID", nullable = false)
+	private Mod mod;
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "creature", cascade = CascadeType.ALL)
 	private Set<AttributeValue> attributeValues = new HashSet<AttributeValue>(0);
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -67,6 +75,14 @@ public class Creature implements java.io.Serializable {
 
 	public void setGame(Game game) {
 		this.game = game;
+	}
+	
+	public Mod getMod() {
+		return mod;
+	}
+
+	public void setMod(Mod mod) {
+		this.mod = mod;
 	}
 
 	public Set<AttributeValue> getAttributeValues() {

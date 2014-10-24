@@ -1,7 +1,10 @@
 {
-	"APP_TITLE" : "Editor",
-	"APP_NAME" : "Creature Editor",
+	"MAIN" : {
+		"YES": "Yes",
+		"NO": "No"
+	},
 	"MENU" : {
+		"CREATURES" : "Creatures",
 		"MODS" : "Mods",
 		"SPELLS" : "Spells",
 		"CATEGORIES" : "Categories",

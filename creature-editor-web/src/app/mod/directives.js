@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	var module = angular.module('creatureEditor.mod.directives', [ 'creatureEditor.mod.services' ]);
+	var module = angular.module('editor.mod.directives', []);
 
 	/**
 	 * ensure that mod name is unique

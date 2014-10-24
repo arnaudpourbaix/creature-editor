@@ -1,7 +1,1 @@
-(function() {
-	'use strict';
-
-	angular.module('creatureEditor.mod', [ 'creatureEditor.mod.config', 'creatureEditor.mod.services', 'creatureEditor.mod.directives', 'creatureEditor.mod.controllers',
-			'ui.bootstrap', 'toolbox', 'jqwidgets' ]);
-
-})();
+angular.module('editor.mod', [ 'editor.mod.config', 'editor.mod.services', 'editor.mod.directives', 'editor.mod.controllers' ]);
