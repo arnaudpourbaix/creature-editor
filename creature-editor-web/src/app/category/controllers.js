@@ -10,25 +10,38 @@ angular.module('editor.category.controllers', [])
 				   { name : 'name', type : 'string' },
 				   { name : 'parentId',	map : 'parent>id', type : 'number', mapChar : '>' }
 				],
-				datatype: "array"
+				datatype: "array",
+				id: 'id'
 		};
 		
-		var dataAdapter = new $.jqx.dataAdapter(source);
-		dataAdapter.dataBind();
-		dataAdapter = dataAdapter.getRecordsHierarchy('id', 'parentId', null, [ {
+		var dataAdapter = new $.jqx.dataAdapter(source, { autoBind : true }).getRecordsHierarchy('id', 'parentId', null, [ {
 			name : 'name',
 			map : 'label'
 		} ]);
 		
 		$scope.settings = {
-				//altrows : true,
 				source : dataAdapter,
-				width : 260,
+//				select : function(event) {
+//					$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
+//				},
+				dragEnd : function(item, dropItem) {
+					console.log(item, dropItem);
+				},				
+				width : 580,
 				height : 400
-//				rowselect: function(event) {
-//					$scope.selectedRow = event.args.row;
-//				}
 		};
+		$('#jqxTree').jqxTree($scope.settings);
+		$('#jqxTree').on('select', function(event) {
+			$scope.$apply(function(){
+				$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
+				console.log('select', $scope.selectedItem);
+			});
+		});
+//		$("#jqxTree").on('dragEnd', function(item, dropItem)	{
+//			$scope.$apply(function(){
+//			    console.log(item, dropItem);
+//			});
+//		});		
 	};
 	
 	setTree();

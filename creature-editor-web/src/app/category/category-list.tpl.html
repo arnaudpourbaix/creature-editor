@@ -1,10 +1,11 @@
 <div class="category-list">
 	<jqx-tree jqx-settings="settings"></jqx-tree>
+	<div id="jqxTree"></div>
 	<!--<div data-ng-if="categoryTree != null" data-jq-tree="categoryTree" data-jq-selected-item="selectedCategory($stateParams)"></div>-->
 	<div class="grid-action-buttons">
 		<crud-add-button></crud-add-button>
-		<button class="btn btn-primary" data-translate data-ng-disabled="!selectedRow" data-ui-sref="category.edit({ id: selectedRow.id })">MOD.BUTTONS.EDIT</button>
-		<button class="btn btn-danger" data-translate data-ng-disabled="!selectedRow" data-ng-click="remove(selectedRow.id)">MOD.BUTTONS.DELETE</button>
+		<button class="btn btn-primary" data-translate data-ng-disabled="!selectedItem" data-ui-sref="category.edit({ id: selectedItem.id })">CATEGORY.BUTTONS.EDIT</button>
+		<button class="btn btn-danger" data-translate data-ng-disabled="!selectedItem" data-ng-click="remove(selectedItem.id)">CATEGORY.BUTTONS.DELETE</button>
 	</div>	
 	<div data-ui-view="category-edit"></div>
 </div>
