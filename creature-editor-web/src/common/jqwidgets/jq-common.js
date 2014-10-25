@@ -1,31 +1,64 @@
 angular.module('apx-jqwidgets.common', [])
 
+/**
+ * @ngdoc service
+ * @name apx-jqwidgets.jqCommonProvider
+ * @description
+ * Use `jqCommonProvider` to change the default behavior of the {@link  apx-jqwidgets.jqCommon jqCommon} service.
+ * # Example
+ * <pre>
+ * angular.module('main.config').config(function(jqCommonProvider) {
+ *    jqCommon.defaults.theme = 'bootstrap';
+ * });
+ * </pre>
+ */
 .provider('jqCommon', function() {
-	var options = this.options = {
+	/**
+	 * @ngdoc property
+	 * @name apx-jqwidgets.jqCommonProvider#defaults
+	 * @propertyOf apx-jqwidgets.jqCommonProvider
+	 * @description Object containing default values for {@link apx-jqwidgets.jqCommon jqCommon}. The object has following properties:
+	 * 
+	 * - **theme** - `{string}` - Default theme used by all widgets.<br>
+	 * 
+	 * @returns {Object} Default values object.
+	 */		
+	var defaults = this.defaults = {
 		theme : 'classic'
 	};
 
+	/**
+	 * @ngdoc service
+	 * @name apx-jqwidgets.jqCommon
+     * @requires $q
+     * @requires $http
+     * @requires $templateCache
+     * @requires $rootScope
+     * @requires $controller
+     * @requires $compile
+     * @requires $injector
+     * @requires $parse
+	 * @description
+	 * # jqCommon
+	 * This service contains common functions used by all widgets.<br>
+	 */
 	this.$get = function($q, $http, $templateCache, $rootScope, $controller, $compile, $injector, $parse) {
 		var service = {};
 
-		service.options = function() {
-			return options;
+		service.defaults = function() {
+			return defaults;
 		};
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.getParams
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
+		 * @name apx-jqwidgets.jqCommon#getParams
+		 * @methodOf apx-jqwidgets.jqCommon
 		 * @description Returns params object after controlling required properties and adding missing optional properties.
-		 * @param {Object}
-		 *           params object to control.
-		 * @param {array}
-		 *           requiredProps required properties array.
-		 * @param {array}
-		 *           optionalProps optional properties array.
-		 * @returns {Object} params object including missing optional properties.
+		 * Throws an exception if any required param is missing.
+		 * @param {Object} params Object to control.
+		 * @param {array=} requiredProps Required properties.
+		 * @param {array=} optionalProps Optional properties.
+		 * @returns {Object} Object including missing optional properties.
 		 */
 		service.getParams = function(params, requiredProps, optionalProps) {
 			var result = angular.copy(params);
@@ -36,16 +69,11 @@ angular.module('apx-jqwidgets.common', [])
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.checkRequiredParams
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description controls required properties.
-		 * 
-		 * @param {Object}
-		 *           params object to control.
-		 * @param {array}
-		 *           or {string} requiredProps required properties.
+		 * @name apx-jqwidgets.jqCommon#checkRequiredParams
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Controls required properties. Throws an exception if any required param is missing.
+		 * @param {Object} params Object to control.
+		 * @param {array|string=} requiredProps Required properties.
 		 */
 		service.checkRequiredParams = function(params, requiredProps) {
 			if (!requiredProps) {
@@ -60,35 +88,28 @@ angular.module('apx-jqwidgets.common', [])
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.getParams
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description controls optional properties.
-		 * @param {Object}
-		 *           params object to control.
-		 * @param {array}
-		 *           or {string} optionalProps optional properties array.
+		 * @name apx-jqwidgets.jqCommon#checkOptionnalParams
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Add optional properties missing in params.
+		 * @param {Object} params Object to control.
+		 * @param {array|string=} optionalProps Optional properties array.
 		 */
-		service.checkOptionnalParams = function(params, requiredProps, optionalProps) {
+		service.checkOptionnalParams = function(params, optionalProps) {
 			if (!optionalProps) {
 				return;
 			}
 			var props = angular.isArray(optionalProps) ? optionalProps : [].concat(optionalProps);
-			angular.forEach(props, function(prop, index) {
+			angular.forEach(props, function(prop) {
 				params[prop] = params[prop] || null;
 			});
 		};
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.checkTemplateParams
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description controls that template is specified (must have template or templateUrl property).
-		 * @param {Object}
-		 *           params object to control.
+		 * @name apx-jqwidgets.jqCommon#checkTemplateParams
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Controls that template is properly specified (must have template or templateUrl property). Throws an exception if none or both are defined.
+		 * @param {Object} params Object to control.
 		 */
 		service.checkTemplateParams = function(params) {
 			if (!params.template && !params.templateUrl) {
@@ -101,16 +122,14 @@ angular.module('apx-jqwidgets.common', [])
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.getTemplatePromise
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description Get template promise from a template string or url.
-		 * @param {Object}
-		 *           options Must contains template or templateUrl property.
-		 * @returns {promise} Template promise.
+		 * @name apx-jqwidgets.jqCommon#getTemplatePromise
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Get template promise from a template string or url. Throws an exception if template options are not valid.
+		 * @param {Object} options Must contains template or templateUrl property.
+		 * @returns {Object} Template's promise.
 		 */
 		service.getTemplatePromise = function(options) {
+			service.checkTemplateParams();
 			return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
 				cache : $templateCache
 			}).then(function(result) {
@@ -120,15 +139,16 @@ angular.module('apx-jqwidgets.common', [])
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.resolveDependencies
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description it will return a deferred with all dependencies. Each promise will be resolved before resolution.
-		 * @param {Object} dependencies object.
-		 * @returns {promise} resolved dependencies object.
+		 * @name apx-jqwidgets.jqCommon#resolveDependencies
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Resolve all dependencies and returns a promise containing a resolved object.
+		 * @param {Object=} dependencies Dependencies object. Each dependency can be a value or a promise.
+		 * @returns {Object} Resolved dependencies object.
 		 */
 		service.resolveDependencies = function(dependencies) {
+			if (!dependencies) {
+				return $q.when();
+			}
 			var promises = [];
 			angular.forEach(dependencies, function(value) {
 				if (angular.isFunction(value) || (angular.isArray(value) && angular.isFunction(value[value.length - 1]))) {
@@ -148,18 +168,13 @@ angular.module('apx-jqwidgets.common', [])
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.instanciateController
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description Instanciate a controller and returns a deferred to track when it's done.
-		 * @param {string}
-		 *           controller Controller's name.
-		 * @param {array}
-		 *           dependencies Dependencies to inject. Promises within dependencies will be resolved.
-		 * @param {Object}
-		 *           scope Controller's scope, if not provided, a new scope is created from root scope.
-		 * @returns {promise} resolved when controller is instanciated
+		 * @name apx-jqwidgets.jqCommon#instanciateController
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Instanciate a controller and returns a promise to track when it's done.
+		 * @param {string=} controller Controller's name.
+		 * @param {array=} dependencies Dependencies to inject in controller. Promises within dependencies will be resolved before injection.
+		 * @param {Object=} scope Controller's scope. If not provided, a new scope is created from root scope.
+		 * @returns {Object} Promise resolved when controller is instanciated
 		 */
 		service.instanciateController = function(controller, dependencies, scope) {
 			var deferred = $q.defer();
@@ -182,20 +197,15 @@ angular.module('apx-jqwidgets.common', [])
 
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.getView
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
-		 * @description Returns a view, also instanciate a controller related to the view.
-		 * @param {Object}
-		 *           templateOptions Must contains template or templateUrl property.
-		 * @param {string}
-		 *           controller Controller's name.
-		 * @param {array}
-		 *           dependencies Dependencies to inject.
-		 * @param {Object}
-		 *           scope Controller's scope, if not provided, a new scope is created from root scope.
-		 * @returns {promise} dom element compiled with angular's scope.
+		 * @name apx-jqwidgets.jqCommon#getView
+		 * @methodOf apx-jqwidgets.jqCommon
+		 * @description Compile and returns a view. It will also instanciate a controller if provided.
+		 * Throws an exception if template options are not valid.
+		 * @param {Object} templateOptions Must contains template or templateUrl property.
+		 * @param {string=} controller Controller's name.
+		 * @param {array=} dependencies Dependencies to inject.
+		 * @param {Object=} scope Controller's scope, if not provided, a new scope is created from root scope.
+		 * @returns {Object} Promise containing compiled DOM.
 		 */
 		service.getView = function(templateOptions, controller, dependencies, scope) {
 			var $scope = scope || $rootScope.$new();
@@ -206,15 +216,11 @@ angular.module('apx-jqwidgets.common', [])
 		
 		/**
 		 * @ngdoc function
-		 * @name jqCommon.getScopeData
-		 * @module apx-jqwidgets.common
-		 * @function
-		 * 
+		 * @name apx-jqwidgets.jqCommon#getScopeData
+		 * @methodOf apx-jqwidgets.jqCommon
 		 * @description Get scope data value. Throw an exception if undefined.
-		 * @param {string}
-		 *           name data name within a scope.
-		 * @param {Object}
-		 *           scope scope containing the data.
+		 * @param {string} name data name within a scope.
+		 * @param {Object} scope scope containing the data.
 		 * @returns {Object} Value.
 		 */
 		service.getScopeData = function(name, scope) {
@@ -229,15 +235,12 @@ angular.module('apx-jqwidgets.common', [])
 	};
 })
 
-	
 /**
  * @ngdoc directive
- * @name jqScopeElement
- * @module apx-jqwidgets.common
- * @directive
- * 
+ * @name apx-jqwidgets.directive:jqScopeElement
+ * @restrict A
+ * @priority 0
  * @description Assign a DOM element to a scope.
- * 
  */
 .directive("jqScopeElement", function() {
 	return {

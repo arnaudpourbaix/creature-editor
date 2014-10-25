@@ -33,6 +33,7 @@ module.exports = function(grunt) {
 		vendor : 'bower_components',
 		build : 'target/build',
 		compile : 'target/compile',
+		doc : 'docs'
 	};
 
 	grunt.initConfig({
@@ -138,7 +139,19 @@ module.exports = function(grunt) {
 						       ];
 					}
 				}
-			}			
+			},
+			doc : {
+				options : {
+					port : 8000,
+					middleware : function(connect) {
+						return [ 
+						         require('grunt-connect-proxy/lib/utils').proxyRequest, 
+						         require('connect-livereload')(), 
+						         mountFolder(connect, grunt.config('app_folders.doc')) 
+						       ];
+					}
+				}
+			}
 		},
 
 		watch : {
@@ -156,6 +169,11 @@ module.exports = function(grunt) {
 //				}
 //			},
 
+			doc : {
+				files : [ '<%= app_files.js %>' ],
+				tasks : [ 'jshint:src', 'copy:buildAppJs', 'ngdocs' ]
+			},
+			
 			jssrc : {
 				files : [ '<%= app_files.js %>' ],
 				tasks : [ 'jshint:src', 'copy:buildAppJs' ]
@@ -413,6 +431,16 @@ module.exports = function(grunt) {
 			}
 		},
 
+		ngdocs: {
+			options: {
+				html5Mode: false,
+				startPage: '/app',
+				title: "Creature Editor",
+			},
+			common: { src: 'src/common/**/*.js', title: 'Common', api: true },
+			app: { src: 'src/app/**/*.js', title: 'Application', api: true }
+		},		
+		
 		karma : {
 			options : {
 				frameworks : [ 'jasmine' ],
@@ -463,5 +491,11 @@ module.exports = function(grunt) {
 	// grunt.registerTask('build', [ 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin' ]);
 	grunt.registerTask('serve', [ 'build', 'configureProxies', 'connect:main', 'watch' ]);
 	grunt.registerTask('test', [ 'karma:all_tests' ]);
+	
+	/**
+	 * Documentation related tasks
+	 */
+	grunt.registerTask('docserver', [ 'connect:doc', 'watch:doc' ]);
+	grunt.registerTask('doc', [ 'ngdocs', 'docserver' ]);
 
 };

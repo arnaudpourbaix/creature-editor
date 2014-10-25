@@ -3,7 +3,6 @@
   "version": "0.0.1",
   "main": "index.html",
   "ignore": [
-    "**/.*",
     "node_modules",
     "bower_components"
   ],
@@ -30,6 +29,7 @@
     "font-awesome": "~4.0",
     "roboto-fontface": "~0.2.0",
     "angular-local-storage": "~0.0.7",
-    "log4javascript": "~1.4.9"
+    "log4javascript": "~1.4.9",
+    "angularjs-toaster": "~0.4.8"
   }
 }

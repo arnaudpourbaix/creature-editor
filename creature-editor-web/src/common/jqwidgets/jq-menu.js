@@ -1,6 +1,12 @@
 angular.module('apx-jqwidgets.menu', [])
 
-.provider('$jqMenu', function() {
+/**
+ * @ngdoc service
+ * @name apx-jqwidgets.jqMenuProvider
+ * @description
+ * Use `jqMenuProvider` to change the default behavior of the {@link  apx-jqwidgets.jqMenu jqMenu} service.
+ */
+.provider('jqMenu', function() {
 	var options = {
 		showTopLevelArrows : true,
 		enableHover : true,
@@ -68,11 +74,11 @@ angular.module('apx-jqwidgets.menu', [])
 	};
 })
 
-.directive('jqMenu', function JqMenuDirective($compile, $jqCommon, $jqMenu, $timeout) {
+.directive('jqMenu', function JqMenuDirective($compile, $jqCommon, jqMenu, $timeout) {
 	return {
 		restrict : 'AE',
 		link : function(scope, element, attributes) {
-			var settings = angular.extend({}, $jqCommon.options(), $jqMenu.options(), scope.$eval(attributes.jqMenu));
+			var settings = angular.extend({}, $jqCommon.options(), jqMenu.options(), scope.$eval(attributes.jqMenu));
 			element.jqxMenu(settings);
 		}
 	};
