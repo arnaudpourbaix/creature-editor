@@ -9,17 +9,29 @@ angular.module('apx-jqwidgets.data-adapter', [])
 .provider('jqDataAdapter', function() {
 	/**
 	 * @ngdoc property
-	 * @name apx-jqwidgets.jqDataAdapterProvider#defaults
+	 * @name apx-jqwidgets.jqDataAdapterProvider#sourceDefaults
 	 * @propertyOf apx-jqwidgets.jqDataAdapterProvider
-	 * @description Object containing default values for {@link apx-jqwidgets.jqDataAdapter jqDataAdapter}. The object has following properties:
+	 * @description Object containing source default values for {@link apx-jqwidgets.jqDataAdapter jqDataAdapter}. The object has following properties:
 	 * 
 	 * - **mapchar** - `{string}` - Specifies the mapping char (used to access object children).<br>
+	 * 
+	 * @returns {Object} Default values object.
+	 */		
+	var sourceDefaults = this.sourceDefaults = {
+		mapchar : '.'
+	};
+
+	/**
+	 * @ngdoc property
+	 * @name apx-jqwidgets.jqDataAdapterProvider#settingDefaults
+	 * @propertyOf apx-jqwidgets.jqDataAdapterProvider
+	 * @description Object containing settings default values for {@link apx-jqwidgets.jqDataAdapter jqDataAdapter}. The object has following properties:
+	 * 
 	 * - **autoBind** - `{boolean}` - Automatically calls the dataAdapter's dataBind method on initialization.<br>
 	 * 
 	 * @returns {Object} Default values object.
 	 */		
-	var defaults = this.defaults = {
-		mapchar : '.',
+	var settingDefaults = this.settingDefaults = {
 		autoBind : true
 	};
 	
@@ -66,8 +78,8 @@ angular.module('apx-jqwidgets.data-adapter', [])
 		 */
 		service.get = function(source, settings) {
 			source.datafields = service.getDatafields(source.datafields);
-			var params = angular.extend({}, defaults.autobind, settings);
-			var src = angular.extend({}, defaults.mapChar, source);
+			var params = angular.extend({}, settingDefaults, settings);
+			var src = angular.extend({}, sourceDefaults, source);
 			return new $.jqx.dataAdapter(src, params);
 		};
 			

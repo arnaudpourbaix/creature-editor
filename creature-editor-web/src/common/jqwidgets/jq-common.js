@@ -45,9 +45,7 @@ angular.module('apx-jqwidgets.common', [])
 	this.$get = function($q, $http, $templateCache, $rootScope, $controller, $compile, $injector, $parse) {
 		var service = {};
 
-		service.defaults = function() {
-			return defaults;
-		};
+		service.defaults = defaults;
 
 		/**
 		 * @ngdoc function

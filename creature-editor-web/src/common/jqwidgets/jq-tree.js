@@ -1,11 +1,46 @@
 angular.module('apx-jqwidgets.tree', [])
 
-.provider('$jqTree', function() {
-	var options = {
+/**
+ * @ngdoc service
+ * @name apx-jqwidgets.jqTreeServiceProvider
+ * @description
+ * Use `jqTreeServiceProvider` to change the default behavior of the {@link  apx-jqwidgets.jqTreeService jqTreeService} service.
+ */
+.provider('jqTreeService', function() {
+	/**
+	 * @ngdoc property
+	 * @name apx-jqwidgets.jqTreeServiceProvider#defaults
+	 * @propertyOf apx-jqwidgets.jqTreeServiceProvider
+	 * @description Object containing default values for {@link apx-jqwidgets.jqTreeService jqTreeService}. The object has following properties:
+	 * 
+	 * - **toggleMode** - `{string}` - User interaction used for expanding or collapsing any item ('click' or 'dblclick').<br>
+	 * 
+	 * @returns {Object} Default values object.
+	 */		
+	var defaults = this.defaults = {
 		toggleMode : 'click'
 	};
 
-	this.$get = function jqTreeService($jqCommon, $jqDataAdapter, $compile, $translate, $timeout) {
+	/**
+	 * @ngdoc service
+	 * @name apx-jqwidgets.jqTreeService
+     * @requires apx-jqwidgets.jqCommon
+     * @requires apx-jqwidgets.jqDataAdapter
+     * @requires $compile
+     * @requires $timeout
+     * @requires $translate
+	 * @description
+	 * # jqTreeService
+	 * This service is a wrapper for tree widget.<br>
+	 */
+	this.$get = function(jqCommon, jqDataAdapter, $compile, $timeout, $translate) {
+		/**
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
 		var getParent = function(item, items, params) {
 			if (!item) {
 				return null;
@@ -29,6 +64,13 @@ angular.module('apx-jqwidgets.tree', [])
 			return parent;
 		};
 
+		/**
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
 		var retrieveParents = function(item, items, params, parents) {
 			var parent = getParent(item, items, params);
 			if (parent) {
@@ -39,34 +81,30 @@ angular.module('apx-jqwidgets.tree', [])
 
 		var service = {};
 
-		service.getFilteredItems = function(filter, params, items) {
-			if (!filter) {
-				return items;
-			}
-			var result = _.filter(items, function(item) {
-				return _.contains(item[params.display].toUpperCase(), filter.toUpperCase());
-			});
-			var parents = [];
-			angular.forEach(result, function(item) {
-				retrieveParents(item, items, params, parents);
-			});
-			result = _.uniq(result.concat(parents));
-			return result;
-		};
-
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqTreeService#create
+		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @description Returns a new data-adapter.
+		 * @param {Object} element DOM element.
+		 * @param {Object} scope Tree's scope.
+		 * @param {Object} params Tree parameters.
+		 * @param {Object} selectedItem .
+		 * @param {Object} filter .
+		 */
 		service.create = function(element, scope, params, selectedItem, filter) {
-			if (!scope[params.data]) {
-				throw new Error("undefined data in scope: " + params.data);
+			if (!scope[params.datasource]) {
+				throw new Error("undefined data in scope: " + params.datasource);
 			}
-			var items = service.getFilteredItems(filter, params, scope[params.data]);
+			var items = service.getFilteredItems(filter, params, scope[params.datasource]);
 			var source = angular.extend({
 				datafields : params.datafields,
 				datatype : "json",
 				localdata : items,
 				id : params.id
 			});
-			var dataAdapter = $jqDataAdapter.getRecordsHierarchy(source, params.id, params.parent, params.display);
-			var settings = angular.extend({}, $jqCommon.options(), options, params.options, {
+			var dataAdapter = jqDataAdapter.getRecordsHierarchy(source, params.id, params.parent, params.display);
+			var settings = angular.extend({}, jqCommon.defaults, defaults, params.options, {
 				source : dataAdapter
 			});
 			if (settings.allowDrop && !settings.dragEnd && angular.isString(params.events.dragEnd)) {
@@ -95,7 +133,42 @@ angular.module('apx-jqwidgets.tree', [])
 				element.jqxTree('expandAll');
 			}
 		};
+		
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqTreeService#getFilteredItems
+		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
+		service.getFilteredItems = function(filter, params, items) {
+			if (!filter) {
+				return items;
+			}
+			var result = _.filter(items, function(item) {
+				return _.contains(item[params.display].toUpperCase(), filter.toUpperCase());
+			});
+			var parents = [];
+			angular.forEach(result, function(item) {
+				retrieveParents(item, items, params, parents);
+			});
+			result = _.uniq(result.concat(parents));
+			return result;
+		};
 
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqTreeService#getEntity
+		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
 		service.getEntity = function(entities, item, idField) {
 			var entity = _.find(entities, function(entity) { /* jshint -W116 */
 				return entity[idField] == item.id;
@@ -103,6 +176,16 @@ angular.module('apx-jqwidgets.tree', [])
 			return entity;
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqTreeService#getItem
+		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
 		service.getItem = function(element, label) {
 			var items = element.jqxTree('getItems');
 			return _.find(items, function(item) { /* jshint -W116 */
@@ -110,6 +193,16 @@ angular.module('apx-jqwidgets.tree', [])
 			});
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqTreeService#addButtons
+		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
 		service.addButtons = function(element, scope, settings) {
 			var template = '';
 			if (settings.add) {
@@ -123,6 +216,16 @@ angular.module('apx-jqwidgets.tree', [])
 			element.html(html);
 		};
 
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqTreeService#addFilter
+		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @description Returns a new data-adapter.
+		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} scope Menu's scope.
+		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @returns {Object} Promise containing compiled DOM.
+		 */
 		service.addFilter = function(element, scope, settings) {
 			var template = '';
 			template += '<input class="form-control" type="text" placeholder="{{ \'JQWIDGETS.FILTER.SEARCH\' | translate }}" data-ng-model="searchFilter" data-ng-trim="true" />';
@@ -134,102 +237,126 @@ angular.module('apx-jqwidgets.tree', [])
 	};
 })
 
-.directive('jqTree', function($compile, $timeout, $jqCommon, $jqTree, $jqMenu) {
+
+/**
+ * @ngdoc directive
+ * @name apx-jqwidgets.directive:jqTree
+ * @restrict A
+ * @priority 0
+ * @description Apply tree widget on element.
+ * The object has following properties:
+ * 
+ * - **datasource** - `{array|Object}` - Datasource, it can be an object or an array.<br>
+ * - **datafields** - `{array}` - Datafields description.<br>
+ * - **id**	- `{string}` - Datafield id property.<br>
+ * - **parent**	- `{string}` - Datafield parent id property.<br>
+ * - **display** - `{string}` - Datafield display property.<br>
+ * - **options** - `{Object}` - .<br>
+ * - **events** - `{Object}` - .<br>
+ * - **contextMenu** - `{Object}` - .<br>
+ * - **buttons** - `{Object}` - .<br>
+ * - **filter** - `{Object}` - .<br>
+ * 
+ */
+.directive('jqTree', function($compile, $timeout, jqCommon, jqTreeService, jqMenu) {
+
+	var getParams = function($scope, attrs) {
+		return jqCommon.getParams($scope.$eval(attrs.jqTree), [ 'datasource', 'datafields', 'id', 'parent', 'display' ], 
+				[ 'options', 'events', 'contextMenu', 'buttons', 'filter' ]);
+	};
+	var getSelectedEntity = function($scope) {
+		var selectedItem = $scope.tree.jqxTree('getSelectedItem');
+		if (!selectedItem) {
+			return null;
+		}
+		return jqTreeService.getEntity($scope[params.data], selectedItem, params.id);
+	};
+	var bindEvents = function($scope, params) {
+		$scope.tree.off();
+		if (angular.isString(params.events.itemClick)) {
+			$scope.tree.on('select', function(event) {
+				var entity = getSelectedEntity();
+				$scope.$eval(params.events.itemClick)(entity);
+			});
+		}
+		if (params.events.contextMenu) {
+			$scope.tree.on('contextmenu', 'li', function(event) {
+				// disable the default browser's context menu
+				event.preventDefault();
+				var target = angular.element(event.target).parents('li:first')[0];
+				if (target == null) {
+					throw new Error("Menu should have 'li' elements");
+				}
+				$scope.tree.jqxTree('selectItem', target);
+				var posX = angular.element(window).scrollLeft() + parseInt(event.clientX) + 5;
+				var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
+				$scope.contextualMenu.jqxMenu('open', posX, posY);
+			});
+			jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
+				$scope.contextualMenu = result;
+			});
+		}
+	};
+	
 	return {
 		restrict : 'A',
-		template : '<div class="jq-tree"><div data-ng-scope-element="contextualMenu" class="jq-contextual-menu"></div><div class="jq-tree-header"><div data-ng-scope-element="buttons" class="jq-tree-buttons"></div><div data-ng-scope-element="filter" class="jq-tree-filter"></div></div><div data-ng-scope-element="tree" class="jq-tree-body"></div></div>',
+		template : '<div class="jq-tree"><div jq-scope-element="contextualMenu" class="jq-contextual-menu"></div>' + 
+					'<div class="jq-tree-header"><div jq-scope-element="buttons" class="jq-tree-buttons"></div>' + 
+					'<div jq-scope-element="filter" class="jq-tree-filter"></div></div><div jq-scope-element="tree" class="jq-tree-body"></div></div>',
 		replace : true,
 		scope : true,
 		compile : function() {
 			return {
-				post : function($scope, iElement, iAttrs) {
-					var getParams = function() {
-						return $jqCommon.getParams($scope.$eval(iAttrs.jqTree), [ 'data', 'datafields', 'id', 'parent', 'display' ], [ 'options', 'events',
-								'contextMenu', 'buttons', 'filter' ]);
-					};
-					var getSelectedEntity = function() {
-						var selectedItem = $scope.tree.jqxTree('getSelectedItem');
-						if (!selectedItem) {
-							return null;
-						}
-						return $jqTree.getEntity($scope[params.data], selectedItem, params.id);
-					};
-					var bindEvents = function(params) {
-						$scope.tree.off();
-						if (angular.isString(params.events.itemClick)) {
-							$scope.tree.on('select', function(event) {
-								var entity = getSelectedEntity();
-								$scope.$eval(params.events.itemClick)(entity);
-							});
-						}
-						if (params.events.contextMenu) {
-							$scope.tree.on('contextmenu', 'li', function(event) {
-								// disable the default browser's context menu
-								event.preventDefault();
-								var target = angular.element(event.target).parents('li:first')[0];
-								if (target == null) {
-									throw new Error("Menu should have 'li' elements");
-								}
-								$scope.tree.jqxTree('selectItem', target);
-								var posX = angular.element(window).scrollLeft() + parseInt(event.clientX) + 5;
-								var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
-								$scope.contextualMenu.jqxMenu('open', posX, posY);
-							});
-							$jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
-								$scope.contextualMenu = result;
-							});
-						}
-					};
+				post : function($scope, element, attrs) {
+					var params = getParams($scope, attrs);
 
-					var params = getParams();
-
-					bindEvents(params);
-					$jqTree.create($scope.tree, $scope, params, $scope.$eval(iAttrs.jqSelectedItem));
-					if (params.buttons) {
-						$jqTree.addButtons($scope.buttons, $scope, params.buttons);
-					}
-					if (params.filter) {
-						$jqTree.addFilter($scope.filter, $scope, params.filter);
-					}
-
-					$scope.$parent.$watch(iAttrs.jqTree, function(newValue, oldValue) {
-						if (angular.equals(newValue, oldValue)) {
-							return;
-						}
-						params = getParams();
-						bindEvents(params);
-						var selectedItem = $scope.$eval(iAttrs.jqSelectedItem) || getSelectedEntity();
-						$jqTree.create($scope.tree, $scope, params, selectedItem);
-					});
-
-					$scope.$parent.$watch(params.data, function(newValue, oldValue) {
-						if (angular.equals(newValue, oldValue)) {
-							return;
-						}
-						var selectedItem = $scope.$eval(iAttrs.jqSelectedItem) || getSelectedEntity();
-						$jqTree.create($scope.tree, $scope, params, selectedItem);
-					}, true);
-
-					$scope.add = function() {
-						$scope.$eval(params.buttons.add)();
-					};
-
-					$scope.expand = function() {
-						$scope.tree.jqxTree('expandAll');
-					};
-
-					$scope.collapse = function() {
-						$scope.tree.jqxTree('collapseAll');
-					};
-
-					$scope.$watch('searchFilter', function(newValue, oldValue) {
-						if (newValue === oldValue) {
-							return;
-						}
-						var selectedItem = $scope.$eval(iAttrs.jqSelectedItem) || getSelectedEntity();
-						$scope.tree.jqxTree('clear');
-						$jqTree.create($scope.tree, $scope, params, selectedItem, newValue);
-					});
+					//bindEvents(params);
+					jqTreeService.create($scope.tree, $scope, params, $scope.$eval(attrs.jqSelectedItem));
+//					if (params.buttons) {
+//						jqTreeService.addButtons($scope.buttons, $scope, params.buttons);
+//					}
+//					if (params.filter) {
+//						jqTreeService.addFilter($scope.filter, $scope, params.filter);
+//					}
+//
+//					$scope.$parent.$watch(attrs.jqTree, function(newValue, oldValue) {
+//						if (angular.equals(newValue, oldValue)) {
+//							return;
+//						}
+//						params = getParams();
+//						bindEvents(params);
+//						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
+//						jqTreeService.create($scope.tree, $scope, params, selectedItem);
+//					});
+//
+//					$scope.$parent.$watch(params.data, function(newValue, oldValue) {
+//						if (angular.equals(newValue, oldValue)) {
+//							return;
+//						}
+//						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
+//						jqTreeService.create($scope.tree, $scope, params, selectedItem);
+//					}, true);
+//
+//					$scope.add = function() {
+//						$scope.$eval(params.buttons.add)();
+//					};
+//
+//					$scope.expand = function() {
+//						$scope.tree.jqxTree('expandAll');
+//					};
+//
+//					$scope.collapse = function() {
+//						$scope.tree.jqxTree('collapseAll');
+//					};
+//
+//					$scope.$watch('searchFilter', function(newValue, oldValue) {
+//						if (newValue === oldValue) {
+//							return;
+//						}
+//						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
+//						$scope.tree.jqxTree('clear');
+//						jqTreeService.create($scope.tree, $scope, params, selectedItem, newValue);
+//					});
 
 				}
 			};

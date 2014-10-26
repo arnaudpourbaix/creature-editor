@@ -2,8 +2,8 @@ angular.module('apx-jqwidgets', [
 	'pascalprecht.translate', 
 	'apx-jqwidgets.common', 
 	'apx-jqwidgets.data-adapter', 
-	'apx-jqwidgets.menu' 
-//	'apx-jqwidgets.tree', 
+	'apx-jqwidgets.menu', 
+	'apx-jqwidgets.tree', 
 //	'apx-jqwidgets.window', 
 //	'apx-jqwidgets.grid',
 //	'apx-jqwidgets.dropdownlist', 

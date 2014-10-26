@@ -1,6 +1,7 @@
 angular.module('editor.category.controllers', [])
 
 .controller('CategoryListController', function($scope, $translate, $state, toaster, Category, CategoryService, categories) {
+	$scope.categories = categories;
 
 	var setTree = function() {
 		var source = {
@@ -44,8 +45,55 @@ angular.module('editor.category.controllers', [])
 //		});		
 	};
 	
-	setTree();
 	
+	//setTree();
+	
+	$scope.categoryTree = {
+		datasource : 'categories',
+		datafields : [ {
+			name : 'id',
+			type : 'number'
+		}, {
+			name : 'name',
+			type : 'string'
+		}, {
+			name : 'parentId',
+			map : 'parent.id',
+			type : 'number'
+		} ],
+		id : 'id',
+		parent : 'parentId',
+		display : 'name',
+		options : {
+			width : 580,
+			allowDrag : true,
+			allowDrop : true,
+		},
+		filter : true,
+		buttons : {
+			add : 'addCategory',
+			expandCollapse : true
+		},
+		events : {
+			dragEnd : 'moveCategory',
+			contextMenu : {
+				options : {
+					width : '200px',
+					height : '90px'
+				},
+				items : [ {
+					label : $translate.instant('CATEGORY.CONTEXTUAL.ADD'),
+					action : 'addCategory'
+				}, {
+					label : $translate.instant('CATEGORY.CONTEXTUAL.EDIT'),
+					action : 'editCategory'
+				}, {
+					label : $translate.instant('CATEGORY.CONTEXTUAL.DELETE'),
+					action : 'removeCategory'
+				} ]
+			}
+		}
+	};
 	
 //	$scope.selectedCategory = function(params) {
 //		var result;

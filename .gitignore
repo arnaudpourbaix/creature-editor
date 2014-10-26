@@ -11,6 +11,7 @@ creature-editor-front/target
 creature-editor-front/src/main/webapp
 creature-editor-web/.settings
 creature-editor-web/.classpath
+creature-editor-web/docs
 creature-editor-web/bin
 creature-editor-web/target
 creature-editor-web/build
