@@ -88,9 +88,9 @@ angular.module('apx-jqwidgets.tree', [])
 		 * @description Returns a new data-adapter.
 		 * @param {Object} element DOM element.
 		 * @param {Object} scope Tree's scope.
-		 * @param {Object} params Tree parameters.
-		 * @param {Object} selectedItem .
-		 * @param {Object} filter .
+		 * @param {Object} params Tree parameters. See {@link apx-jqwidgets.directive:jqTree jqTree}
+		 * @param {Object=} selectedItem Select a node in tree and expand parents. It must be an item present in datasource.  
+		 * @param {string=} filter Tree nodes will be filtered by this parameter.
 		 */
 		service.create = function(element, scope, params, selectedItem, filter) {
 			if (!scope[params.datasource]) {
@@ -104,7 +104,7 @@ angular.module('apx-jqwidgets.tree', [])
 				id : params.id
 			});
 			var dataAdapter = jqDataAdapter.getRecordsHierarchy(source, params.id, params.parent, params.display);
-			var settings = angular.extend({}, jqCommon.defaults, defaults, params.options, {
+			var settings = angular.extend({}, jqCommon.defaults, defaults, params.settings, {
 				source : dataAdapter
 			});
 			if (settings.allowDrop && !settings.dragEnd && angular.isString(params.events.dragEnd)) {
@@ -251,7 +251,7 @@ angular.module('apx-jqwidgets.tree', [])
  * - **id**	- `{string}` - Datafield id property.<br>
  * - **parent**	- `{string}` - Datafield parent id property.<br>
  * - **display** - `{string}` - Datafield display property.<br>
- * - **options** - `{Object}` - .<br>
+ * - **settings** - `{Object=}` - Set of key/value pairs that configure the jqxTree plug-in. All settings are optional.<br>
  * - **events** - `{Object}` - .<br>
  * - **contextMenu** - `{Object}` - .<br>
  * - **buttons** - `{Object}` - .<br>
@@ -262,9 +262,9 @@ angular.module('apx-jqwidgets.tree', [])
 
 	var getParams = function($scope, attrs) {
 		return jqCommon.getParams($scope.$eval(attrs.jqTree), [ 'datasource', 'datafields', 'id', 'parent', 'display' ], 
-				[ 'options', 'events', 'contextMenu', 'buttons', 'filter' ]);
+				[ 'settings', 'events', 'contextMenu', 'buttons', 'filter' ]);
 	};
-	var getSelectedEntity = function($scope) {
+	var getSelectedEntity = function($scope, params) {
 		var selectedItem = $scope.tree.jqxTree('getSelectedItem');
 		if (!selectedItem) {
 			return null;
