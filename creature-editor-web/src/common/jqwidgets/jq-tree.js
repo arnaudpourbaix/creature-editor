@@ -113,7 +113,7 @@ angular.module('apx-jqwidgets.tree', [])
 						var dragEntity = service.getEntity(items, item, params.id);
 						var dropEntity = service.getEntity(items, dropItem, params.id);
 						$timeout(function() {
-							scope.$eval(params.events.dragEnd)(dragEntity, dropEntity, item, dropItem);
+							scope.$eval(params.events.dragEnd)(dragEntity, dropEntity);
 							element.jqxTree('expandItem', dropItem);
 						});
 					}
@@ -252,17 +252,30 @@ angular.module('apx-jqwidgets.tree', [])
  * - **parent**	- `{string}` - Datafield parent id property.<br>
  * - **display** - `{string}` - Datafield display property.<br>
  * - **settings** - `{Object=}` - Set of key/value pairs that configure the jqxTree plug-in. All settings are optional.<br>
- * - **events** - `{Object}` - .<br>
- * - **contextMenu** - `{Object}` - .<br>
- * - **buttons** - `{Object}` - .<br>
- * - **filter** - `{Object}` - .<br>
+ * - **events** - `{Object=}` - Bind events between widget and Angular's scope. See below.<br>
+ * - **buttons** - `{Object=}` - Configure external buttons tied to widget. See below.<br>
+ * - **filter** - `{boolean=}` - Add a filter text field.<br>
  * 
+ * events property has following properties:
+ * 
+ * - **dragEnd** - `{string=}` - Must be a method within scope. It will be called with 2 parameters: drag entity, drop entity<br>
+ * - **contextMenu** - `{Object=}` - Use this to set a contextual menu on items. See below.<br>
+ * 
+ * contextMenu property has following properties:
+ * 
+ * - **settings** - `{Object=}` - Set of key/value pairs that configure the jqxMenu plug-in. All settings are optional.<br>
+ * - **items** - `{array}` - Contains a list of menu items. Each item has 2 properties: label {string} and action {string} (must be a method within scope).<br>
+ * 
+ * buttons property has following properties:
+ * 
+ * - **add** - `{string=}` - Add a button to add a new element in tree. Must be a method within scope.<br>
+ * - **expandCollapse** - `{boolean=}` - Add expand All and Collapse All buttons.<br>
  */
 .directive('jqTree', function($compile, $timeout, jqCommon, jqTreeService, jqMenu) {
 
 	var getParams = function($scope, attrs) {
 		return jqCommon.getParams($scope.$eval(attrs.jqTree), [ 'datasource', 'datafields', 'id', 'parent', 'display' ], 
-				[ 'settings', 'events', 'contextMenu', 'buttons', 'filter' ]);
+				[ 'settings', 'events', 'buttons', 'filter' ]);
 	};
 	var getSelectedEntity = function($scope, params) {
 		var selectedItem = $scope.tree.jqxTree('getSelectedItem');
