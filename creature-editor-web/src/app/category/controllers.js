@@ -64,7 +64,7 @@ angular.module('editor.category.controllers', [])
 		id : 'id',
 		parent : 'parentId',
 		display : 'name',
-		options : {
+		settings : {
 			width : 580,
 			allowDrag : true,
 			allowDrop : true,
@@ -95,37 +95,37 @@ angular.module('editor.category.controllers', [])
 		}
 	};
 	
-//	$scope.selectedCategory = function(params) {
-//		var result;
-//		if (params.categoryId && params.categoryId !== 'new') {
-//			result = CategoryService.getById($scope.categories, params.categoryId);
-//		} else if (params.categoryParentId && params.categoryParentId !== 'root') {
-//			result = CategoryService.getById($scope.categories, params.categoryParentId);
-//		}
-//		return result;
-//	};
-//
-//	$scope.addCategory = function(category) {
-//		$state.go('categories.edit', {
-//			categoryParentId : category ? category.$id() : 'root',
-//			categoryId : 'new'
-//		});
-//	};
-//
-//	$scope.editCategory = function(category) {
-//		$state.go('categories.edit', {
-//			categoryParentId : category.parent ? category.parent.$id() : 'root',
-//			categoryId : category.$id()
-//		});
-//	};
-//
-//	$scope.moveCategory = function(category, parent) {
-//		category.parent = parent;
-//		category.$save();
-//	};
-//
-//	$scope.removeCategory = function(category) {
-//		category.$delete().then(function(response) {
+	$scope.selectedCategory = function(params) {
+		var result;
+		if (params.categoryId && params.categoryId !== 'new') {
+			result = CategoryService.getById($scope.categories, params.categoryId);
+		} else if (params.categoryParentId && params.categoryParentId !== 'root') {
+			result = CategoryService.getById($scope.categories, params.categoryParentId);
+		}
+		return result;
+	};
+
+	$scope.addCategory = function(category) {
+		$state.go('categories.edit', {
+			categoryParentId : category ? category.$id() : 'root',
+			categoryId : 'new'
+		});
+	};
+
+	$scope.editCategory = function(category) {
+		$state.go('categories.edit', {
+			categoryParentId : category.parent ? category.parent.$id() : 'root',
+			categoryId : category.$id()
+		});
+	};
+
+	$scope.moveCategory = function(category, parent) {
+		category.parent = parent;
+		category.$save();
+	};
+
+	$scope.removeCategory = function(category) {
+		category.$delete().then(function(response) {
 //			$translateWrapper('CATEGORY.LABEL').then(function(label) {
 //				$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
 //					entity : label,
@@ -135,68 +135,12 @@ angular.module('editor.category.controllers', [])
 //			Category.query().$promise.then(function(result) {
 //				$scope.categories = result;
 //			});
-//		}, function() {
+		}, function() {
 //			$alertMessage.push('CRUD.REMOVE_ERROR', 'danger', {
 //				name : category.name
 //			});
-//		});
-//	};
-
-//	var setCategoryTree = function() {
-//		$translateWrapper([ 'CATEGORY.CONTEXTUAL.ADD', 'CATEGORY.CONTEXTUAL.EDIT', 'CATEGORY.CONTEXTUAL.DELETE' ]).then(function(labels) {
-//			$scope.categoryTree = {
-//				data : 'categories',
-//				datafields : [ {
-//					name : 'id',
-//					type : 'number'
-//				}, {
-//					name : 'name',
-//					type : 'string'
-//				}, {
-//					name : 'parentId',
-//					map : 'parent.id',
-//					type : 'number'
-//				} ],
-//				id : 'id',
-//				parent : 'parentId',
-//				display : 'name',
-//				options : {
-//					width : 580,
-//					allowDrag : true,
-//					allowDrop : true,
-//				},
-//				filter : true,
-//				buttons : {
-//					add : 'addCategory',
-//					expandCollapse : true
-//				},
-//				events : {
-//					dragEnd : 'moveCategory',
-//					contextMenu : {
-//						options : {
-//							width : '200px',
-//							height : '90px'
-//						},
-//						items : [ {
-//							label : labels['CATEGORY.CONTEXTUAL.ADD'],
-//							action : 'addCategory'
-//						}, {
-//							label : labels['CATEGORY.CONTEXTUAL.EDIT'],
-//							action : 'editCategory'
-//						}, {
-//							label : labels['CATEGORY.CONTEXTUAL.DELETE'],
-//							action : 'removeCategory'
-//						} ]
-//					}
-//				}
-//			};
-//		});
-//	};
-//
-//	setCategoryTree();
-//	$scope.$onRootScope('$translateChangeSuccess', function() {
-//		setCategoryTree();
-//	});
+		});
+	};
 
 })
 

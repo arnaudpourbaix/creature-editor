@@ -2,16 +2,16 @@ angular.module('apx-jqwidgets.tree', [])
 
 /**
  * @ngdoc service
- * @name apx-jqwidgets.jqTreeServiceProvider
+ * @name apx-jqwidgets.jqTreeProvider
  * @description
- * Use `jqTreeServiceProvider` to change the default behavior of the {@link  apx-jqwidgets.jqTreeService jqTreeService} service.
+ * Use `jqTreeProvider` to change the default behavior of the {@link  apx-jqwidgets.jqTree jqTree} service.
  */
-.provider('jqTreeService', function() {
+.provider('jqTree', function() {
 	/**
 	 * @ngdoc property
-	 * @name apx-jqwidgets.jqTreeServiceProvider#defaults
-	 * @propertyOf apx-jqwidgets.jqTreeServiceProvider
-	 * @description Object containing default values for {@link apx-jqwidgets.jqTreeService jqTreeService}. The object has following properties:
+	 * @name apx-jqwidgets.jqTreeProvider#defaults
+	 * @propertyOf apx-jqwidgets.jqTreeProvider
+	 * @description Object containing default values for {@link apx-jqwidgets.jqTree jqTree}. The object has following properties:
 	 * 
 	 * - **toggleMode** - `{string}` - User interaction used for expanding or collapsing any item ('click' or 'dblclick').<br>
 	 * 
@@ -23,14 +23,14 @@ angular.module('apx-jqwidgets.tree', [])
 
 	/**
 	 * @ngdoc service
-	 * @name apx-jqwidgets.jqTreeService
+	 * @name apx-jqwidgets.jqTree
      * @requires apx-jqwidgets.jqCommon
      * @requires apx-jqwidgets.jqDataAdapter
      * @requires $compile
      * @requires $timeout
      * @requires $translate
 	 * @description
-	 * # jqTreeService
+	 * # jqTree
 	 * This service is a wrapper for tree widget.<br>
 	 */
 	this.$get = function(jqCommon, jqDataAdapter, $compile, $timeout, $translate) {
@@ -83,8 +83,8 @@ angular.module('apx-jqwidgets.tree', [])
 
 		/**
 		 * @ngdoc function
-		 * @name apx-jqwidgets.jqTreeService#create
-		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @name apx-jqwidgets.jqTree#create
+		 * @methodOf apx-jqwidgets.jqTree
 		 * @description Returns a new data-adapter.
 		 * @param {Object} element DOM element.
 		 * @param {Object} scope Tree's scope.
@@ -136,8 +136,8 @@ angular.module('apx-jqwidgets.tree', [])
 		
 		/**
 		 * @ngdoc function
-		 * @name apx-jqwidgets.jqTreeService#getFilteredItems
-		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @name apx-jqwidgets.jqTree#getFilteredItems
+		 * @methodOf apx-jqwidgets.jqTree
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} scope Menu's scope.
@@ -161,8 +161,8 @@ angular.module('apx-jqwidgets.tree', [])
 
 		/**
 		 * @ngdoc function
-		 * @name apx-jqwidgets.jqTreeService#getEntity
-		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @name apx-jqwidgets.jqTree#getEntity
+		 * @methodOf apx-jqwidgets.jqTree
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} scope Menu's scope.
@@ -178,8 +178,8 @@ angular.module('apx-jqwidgets.tree', [])
 
 		/**
 		 * @ngdoc function
-		 * @name apx-jqwidgets.jqTreeService#getItem
-		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @name apx-jqwidgets.jqTree#getItem
+		 * @methodOf apx-jqwidgets.jqTree
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} scope Menu's scope.
@@ -195,8 +195,8 @@ angular.module('apx-jqwidgets.tree', [])
 
 		/**
 		 * @ngdoc function
-		 * @name apx-jqwidgets.jqTreeService#addButtons
-		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @name apx-jqwidgets.jqTree#addButtons
+		 * @methodOf apx-jqwidgets.jqTree
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} scope Menu's scope.
@@ -218,8 +218,8 @@ angular.module('apx-jqwidgets.tree', [])
 
 		/**
 		 * @ngdoc function
-		 * @name apx-jqwidgets.jqTreeService#addFilter
-		 * @methodOf apx-jqwidgets.jqTreeService
+		 * @name apx-jqwidgets.jqTree#addFilter
+		 * @methodOf apx-jqwidgets.jqTree
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} scope Menu's scope.
@@ -270,8 +270,67 @@ angular.module('apx-jqwidgets.tree', [])
  * 
  * - **add** - `{string=}` - Add a button to add a new element in tree. Must be a method within scope.<br>
  * - **expandCollapse** - `{boolean=}` - Add expand All and Collapse All buttons.<br>
+ * 
+ * HTML attributes:
+ * 
+ * - **jq-selected-item** - `{string=}` - Object or function that will be evaluated to get a datasource item. This item will be selected after tree creation.<br>
+ * 
+ * # Example:
+ * 
+ * <pre>
+ * <div data-jq-tree="categoryTree"></div>
+ * </pre>
+ * 
+ * <pre>
+ * 	$scope.categoryTree = {
+		datasource : 'categories',
+		datafields : [ {
+			name : 'id',
+			type : 'number'
+		}, {
+			name : 'name',
+			type : 'string'
+		}, {
+			name : 'parentId',
+			map : 'parent.id',
+			type : 'number'
+		} ],
+		id : 'id',
+		parent : 'parentId',
+		display : 'name',
+		settings : {
+			width : 580,
+			allowDrag : true,
+			allowDrop : true,
+		},
+		filter : true,
+		buttons : {
+			add : 'addCategory',
+			expandCollapse : true
+		},
+		events : {
+			dragEnd : 'moveCategory',
+			contextMenu : {
+				options : {
+					width : '200px',
+					height : '90px'
+				},
+				items : [ {
+					label : $translate.instant('CATEGORY.CONTEXTUAL.ADD'),
+					action : 'addCategory'
+				}, {
+					label : $translate.instant('CATEGORY.CONTEXTUAL.EDIT'),
+					action : 'editCategory'
+				}, {
+					label : $translate.instant('CATEGORY.CONTEXTUAL.DELETE'),
+					action : 'removeCategory'
+				} ]
+			}
+		}
+	};
+ * </pre>
  */
-.directive('jqTree', function($compile, $timeout, jqCommon, jqTreeService, jqMenu) {
+.directive('jqTree', function($compile, $timeout, jqCommon, jqTree, jqMenu) {
 
 	var getParams = function($scope, attrs) {
 		return jqCommon.getParams($scope.$eval(attrs.jqTree), [ 'datasource', 'datafields', 'id', 'parent', 'display' ], 
@@ -282,7 +341,7 @@ angular.module('apx-jqwidgets.tree', [])
 		if (!selectedItem) {
 			return null;
 		}
-		return jqTreeService.getEntity($scope[params.data], selectedItem, params.id);
+		return jqTree.getEntity($scope[params.data], selectedItem, params.id);
 	};
 	var bindEvents = function($scope, params) {
 		$scope.tree.off();
@@ -324,13 +383,13 @@ angular.module('apx-jqwidgets.tree', [])
 					var params = getParams($scope, attrs);
 
 					//bindEvents(params);
-					jqTreeService.create($scope.tree, $scope, params, $scope.$eval(attrs.jqSelectedItem));
-//					if (params.buttons) {
-//						jqTreeService.addButtons($scope.buttons, $scope, params.buttons);
-//					}
-//					if (params.filter) {
-//						jqTreeService.addFilter($scope.filter, $scope, params.filter);
-//					}
+					jqTree.create($scope.tree, $scope, params, $scope.$eval(attrs.jqSelectedItem));
+					if (params.buttons) {
+						jqTree.addButtons($scope.buttons, $scope, params.buttons);
+					}
+					if (params.filter) {
+						jqTree.addFilter($scope.filter, $scope, params.filter);
+					}
 //
 //					$scope.$parent.$watch(attrs.jqTree, function(newValue, oldValue) {
 //						if (angular.equals(newValue, oldValue)) {
@@ -339,7 +398,7 @@ angular.module('apx-jqwidgets.tree', [])
 //						params = getParams();
 //						bindEvents(params);
 //						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
-//						jqTreeService.create($scope.tree, $scope, params, selectedItem);
+//						jqTree.create($scope.tree, $scope, params, selectedItem);
 //					});
 //
 //					$scope.$parent.$watch(params.data, function(newValue, oldValue) {
@@ -347,7 +406,7 @@ angular.module('apx-jqwidgets.tree', [])
 //							return;
 //						}
 //						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
-//						jqTreeService.create($scope.tree, $scope, params, selectedItem);
+//						jqTree.create($scope.tree, $scope, params, selectedItem);
 //					}, true);
 //
 //					$scope.add = function() {
@@ -368,7 +427,7 @@ angular.module('apx-jqwidgets.tree', [])
 //						}
 //						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
 //						$scope.tree.jqxTree('clear');
-//						jqTreeService.create($scope.tree, $scope, params, selectedItem, newValue);
+//						jqTree.create($scope.tree, $scope, params, selectedItem, newValue);
 //					});
 
 				}

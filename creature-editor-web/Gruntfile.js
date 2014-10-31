@@ -78,9 +78,9 @@ module.exports = function(grunt) {
 		 */
 		vendor_files : {
 			js : [ 
-			      '<%= app_folders.vendor %>/jquery/jquery.min.js', 
-			      '<%= app_folders.vendor %>/angular/angular.js', 
-			      '<%= app_folders.vendor %>/angular-cookies/angular-cookies.min.js',
+			      	'<%= app_folders.vendor %>/jquery/jquery.min.js', 
+			      	'<%= app_folders.vendor %>/angular/angular.js', 
+			      	'<%= app_folders.vendor %>/angular-cookies/angular-cookies.min.js',
 					'<%= app_folders.vendor %>/angular-resource/angular-resource.min.js', 
 					'<%= app_folders.vendor %>/angular-animate/angular-animate.min.js', 
 					'<%= app_folders.vendor %>/angular-sanitize/angular-sanitize.min.js',
@@ -94,21 +94,20 @@ module.exports = function(grunt) {
 					'<%= app_folders.vendor %>/angular-bootstrap/ui-bootstrap-tpls.min.js', 
 					'<%= app_folders.vendor %>/AngularJS-Toaster/toaster.js', 
 					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
+					'<%= app_folders.vendor %>/log4javascript/log4javascript.js',
 					'<%= app_folders.src %>/assets/jqwidgets/jqx-all.js', 
-					'<%= app_folders.src %>/assets/Long.js',
-					'<%= app_folders.vendor %>/log4javascript/log4javascript.js'
+					'<%= app_folders.src %>/assets/Long.js'
 				],
 			css : [ 
-			     '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
-			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css',
-			     '<%= app_folders.vendor %>/AngularJS-Toaster/toaster.css'
+			       '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
+			       '<%= app_folders.vendor %>/AngularJS-Toaster/toaster.css'
 			   ],
 			assets : [ 
-			     '<%= app_folders.vendor %>/bootstrap/dist/fonts/*', 
-			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap.min.css', 
-			     '<%= app_folders.vendor %>/bootstrap/dist/css/bootstrap-theme.min.css', 
-			     '<%= app_folders.vendor %>/roboto-fontface/*.css',
-			     '<%= app_folders.vendor %>/roboto-fontface/fonts/*' 
+			       'bootstrap/dist/fonts/*', 
+			       'bootstrap/dist/css/bootstrap.min.css', 
+			       'bootstrap/dist/css/bootstrap-theme.min.css', 
+			       'roboto-fontface/*.css',
+			       'roboto-fontface/fonts/*' 
 			   ]
 
 		},
@@ -288,9 +287,8 @@ module.exports = function(grunt) {
 				files : [ {
 					src : [ '<%= vendor_files.assets %>' ],
 					dest : '<%= app_folders.build %>/assets',
-					cwd : 'vendor',
+					cwd : '<%= app_folders.vendor %>',
 					expand : true
-				// , flatten : true
 				} ]
 			},
 			buildAppJson : {
@@ -304,7 +302,7 @@ module.exports = function(grunt) {
 			compileAppJson : {
 				files : [ {
 					src : [ '**/*.json' ],
-					dest : '<%= compile %>',
+					dest : '<%= app_folders.compile %>',
 					cwd : '<%= app_folders.build %>',
 					expand : true
 				} ]
@@ -312,7 +310,7 @@ module.exports = function(grunt) {
 			compileAssets : {
 				files : [ {
 					src : [ '**' ],
-					dest : '<%= compile %>/assets',
+					dest : '<%= app_folders.compile %>/assets',
 					cwd : '<%= app_folders.build %>/assets',
 					expand : true
 				} ]
@@ -486,7 +484,7 @@ module.exports = function(grunt) {
 	});
 
 	grunt.registerTask('build', [ 'jshint', 'clean', 'copy:buildAppJs', 'copy:buildVendorJs', 'copy:buildAppCss', 'copy:buildVendorCss',
-	                              'copy:buildAppJson', 'copy:buildAppAssets',
+	                              'copy:buildAppJson', 'copy:buildAppAssets', 'copy:buildVendorAssets',
 	                              'less:development', 'autoprefixer', 'html2js', 'index:build' ]);
 	// grunt.registerTask('build', [ 'ngtemplates', 'cssmin', 'concat', 'ngmin', 'uglify', 'copy', 'htmlmin', 'imagemin' ]);
 	grunt.registerTask('serve', [ 'build', 'configureProxies', 'connect:main', 'watch' ]);
