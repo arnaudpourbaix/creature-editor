@@ -127,7 +127,7 @@ angular.module('apx-jqwidgets.common', [])
 		 * @returns {Object} Template's promise.
 		 */
 		service.getTemplatePromise = function(options) {
-			service.checkTemplateParams();
+			service.checkTemplateParams(options);
 			return options.template ? $q.when(options.template) : $http.get(options.templateUrl, {
 				cache : $templateCache
 			}).then(function(result) {
@@ -171,10 +171,10 @@ angular.module('apx-jqwidgets.common', [])
 		 * @description Instanciate a controller and returns a promise to track when it's done.
 		 * @param {string=} controller Controller's name.
 		 * @param {array=} dependencies Dependencies to inject in controller. Promises within dependencies will be resolved before injection.
-		 * @param {Object=} scope Controller's scope. If not provided, a new scope is created from root scope.
+		 * @param {Object=} $scope Controller's scope. If not provided, a new scope is created from root scope.
 		 * @returns {Object} Promise resolved when controller is instanciated
 		 */
-		service.instanciateController = function(controller, dependencies, scope) {
+		service.instanciateController = function(controller, dependencies, $scope) {
 			var deferred = $q.defer();
 			if (!controller) {
 				deferred.resolve();
@@ -182,7 +182,7 @@ angular.module('apx-jqwidgets.common', [])
 			}
 			service.resolveDependencies(dependencies).then(function(result) {
 				var ctrlLocals = {
-					$scope : scope || $rootScope.$new()
+					$scope : $scope || $rootScope.$new()
 				};
 				angular.forEach(result, function(value, key) {
 					ctrlLocals[key] = value;
@@ -202,11 +202,11 @@ angular.module('apx-jqwidgets.common', [])
 		 * @param {Object} templateOptions Must contains template or templateUrl property.
 		 * @param {string=} controller Controller's name.
 		 * @param {array=} dependencies Dependencies to inject.
-		 * @param {Object=} scope Controller's scope, if not provided, a new scope is created from root scope.
+		 * @param {Object=} $scope Controller's scope, if not provided, a new scope is created from root scope.
 		 * @returns {Object} Promise containing compiled DOM.
 		 */
-		service.getView = function(templateOptions, controller, dependencies, scope) {
-			var $scope = scope || $rootScope.$new();
+		service.getView = function(templateOptions, controller, dependencies, $scope) {
+			$scope = $scope || $rootScope.$new();
 			return $q.all([ service.getTemplatePromise(templateOptions), service.instanciateController(controller, dependencies, $scope)]).then(function(result) {
 				return $compile(result[0])($scope);
 			});
@@ -218,11 +218,11 @@ angular.module('apx-jqwidgets.common', [])
 		 * @methodOf apx-jqwidgets.jqCommon
 		 * @description Get scope data value. Throw an exception if undefined.
 		 * @param {string} name data name within a scope.
-		 * @param {Object} scope scope containing the data.
+		 * @param {Object} $scope scope containing the data.
 		 * @returns {Object} Value.
 		 */
-		service.getScopeData = function(name, scope) {
-			var value = $parse(name)(scope);
+		service.getScopeData = function(name, $scope) {
+			var value = $parse(name)($scope);
 			if (angular.isUndefined(value)) {
 				throw new Error('Undefined data in scope :' + name);
 			}
@@ -245,8 +245,8 @@ angular.module('apx-jqwidgets.common', [])
 		restrict : "A",
 		compile : function(tElement, tAttrs, transclude) {
 			return {
-				pre : function(scope, iElement, iAttrs) {
-					scope[iAttrs.jqScopeElement] = iElement;
+				pre : function($scope, iElement, iAttrs) {
+					$scope[iAttrs.jqScopeElement] = iElement;
 				}
 			};
 		}

@@ -62,17 +62,17 @@ angular.module('apx-jqwidgets.menu', [])
 		/**
 		 * @description Returns a new data-adapter.
 		 * @param {string} label Set of key/value pairs that configure the jqxDataAdapter's source object.
-		 * @param {Object} scope Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} $scope Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} settings Should contain a property items wich should be an array of objects (menu items).
 		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 */
-		var selectItem = function(label, scope, settings, getEntity) {
+		var selectItem = function(label, $scope, settings, getEntity) {
 			var item = _.find(settings.items, function(item) {
 				return item.label === label;
 			});
-			scope.$apply(function() {
+			$scope.$apply(function() {
 				var entity = getEntity();
-				scope.$eval(item.action)(entity);
+				$scope.$eval(item.action)(entity);
 			});
 		};
 
@@ -84,14 +84,14 @@ angular.module('apx-jqwidgets.menu', [])
 		 * @methodOf apx-jqwidgets.jqMenu
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
-		 * @param {Object} scope Menu's scope.
+		 * @param {Object} $scope Menu's scope.
 		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @returns {Object} Promise containing compiled DOM.
 		 */
-		service.getContextual = function(settings, scope, getEntity) {
+		service.getContextual = function(settings, $scope, getEntity) {
 			checkMenuItems(settings);
 			var templateOptions = {
-				template : '<ul><li data-ng-repeat="item in items">{{item.label}}</li></ul>'
+				template : '<div><ul><li data-ng-repeat="item in items">{{item.label}}</li></ul></div>'
 			};
 			var dependencies = {
 				items : settings.items
@@ -101,13 +101,14 @@ angular.module('apx-jqwidgets.menu', [])
 					autoOpenPopup : false,
 					mode : 'popup'
 				});
-//				$timeout(function() {
-//					element.jqxMenu(options);
-//					element.on('itemclick', function(event) {
-//						selectItem($(event.target).text(), scope, settings, getEntity);
-//					});
-//				});
-//				return element.html(view);
+				return $timeout(function() {
+					view.jqxMenu(options);
+					view.on('itemclick', function(event) {
+						selectItem($(event.target).text(), $scope, settings, getEntity);
+					});
+					return view;
+				});
+			}).then(function(view) {
 				return view;
 			});
 		};
@@ -126,8 +127,8 @@ angular.module('apx-jqwidgets.menu', [])
 .directive('jqMenu', function($compile, jqCommon, jqMenu, $timeout) {
 	return {
 		restrict : 'AE',
-		link : function(scope, element, attributes) {
-			var settings = angular.extend({}, jqCommon.defaults, jqMenu.defaults, scope.$eval(attributes.jqMenu));
+		link : function($scope, element, attributes) {
+			var settings = angular.extend({}, jqCommon.defaults, jqMenu.defaults, $scope.$eval(attributes.jqMenu));
 			element.jqxMenu(settings);
 		}
 	};

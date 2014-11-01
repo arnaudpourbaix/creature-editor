@@ -341,17 +341,17 @@ angular.module('apx-jqwidgets.tree', [])
 		if (!selectedItem) {
 			return null;
 		}
-		return jqTree.getEntity($scope[params.data], selectedItem, params.id);
+		return jqTree.getEntity($scope[params.datasource], selectedItem, params.id);
 	};
 	var bindEvents = function($scope, params) {
 		$scope.tree.off();
 		if (angular.isString(params.events.itemClick)) {
 			$scope.tree.on('select', function(event) {
-				var entity = getSelectedEntity();
+				var entity = getSelectedEntity($scope, params);
 				$scope.$eval(params.events.itemClick)(entity);
 			});
 		}
-		if (params.events.contextMenu) {
+		if (angular.isObject(params.events.contextMenu)) {
 			$scope.tree.on('contextmenu', 'li', function(event) {
 				// disable the default browser's context menu
 				event.preventDefault();
@@ -364,7 +364,7 @@ angular.module('apx-jqwidgets.tree', [])
 				var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
 				$scope.contextualMenu.jqxMenu('open', posX, posY);
 			});
-			jqMenu.getContextual($scope.contextualMenu, params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
+			jqMenu.getContextual(params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
 				$scope.contextualMenu = result;
 			});
 		}
@@ -372,9 +372,7 @@ angular.module('apx-jqwidgets.tree', [])
 	
 	return {
 		restrict : 'A',
-		template : '<div class="jq-tree"><div jq-scope-element="contextualMenu" class="jq-contextual-menu"></div>' + 
-					'<div class="jq-tree-header"><div jq-scope-element="buttons" class="jq-tree-buttons"></div>' + 
-					'<div jq-scope-element="filter" class="jq-tree-filter"></div></div><div jq-scope-element="tree" class="jq-tree-body"></div></div>',
+		templateUrl: 'jqwidgets/tree/jqtree.tpl.html',
 		replace : true,
 		scope : true,
 		compile : function() {
@@ -382,7 +380,7 @@ angular.module('apx-jqwidgets.tree', [])
 				post : function($scope, element, attrs) {
 					var params = getParams($scope, attrs);
 
-					//bindEvents(params);
+					bindEvents($scope, params);
 					jqTree.create($scope.tree, $scope, params, $scope.$eval(attrs.jqSelectedItem));
 					if (params.buttons) {
 						jqTree.addButtons($scope.buttons, $scope, params.buttons);
@@ -390,6 +388,10 @@ angular.module('apx-jqwidgets.tree', [])
 					if (params.filter) {
 						jqTree.addFilter($scope.filter, $scope, params.filter);
 					}
+					
+					$scope.$on('$destroy', function() {
+						$scope.tree.jqxTree('destroy');
+					});
 //
 //					$scope.$parent.$watch(attrs.jqTree, function(newValue, oldValue) {
 //						if (angular.equals(newValue, oldValue)) {
@@ -409,26 +411,26 @@ angular.module('apx-jqwidgets.tree', [])
 //						jqTree.create($scope.tree, $scope, params, selectedItem);
 //					}, true);
 //
-//					$scope.add = function() {
-//						$scope.$eval(params.buttons.add)();
-//					};
-//
-//					$scope.expand = function() {
-//						$scope.tree.jqxTree('expandAll');
-//					};
-//
-//					$scope.collapse = function() {
-//						$scope.tree.jqxTree('collapseAll');
-//					};
-//
-//					$scope.$watch('searchFilter', function(newValue, oldValue) {
-//						if (newValue === oldValue) {
-//							return;
-//						}
-//						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
-//						$scope.tree.jqxTree('clear');
-//						jqTree.create($scope.tree, $scope, params, selectedItem, newValue);
-//					});
+					$scope.add = function() {
+						$scope.$eval(params.buttons.add)();
+					};
+
+					$scope.expand = function() {
+						$scope.tree.jqxTree('expandAll');
+					};
+
+					$scope.collapse = function() {
+						$scope.tree.jqxTree('collapseAll');
+					};
+
+					$scope.$watch('searchFilter', function(newValue, oldValue) {
+						if (newValue === oldValue) {
+							return;
+						}
+						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
+						$scope.tree.jqxTree('clear');
+						jqTree.create($scope.tree, $scope, params, selectedItem, newValue);
+					});
 
 				}
 			};

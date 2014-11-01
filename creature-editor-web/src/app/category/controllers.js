@@ -3,47 +3,47 @@ angular.module('editor.category.controllers', [])
 .controller('CategoryListController', function($scope, $translate, $state, toaster, Category, CategoryService, categories) {
 	$scope.categories = categories;
 
-	var setTree = function() {
-		var source = {
-				localdata: categories,
-				datafields: [
-				   { name : 'id',	type : 'number' },
-				   { name : 'name', type : 'string' },
-				   { name : 'parentId',	map : 'parent>id', type : 'number', mapChar : '>' }
-				],
-				datatype: "array",
-				id: 'id'
-		};
-		
-		var dataAdapter = new $.jqx.dataAdapter(source, { autoBind : true }).getRecordsHierarchy('id', 'parentId', null, [ {
-			name : 'name',
-			map : 'label'
-		} ]);
-		
-		$scope.settings = {
-				source : dataAdapter,
-//				select : function(event) {
-//					$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
-//				},
-				dragEnd : function(item, dropItem) {
-					console.log(item, dropItem);
-				},				
-				width : 580,
-				height : 400
-		};
-		$('#jqxTree').jqxTree($scope.settings);
-		$('#jqxTree').on('select', function(event) {
-			$scope.$apply(function(){
-				$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
-				console.log('select', $scope.selectedItem);
-			});
-		});
-//		$("#jqxTree").on('dragEnd', function(item, dropItem)	{
+//	var setTree = function() {
+//		var source = {
+//				localdata: categories,
+//				datafields: [
+//				   { name : 'id',	type : 'number' },
+//				   { name : 'name', type : 'string' },
+//				   { name : 'parentId',	map : 'parent>id', type : 'number', mapChar : '>' }
+//				],
+//				datatype: "array",
+//				id: 'id'
+//		};
+//		
+//		var dataAdapter = new $.jqx.dataAdapter(source, { autoBind : true }).getRecordsHierarchy('id', 'parentId', null, [ {
+//			name : 'name',
+//			map : 'label'
+//		} ]);
+//		
+//		$scope.settings = {
+//				source : dataAdapter,
+////				select : function(event) {
+////					$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
+////				},
+//				dragEnd : function(item, dropItem) {
+//					console.log(item, dropItem);
+//				},				
+//				width : 580,
+//				height : 400
+//		};
+//		$('#jqxTree').jqxTree($scope.settings);
+//		$('#jqxTree').on('select', function(event) {
 //			$scope.$apply(function(){
-//			    console.log(item, dropItem);
+//				$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
+//				console.log('select', $scope.selectedItem);
 //			});
-//		});		
-	};
+//		});
+////		$("#jqxTree").on('dragEnd', function(item, dropItem)	{
+////			$scope.$apply(function(){
+////			    console.log(item, dropItem);
+////			});
+////		});		
+//	};
 	
 	
 	//setTree();
@@ -76,6 +76,7 @@ angular.module('editor.category.controllers', [])
 		},
 		events : {
 			dragEnd : 'moveCategory',
+			itemClick : 'selectCategory',
 			contextMenu : {
 				options : {
 					width : '200px',
@@ -93,6 +94,10 @@ angular.module('editor.category.controllers', [])
 				} ]
 			}
 		}
+	};
+
+	$scope.selectCategory = function(category) {
+		console.log('selectCategory', category);
 	};
 	
 	$scope.selectedCategory = function(params) {
