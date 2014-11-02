@@ -43,7 +43,7 @@ angular.module('apx-jqwidgets.data-adapter', [])
 	 * # jqDataAdapter
 	 * This service is a wrapper for data-adapter widget.<br>
 	 */
-	this.$get = function(jqCommon) {
+	this.$get = function($parse, jqCommon) {
 
 		var service = {};
 
@@ -88,6 +88,7 @@ angular.module('apx-jqwidgets.data-adapter', [])
 		 * @name apx-jqwidgets.jqDataAdapter#getRecordsHierarchy
 		 * @methodOf apx-jqwidgets.jqDataAdapter
 		 * @description Returns a data-adapter and builds a data tree.
+		 * @param {Object} source Set of key/value pairs that configure the jqxDataAdapter's source object.
 		 * @param {string} id Field’s id.
 		 * @param {string} parent Parent field’s id.
 		 * @param {string} display Display label.
@@ -99,6 +100,29 @@ angular.module('apx-jqwidgets.data-adapter', [])
 					name : display,
 					map : 'label'
 				} ]);
+		};
+
+		/**
+		 * @ngdoc function
+		 * @name apx-jqwidgets.jqDataAdapter#getEntityParentId
+		 * @methodOf apx-jqwidgets.jqDataAdapter
+		 * @description Returns entity parent id.
+		 * @param {Object} entity Entity.
+		 * @param {array} datafields An array describing the fields in a particular record. Each datafield must define the following members: name, type, map (optional), format (optional). 
+		 * @param {string} parent Parent field’s id.
+		 * @returns {Object} Entity parent id.
+		 */
+		service.getEntityParentId = function(entity, datafields, parent) {
+			var field = _.find(datafields, function(datafield) {
+				return datafield.name === parent;
+			});
+			var result = entity;
+			angular.forEach(field.map.split(sourceDefaults.mapchar), function(f) {
+				if (result) {
+					result = result[f];
+				}
+			});
+			return result;
 		};
 		
 		return service;

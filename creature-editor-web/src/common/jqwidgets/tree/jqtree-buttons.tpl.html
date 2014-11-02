@@ -1,0 +1,11 @@
+<div>
+	<button data-ng-if="buttons.add" type="button" data-ng-click="add()" class="btn btn-default btn-xs">
+		<i class="glyphicon glyphicon-plus"></i>&nbsp;{{ 'JQWIDGETS.TREE.ADD' | translate }}
+	</button>
+	<button data-ng-if="buttons.expandCollapse" type="button" data-ng-click="collapse()" class="btn btn-default btn-xs">
+		<i class="glyphicon glyphicon-collapse-down"></i>&nbsp;{{ 'JQWIDGETS.TREE.COLLAPSE' | translate }}
+	</button>
+	<button data-ng-if="buttons.expandCollapse" type="button" data-ng-click="expand()" class="btn btn-default btn-xs">
+		<i class="glyphicon glyphicon-expand"></i>&nbsp;{{ 'JQWIDGETS.TREE.EXPAND' | translate }}
+	</button>
+</div>

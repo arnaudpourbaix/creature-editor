@@ -64,7 +64,7 @@ angular.module('apx-jqwidgets.menu', [])
 		 * @param {string} label Set of key/value pairs that configure the jqxDataAdapter's source object.
 		 * @param {Object} $scope Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} settings Should contain a property items wich should be an array of objects (menu items).
-		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} getEntity .
 		 */
 		var selectItem = function(label, $scope, settings, getEntity) {
 			var item = _.find(settings.items, function(item) {
@@ -85,7 +85,7 @@ angular.module('apx-jqwidgets.menu', [])
 		 * @description Returns a new data-adapter.
 		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
 		 * @param {Object} $scope Menu's scope.
-		 * @param {Object} getEntity Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
+		 * @param {Object} getEntity .
 		 * @returns {Object} Promise containing compiled DOM.
 		 */
 		service.getContextual = function(settings, $scope, getEntity) {
