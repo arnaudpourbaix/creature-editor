@@ -336,7 +336,7 @@ angular.module('apx-jqwidgets.tree', [])
 						$scope.tree.off();
 						if (angular.isString(params.events.itemClick)) {
 							$scope.tree.on('select', function(event) {
-								var entity = getSelectedEntity($scope, params);
+								var entity = getSelectedEntity();
 								$scope.$eval(params.events.itemClick)(entity);
 							});
 						}

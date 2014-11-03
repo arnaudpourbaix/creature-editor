@@ -60,14 +60,18 @@ angular.module('apx-jqwidgets.menu', [])
 		};
 
 		/**
-		 * @description Returns a new data-adapter.
-		 * @param {string} label Set of key/value pairs that configure the jqxDataAdapter's source object.
-		 * @param {Object} $scope Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
-		 * @param {Object} settings Should contain a property items wich should be an array of objects (menu items).
-		 * @param {Object} getEntity .
+		 * @description Select a menu item and calls its action.
+		 * @param {string} label Item label.
+		 * @param {Object} $scope Controller's scope.
+		 * @param {Object} params Contextual menu parameters. Has following properties:
+		 * 
+		 * - **settings** - `{Object=}` - Set of key/value pairs that configure the jqxMenu plug-in. All settings are optional.<br>
+		 * - **items** - `{array}` - Contains a list of menu items. Each item has 2 properties: label {string} and action {string} (must be a method within scope).<br>
+		 * 
+		 * @param {Object} getEntity Callback function to get an entity that will be passed as a parameter to menu actions.
 		 */
-		var selectItem = function(label, $scope, settings, getEntity) {
-			var item = _.find(settings.items, function(item) {
+		var selectItem = function(label, $scope, params, getEntity) {
+			var item = _.find(params.items, function(item) {
 				return item.label === label;
 			});
 			$scope.$apply(function() {
@@ -82,29 +86,33 @@ angular.module('apx-jqwidgets.menu', [])
 		 * @ngdoc function
 		 * @name apx-jqwidgets.jqMenu#getContextual
 		 * @methodOf apx-jqwidgets.jqMenu
-		 * @description Returns a new data-adapter.
-		 * @param {Object} settings Set of key/value pairs that configure the jqxDataAdapter plug-in. All settings are optional.
-		 * @param {Object} $scope Menu's scope.
-		 * @param {Object} getEntity .
+		 * @description Returns a contextual menu.
+		 * @param {Object} params Contextual menu parameters. Has following properties:
+		 * 
+		 * - **settings** - `{Object=}` - Set of key/value pairs that configure the jqxMenu plug-in. All settings are optional.<br>
+		 * - **items** - `{array}` - Contains a list of menu items. Each item has 2 properties: label {string} and action {string} (must be a method within scope).<br>
+		 * 
+		 * @param {Object} $scope Controller's scope.
+		 * @param {Object} getEntity Callback function to get an entity that will be passed as a parameter to menu actions.
 		 * @returns {Object} Promise containing compiled DOM.
 		 */
-		service.getContextual = function(settings, $scope, getEntity) {
-			checkMenuItems(settings);
+		service.getContextual = function(params, $scope, getEntity) {
+			checkMenuItems(params);
 			var templateOptions = {
 				template : '<div><ul><li data-ng-repeat="item in items">{{item.label}}</li></ul></div>'
 			};
 			var dependencies = {
-				items : settings.items
+				items : params.items
 			};
 			return jqCommon.getView(templateOptions, 'JqContextualMenuController', dependencies).then(function(view) {
-				var options = angular.extend({}, settings.options, {
+				var options = angular.extend({}, params.settings, {
 					autoOpenPopup : false,
 					mode : 'popup'
 				});
 				return $timeout(function() {
 					view.jqxMenu(options);
 					view.on('itemclick', function(event) {
-						selectItem($(event.target).text(), $scope, settings, getEntity);
+						selectItem($(event.target).text(), $scope, params, getEntity);
 					});
 					return view;
 				});
@@ -140,6 +148,12 @@ angular.module('apx-jqwidgets.menu', [])
  * @description Contextual menu widget controller.
  */
 .controller('JqContextualMenuController', function($scope, items) {
+	/**
+	 * @ngdoc property
+	 * @name items
+	 * @propertyOf apx-jqwidgets.controller:JqContextualMenuController
+	 * @description Menu items. 
+	 */
 	$scope.items = items;
 })
 
