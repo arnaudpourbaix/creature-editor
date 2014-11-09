@@ -1,12 +1,12 @@
 angular.module('editor.category.services', [])
 
-.factory('categorySettings', function categorySettings(appSettings) {
+.factory('categorySettings', function(appSettings) {
 	return {
 		url : appSettings.restBaseUrl + 'category/'
 	};
 })
 	
-.factory('Category', function CategoryFactory($resource, categorySettings) {
+.factory('Category', function($resource, categorySettings) {
 	var res = $resource(categorySettings.url + ':id', {}, {
 		'save' : {
 			method : 'PUT'
@@ -36,16 +36,28 @@ angular.module('editor.category.services', [])
 	return res;
 })
 
-.service('CategoryService', function CategoryService(Category) {
+.service('CategoryService', function($q, Category) {
 	var service = {};
 	
-	service.getNew = function(parent) {
-			var category = new Category({
-				id : null,
-				name : null,
-				parent : parent ? parent : null
-			});
+	service.get = function(parentId, id) {
+		if (id !== 'new') {
+			return Category.get({
+				id: id
+			}).$promise;
+		}
+		var category = new Category({
+			id : null,
+			name : null
+		});
+		if (parentId === 'root') {
+			return $q.when(category);
+		}
+		return Category.get({
+			id: parentId
+		}).$promise.then(function(parent) {
+			category.parent = parent;
 			return category;
+		});		
 	};
 		
 	service.getById = function(categories, id) {

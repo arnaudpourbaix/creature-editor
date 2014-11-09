@@ -32,7 +32,7 @@ public class CategoryController {
 
 	@RequestMapping(value = "/category/{id}", method = RequestMethod.GET, produces = "application/json")
 	public Category getById(@PathVariable Integer id) {
-		return categoryRepository.findOne(id);
+		return categoryRepository.findById(id);
 	}
 
 	@RequestMapping(value = "/category/name/{name}", method = RequestMethod.GET, produces = "application/json")

@@ -226,7 +226,7 @@ angular.module('apx-jqwidgets.tree', [])
  * @restrict A
  * @priority 0
  * @description Apply tree widget on element.
- * The object has following properties:
+ * Directive attribute's value is an object that has following properties:
  * 
  * - **datasource** - `{array|Object}` - Datasource, it can be an object or an array.<br>
  * - **datafields** - `{array}` - Datafields description.<br>
@@ -241,6 +241,7 @@ angular.module('apx-jqwidgets.tree', [])
  * events property has following properties:
  * 
  * - **dragEnd** - `{string=}` - Must be a method within scope. It will be called with 2 parameters: drag entity, drop entity<br>
+ * - **selectItem** - `{string=}` - Must be a method within scope. It will be called with 1 parameter: selected entity<br>
  * - **contextMenu** - `{Object=}` - Use this to set a contextual menu on items. See below.<br>
  * 
  * contextMenu property has following properties:
@@ -334,10 +335,10 @@ angular.module('apx-jqwidgets.tree', [])
 					};
 					var bindEvents = function() {
 						$scope.tree.off();
-						if (angular.isString(params.events.itemClick)) {
+						if (angular.isString(params.events.selectItem)) {
 							$scope.tree.on('select', function(event) {
 								var entity = getSelectedEntity();
-								$scope.$eval(params.events.itemClick)(entity);
+								$scope.$eval(params.events.selectItem)(entity);
 							});
 						}
 						if (angular.isObject(params.events.contextMenu)) {
@@ -371,27 +372,17 @@ angular.module('apx-jqwidgets.tree', [])
 					$scope.$on('$destroy', function() {
 						$scope.tree.jqxTree('destroy');
 					});
-//
-//					$scope.$parent.$watch(attrs.jqTree, function(newValue, oldValue) {
-//						if (angular.equals(newValue, oldValue)) {
-//							return;
-//						}
-//						params = getParams();
-//						bindEvents(params);
-//						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
-//						jqTree.create($scope.tree, $scope, params, selectedItem);
-//					});
-//
-//					$scope.$parent.$watch(params.data, function(newValue, oldValue) {
-//						if (angular.equals(newValue, oldValue)) {
-//							return;
-//						}
-//						var selectedItem = $scope.$eval(attrs.jqSelectedItem) || getSelectedEntity();
-//						jqTree.create($scope.tree, $scope, params, selectedItem);
-//					}, true);
-//
+
+					$scope.$parent.$watch(params.datasource, function(newValue, oldValue) {
+						if (angular.equals(newValue, oldValue)) {
+							return;
+						}
+						var selectedEntity = getSelectedEntity();
+						jqTree.create($scope.tree, $scope, params, selectedEntity);
+					}, true);
+
 					$scope.add = function() {
-						$scope.$eval(params.buttons.add)();
+						$scope.$eval(params.buttons.add)(getSelectedEntity());
 					};
 
 					$scope.expand = function() {

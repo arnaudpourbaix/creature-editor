@@ -2,51 +2,18 @@ angular.module('editor.category.controllers', [])
 
 .controller('CategoryListController', function($scope, $translate, $state, toaster, Category, CategoryService, categories) {
 	$scope.categories = categories;
-
-//	var setTree = function() {
-//		var source = {
-//				localdata: categories,
-//				datafields: [
-//				   { name : 'id',	type : 'number' },
-//				   { name : 'name', type : 'string' },
-//				   { name : 'parentId',	map : 'parent>id', type : 'number', mapChar : '>' }
-//				],
-//				datatype: "array",
-//				id: 'id'
-//		};
-//		
-//		var dataAdapter = new $.jqx.dataAdapter(source, { autoBind : true }).getRecordsHierarchy('id', 'parentId', null, [ {
-//			name : 'name',
-//			map : 'label'
-//		} ]);
-//		
-//		$scope.settings = {
-//				source : dataAdapter,
-////				select : function(event) {
-////					$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
-////				},
-//				dragEnd : function(item, dropItem) {
-//					console.log(item, dropItem);
-//				},				
-//				width : 580,
-//				height : 400
-//		};
-//		$('#jqxTree').jqxTree($scope.settings);
-//		$('#jqxTree').on('select', function(event) {
-//			$scope.$apply(function(){
-//				$scope.selectedItem = CategoryService.getById(categories, event.args.element.id);
-//				console.log('select', $scope.selectedItem);
-//			});
-//		});
-////		$("#jqxTree").on('dragEnd', function(item, dropItem)	{
-////			$scope.$apply(function(){
-////			    console.log(item, dropItem);
-////			});
-////		});		
-//	};
 	
-	
-	//setTree();
+	$scope.splitter = {
+		width : 1000,
+		height : 600,
+		panels : [ {
+			size : 600,
+			min : 200
+		}, {
+			size : 400,
+			min : 100
+		} ]
+	};
 	
 	$scope.categoryTree = {
 		datasource : 'categories',
@@ -76,7 +43,7 @@ angular.module('editor.category.controllers', [])
 		},
 		events : {
 			dragEnd : 'moveCategory',
-			itemClick : 'selectCategory',
+			selectItem : 'editCategory',
 			contextMenu : {
 				options : {
 					width : '200px',
@@ -95,10 +62,6 @@ angular.module('editor.category.controllers', [])
 			}
 		}
 	};
-
-	$scope.selectCategory = function(category) {
-		console.log('selectCategory', category);
-	};
 	
 	$scope.selectedCategory = function(params) {
 		var result;
@@ -111,16 +74,16 @@ angular.module('editor.category.controllers', [])
 	};
 
 	$scope.addCategory = function(category) {
-		$state.go('categories.edit', {
-			categoryParentId : category ? category.$id() : 'root',
+		$state.go('category.edit', {
+			categoryParentId : category ? category.id : 'root',
 			categoryId : 'new'
 		});
 	};
 
 	$scope.editCategory = function(category) {
-		$state.go('categories.edit', {
-			categoryParentId : category.parent ? category.parent.$id() : 'root',
-			categoryId : category.$id()
+		$state.go('category.edit', {
+			categoryParentId : category.parent ? category.parent.id : 'root',
+			categoryId : category.id
 		});
 	};
 
@@ -149,19 +112,32 @@ angular.module('editor.category.controllers', [])
 
 })
 
-.controller('CategoryEditController', function($scope, $state, $stateParams, CategoryService) {
-//	$scope.create = $stateParams.categoryId === 'new';
-//	if ($scope.create) {
-//		var parent = CategoryService.getById($scope.categories, $stateParams.categoryParentId);
-//		$scope.category = CategoryService.getNew(parent);
-//	} else {
-//		$scope.category = angular.copy(CategoryService.getById($scope.categories, $stateParams.categoryId));
-//	}
-//
-//	$scope.onCancel = function() {
-//		$state.go('^');
-//	};
-//
+.controller('CategoryEditController', function($scope, $state, $stateParams, CategoryService, category) {
+	$scope.category = category;
+	
+	$scope.edit = { model: 'category', entity: 'CATEGORY.LABEL', name: 'name' };
+	
+	$scope.onCancel = function() {
+		//$scope.$dismiss();
+		$state.go('^');
+	};
+
+	$scope.onSave = function() {
+		$scope.$close();
+	};
+
+	$scope.onSaveError = function() {
+		$scope.$dismiss();
+	};
+	
+	$scope.onRemove = function() {
+		$scope.$close();
+	};
+
+	$scope.onRemoveError = function() {
+		$scope.$dismiss();
+	};
+
 //	$scope.onSave = function() {
 //		if ($scope.create) {
 //			$scope.categories.push($scope.category);

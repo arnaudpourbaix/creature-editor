@@ -24,6 +24,11 @@ angular.module('editor.category.config', [])
 				controller : 'CategoryEditController',
 				templateUrl : 'category/category-edit.tpl.html'
 			}
+		},
+		resolve : {
+			category : function($stateParams, CategoryService) {
+				return CategoryService.get($stateParams.categoryParentId, $stateParams.categoryId);
+			}
 		}
 	});
 
