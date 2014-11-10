@@ -81,13 +81,12 @@ angular.module('apx-jqwidgets.docking', [])
 		} ]
 	};
  * </pre>
-
  */
 .directive('jqDocking', function($compile, $timeout, jqCommon, jqDocking) {
 	return {
 		restrict : 'A',
 		link : function($scope, element, attrs) {
-			var params = jqCommon.getParams($scope.$eval(attrs.jqDocking), [], [ 'settings', 'windows' ]);
+			var params = jqCommon.getParams($scope.$eval(attrs.jqDocking) || {}, [], [ 'settings', 'windows' ]);
 			var settings = angular.extend({}, jqCommon.defaults, params.settings);
 			element.jqxDocking(settings);
 			angular.forEach(params.windows, function(w) {

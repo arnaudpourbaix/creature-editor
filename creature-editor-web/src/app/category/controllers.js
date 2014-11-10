@@ -94,19 +94,21 @@ angular.module('editor.category.controllers', [])
 
 	$scope.removeCategory = function(category) {
 		category.$delete().then(function(response) {
-//			$translateWrapper('CATEGORY.LABEL').then(function(label) {
-//				$alertMessage.push('CRUD.REMOVE_SUCCESS', 'info', {
-//					entity : label,
-//					name : category.name
-//				});
-//			});
-//			Category.query().$promise.then(function(result) {
-//				$scope.categories = result;
-//			});
+			var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
+				entity: $translate.instant('CATEGORY.LABEL'),
+				name: category.name
+			});
+			toaster.pop('success', null, message);
+			Category.query().$promise.then(function(categories) {
+				$scope.categories = categories;
+				$state.go('category'); // item could have been selected, opening edit state
+			});
 		}, function() {
-//			$alertMessage.push('CRUD.REMOVE_ERROR', 'danger', {
-//				name : category.name
-//			});
+			var message = $translate.instant('CRUD.REMOVE_ERROR', {
+				entity: $translate.instant('CATEGORY.LABEL'),
+				name: category.name
+			});
+			toaster.pop('danger', null, message);
 		});
 	};
 
@@ -114,53 +116,37 @@ angular.module('editor.category.controllers', [])
 
 .controller('CategoryEditController', function($scope, $state, $stateParams, CategoryService, category) {
 	$scope.category = category;
+	$scope.isNew = category.id == null; 
 	
 	$scope.edit = { model: 'category', entity: 'CATEGORY.LABEL', name: 'name' };
 	
 	$scope.onCancel = function() {
-		//$scope.$dismiss();
+		$state.go('^');
+	};
+	
+	$scope.onSave = function() {
+		if ($scope.isNew) {
+			$scope.categories.push($scope.category);
+		} else {
+			var item = CategoryService.getById($scope.categories, $scope.category.id);
+			angular.extend(item, $scope.category);
+		}
 		$state.go('^');
 	};
 
-	$scope.onSave = function() {
-		$scope.$close();
+	$scope.onSaveError = function() {
+		$state.go('^');
 	};
 
-	$scope.onSaveError = function() {
-		$scope.$dismiss();
-	};
-	
 	$scope.onRemove = function() {
-		$scope.$close();
+		var item = CategoryService.getById($scope.categories, $scope.category.id);
+		$scope.categories.splice($scope.categories.indexOf(item), 1);
+		$state.go('^');
 	};
 
 	$scope.onRemoveError = function() {
-		$scope.$dismiss();
+		$state.go('^');
 	};
-
-//	$scope.onSave = function() {
-//		if ($scope.create) {
-//			$scope.categories.push($scope.category);
-//		} else {
-//			var item = CategoryService.getById($scope.categories, $scope.category.$id());
-//			angular.extend(item, $scope.category);
-//		}
-//		$state.go('^');
-//	};
-//
-//	$scope.onSaveError = function() {
-//		$state.go('^');
-//	};
-//
-//	$scope.onRemove = function() {
-//		var item = CategoryService.getById($scope.categories, $scope.category.$id());
-//		$scope.categories.splice($scope.categories.indexOf(item), 1);
-//		$state.go('^');
-//	};
-//
-//	$scope.onRemoveError = function() {
-//		$state.go('^');
-//	};
 })
 
 ;

@@ -12,7 +12,7 @@ angular.module('apx-jqwidgets.splitter', [])
 	return {
 		restrict : 'A',
 		link : function(scope, element, attributes) {
-			var params = scope.$eval(attributes.jqSplitter);
+			var params = scope.$eval(attributes.jqSplitter) || {};
 			var settings = angular.extend({}, jqCommon.defaults, params);
 			element.jqxSplitter(settings);
 		}
