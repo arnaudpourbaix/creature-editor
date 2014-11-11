@@ -18,23 +18,16 @@ angular.module('editor.mod.config', [])
 
 	$stateProvider.state('mod.edit', {
 		url : '/:id',
-		onEnter : function($state, $stateParams, $modal, $timeout) {
-			var modal = $modal.open({
+		views : {
+			'mod-edit' : {
 				controller : 'ModEditController',
 				templateUrl : "mod/mod-edit.tpl.html",
-				resolve : {
-					mod : function(ModService) {
-						return ModService.get($stateParams.id);
-					}
-				}
-			});
-			modal.result.then(function(result) {
-				$state.go('^', {}, {
-					reload : true
-				});
-			}, function() {
-				$state.go('^');
-			});
+			}
+		},
+		resolve : {
+			mod : function($stateParams, ModService) {
+				return ModService.get($stateParams.id);
+			}
 		}
 	});
 	

@@ -1,39 +1,76 @@
 angular.module('editor.mod.controllers', [])
 
-.controller('ModListController', function($scope, $location, crudListMethods, $translate, $state, ModService, mods, toaster) {
-	angular.extend($scope, crudListMethods($location.url()));
+.controller('ModListController', function($scope, $translate, $state, $interpolate, toaster, Mod, ModService, mods) {
+	$scope.mods = mods;
 
-	var setTable = function() {
-		var source = {
-				localdata: mods,
-				datafields: [
-				   { name: 'id', type: 'number' },
-				   { name: 'name', type: 'string' }
-				],
-				datatype: "array"
-		};
-		
-		var dataAdapter = new $.jqx.dataAdapter(source);
-
-		var columns = [{
-			text : $translate.instant('MOD.FIELDS.NAME'),
-			dataField : 'name',
-			width : 200
-		}];
-		
-		$scope.settings = {
-				altrows : true,
-				width : 260,
-				height : 400,
-				source : dataAdapter,
-				columns : columns,
-				rowselect: function(event) {
-					$scope.selectedRow = event.args.row;
-				}
-		};
+	$scope.splitter = {
+			width : 800,
+			height : 600,
+			panels : [ {
+				size : 400,
+				min : 200
+			}, {
+				size : 400,
+				min : 100
+			} ]
 	};
 	
-	setTable();
+	$scope.modGrid = {
+			datasource : 'mods',
+			columns : [ {
+				text : $translate.instant('MOD.FIELDS.NAME'),
+				datafield : 'name',
+				type : 'string',
+				align : 'center',
+				width : 200
+			}, {
+				text : $translate.instant('MOD.COLUMNS.ACTION'),
+				type : 'string',
+				width : 60,
+				align : 'center',
+				cellsalign : 'center',
+				filterable : false,
+				sortable : false,
+				cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
+					return $interpolate('<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="{{title}}" /></div>')({
+						title : $translate.instant('MOD.COLUMNS.DELETE')
+					});
+				}
+			} ],
+			options : {
+				width : 260,
+				height : 400
+			},
+			buttons : {
+				add : 'add'
+			},
+			events : {
+				contextMenu : {
+					options : {
+						width : '200px',
+						height : '90px'
+					},
+					items : [ {
+						label : $translate.instant('CONTEXTUAL.EDIT'),
+						action : 'edit'
+					}, {
+						label : $translate.instant('CONTEXTUAL.DELETE'),
+						action : 'remove'
+					} ]
+				},
+				cellClick : function($scope, mod, column) {
+					if (column === 1) {
+						$scope.remove(mod);
+					} else {
+						$scope.edit(mod.$id());
+					}
+				}
+			}
+	};
+	
+	$scope.add = function() {
+		$state.go('mod.edit', {	id : 'new' });
+	};
 	
 	$scope.remove = function(id) {
 		var mod = ModService.getById(mods, id);
@@ -45,7 +82,6 @@ angular.module('editor.mod.controllers', [])
 			});
 			toaster.pop('info', null, message);
 			$scope.removeFromList(mods, 'id', mod.$id());
-			setTable();
 		}, function() {
 			var message = $translate.instant('CRUD.REMOVE_ERROR', {
 				entity: $translate.instant('MOD.LABEL'),
@@ -58,30 +94,40 @@ angular.module('editor.mod.controllers', [])
 })
 
 
-.controller('ModEditController', function($scope, ModService, mod) {
+.controller('ModEditController', function($scope, $state, ModService, mod) {
 	$scope.mod = mod;
+	$scope.isNew = mod.id == null; 
 	
 	$scope.edit = { model: 'mod', entity: 'MOD.LABEL', name: 'name' };
-	
-	$scope.onCancel = function() {
-		$scope.$dismiss();
-	};
 
+	$scope.onCancel = function() {
+		$state.go('^');
+	};
+	
 	$scope.onSave = function() {
-		$scope.$close();
+		if ($scope.isNew) {
+			$scope.mods.push($scope.mod);
+		} else {
+			var item = ModService.getById($scope.mods, $scope.mod.$id());
+			angular.extend(item, $scope.mod);
+		}
+		$state.go('^');
 	};
 
 	$scope.onSaveError = function() {
-		$scope.$dismiss();
+		$state.go('^');
 	};
-	
+
 	$scope.onRemove = function() {
-		$scope.$close();
+		var item = ModService.getById($scope.mods, $scope.mod.$id());
+		$scope.mods.splice($scope.mods.indexOf(item), 1);
+		$state.go('^');
 	};
 
 	$scope.onRemoveError = function() {
-		$scope.$dismiss();
+		$state.go('^');
 	};
+	
 })
 
 ;

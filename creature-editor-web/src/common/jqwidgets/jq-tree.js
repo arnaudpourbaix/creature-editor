@@ -24,16 +24,16 @@ angular.module('apx-jqwidgets.tree', [])
 	/**
 	 * @ngdoc service
 	 * @name apx-jqwidgets.jqTree
-     * @requires apx-jqwidgets.jqCommon
-     * @requires apx-jqwidgets.jqDataAdapter
      * @requires $compile
      * @requires $timeout
      * @requires $translate
+     * @requires apx-jqwidgets.jqCommon
+     * @requires apx-jqwidgets.jqDataAdapter
 	 * @description
 	 * # jqTree
 	 * This service is a wrapper for tree widget.<br>
 	 */
-	this.$get = function(jqCommon, jqDataAdapter, $compile, $timeout, $translate) {
+	this.$get = function($compile, $timeout, $translate, jqCommon, jqDataAdapter) {
 		/**
 		 * @description Returns entity's parent entity.
 		 * @param {Object} entity Entity to get parents from.
@@ -78,7 +78,7 @@ angular.module('apx-jqwidgets.tree', [])
 		 * @ngdoc function
 		 * @name apx-jqwidgets.jqTree#create
 		 * @methodOf apx-jqwidgets.jqTree
-		 * @description Returns a new data-adapter.
+		 * @description Create jqxTree widget.
 		 * @param {Object} element Tree DOM element.
 		 * @param {Object} $scope Controller's scope.
 		 * @param {Object} params Tree parameters. See {@link apx-jqwidgets.directive:jqTree jqTree}
@@ -240,8 +240,8 @@ angular.module('apx-jqwidgets.tree', [])
  * 
  * events property has following properties:
  * 
- * - **dragEnd** - `{string=}` - Must be a method within scope. It will be called with 2 parameters: drag entity, drop entity<br>
- * - **selectItem** - `{string=}` - Must be a method within scope. It will be called with 1 parameter: selected entity<br>
+ * - **dragEnd** - `{string=}` - This event is triggered when the user drops an item. Must be a method within scope. It will be called with following parameters: drag entity, drop entity<br>
+ * - **select** - `{string=}` - This event is triggered when the user selects a tree item. Must be a method within scope. It will be called with following parameter: selected entity<br>
  * - **contextMenu** - `{Object=}` - Use this to set a contextual menu on items. See below.<br>
  * 
  * contextMenu property has following properties:
@@ -293,6 +293,7 @@ angular.module('apx-jqwidgets.tree', [])
 		},
 		events : {
 			dragEnd : 'moveCategory',
+			select : 'editCategory',
 			contextMenu : {
 				options : {
 					width : '200px',
@@ -335,7 +336,7 @@ angular.module('apx-jqwidgets.tree', [])
 					};
 					var bindEvents = function() {
 						$scope.tree.off();
-						if (angular.isString(params.events.selectItem)) {
+						if (angular.isString(params.events.select)) {
 							$scope.tree.on('select', function(event) {
 								var entity = getSelectedEntity();
 								$scope.$eval(params.events.selectItem)(entity);
@@ -359,7 +360,8 @@ angular.module('apx-jqwidgets.tree', [])
 							});
 						}
 					};
-					var params = getParams($scope, attrs);
+					
+					var params = getParams();
 					bindEvents($scope, params);
 					jqTree.create($scope.tree, $scope, params, $scope.$eval(attrs.jqSelectedItem));
 					if (params.buttons) {
@@ -382,7 +384,7 @@ angular.module('apx-jqwidgets.tree', [])
 					}, true);
 
 					$scope.add = function() {
-						$scope.$eval(params.buttons.add)(getSelectedEntity());
+						$scope.$parent.$eval(params.buttons.add)(getSelectedEntity());
 					};
 
 					$scope.expand = function() {

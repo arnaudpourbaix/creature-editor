@@ -5,9 +5,9 @@ angular.module('apx-jqwidgets', [
 	'apx-jqwidgets.menu', 
 	'apx-jqwidgets.tree', 
 	'apx-jqwidgets.docking', 
-	'apx-jqwidgets.splitter' 
+	'apx-jqwidgets.splitter', 
+	'apx-jqwidgets.grid'
 //	'apx-jqwidgets.window', 
-//	'apx-jqwidgets.grid',
 //	'apx-jqwidgets.dropdownlist', 
 //	'apx-jqwidgets.panel', 
 //	'apx-jqwidgets.tabs', 

@@ -11,6 +11,11 @@
 		"CONFIGURATION" : "Configuration",
 		"PARAMETERS" : "Parameters"
 	},
+	"CONTEXTUAL" : {
+		"ADD" : "Add",
+		"EDIT" : "Edit",
+		"DELETE" : "Delete"
+	},
 	"CONTROLS" : {
 		"REQUIRED" : "Required",
 		"EXISTS" : "Already exists"

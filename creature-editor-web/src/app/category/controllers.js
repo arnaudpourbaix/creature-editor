@@ -38,26 +38,26 @@ angular.module('editor.category.controllers', [])
 		},
 		filter : true,
 		buttons : {
-			add : 'addCategory',
+			add : 'add',
 			expandCollapse : true
 		},
 		events : {
-			dragEnd : 'moveCategory',
-			selectItem : 'editCategory',
+			dragEnd : 'move',
+			select : 'edit',
 			contextMenu : {
 				options : {
 					width : '200px',
 					height : '90px'
 				},
 				items : [ {
-					label : $translate.instant('CATEGORY.CONTEXTUAL.ADD'),
-					action : 'addCategory'
+					label : $translate.instant('CONTEXTUAL.ADD'),
+					action : 'add'
 				}, {
-					label : $translate.instant('CATEGORY.CONTEXTUAL.EDIT'),
-					action : 'editCategory'
+					label : $translate.instant('CONTEXTUAL.EDIT'),
+					action : 'edit'
 				}, {
-					label : $translate.instant('CATEGORY.CONTEXTUAL.DELETE'),
-					action : 'removeCategory'
+					label : $translate.instant('CONTEXTUAL.DELETE'),
+					action : 'remove'
 				} ]
 			}
 		}
@@ -73,26 +73,26 @@ angular.module('editor.category.controllers', [])
 		return result;
 	};
 
-	$scope.addCategory = function(category) {
+	$scope.add = function(category) {
 		$state.go('category.edit', {
 			categoryParentId : category ? category.id : 'root',
 			categoryId : 'new'
 		});
 	};
 
-	$scope.editCategory = function(category) {
+	$scope.edit = function(category) {
 		$state.go('category.edit', {
 			categoryParentId : category.parent ? category.parent.id : 'root',
 			categoryId : category.id
 		});
 	};
 
-	$scope.moveCategory = function(category, parent) {
+	$scope.move = function(category, parent) {
 		category.parent = parent;
 		category.$save();
 	};
 
-	$scope.removeCategory = function(category) {
+	$scope.remove = function(category) {
 		category.$delete().then(function(response) {
 			var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
 				entity: $translate.instant('CATEGORY.LABEL'),

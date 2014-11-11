@@ -1,9 +1,13 @@
-<div class="mod-list">
-	<jqx-grid jqx-settings="settings"></jqx-grid>
-	<div class="grid-action-buttons">
-		<crud-add-button></crud-add-button>
-		<button class="btn btn-primary" data-translate data-ng-disabled="!selectedRow" data-ui-sref="mod.edit({ id: selectedRow.id })">MOD.BUTTONS.EDIT</button>
-		<button class="btn btn-danger" data-translate data-ng-disabled="!selectedRow" data-ng-click="remove(selectedRow.id)">MOD.BUTTONS.DELETE</button>
-	</div>	
-	<div data-ui-view="mod-edit"></div>
+<div data-jq-docking>
+	<div>
+		<div>
+			<div data-translate>MOD.LIST_TITLE</div>		
+			<div data-jq-splitter="splitter" class="mod-splitter">
+				<div><div class="mod-list">
+					<div data-jq-grid="modGrid"></div>
+				</div></div>
+				<div><div class="mod-edit" data-ui-view="mod-edit"></div></div>
+			</div>
+		</div>
+	</div>
 </div>
