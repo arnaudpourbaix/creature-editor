@@ -155,13 +155,13 @@ angular.module('apx-jqwidgets.grid', [])
 					var bindEvents = function(params) {
 						$scope.grid.off();
 						if (params.events.rowclick) {
-							$scope.grid.on('rowclick', function(event) {
-								event.stopPropagation();
-								$scope.$apply(function() {
-									var item = $scope[params.data][event.args.rowindex];
-									params.events.rowClick($scope, item);
-								});
-							});
+//							$scope.grid.on('rowclick', function(event) {
+//								event.stopPropagation();
+//								$scope.$apply(function() {
+//									var item = $scope[params.data][event.args.rowindex];
+//									params.events.rowClick($scope, item);
+//								});
+//							});
 						}
 						if (params.events.cellClick) {
 							$scope.grid.on("cellclick", function(event) {
@@ -173,17 +173,17 @@ angular.module('apx-jqwidgets.grid', [])
 							});
 						}
 						if (angular.isObject(params.events.contextMenu)) {
-							$scope.grid.on('contextmenu', 'div', function(event) {
-								// disable the default browser's context menu
-								event.preventDefault();
-								var target = angular.element(event.target).parents('div:first')[0];
-								if (target == null) {
-									throw new Error("Menu should have 'div' elements");
+							$scope.grid.on('contextmenu', function(event) {
+								return false;
+							});
+							$scope.grid.on('rowclick', function(event) {
+								if (event.args.rightclick) {
+									$scope.grid.jqxGrid('selectrow', event.args.rowindex);
+									var posX = angular.element(window).scrollLeft() + parseInt(event.args.originalEvent.clientX) + 5;
+									var posY = angular.element(window).scrollTop() + parseInt(event.args.originalEvent.clientY) + 5;
+									$scope.contextualMenu.jqxMenu('open', posX, posY);
+									return false;
 								}
-								//$scope.grid.jqxTree('selectItem', target);
-								var posX = angular.element(window).scrollLeft() + parseInt(event.clientX) + 5;
-								var posY = angular.element(window).scrollTop() + parseInt(event.clientY) + 5;
-								$scope.contextualMenu.jqxMenu('open', posX, posY);
 							});
 							jqMenu.getContextual(params.events.contextMenu, $scope).then(function(result) {
 								$scope.contextualMenu = result;

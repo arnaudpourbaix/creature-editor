@@ -339,7 +339,7 @@ angular.module('apx-jqwidgets.tree', [])
 						if (angular.isString(params.events.select)) {
 							$scope.tree.on('select', function(event) {
 								var entity = getSelectedEntity();
-								$scope.$eval(params.events.selectItem)(entity);
+								$scope.$eval(params.events.select)(entity);
 							});
 						}
 						if (angular.isObject(params.events.contextMenu)) {
