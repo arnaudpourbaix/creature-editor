@@ -23,19 +23,6 @@ angular.module('editor.mod.controllers', [])
 				type : 'string',
 				align : 'center',
 				width : 200
-			}, {
-				text : $translate.instant('MOD.COLUMNS.ACTION'),
-				type : 'string',
-				width : 60,
-				align : 'center',
-				cellsalign : 'center',
-				filterable : false,
-				sortable : false,
-				cellsrenderer : function(row, columnfield, value, defaulthtml, columnproperties) {
-					return $interpolate('<div class="pointer text-center"><span class="glyphicon glyphicon-trash" title="{{title}}" /></div>')({
-						title : $translate.instant('MOD.COLUMNS.DELETE')
-					});
-				}
 			} ],
 			options : {
 				width : 260,
@@ -57,19 +44,20 @@ angular.module('editor.mod.controllers', [])
 						label : $translate.instant('CONTEXTUAL.DELETE'),
 						action : 'remove'
 					} ]
-				},
-				cellClick : function($scope, mod, column) {
-					if (column === 1) {
-						$scope.remove(mod);
-					} else {
-						$scope.edit(mod.$id());
-					}
 				}
 			}
 	};
 	
 	$scope.add = function() {
 		$state.go('mod.edit', {	id : 'new' });
+	};
+	
+	$scope.edit = function(mod) {
+		console.log('edit', mod);
+//		$state.go('category.edit', {
+//			categoryParentId : category.parent ? category.parent.id : 'root',
+//			categoryId : category.id
+//		});
 	};
 	
 	$scope.remove = function(id) {

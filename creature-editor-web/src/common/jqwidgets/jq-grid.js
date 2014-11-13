@@ -152,24 +152,32 @@ angular.module('apx-jqwidgets.grid', [])
 					var getParams = function() {
 						return jqCommon.getParams($scope.$eval(attrs.jqGrid), [ 'datasource', 'columns' ], [ 'settings', 'events', 'buttons', 'filter' ]);
 					};
+					var getSelectedEntity = function() {
+						var rowIndex = $scope.grid.jqxGrid('getselectedrowindex');
+						return $scope[params.datasource][rowIndex];
+					};
 					var bindEvents = function(params) {
 						$scope.grid.off();
-						if (params.events.rowclick) {
-//							$scope.grid.on('rowclick', function(event) {
-//								event.stopPropagation();
-//								$scope.$apply(function() {
-//									var item = $scope[params.data][event.args.rowindex];
-//									params.events.rowClick($scope, item);
-//								});
-//							});
+						if (angular.isString(params.events.rowclick)) {
+							$scope.grid.on('rowclick', function(event) {
+								event.stopPropagation();
+								if (!event.args.rightclick) {
+									$scope.$apply(function() {
+										var item = $scope[params.datasource][event.args.rowindex];
+										params.events.rowclick($scope, item);
+									});
+								}
+							});
 						}
-						if (params.events.cellClick) {
+						if (angular.isString(params.events.cellclick)) {
 							$scope.grid.on("cellclick", function(event) {
 								event.stopPropagation();
-								$scope.$apply(function() {
-									var item = $scope[params.data][event.args.rowindex];
-									params.events.cellClick($scope.$parent, item, event.args.columnindex);
-								});
+								if (!event.args.rightclick) {
+									$scope.$apply(function() {
+										var item = $scope[params.datasource][event.args.rowindex];
+										params.events.cellclick($scope.$parent, item, event.args.columnindex);
+									});
+								}
 							});
 						}
 						if (angular.isObject(params.events.contextMenu)) {
@@ -185,7 +193,7 @@ angular.module('apx-jqwidgets.grid', [])
 									return false;
 								}
 							});
-							jqMenu.getContextual(params.events.contextMenu, $scope).then(function(result) {
+							jqMenu.getContextual(params.events.contextMenu, $scope, getSelectedEntity).then(function(result) {
 								$scope.contextualMenu = result;
 							});
 						}
