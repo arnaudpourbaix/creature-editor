@@ -164,7 +164,7 @@ angular.module('apx-jqwidgets.grid', [])
 								if (!event.args.rightclick) {
 									$scope.$apply(function() {
 										var item = $scope[params.datasource][event.args.rowindex];
-										params.events.rowclick($scope, item);
+										$scope.$eval(params.events.rowclick)(item);
 									});
 								}
 							});
@@ -175,7 +175,7 @@ angular.module('apx-jqwidgets.grid', [])
 								if (!event.args.rightclick) {
 									$scope.$apply(function() {
 										var item = $scope[params.datasource][event.args.rowindex];
-										params.events.cellclick($scope.$parent, item, event.args.columnindex);
+										$scope.$eval(params.events.cellclick)(item, event.args.columnindex);
 									});
 								}
 							});
@@ -218,20 +218,7 @@ angular.module('apx-jqwidgets.grid', [])
 						$scope.$parent.$eval(params.buttons.add)();
 					};
 
-					$scope.$parent.$watch(attrs.jqGrid, function(newValue, oldValue) {
-						if (newValue === oldValue) {
-							return;
-						}
-						params = getParams();
-						bindEvents(params);
-						jqGrid.create($scope.grid, $scope, params);
-					});
-
-					$scope.$on('jqGrid-new-data', function() {
-						jqGrid.create($scope.grid, $scope, params);
-					});
-
-					$scope.$parent.$watch(params.data, function(newValue, oldValue) {
+					$scope.$parent.$watch(params.datasource, function(newValue, oldValue) {
 						if (angular.equals(newValue, oldValue)) {
 							return;
 						}

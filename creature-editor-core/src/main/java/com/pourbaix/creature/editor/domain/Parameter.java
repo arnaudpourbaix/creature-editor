@@ -23,7 +23,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 @Table(name = "PARAMETER", schema = "PUBLIC", catalog = "PUBLIC")
 @DiscriminatorColumn(name = "DATATYPE", discriminatorType = DiscriminatorType.STRING)
 @Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 public class Parameter implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;

@@ -1,6 +1,6 @@
 angular.module('editor.mod.controllers', [])
 
-.controller('ModListController', function($scope, $translate, $state, $interpolate, toaster, Mod, ModService, mods) {
+.controller('ModListController', function($scope, $translate, $state, toaster, Mod, ModService, mods) {
 	$scope.mods = mods;
 
 	$scope.splitter = {
@@ -24,7 +24,7 @@ angular.module('editor.mod.controllers', [])
 				align : 'center',
 				width : 200
 			} ],
-			options : {
+			settings : {
 				width : 260,
 				height : 400
 			},
@@ -32,6 +32,7 @@ angular.module('editor.mod.controllers', [])
 				add : 'add'
 			},
 			events : {
+				rowclick : 'edit',
 				contextMenu : {
 					options : {
 						width : '200px',
@@ -53,29 +54,26 @@ angular.module('editor.mod.controllers', [])
 	};
 	
 	$scope.edit = function(mod) {
-		console.log('edit', mod);
-//		$state.go('category.edit', {
-//			categoryParentId : category.parent ? category.parent.id : 'root',
-//			categoryId : category.id
-//		});
+		$state.go('mod.edit', {
+			id : mod.id
+		});
 	};
 	
-	$scope.remove = function(id) {
-		var mod = ModService.getById(mods, id);
-		$scope.removeFromList(mods, 'id', mod.$id());
+	$scope.remove = function(mod) {
 		mod.$delete().then(function(response) {
 			var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
 				entity: $translate.instant('MOD.LABEL'),
 				name: mod.name
 			});
-			toaster.pop('info', null, message);
-			$scope.removeFromList(mods, 'id', mod.$id());
+			toaster.pop('success', null, message);
+			$scope.mods.splice($scope.mods.indexOf(mod), 1);
+			$state.go('mod'); // item could have been selected, opening edit state
 		}, function() {
 			var message = $translate.instant('CRUD.REMOVE_ERROR', {
 				entity: $translate.instant('MOD.LABEL'),
 				name: mod.name
-			});		
-			toaster.pop('error', null, message);
+			});
+			toaster.pop('danger', null, message);
 		});
 	};
 

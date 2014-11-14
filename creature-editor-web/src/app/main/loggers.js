@@ -13,8 +13,6 @@ angular.module('editor.main.loggers', [])
 		"use strict";
 //		$anLogger.setAjaxAppender('ERROR', appSettings.restBaseUrl + 'log', true);
 //		$anLogger.addAppender('PopUpAppender', 'ALL');
-//		$anLogger.addAppender('BrowserConsoleAppender', 'ALL');
-//		$anLogger.setLevel('TRACE', 'editor.pubca.topProduct');
-//		$anLogger.setLevel('TRACE', 'editor.pubca');
+		$anLogger.addAppender('BrowserConsoleAppender', 'ALL');
 	} ])
 ;

@@ -1,86 +1,88 @@
-(function() {
-	'use strict';
+angular.module('parameter.controllers', [])
 
-	angular.module('parameter.controllers', [])
+.controller('ParameterController', function($scope, types) {
+	$scope.types = types;
+})
 
-	.controller('ParameterController', function($scope, types) {
-		$scope.types = types;
-	})
+.controller('ParameterListController', function($scope, $translate, $state, parameters) {
+	$scope.parameters = parameters;
 
-	.controller('ParameterListController', function($scope, $location, crudListMethods, $translate, parameters, $stateParams) {
-		angular.extend($scope, crudListMethods($location.url()));
-
-		$scope.parameters = parameters;
-
-		var source = {
-				localdata: $scope.parameters,
-				datafields: [
-				   { name: 'name', type: 'string' },
-				   { name: 'label', type: 'string' },
-				   { name: 'value', type: 'string' }
-				],
-				datatype: "array"
-		};
-		
-		var dataAdapter = new $.jqx.dataAdapter(source);
-
-		var columns = [ {
-			text : $translate.instant('PARAMETER.FIELDS.NAME'),
-			dataField : 'name',
-			width : 300
-		}, {
-			text : $translate.instant('PARAMETER.FIELDS.LABEL'),
-			dataField : 'label',
-			width : 200
-		}, {
-			text : $translate.instant('PARAMETER.FIELDS.VALUE'),
-			dataField : 'value',
-			width : 300
-		}
-		];
-		
-		$scope.settings = {
-				altrows : true,
+	$scope.parameterGrid = {
+			datasource : 'parameters',
+			columns : [ {
+				text : $translate.instant('PARAMETER.FIELDS.NAME'),
+				datafield : 'name',
+				type : 'string',
+				align : 'center',
+				width : 200
+			},
+			{
+				text : $translate.instant('PARAMETER.FIELDS.LABEL'),
+				datafield : 'label',
+				type : 'string',
+				align : 'center',
+				width : 300
+			},{
+				text : $translate.instant('PARAMETER.FIELDS.VALUE'),
+				datafield : 'value',
+				type : 'string',
+				 align : 'center',
+				width : 380
+			} ],
+			settings : {
 				width : 900,
-				height : 400,
-				source : dataAdapter,
-				columns : columns,
-				rowselect: function(event) {
-					$scope.selectedRow = event.args.row;
+				height : 590
+			},
+			events : {
+				rowclick : 'edit',
+				contextMenu : {
+					options : {
+						width : '200px',
+						height : '90px'
+					},
+					items : [ {
+						label : $translate.instant('CONTEXTUAL.EDIT'),
+						action : 'edit'
+					} ]
 				}
-		};
+			}
+	};
 
-	})
+	$scope.edit = function(parameter) {
+		$state.go('parameter.list.edit', {
+			id : parameter.name
+		});
+	};
+	
+})
 
-	.controller('ParameterEditController', function($scope, $state, parameter, $translate) {
-		$scope.parameter = parameter;
-		
-		$scope.edit = { model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' };
+.controller('ParameterEditController', function($scope, $state, parameter, $translate) {
+	$scope.parameter = parameter;
+	
+	$scope.edit = { model: 'parameter', entity: 'PARAMETER.LABEL', name: 'name' };
 
-		$scope.valuesSelect = {
-				width: 300,
-				height: 30,
-				autoDropDownHeight: true,
-				displayMember: "description",
-				valueMember: "value",
-				//placeHolder : $translate.instant('PARAMETER.VALUE_SELECT'),
-				source: $scope.parameter.parameterValues
-		};
+	$scope.valuesSelect = {
+			width: 300,
+			height: 30,
+			autoDropDownHeight: true,
+			displayMember: "description",
+			valueMember: "value",
+			//placeHolder : $translate.instant('PARAMETER.VALUE_SELECT'),
+			source: $scope.parameter.parameterValues
+	};
 
-		$scope.onCancel = function() {
-			$scope.$dismiss();
-		};
+	$scope.onCancel = function() {
+		$scope.$dismiss();
+	};
 
-		$scope.onSave = function() {
-			$scope.$close();
-		};
+	$scope.onSave = function() {
+		$scope.$close();
+	};
 
-		$scope.onSaveError = function() {
-			$scope.$dismiss();
-		};
+	$scope.onSaveError = function() {
+		$scope.$dismiss();
+	};
 
-	})
+})
 
-	;
-
-})();
+;
