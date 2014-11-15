@@ -34,10 +34,6 @@ angular.module('editor.mod.controllers', [])
 			events : {
 				rowclick : 'edit',
 				contextMenu : {
-					options : {
-						width : '200px',
-						height : '90px'
-					},
 					items : [ {
 						label : $translate.instant('CONTEXTUAL.EDIT'),
 						action : 'edit'

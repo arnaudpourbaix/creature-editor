@@ -40,20 +40,17 @@
 	})
 
 	.service('CreatureService', function(Creature) {
-		var service = {
-			getNew : function(parent) {
-				var creature = new Creature({
-					id : null,
-					name : null,
-					parent : parent ? parent : null
-				});
-				return creature;
-			},
-			getById : function(creatures, id) {
-				return _.find(creatures, function(creature) { /* jshint -W116 */
-					return creature.id == id;
-				});
-			}
+		var service = {};
+		
+		service.get = function(id) {
+			var creature = Creature.get({ id: id }).$promise;
+			return creature;
+		};
+		
+		service.getById = function(creatures, id) {
+			return _.find(creatures, function(creature) { /* jshint -W116 */
+				return creature.id == id;
+			});
 		};
 
 		return service;

@@ -136,7 +136,40 @@ angular.module('apx-jqwidgets.grid', [])
  * # Example:
  * 
  * <pre>
- * <div data-jq-grid="modGrid"></div>
+ * <div data-jq-grid="parameterGrid"></div>
+ * </pre>
+ * 
+ * <pre>
+ * 	$scope.parameterGrid = {
+			datasource : 'parameters',
+			columns : [ {
+				text : $translate.instant('PARAMETER.FIELDS.NAME'),
+				datafield : 'name',
+				type : 'string',
+				align : 'center',
+				width : 200
+			},
+			{
+				text : $translate.instant('PARAMETER.FIELDS.LABEL'),
+				datafield : 'label',
+				type : 'string',
+				align : 'center',
+				width : 300
+			},{
+				text : $translate.instant('PARAMETER.FIELDS.VALUE'),
+				datafield : 'value',
+				type : 'string',
+				 align : 'center',
+				width : 380
+			} ],
+			settings : {
+				width : 900,
+				height : 590
+			},
+			events : {
+				rowclick : 'edit',
+			}
+	};
  * </pre>
  * 
  */

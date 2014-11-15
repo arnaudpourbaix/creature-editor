@@ -45,10 +45,6 @@ angular.module('editor.category.controllers', [])
 			dragEnd : 'move',
 			select : 'edit',
 			contextMenu : {
-				options : {
-					width : '200px',
-					height : '90px'
-				},
 				items : [ {
 					label : $translate.instant('CONTEXTUAL.ADD'),
 					action : 'add'

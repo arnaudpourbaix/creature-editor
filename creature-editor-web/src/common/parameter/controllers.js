@@ -26,7 +26,7 @@ angular.module('parameter.controllers', [])
 				text : $translate.instant('PARAMETER.FIELDS.VALUE'),
 				datafield : 'value',
 				type : 'string',
-				 align : 'center',
+				align : 'center',
 				width : 380
 			} ],
 			settings : {
@@ -34,17 +34,7 @@ angular.module('parameter.controllers', [])
 				height : 590
 			},
 			events : {
-				rowclick : 'edit',
-				contextMenu : {
-					options : {
-						width : '200px',
-						height : '90px'
-					},
-					items : [ {
-						label : $translate.instant('CONTEXTUAL.EDIT'),
-						action : 'edit'
-					} ]
-				}
+				rowclick : 'edit'
 			}
 	};
 

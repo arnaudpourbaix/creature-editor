@@ -1,17 +1,11 @@
-<form role="form" name="categoryForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'category', entity: 'CATEGORY.LABEL', name: 'name' }">
+<form role="form" name="creatureForm" class="form-horizontal" novalidate data-crud-edit="{ model: 'creature', entity: 'CREATURE.LABEL', name: 'name' }">
 	<div class="form-group">
-		<label for="category.name" class="col-sm-2 control-label" data-translate>CATEGORY.FIELDS.NAME</label>
-		<div class="col-sm-10" data-ng-class="{'has-error': categoryForm.name.$invalid}">
-			<input id="category.name" class="form-control" type="text" placeholder="{{ 'CATEGORY.FIELDS.NAME' | translate }}" name="name" data-ng-model="category.name" data-ng-trim="true" data-focus-me="true"
-				required data-ap-unique-category-name="{ id: category.id }" /> 
-			<span class="help-block" data-ng-show="categoryForm.name.$error.required" data-translate>CONTROLS.REQUIRED</span> 
-			<span class="help-block" data-ng-show="categoryForm.name.$dirty && categoryForm.name.$error.unique" data-translate>CONTROLS.EXISTS</span>
-		</div>
-	</div>
-	<div data-ng-if="category.parent != null" class="form-group">
-		<label for="category.parent" class="col-sm-2 control-label" data-translate>CATEGORY.FIELDS.PARENT_NAME</label>
-		<div class="col-sm-10" data-ng-class="{'has-error': categoryForm.parent.$invalid}">
-			<input id="category.parent.name" class="form-control" type="text" placeholder="{{ 'CATEGORY.FIELDS.PARENT_NAME' | translate }}" name="parent" data-ng-model="category.parent.name" disabled /> 
+		<label for="creature.name" class="col-sm-2 control-label" data-translate>CREATURE.FIELDS.NAME</label>
+		<div class="col-sm-10" data-ng-class="{'has-error': creatureForm.name.$invalid}">
+			<input id="creature.name" class="form-control" type="text" placeholder="{{ 'CREATURE.FIELDS.NAME' | translate }}" name="name" data-ng-model="creature.name" data-ng-trim="true" data-focus-me="true"
+				required data-ap-unique-creature-name="{ id: creature.id }" /> 
+			<span class="help-block" data-ng-show="creatureForm.name.$error.required" data-translate>CONTROLS.REQUIRED</span> 
+			<span class="help-block" data-ng-show="creatureForm.name.$dirty && creatureForm.name.$error.unique" data-translate>CONTROLS.EXISTS</span>
 		</div>
 	</div>
 	<crud-buttons />

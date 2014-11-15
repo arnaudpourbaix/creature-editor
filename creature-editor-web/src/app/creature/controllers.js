@@ -1,100 +1,130 @@
-(function() {
-	'use strict';
+angular.module('editor.creature.controllers', [])
 
-	angular.module('editor.creature.controllers', [])
+.controller('CreatureListController', function($scope, $translate, $state, toaster, apxPanel, CreatureImportService, creatures, mods) {
+	$scope.mods = mods;
 	
-	.controller('CreatureListController', function($scope, $translate, CreatureImportService, apxPanel, creatures, mods) {
-			angular.forEach(creatures, function(creature) {
-				creature.attributeValues = _.indexBy(creature.attributeValues, function(attributeValue) {
-					return attributeValue.attribute.id;
-				});
-			});
-			$scope.creatures = creatures;
-			
-			var source = {
-					localdata: $scope.creatures,
-					datafields: [
-					   { name: 'game', type: 'string', map: 'game>id', mapChar : '>' },
-					   { name: 'mod', type: 'string', map: 'mod>name', mapChar : '>' },
-					   { name: 'resource', type: 'string' },
-					   { name: 'name', type: 'string', map: 'attributeValues>NAME>stringValue', mapChar : '>' }
-					],
-					datatype: "array"
-			};
-			
-			var dataAdapter = new $.jqx.dataAdapter(source);
-
-			var columns = [ {
+	
+	angular.forEach(creatures, function(creature) {
+		creature.attributeValues = _.indexBy(creature.attributeValues, function(attributeValue) {
+			return attributeValue.attribute.id;
+		});
+	});
+	$scope.creatures = creatures;
+		
+	$scope.creatureGrid = {
+			datasource : 'creatures',
+			columns : [ {
 				text : $translate.instant('CREATURE.FIELDS.GAME'),
-				dataField : 'game',
+				datafield : 'game',
+				map: 'game.id',
+				type : 'string',
+				align : 'center',
 				width : 100
-			}, {
+			},
+			{
 				text : $translate.instant('CREATURE.FIELDS.MOD'),
-				dataField : 'mod',
+				datafield : 'mod',
+				map: 'mod.name',
+				type : 'string',
+				align : 'center',
 				width : 100
-			}, {
+			},{
 				text : $translate.instant('CREATURE.FIELDS.RESOURCE'),
-				dataField : 'resource',
+				datafield : 'resource',
+				type : 'string',
+				align : 'center',
 				width : 200
-			}, {
+			},{
 				text : $translate.instant('CREATURE.FIELDS.NAME'),
-				dataField : 'name',
+				datafield : 'name',
+				map: 'attributeValues.NAME.stringValue',
+				type : 'string',
+				align : 'center',
 				width : 200
+			} ],
+			settings : {
+				width : 900,
+				height : 590
+			},
+			events : {
+				rowclick : 'edit',
+				contextMenu : {
+					items : [ {
+						label : $translate.instant('CONTEXTUAL.EDIT'),
+						action : 'edit'
+					}, {
+						label : $translate.instant('CONTEXTUAL.DELETE'),
+						action : 'remove'
+					} ]
+				}
 			}
-			];
-			
-			$scope.settings = {
-					altrows : true,
-					sortable: true,
-					width : 900,
-					height : 400,
-					source : dataAdapter,
-					columns : columns,
-					rowselect: function(event) {
-						$scope.selectedRow = event.args.row;
-					}
-			};
+	};
 
-			$scope.import = function() {
-				var panel = apxPanel.open({
-					templateUrl : 'creature/import-panel.tpl.html',
-					controller : 'CreatureImportController',
-					resolve : {
-						mods : function() {
-							return $scope.mods.$promise;
-						}
-					}
-				});
-			};
-			
-			$scope.mods = mods;
-			
-	})
-
-	.controller('CreatureImportController', function($scope, $translate, CreatureImportService, $panelInstance, mods) {
-		
-		$scope.mods = mods;
-		
-		$scope.options = {
-				mod: _.find(mods, function(mod) {
-					return mod.id === 1;
-				}),
-				resource: 'AL.*',
-				override: false,
-				onlyName: true
-		};
-		
-		$scope.validate = function() {
-			CreatureImportService.startImport($scope.options);
-		};
-
-		$scope.stopImport = function() {
-			CreatureImportService.cancelImport();
-		};
-		
-		
-	})
+	$scope.edit = function(creature) {
+		$state.go('creature.edit', {
+			id : creature.id
+		});
+	};
 	
-	;
+	$scope.remove = function(creature) {
+		creature.$delete().then(function(response) {
+			var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
+				entity: $translate.instant('CREATURE.LABEL'),
+				name: creature.resource
+			});
+			toaster.pop('success', null, message);
+			$scope.creatures.splice($scope.creatures.indexOf(creature), 1);
+		}, function() {
+			var message = $translate.instant('CRUD.REMOVE_ERROR', {
+				entity: $translate.instant('CREATURE.LABEL'),
+				name: creature.resource
+			});
+			toaster.pop('danger', null, message);
+		});
+	};
+	
+	$scope.import = function() {
+		var panel = apxPanel.open({
+			templateUrl : 'creature/import-panel.tpl.html',
+			controller : 'CreatureImportController',
+			resolve : {
+				mods : function() {
+					return $scope.mods.$promise;
+				}
+			}
+		});
+	};
+		
+})
 
-})();
+.controller('CreatureImportController', function($scope, $translate, CreatureImportService, $panelInstance, mods) {
+	
+	$scope.mods = mods;
+	
+	$scope.options = {
+			mod: _.find(mods, function(mod) {
+				return mod.id === 1;
+			}),
+			resource: 'AL.*',
+			override: false,
+			onlyName: true
+	};
+	
+	$scope.validate = function() {
+		CreatureImportService.startImport($scope.options);
+	};
+
+	$scope.stopImport = function() {
+		CreatureImportService.cancelImport();
+	};
+	
+	
+})
+
+.controller('CreatureEditController', function($scope, $translate, creature) {
+	$scope.creature = creature;
+	
+})
+
+;
+
