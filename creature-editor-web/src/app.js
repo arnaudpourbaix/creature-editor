@@ -19,6 +19,7 @@ angular.module('editor', [
 	
 	// Common modules
 	'apx-jqwidgets',
+	'apx-alertify',
 	'apx-tools', 
 	'an-error', 
 	'an-log4javascript',

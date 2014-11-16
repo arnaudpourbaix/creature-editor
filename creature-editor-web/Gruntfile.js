@@ -95,12 +95,15 @@ module.exports = function(grunt) {
 					'<%= app_folders.vendor %>/AngularJS-Toaster/toaster.js', 
 					'<%= app_folders.vendor %>/lodash/dist/lodash.min.js', 
 					'<%= app_folders.vendor %>/log4javascript/log4javascript.js',
+					'<%= app_folders.vendor %>/alertify/alertify.min.js',
 					'<%= app_folders.src %>/assets/jqwidgets/jqx-all.js', 
 					'<%= app_folders.src %>/assets/Long.js'
 				],
 			css : [ 
 			       '<%= app_folders.vendor %>/font-awesome/css/font-awesome.min.css',
-			       '<%= app_folders.vendor %>/AngularJS-Toaster/toaster.css'
+			       '<%= app_folders.vendor %>/AngularJS-Toaster/toaster.css',
+			       '<%= app_folders.vendor %>/alertify/themes/alertify.core.css',
+			       '<%= app_folders.vendor %>/alertify/themes/alertify.bootstrap.css'
 			   ],
 			assets : [ 
 			       'bootstrap/dist/fonts/*', 

@@ -85,13 +85,53 @@ angular.module('apx-jqwidgets.docking', [])
 .directive('jqDocking', function($compile, $timeout, jqCommon, jqDocking) {
 	return {
 		restrict : 'A',
-		link : function($scope, element, attrs) {
-			var params = jqCommon.getParams($scope.$eval(attrs.jqDocking) || {}, [], [ 'settings', 'windows' ]);
-			var settings = angular.extend({}, jqCommon.defaults, params.settings);
-			element.jqxDocking(settings);
-			angular.forEach(params.windows, function(w) {
-				jqDocking.setWindowProperties(element, w);
-			});
+		replace : true,
+		transclude : true,
+		template : '<div><div ng-transclude></div></div>',
+//		controller: function($scope) {
+//			console.log('jqDocking controller');
+//		},
+		compile : function() {
+			return {
+				pre : function preLink($scope, element, attrs) {
+					console.log('docking template', 'pre compile', $scope.id);
+//					var params = jqCommon.getParams($scope.$eval(attrs.jqDocking) || {}, [], [ 'settings', 'windows' ]);
+//					var settings = angular.extend({}, jqCommon.defaults, params.settings);
+//					element.jqxDocking(settings);
+				},
+				post : function preLink($scope, element, attrs) {
+					console.log('docking template', 'post compile', $scope.id);
+					var params = jqCommon.getParams($scope.$eval(attrs.jqDocking) || {}, [], [ 'settings', 'windows' ]);
+					var settings = angular.extend({}, jqCommon.defaults, params.settings);
+					element.jqxDocking(settings);
+//					angular.forEach(params.windows, function(w) {
+//					jqDocking.setWindowProperties(element, w);
+//				});
+				}
+			};
+		}
+	};
+})
+
+.directive('jqDockingWindow', function($compile, $timeout, jqCommon, jqDocking) {
+	return {
+		restrict : 'A',
+		//require: 'jqDocking',
+		replace : true,
+		transclude : true,
+		template : '<div id="{{ ::id }}"><div>{{ ::title | translate }}</div><div ng-transclude></div></div>',
+		compile : function() {
+			return {
+				pre : function preLink($scope, element, attrs) {
+					var params = jqCommon.getParams($scope.$eval(attrs.jqDockingWindow) || {}, [ 'id', 'title' ], [ 'height' ]);
+					$scope.id = params.id;
+					$scope.title = params.title;
+					console.log('window template', 'pre compile');
+				},
+				post : function preLink($scope, element, attrs) {
+					console.log('window template', 'post compile');
+				}
+			};
 		}
 	};
 })

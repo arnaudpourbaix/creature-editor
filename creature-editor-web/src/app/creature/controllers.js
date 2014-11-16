@@ -1,6 +1,6 @@
 angular.module('editor.creature.controllers', [])
 
-.controller('CreatureListController', function($scope, $translate, $state, toaster, apxPanel, CreatureImportService, creatures, mods) {
+.controller('CreatureListController', function($scope, $translate, $state, toaster, $alertify, apxPanel, CreatureImportService, creatures, mods) {
 	$scope.mods = mods;
 	
 	
@@ -59,6 +59,17 @@ angular.module('editor.creature.controllers', [])
 				}
 			}
 	};
+	
+	$scope.docking = {
+		settings : {
+			width : 1200,
+			height : 800
+		},
+		windows : [ {
+			id : 'creature-list',
+			height : 700
+		} ]
+	};
 
 	$scope.edit = function(creature) {
 		$state.go('creature.edit', {
@@ -67,19 +78,21 @@ angular.module('editor.creature.controllers', [])
 	};
 	
 	$scope.remove = function(creature) {
-		creature.$delete().then(function(response) {
-			var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
-				entity: $translate.instant('CREATURE.LABEL'),
-				name: creature.resource
+		$alertify.confirm($translate.instant("CREATURE.DELETE_CONFIRM")).then(function() {
+			return creature.$delete().then(function(response) {
+				var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
+					entity: $translate.instant('CREATURE.LABEL'),
+					name: creature.resource
+				});
+				toaster.pop('success', null, message);
+				$scope.creatures.splice($scope.creatures.indexOf(creature), 1);
+			}, function() {
+				var message = $translate.instant('CRUD.REMOVE_ERROR', {
+					entity: $translate.instant('CREATURE.LABEL'),
+					name: creature.resource
+				});
+				toaster.pop('danger', null, message);
 			});
-			toaster.pop('success', null, message);
-			$scope.creatures.splice($scope.creatures.indexOf(creature), 1);
-		}, function() {
-			var message = $translate.instant('CRUD.REMOVE_ERROR', {
-				entity: $translate.instant('CREATURE.LABEL'),
-				name: creature.resource
-			});
-			toaster.pop('danger', null, message);
 		});
 	};
 	

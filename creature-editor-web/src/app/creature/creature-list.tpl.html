@@ -1,7 +1,27 @@
-<div class="creature">
-	<div data-translate>CREATURE.LIST_TITLE</div>
-	<button type="button" class="btn btn-primary" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
-	<button type="button" class="btn btn-danger" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
-	<div data-jq-grid="creatureGrid"></div>
-	<div class="creature-edit" data-ui-view="creature-edit"></div>
+<!-- 
+<div data-jq-docking="docking">
+	<div>
+	<div id="creature-list">
+		<div data-translate>CREATURE.LIST_TITLE</div>
+		<div>
+			<div>
+				<button type="button" class="btn btn-primary" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
+				<button type="button" class="btn btn-danger" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
+				<div data-jq-grid="creatureGrid"></div>
+				<div class="creature-edit" data-ui-view="creature-edit"></div>
+			</div>
+		</div>
+	</div>	
+	</div>
 </div>
+ -->
+<div data-jq-docking="{ width : 1200, height : 800 }">
+	<div data-jq-docking-window="{ id: 'creature-list', height: 700, title: 'CREATURE.LIST_TITLE' }">
+		<button type="button" class="btn btn-primary" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
+		<button type="button" class="btn btn-danger" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
+		<div data-jq-grid="creatureGrid"></div>
+		<div class="creature-edit" data-ui-view="creature-edit"></div>
+	</div>	
+</div>
+ 
+ 	

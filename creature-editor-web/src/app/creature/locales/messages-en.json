@@ -3,6 +3,7 @@
 		"LABEL" : "Creature",
 		"LIST_TITLE" : "Creatures",
 		"EDIT_TITLE" : "Creature details",
+		"DELETE_CONFIRM" : "Delete creature {{resource}} ?",
 		"BUTTONS": {
 			"IMPORT": "Import",
 			"CANCEL": "Cancel"
