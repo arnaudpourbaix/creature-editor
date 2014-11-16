@@ -5,7 +5,7 @@ angular.module('editor.mod.controllers', [])
 
 	$scope.splitter = {
 			width : 800,
-			height : 600,
+			height : 400,
 			panels : [ {
 				size : 400,
 				min : 200
@@ -26,7 +26,7 @@ angular.module('editor.mod.controllers', [])
 			} ],
 			settings : {
 				width : 260,
-				height : 400
+				height : 300
 			},
 			buttons : {
 				add : 'add'

@@ -131,7 +131,7 @@ angular.module('apx-jqwidgets.menu', [])
  * @restrict AE
  * @priority 0
  * @description Apply menu widget on element.
- * Directive attribute's value is an object that contains widget properties:
+ * Directive attribute's value is an object that contains widget properties.
  * 
  */
 .directive('jqMenu', function($compile, jqCommon, jqMenu, $timeout) {

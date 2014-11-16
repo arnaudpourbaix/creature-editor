@@ -44,7 +44,7 @@ angular.module('editor.creature.controllers', [])
 			} ],
 			settings : {
 				width : 900,
-				height : 590
+				height : 390
 			},
 			events : {
 				rowclick : 'edit',
@@ -58,17 +58,6 @@ angular.module('editor.creature.controllers', [])
 					} ]
 				}
 			}
-	};
-	
-	$scope.docking = {
-		settings : {
-			width : 1200,
-			height : 800
-		},
-		windows : [ {
-			id : 'creature-list',
-			height : 700
-		} ]
 	};
 
 	$scope.edit = function(creature) {

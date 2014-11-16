@@ -24,19 +24,20 @@ angular.module('apx-jqwidgets.docking', [])
 		 * @methodOf apx-jqwidgets.jqDocking
 		 * @description Set window properties.
 		 * @param {Object} element Docking DOM element.
+		 * @param {string} id Docking window id.
 		 * @param {Object} properties Window properties:
 		 * 
-		 * - **id** - `{string}` - Window element id<br>
 		 * - **height** - `{number}` - Window height<br>
+		 * - **width** - `{number}` - Window width<br>
 		 */
-		service.setWindowProperties = function(element, properties) {
+		service.setWindowProperties = function(element, id, properties) {
 			var props = {};
 			if (properties.height && properties.height > 600) {
 				props.maxHeight = properties.height;
 			}
-			angular.extend(props, _.omit(properties, [ 'id', 'template', 'templateUrl' ]));
+			angular.extend(props, _.omit(properties, [ 'title' ]));
 			angular.forEach(props, function(value, key) {
-				element.jqxDocking('setWindowProperty', properties.id, key, value);
+				element.jqxDocking('setWindowProperty', id, key, value);
 			});
 		};
 
@@ -50,88 +51,85 @@ angular.module('apx-jqwidgets.docking', [])
  * @restrict A
  * @priority 0
  * @description Apply docking widget on element.
- * Directive attribute's value is an object that has following properties:
- * 
- * - **settings** - `{Object=}` - Set of key/value pairs that configure the jqxDocking plug-in. All settings are optional.<br>
- * - **windows** - `{array}` - Windows.<br>
- * 
- * windows property has following properties:
- * 
- * - **id** - `{string}` - Window element id<br>
- * - **height** - `{number}` - Window height<br>
+ * Directive attribute's value is an object that contains widget properties.
  * 
  * # Example:
  * 
  * <pre>
- * <div data-jq-docking="layout"></div>
- * </pre>
- * 
- * <pre>
-	$scope.layout = {
-		settings : {
-			width : 1200,
-			height : 800
-		},
-		windows : [ {
-			id : 'spell-list',
-			height : 700
-		}, {
-			id : 'spell-import',
-			height : 100,
-		} ]
-	};
+<div data-jq-docking="{ width : 1200, height : 800 }">
+	<div id="creature-list" data-jq-docking-window="{ height: 600, title: 'CREATURE.LIST_TITLE' }">
+		<button type="button" class="btn btn-primary" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
+		<button type="button" class="btn btn-danger" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
+		<div data-jq-grid="creatureGrid"></div>
+		<div class="creature-edit" data-ui-view="creature-edit"></div>
+	</div>	
+</div>
  * </pre>
  */
-.directive('jqDocking', function($compile, $timeout, jqCommon, jqDocking) {
+.directive('jqDocking', function($timeout, jqCommon, jqDocking) {
 	return {
 		restrict : 'A',
 		replace : true,
 		transclude : true,
 		template : '<div><div ng-transclude></div></div>',
-//		controller: function($scope) {
-//			console.log('jqDocking controller');
-//		},
+		controller: function($scope, $element) {
+			/*
+			 * @description Set window properties.
+			 * @param {string} id Docking window id.
+			 * @param {Object} properties Window properties:
+			 */
+			this.setWindowProperties = function(id, properties) {
+				jqDocking.setWindowProperties($element, id, properties);
+			};
+		},
 		compile : function() {
 			return {
-				pre : function preLink($scope, element, attrs) {
-					console.log('docking template', 'pre compile', $scope.id);
-//					var params = jqCommon.getParams($scope.$eval(attrs.jqDocking) || {}, [], [ 'settings', 'windows' ]);
-//					var settings = angular.extend({}, jqCommon.defaults, params.settings);
-//					element.jqxDocking(settings);
-				},
-				post : function preLink($scope, element, attrs) {
-					console.log('docking template', 'post compile', $scope.id);
-					var params = jqCommon.getParams($scope.$eval(attrs.jqDocking) || {}, [], [ 'settings', 'windows' ]);
-					var settings = angular.extend({}, jqCommon.defaults, params.settings);
-					element.jqxDocking(settings);
-//					angular.forEach(params.windows, function(w) {
-//					jqDocking.setWindowProperties(element, w);
-//				});
+				pre : function preLink($scope, element, attrs) { // pre-compile because docking must be applied before setting children windows
+					var params = $scope.$eval(attrs.jqDocking) || {};
+					var settings = angular.extend({}, jqCommon.defaults, params);
+					$timeout(function() { // must use timeout to be sure template will correctly be set at that point
+						element.jqxDocking(settings);
+					});
 				}
 			};
 		}
 	};
 })
 
-.directive('jqDockingWindow', function($compile, $timeout, jqCommon, jqDocking) {
+/**
+ * @ngdoc directive
+ * @name apx-jqwidgets.directive:jqDockingWindow
+ * @restrict A
+ * @priority 0
+ * @description Defines a windows inside a docking widget.
+ * Directive attribute's value is an object that has following properties:
+ * 
+ * - **title** - `{string}` - Window's title. Should be a string code that will be translated with {@link $translate $translate} service.<br>
+ * - **height** - `{number=}` - Height.<br>
+ * - **width** - `{number}` - Width.<br>
+ * 
+ * # Example:
+ * 
+ * <pre>
+ * <div data-jq-docking-window="{ id: 'creature-list', height: 700, title: 'CREATURE.LIST_TITLE' }">
+ * </pre>
+ */
+.directive('jqDockingWindow', function($timeout, jqCommon, jqDocking) {
 	return {
 		restrict : 'A',
-		//require: 'jqDocking',
-		replace : true,
+		require: '^^jqDocking',
 		transclude : true,
-		template : '<div id="{{ ::id }}"><div>{{ ::title | translate }}</div><div ng-transclude></div></div>',
-		compile : function() {
-			return {
-				pre : function preLink($scope, element, attrs) {
-					var params = jqCommon.getParams($scope.$eval(attrs.jqDockingWindow) || {}, [ 'id', 'title' ], [ 'height' ]);
-					$scope.id = params.id;
-					$scope.title = params.title;
-					console.log('window template', 'pre compile');
-				},
-				post : function preLink($scope, element, attrs) {
-					console.log('window template', 'post compile');
-				}
-			};
+		template : '<div>{{ ::title | translate }}</div><div ng-transclude></div>',
+		scope: true,
+		link : function($scope, element, attrs, jqDockingCtrl) {
+			if (!attrs.id) {
+				throw new Error('docking window must have an id attribute!');
+			}
+			var params = jqCommon.getParams($scope.$eval(attrs.jqDockingWindow) || {}, [ 'title' ], []);
+			$scope.title = params.title;
+			$timeout(function() { // must use timeout to be sure template will correctly be set at that point
+				jqDockingCtrl.setWindowProperties(attrs.id, params);	
+			});
 		}
 	};
 })
