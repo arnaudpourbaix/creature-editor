@@ -2,6 +2,7 @@
 	"CREATURE" : {
 		"LABEL" : "Creature",
 		"LIST_TITLE" : "Creatures",
+		"ACTION_TITLE" : "Actions",
 		"EDIT_TITLE" : "Creature details",
 		"DELETE_CONFIRM" : "Delete creature {{resource}} ?",
 		"BUTTONS": {

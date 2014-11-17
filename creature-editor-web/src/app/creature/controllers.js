@@ -61,7 +61,7 @@ angular.module('editor.creature.controllers', [])
 	};
 
 	$scope.edit = function(creature) {
-		$state.go('creature.edit', {
+		$state.go('creatureEdit', {
 			id : creature.id
 		});
 	};

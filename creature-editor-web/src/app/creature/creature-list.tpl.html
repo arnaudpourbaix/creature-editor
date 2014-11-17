@@ -1,10 +1,13 @@
-<div data-jq-docking="{ width : 1200, height : 800 }">
-	<div id="creature-list" data-jq-docking-window="{ title: 'CREATURE.LIST_TITLE', height: 780 }">
-		<button type="button" class="btn btn-primary" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
-		<button type="button" class="btn btn-danger" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
-		<div data-jq-grid="creatureGrid"></div>
-		<div class="creature-edit" data-ui-view="creature-edit"></div>
+<div data-jq-docking="{ width : 1200, height : 850 }">
+	<div id="creature-list" data-jq-docking-window="{ title: 'CREATURE.LIST_TITLE', height: 700 }">
+		<div class="creature-list">
+			<div data-jq-grid="creatureGrid"></div>
+		</div>
 	</div>	
-</div>
- 
- 	
+	<div id="creature-list-actions" data-jq-docking-window="{ title: 'CREATURE.ACTION_TITLE', height: 100 }">
+		<div class="creature-list-actions">
+			<button type="button" class="btn btn-primary btn-xs" data-ng-click="import()" data-translate>CREATURE.BUTTONS.IMPORT</button>		
+			<button type="button" class="btn btn-danger btn-xs" data-ng-click="stopImport()" data-translate>CREATURE.BUTTONS.CANCEL</button>
+		</div>
+	</div>
+</div>	
