@@ -1,6 +1,6 @@
 angular.module('editor.creature.import.services', [])
 
-.service('CreatureImportService', function($http, $interval, creatureSettings) {
+.service('CreatureImportService', function($http, $interval, creatureSettings, Mod, apxPanel) {
 	var service = {};
 	
 	service.running = false;
@@ -14,13 +14,11 @@ angular.module('editor.creature.import.services', [])
 			templateUrl : 'creature/import/import-panel.tpl.html',
 			controller : 'CreatureImportController',
 			resolve : {
-				mods : function() {
-					return $scope.mods.$promise;
-				}
+				mods : Mod.query().$promise
 			}
 		});
 		return panel;
-	}
+	};
 
 	service.startImport = function(options) {
 		$http({
