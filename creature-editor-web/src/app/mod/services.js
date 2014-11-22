@@ -1,4 +1,3 @@
-/* global _ */
 angular.module('editor.mod.services', [])
 
 .factory('modSettings', function(appSettings) {

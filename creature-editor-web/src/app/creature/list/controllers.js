@@ -1,4 +1,4 @@
-angular.module('editor.creature.controllers', [])
+angular.module('editor.creature.list.controllers', [])
 
 .controller('CreatureListController', function($scope, $translate, $state, toaster, $alertify, apxPanel, CreatureImportService, creatures, mods) {
 	$scope.mods = mods;
@@ -86,46 +86,9 @@ angular.module('editor.creature.controllers', [])
 	};
 	
 	$scope.import = function() {
-		var panel = apxPanel.open({
-			templateUrl : 'creature/import-panel.tpl.html',
-			controller : 'CreatureImportController',
-			resolve : {
-				mods : function() {
-					return $scope.mods.$promise;
-				}
-			}
-		});
+		CreatureImportService.getPanel();
 	};
 		
-})
-
-.controller('CreatureImportController', function($scope, $translate, CreatureImportService, $panelInstance, mods) {
-	
-	$scope.mods = mods;
-	
-	$scope.options = {
-			mod: _.find(mods, function(mod) {
-				return mod.id === 1;
-			}),
-			resource: 'AL.*',
-			override: false,
-			onlyName: true
-	};
-	
-	$scope.validate = function() {
-		CreatureImportService.startImport($scope.options);
-	};
-
-	$scope.stopImport = function() {
-		CreatureImportService.cancelImport();
-	};
-	
-	
-})
-
-.controller('CreatureEditController', function($scope, $translate, creature) {
-	$scope.creature = creature;
-	
 })
 
 ;

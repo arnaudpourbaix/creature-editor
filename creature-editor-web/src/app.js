@@ -23,7 +23,6 @@ angular.module('editor', [
 	'apx-tools', 
 	'an-error', 
 	'an-log4javascript',
-	'translate-wrapper',
 	'crud',
 	'parameter', 
 	

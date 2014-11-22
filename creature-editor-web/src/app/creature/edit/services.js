@@ -1,0 +1,1 @@
+angular.module('editor.creature.edit.services', []);
