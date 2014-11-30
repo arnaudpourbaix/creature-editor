@@ -30,5 +30,8 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="btn btn-primary bottom-right" data-ng-click="validate()" data-translate>CREATURE.IMPORT.BUTTONS.VALIDATE</button>
+	<button type="button" class="btn btn-primary bottom-right" data-ng-show="!running" data-ng-click="validate()" data-translate>CREATURE.IMPORT.BUTTONS.VALIDATE</button>
+	<button type="button" class="btn btn-danger btn-xs" data-ng-show="running" data-ng-click="cancel()" data-translate>CREATURE.IMPORT.BUTTONS.CANCEL</button>
+	<progressbar animate="false" value="progressValue" type="success" data-ng-show="running"><b>{{progressValue}}%</b></progressbar>
+	<div>{{  }}</div>
 </form>

@@ -20,6 +20,9 @@
 			"DELETE" : "Delete"
 		},
 		"IMPORT" : {
+			"CANCELLED" : "Import was cancelled",
+			"CANCEL_CONFIRM" : "Do you you really want to cancel import ?",
+			"ALREADY_RUNNING" : "Import is already running",
 			"FIELDS" : {
 				"MOD" : "Mod",
 				"RESOURCE" : "Resource",
@@ -27,7 +30,8 @@
 				"ONLY_NAME" : "Only names"
 			},
 			"BUTTONS": {
-				"VALIDATE": "Validate"
+				"VALIDATE": "Validate",
+				"CANCEL": "Cancel"
 			}
 		},
 		"EDIT_TITLE" : "{{name}}",

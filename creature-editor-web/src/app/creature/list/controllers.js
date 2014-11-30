@@ -67,7 +67,7 @@ angular.module('editor.creature.list.controllers', [])
 	};
 	
 	$scope.remove = function(creature) {
-		$alertify.confirm($translate.instant("CREATURE.DELETE_CONFIRM")).then(function() {
+		$alertify.confirm($translate.instant("CREATURE.DELETE_CONFIRM", { resource: creature.resource })).then(function() {
 			return creature.$delete().then(function(response) {
 				var message = $translate.instant('CRUD.REMOVE_SUCCESS', {
 					entity: $translate.instant('CREATURE.LABEL'),
@@ -85,8 +85,12 @@ angular.module('editor.creature.list.controllers', [])
 		});
 	};
 	
-	$scope.import = function() {
+	$scope.importPanel = function() {
 		CreatureImportService.getPanel();
+	};
+
+	$scope.stopImport = function() {
+		CreatureImportService.cancelImport();
 	};
 		
 })

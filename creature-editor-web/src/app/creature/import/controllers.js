@@ -1,6 +1,6 @@
 angular.module('editor.creature.import.controllers', [])
 
-.controller('CreatureImportController', function($scope, $translate, CreatureImportService, $panelInstance, mods) {
+.controller('CreatureImportController', function($scope, $translate, toaster, $alertify, CreatureImportService, $panelInstance, mods) {
 	
 	$scope.mods = mods;
 	
@@ -13,12 +13,25 @@ angular.module('editor.creature.import.controllers', [])
 			onlyName: true
 	};
 	
+	$scope.running = false;
+	
 	$scope.validate = function() {
-		CreatureImportService.startImport($scope.options);
+		CreatureImportService.import($scope.options).then(function(response) {
+			console.info(response);
+			$scope.running = true;
+			$scope.data = response;
+			//$panelInstance.close();
+		}, function(response) {
+			toaster.pop('danger', null, $translate.instant(response.data.code));
+		});
 	};
 
-	$scope.stopImport = function() {
-		CreatureImportService.cancelImport();
+	$scope.cancel = function() {
+		$alertify.confirm($translate.instant("CREATURE.IMPORT.CANCEL_CONFIRM")).then(function() {
+			$scope.running = false;
+			toaster.pop('warning', null, $translate.instant("CREATURE.IMPORT.CANCELLED"));
+			//CreatureImportService.cancelImport();
+		});
 	};
 	
 	

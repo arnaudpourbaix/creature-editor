@@ -1,23 +1,17 @@
 package com.pourbaix.creature.editor.domain;
 
-public class DomainException extends Exception {
+import com.pourbaix.creature.editor.exception.AbstractException;
+
+public class DomainException extends AbstractException {
 
 	private static final long serialVersionUID = 1L;
 
-	public DomainException() {
-
+	public DomainException(String code) {
+		super(code);
 	}
 
-	public DomainException(final String message) {
-		super(message);
+	public DomainException(String code, String param) {
+		super(code, param);
 	}
-
-	public DomainException(final Throwable cause) {
-		super(cause);
-	}
-
-	public DomainException(final String message, final Throwable cause) {
-		super(message, cause);
-	}
-
+	
 }
