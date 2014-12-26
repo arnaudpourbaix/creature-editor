@@ -55,7 +55,6 @@ public class CreatureController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable Integer id) {
-		Creature c = creatureService.getById(id);
 		creatureService.delete(id);
 	}
 
@@ -79,4 +78,9 @@ public class CreatureController {
 		creatureImportService.cancelImport();
 	}
 
+	@RequestMapping("/deleteAll")
+	public void deleteAll() {
+		creatureService.deleteAll();
+	}
+	
 }

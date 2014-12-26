@@ -1,6 +1,51 @@
 angular.module('editor.creature.import.services', [])
 
-.service('CreatureImportService', function($http, $interval, $q, creatureSettings, Mod, apxPanel) {
+.service('CreatureImportService', function($http, $interval, $q, $translate, toaster, creatureSettings, Mod, apxPanel) {
+
+	var ImportContainer = function(itemCount) {
+		var self = this;
+		var interval;
+		var creatures = [];
+		var deferred = new $q.defer();
+		
+		var updateStatus = function() {
+			$http({
+				method : 'GET',
+				url : creatureSettings.url + 'import/gather'
+			}).then(function(response) {
+				creatures.push.apply(creatures, response.data);
+				self.progressValue = parseInt(100 / itemCount * creatures.length, 10);
+				if (creatures.length === itemCount) {
+					$interval.cancel(interval);
+					deferred.resolve();
+					toaster.pop('success', null, $translate.instant("CREATURE.IMPORT.SUCCESS"));
+				}
+			}, function(response) {
+				$interval.cancel(interval);
+				toaster.pop('danger', null, $translate.instant("CREATURE.IMPORT.ERROR"));
+			});
+		};
+
+		self.creatures = creatures;
+		self.progressValue = 0;
+		self.end = deferred.promise;
+		
+		self.cancel = function() {
+			$http({
+				method : 'GET',
+				url : creatureSettings.url + 'import/cancel'
+			}).then(function(response) {
+				$interval.cancel(interval);
+				toaster.pop('warning', null, $translate.instant("CREATURE.IMPORT.CANCELLED"));
+			});
+		};
+		
+		(function() { // constructor
+			interval = $interval(updateStatus, 2000);
+		})();
+		
+	};
+	
 	var service = {};
 	
 	service.getPanel = function() {
@@ -9,63 +54,19 @@ angular.module('editor.creature.import.services', [])
 			controller : 'CreatureImportController',
 			resolve : {
 				mods : Mod.query().$promise
-			}
+			},
+			backdrop: false
 		});
 		return panel;
 	};
-
+	
 	service.import = function(options) {
 		return $http({
 			method : 'POST',
 			url : creatureSettings.url + 'import',
 			data : options
 		}).then(function(response) {
-			var creatureCount = parseInt(response.data, 10);
-			var stop = function() {
-				$interval.cancel(service.interval);
-				service.container.running = false;
-				service.container.progressValue = 0;
-			};
-			var cancel = function() {
-				$http({
-					method : 'GET',
-					url : creatureSettings.url + 'import/cancel'
-				}).then(function(response) {
-					service.endImport();
-					//$console.logMessage.push('CREATURE.IMPORT.CANCEL', 'warning');
-					console.log('cancel');
-				});
-			};
-			var gatherImportedCreatures = function() {
-				$http({
-					method : 'GET',
-					url : creatureSettings.url + 'import/gather'
-				}).then(function(response) {
-					angular.forEach(response.data, function(value, index) {
-						service.container.creatures.push(value);
-					});
-					service.container.progressValue = parseInt(100 / service.container.creatureCount * service.container.creatures.length, 10);
-					if (service.container.creatures.length === service.container.creatureCount) {
-//								$console.logMessage.push('CREATURE.IMPORT.SUCCESS', 'success', {
-//									name : service.container.mod.name
-//								});
-						console.log('success');
-						service.container.endImport();
-					}
-				}, function(response) {
-					service.container.endImport();
-					console.log('error');
-				});
-			};
-			//var interval = $interval(gatherImportedCreatures, 2000);
-			var result = {
-				cancel: function() {
-					cancel();
-				},	
-				creatureCount: creatureCount,
-				creatures: []
-			};
-			return result;
+			return new ImportContainer(response.data);
 		});
 	};
 

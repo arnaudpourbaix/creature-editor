@@ -43,20 +43,28 @@ public class CreatureService {
 		return creature;
 	}
 
+	public void save(Iterable<Creature> creatures) {
+		creatureRepository.save(creatures);
+	}
+	
 	public List<Creature> list() {
 		List<Creature> creatures = creatureRepository.findAll();
-		logger.debug("START");
+		logger.debug("list - START");
 //		for (Creature creature : creatures) {
 //			logger.debug("-start-");
 //			Set<AttributeValue> attributeValues = attributeValueService.getCurrentAttributeValues(creature, creatureListAttributes);
 //			creature.setAttributeValues(attributeValues);
 //		}
-		logger.debug("END");
+		logger.debug("list - END");
 		return creatures;
 	}
 
 	public void delete(Integer id) {
 		creatureRepository.delete(id);
+	}
+
+	public void deleteAll() {
+		creatureRepository.deleteAll();
 	}
 	
 	public void deleteByResourceAndGameAndMod(String resource, Game game, Mod mod) {

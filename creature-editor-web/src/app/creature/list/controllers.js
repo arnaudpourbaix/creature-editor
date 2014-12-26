@@ -1,6 +1,6 @@
 angular.module('editor.creature.list.controllers', [])
 
-.controller('CreatureListController', function($scope, $translate, $state, toaster, $alertify, apxPanel, CreatureImportService, creatures, mods) {
+.controller('CreatureListController', function($scope, $translate, $state, $http, toaster, $alertify, apxPanel, creatureSettings, CreatureImportService, creatures, mods) {
 	$scope.mods = mods;
 	
 	
@@ -89,8 +89,14 @@ angular.module('editor.creature.list.controllers', [])
 		CreatureImportService.getPanel();
 	};
 
-	$scope.stopImport = function() {
-		CreatureImportService.cancelImport();
+	$scope.deleteAll = function() {
+		$http({
+			method : 'GET',
+			url : creatureSettings.url + 'deleteAll'
+		}).then(function(response) {
+			toaster.pop('success', null, $translate.instant("CREATURE.DELETE_ALL_SUCCESS"));
+			$scope.creatures.splice(0, $scope.creatures.length);			
+		});
 	};
 		
 })

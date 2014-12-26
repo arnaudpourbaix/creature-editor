@@ -2,6 +2,7 @@ package com.pourbaix.creature.editor.spring;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -46,20 +47,29 @@ public class PersistenceConfig {
 		dataSource.setDriverClassName(driver);
 		dataSource.setUrl(url);
 		dataSource.setUsername(username);
+		Properties properties = new Properties();
+		properties.setProperty("AUTOCOMMIT ", "FALSE");
+		dataSource.setConnectionProperties(properties);
 		return dataSource;
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+			EntityManagerFactoryBuilder builder) {
 		Map<String, String> jpaProperties = new HashMap<>();
 		jpaProperties.put(org.hibernate.cfg.Environment.DIALECT, dialect);
-		jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, hbm2ddlAuto);
+		jpaProperties.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO,
+				hbm2ddlAuto);
 		jpaProperties.put(org.hibernate.cfg.Environment.SHOW_SQL, "false");
 		jpaProperties.put("hibernate.cache.use_second_level_cache", "true");
-		jpaProperties.put("hibernate.cache.region.factory_class", "org.hibernate.cache.ehcache.EhCacheRegionFactory");
+		jpaProperties.put("hibernate.cache.region.factory_class",
+				"org.hibernate.cache.ehcache.EhCacheRegionFactory");
 		jpaProperties.put("hibernate.cache.use_query_cache", "true");
-		return builder.dataSource(dataSource()).packages("com.pourbaix.creature.editor.domain", "com.pourbaix.infinity.domain").properties(jpaProperties)
-				.build();
+		return builder
+				.dataSource(dataSource())
+				.packages("com.pourbaix.creature.editor.domain",
+						"com.pourbaix.infinity.domain")
+				.properties(jpaProperties).build();
 	}
 
 	@Bean
@@ -74,16 +84,18 @@ public class PersistenceConfig {
 		EhCacheManagerFactoryBean ehCacheManagerFactoryBean = new EhCacheManagerFactoryBean();
 		ehCacheManagerFactoryBean.setCacheManagerName("creatureCache");
 		ehCacheManagerFactoryBean.setShared(true);
-		ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+		ehCacheManagerFactoryBean.setConfigLocation(new ClassPathResource(
+				"ehcache.xml"));
 		return ehCacheManagerFactoryBean;
 	}
 
-	// @Bean
-	// public PlatformTransactionManager transactionManager() {
-	// JpaTransactionManager txManager = new JpaTransactionManager();
-	// txManager.setEntityManagerFactory(entityManagerFactory());
-	// return txManager;
-	// }
+//	@Bean
+//	public PlatformTransactionManager transactionManager() {
+//		JpaTransactionManager txManager = new JpaTransactionManager();
+//		txManager.setEntityManagerFactory(entityManagerFactory());
+//		return txManager;
+//	}
+
 	//
 	// @Bean
 	// public HibernateExceptionTranslator hibernateExceptionTranslator() {

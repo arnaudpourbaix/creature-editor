@@ -8,30 +8,34 @@ angular.module('editor.creature.import.controllers', [])
 			mod: _.find(mods, function(mod) {
 				return mod.id === 1;
 			}),
-			resource: 'AL.*',
+			resource: 'A.*',
 			override: false,
 			onlyName: true
 	};
 	
-	$scope.running = false;
-	
 	$scope.validate = function() {
 		CreatureImportService.import($scope.options).then(function(response) {
-			console.info(response);
-			$scope.running = true;
-			$scope.data = response;
-			//$panelInstance.close();
+			$scope.job = response;
+			$scope.job.end.then(function() {
+				$scope.job = null;
+				$panelInstance.close();
+			});
 		}, function(response) {
 			toaster.pop('danger', null, $translate.instant(response.data.code));
 		});
 	};
 
 	$scope.cancel = function() {
-		$alertify.confirm($translate.instant("CREATURE.IMPORT.CANCEL_CONFIRM")).then(function() {
-			$scope.running = false;
-			toaster.pop('warning', null, $translate.instant("CREATURE.IMPORT.CANCELLED"));
-			//CreatureImportService.cancelImport();
-		});
+		if (!$scope.job) {
+			$panelInstance.close();
+		} else {
+			$scope.job.cancel();
+			$panelInstance.close();
+//			$alertify.confirm($translate.instant("CREATURE.IMPORT.CANCEL_CONFIRM")).then(function() {
+//				$scope.job.cancel();
+//				$panelInstance.close();
+//			});
+		}
 	};
 	
 	

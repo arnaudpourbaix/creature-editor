@@ -5,9 +5,10 @@
 		"ACTION_TITLE" : "Actions",
 		"EDIT_TITLE" : "Creature details",
 		"DELETE_CONFIRM" : "Delete creature {{resource}} ?",
+		"DELETE_ALL_SUCCESS": "All creatures have been deleted",
 		"BUTTONS": {
 			"IMPORT": "Import",
-			"CANCEL": "Cancel"
+			"DELETE_ALL": "Delete all"
 		},
 		"FIELDS" : {
 			"GAME" : "Game",
@@ -20,6 +21,8 @@
 			"DELETE" : "Delete"
 		},
 		"IMPORT" : {
+			"ERROR" : "An error occured during import",
+			"SUCCESS" : "Creature import has successfully finished",
 			"CANCELLED" : "Import was cancelled",
 			"CANCEL_CONFIRM" : "Do you you really want to cancel import ?",
 			"ALREADY_RUNNING" : "Import is already running",

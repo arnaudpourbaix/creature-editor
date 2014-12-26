@@ -49,12 +49,14 @@ public class CreatureImportService implements Runnable {
 	private CreatureImportException exception;
 	
 	public void run() {
+		logger.trace("creature import - start");
 		try {
 			importCreatures();
 		} catch (CreatureImportException e) {
 			exception = e;
 		}
 		running = false;
+		logger.trace("creature import - end");
 	}
 
 	public void startImport(DeferredResult<Integer> deferredResult, final CreatureImportOptions options) throws ServiceException, CreatureImportException {
@@ -95,12 +97,14 @@ public class CreatureImportService implements Runnable {
 
 	public void cancelImport() {
 		if (running) {
+			logger.trace("cancel creature import");
 			running = false;
 		}
 	}
 
 	@Transactional(rollbackFor=CreatureImportException.class)
 	private void importCreatures() throws CreatureImportException {
+		List<Creature> creaturesToInsert = new ArrayList<>();
 		creatures = new LinkedBlockingQueue<>();
 		for (ResourceEntry resource : resources) {
 			if (!running) { // process has been cancelled
@@ -109,12 +113,14 @@ public class CreatureImportService implements Runnable {
 			}
 			Creature creature = null;
 			try {
+				logger.trace("reading resource {}", resource);
 				creature = readerService.getCreature(resource, options.isOnlyName());
 				creature.setMod(options.getMod());
 				if (options.isOverride()) {
 					creatureService.deleteByResourceAndGameAndMod(creature.getResource(), creature.getGame(), creature.getMod());
 				}
-				creatureService.save(creature);
+				//creatureService.save(creature);
+				creaturesToInsert.add(creature);
 				creatures.add(creature);
 			} catch (ServiceException e) {
 				logger.error(resource.getResourceName(), e.getMessage());
@@ -124,6 +130,7 @@ public class CreatureImportService implements Runnable {
 				throw new CreatureImportException(IMPORT_SAVING_ERROR, resource.getResourceName());
 			}
 		}
+		creatureService.save(creaturesToInsert);
 	}
 	
 }
