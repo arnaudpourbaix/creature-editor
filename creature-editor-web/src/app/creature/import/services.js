@@ -1,6 +1,6 @@
 angular.module('editor.creature.import.services', [])
 
-.service('CreatureImportService', function($http, $interval, $q, $translate, toaster, creatureSettings, Mod, apxPanel) {
+.service('CreatureImportService', function($http, $interval, $q, $translate, toaster, creatureSettings, Mod, apxPanel, sidePanel) {
 
 	var ImportContainer = function(itemCount) {
 		var self = this;
@@ -49,7 +49,8 @@ angular.module('editor.creature.import.services', [])
 	var service = {};
 	
 	service.getPanel = function() {
-		var panel = apxPanel.open({
+		//var panel = apxPanel.open({
+		var panel = sidePanel({
 			templateUrl : 'creature/import/import-panel.tpl.html',
 			controller : 'CreatureImportController',
 			resolve : {

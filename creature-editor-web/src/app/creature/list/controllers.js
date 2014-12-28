@@ -1,6 +1,6 @@
 angular.module('editor.creature.list.controllers', [])
 
-.controller('CreatureListController', function($scope, $translate, $state, $http, toaster, $alertify, apxPanel, creatureSettings, CreatureImportService, creatures, mods) {
+.controller('CreatureListController', function($scope, $translate, $state, $http, toaster, $alertify, creatureSettings, CreatureImportService, creatures, mods) {
 	$scope.mods = mods;
 	
 	
@@ -86,7 +86,11 @@ angular.module('editor.creature.list.controllers', [])
 	};
 	
 	$scope.importPanel = function() {
-		CreatureImportService.getPanel();
+		CreatureImportService.getPanel().result.then(function(result) {
+			console.log("panel was a success", result);
+		}, function(reason) {
+			console.log("panel was a failure", reason);
+		});
 	};
 
 	$scope.deleteAll = function() {

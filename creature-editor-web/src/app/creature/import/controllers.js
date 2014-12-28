@@ -14,23 +14,24 @@ angular.module('editor.creature.import.controllers', [])
 	};
 	
 	$scope.validate = function() {
-		CreatureImportService.import($scope.options).then(function(response) {
-			$scope.job = response;
-			$scope.job.end.then(function() {
-				$scope.job = null;
-				$panelInstance.close();
-			});
-		}, function(response) {
-			toaster.pop('danger', null, $translate.instant(response.data.code));
-		});
+		$panelInstance.close();
+//		CreatureImportService.import($scope.options).then(function(response) {
+//			$scope.job = response;
+//			$scope.job.end.then(function() {
+//				$scope.job = null;
+//				$panelInstance.close();
+//			});
+//		}, function(response) {
+//			toaster.pop('danger', null, $translate.instant(response.data.code));
+//		});
 	};
 
 	$scope.cancel = function() {
 		if (!$scope.job) {
-			$panelInstance.close();
+			$panelInstance.dismiss();
 		} else {
 			$scope.job.cancel();
-			$panelInstance.close();
+			$panelInstance.dismiss();
 //			$alertify.confirm($translate.instant("CREATURE.IMPORT.CANCEL_CONFIRM")).then(function() {
 //				$scope.job.cancel();
 //				$panelInstance.close();

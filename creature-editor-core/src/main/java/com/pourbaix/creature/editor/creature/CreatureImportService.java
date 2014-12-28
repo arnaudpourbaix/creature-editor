@@ -43,7 +43,7 @@ public class CreatureImportService implements Runnable {
 	private static final String IMPORT_ALREADY_RUNNING = "CREATURE.IMPORT.ALREADY_RUNNING";
 
 	private volatile boolean running = false;
-	private LinkedBlockingQueue<Creature> creatures;
+	private LinkedBlockingQueue<Creature> creaturesQueue;
 	private CreatureImportOptions options;
 	private List<ResourceEntry> resources;
 	private CreatureImportException exception;
@@ -86,8 +86,8 @@ public class CreatureImportService implements Runnable {
 		}
 		List<Creature> resultCreatures = new ArrayList<>();
 		try {
-			while (!creatures.isEmpty()) {
-				resultCreatures.add(creatures.take());
+			while (!creaturesQueue.isEmpty()) {
+				resultCreatures.add(creaturesQueue.take());
 			}
 			deferredResult.setResult(resultCreatures);
 		} catch (InterruptedException e) {
@@ -104,8 +104,8 @@ public class CreatureImportService implements Runnable {
 
 	@Transactional(rollbackFor=CreatureImportException.class)
 	private void importCreatures() throws CreatureImportException {
-		List<Creature> creaturesToInsert = new ArrayList<>();
-		creatures = new LinkedBlockingQueue<>();
+		List<Creature> creatures = new ArrayList<>(resources.size());
+		creaturesQueue = new LinkedBlockingQueue<>(20);
 		for (ResourceEntry resource : resources) {
 			if (!running) { // process has been cancelled
 				logger.info("creature import was cancelled by user");
@@ -119,9 +119,8 @@ public class CreatureImportService implements Runnable {
 				if (options.isOverride()) {
 					creatureService.deleteByResourceAndGameAndMod(creature.getResource(), creature.getGame(), creature.getMod());
 				}
-				//creatureService.save(creature);
-				creaturesToInsert.add(creature);
 				creatures.add(creature);
+				creaturesQueue.add(creature);
 			} catch (ServiceException e) {
 				logger.error(resource.getResourceName(), e.getMessage());
 				throw new CreatureImportException(e);
@@ -130,7 +129,7 @@ public class CreatureImportService implements Runnable {
 				throw new CreatureImportException(IMPORT_SAVING_ERROR, resource.getResourceName());
 			}
 		}
-		creatureService.save(creaturesToInsert);
+		creatureService.save(creatures);
 	}
 	
 }

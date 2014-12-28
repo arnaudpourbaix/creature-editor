@@ -8,7 +8,8 @@
 angular.module('apx-tools', [
     'apx-tools.directives',
     'apx-tools.filters',
-    'apx-tools.services'
+    'apx-tools.services',
+    'apx-tools.panel'
 ]);
 
 

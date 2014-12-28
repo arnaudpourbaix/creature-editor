@@ -19,7 +19,6 @@ import com.pourbaix.creature.editor.repository.CreatureRepository;
 @Service
 public class CreatureService {
 
-	@SuppressWarnings("unused")
 	private static final Logger logger = LoggerFactory.getLogger(CreatureService.class);
 	
 	@Resource
