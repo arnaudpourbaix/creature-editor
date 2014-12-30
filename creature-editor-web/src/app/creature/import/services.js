@@ -49,7 +49,7 @@ angular.module('editor.creature.import.services', [])
 	var service = {};
 	
 	service.getPanel = function() {
-		var panel = apxSidePanel({
+		var panel = apxSidePanel.open({
 			templateUrl : 'creature/import/import-panel.tpl.html',
 			controller : 'CreatureImportController',
 			resolve : {

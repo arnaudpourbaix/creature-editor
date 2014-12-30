@@ -227,171 +227,15 @@ angular.module("apx-tools.panel", [])
 
 
 
-
-
-
-
-.factory('$panelStack', function ($transition, $timeout, $document, $compile, $rootScope, $$stackedMap) {
-	var OPENED_MODAL_CLASS = 'modal-open';
-	var backdropDomEl, backdropScope;
-	var openedPanels = $$stackedMap.createNew();
-	var $panelStack = {};
-	
-	function backdropIndex() {
-		var topBackdropIndex = -1;
-		var opened = openedPanels.keys();
-		for (var i = 0; i < opened.length; i++) {
-			if (openedPanels.get(opened[i]).value.backdrop) {
-				topBackdropIndex = i;
-			}
-		}
-		return topBackdropIndex;
-	}
-	
-	$rootScope.$watch(backdropIndex, function(newBackdropIndex){
-		if (backdropScope) {
-			backdropScope.index = newBackdropIndex;
-		}
-	});
-	
-	function removePanel(panelInstance) {
-		var body = $document.find('body').eq(0);
-		var panel = openedPanels.get(panelInstance).value;
-		// clean up the stack
-		openedPanels.remove(panelInstance);
-		// remove window DOM element
-		removeAfterAnimate(panel.modalDomEl, panel.modalScope, 300, function() {
-			panel.modalScope.$destroy();
-			body.toggleClass(OPENED_MODAL_CLASS, openedPanels.length() > 0);
-			checkRemoveBackdrop();
-		});
-	}
-	
-	function checkRemoveBackdrop() {
-		//remove backdrop if no longer needed
-		if (backdropDomEl && backdropIndex() === -1) {
-			var backdropScopeRef = backdropScope;
-			removeAfterAnimate(backdropDomEl, backdropScope, 150, function () {
-				backdropScopeRef.$destroy();
-				backdropScopeRef = null;
-			});
-			backdropDomEl = undefined;
-			backdropScope = undefined;
-		}
-	}
-	
-	function removeAfterAnimate(domEl, scope, emulateTime, done) {
-		// Closing animation
-		scope.animate = false;
-
-		function afterAnimating() {
-			if (afterAnimating.done) {
-				return;
-			}
-			afterAnimating.done = true;
-			domEl.remove();
-			if (done) {
-				done();
-			}
-		}
-	  
-		var transitionEndEventName = $transition.transitionEndEventName;
-		if (transitionEndEventName) {
-			// transition out
-			var timeout = $timeout(afterAnimating, emulateTime);
-			domEl.bind(transitionEndEventName, function () {
-				$timeout.cancel(timeout);
-				afterAnimating();
-				scope.$apply();
-			});
-		} else {
-			// Ensure this call is async
-			$timeout(afterAnimating, 0);
-		}
-	}
-	
-	$document.bind('keydown', function (evt) {
-		var modal;
-		if (evt.which === 27) {
-			modal = openedPanels.top();
-			if (modal && modal.value.keyboard) {
-				evt.preventDefault();
-				$rootScope.$apply(function () {
-					$panelStack.dismiss(modal.key, 'escape key press');
-				});
-			}
-		}
-	});
-	
-	$panelStack.open = function (panelInstance, modal) {
-		openedPanels.add(panelInstance, {
-			deferred: modal.deferred,
-			modalScope: modal.scope,
-			backdrop: modal.backdrop,
-			keyboard: modal.keyboard
-		});
-	
-		var body = $document.find('body').eq(0);
-		var currBackdropIndex = backdropIndex();
-	
-		if (currBackdropIndex >= 0 && !backdropDomEl) {
-			backdropScope = $rootScope.$new(true);
-			backdropScope.index = currBackdropIndex;
-			backdropDomEl = $compile('<div panel-backdrop></div>')(backdropScope);
-			body.append(backdropDomEl);
-		}
-	
-		var angularDomEl = angular.element('<div panel-window></div>');
-		angularDomEl.attr({
-			'window-class': modal.windowClass,
-			'index': openedPanels.length() - 1,
-			'animate': 'animate'
-		}).html(modal.content);
-	
-		var modalDomEl = $compile(angularDomEl)(modal.scope);
-		openedPanels.top().value.modalDomEl = modalDomEl;
-		body.append(modalDomEl);
-		body.addClass(OPENED_MODAL_CLASS);
-	};
-	
-	$panelStack.close = function (panelInstance, result) {
-		var panel = openedPanels.get(panelInstance).value;
-		if (panel) {
-			panel.deferred.resolve(result);
-			removePanel(panelInstance);
-		}
-	};
-	
-	$panelStack.dismiss = function (panelInstance, reason) {
-		var panel = openedPanels.get(panelInstance).value;
-		if (panel) {
-			panel.deferred.reject(reason);
-			removePanel(panelInstance);
-		}
-	};
-	
-	$panelStack.dismissAll = function (reason) {
-		var topModal = this.getTop();
-		while (topModal) {
-			this.dismiss(topModal.key, reason);
-			topModal = this.getTop();
-		}
-	};
-	
-	$panelStack.getTop = function () {
-		return openedPanels.top();
-	};
-	
-	return $panelStack;
-})
-
-
-
-.factory('apxSidePanel', function ($q, $http, $templateCache, $injector, $controller, $rootScope, $panelStack) {
+.factory('apxSidePanel', function ($q, $http, $templateCache, $document, $injector, $controller, $rootScope, $compile, $transition, $timeout) {
 	var defaults = {
 		backdrop: true,
 		keyboard: true
 	};
+	var deferred;
+	var OPENED_MODAL_CLASS = 'modal-open';
+	var backdropDomEl, backdropScope;
+	var panelDomEl, panelInstance, panelSettings;
 
 	function getTemplatePromise(options) {
 		if (options.template) {
@@ -414,20 +258,100 @@ angular.module("apx-tools.panel", [])
 		});
 		return promises;
 	}
+
+	function open() {
+		var body = $document.find('body').eq(0);
 	
-	return function (settings) {
-		var deferred = $q.defer();
+		backdropScope = $rootScope.$new(true);
+		backdropScope.index = -1;
+		backdropDomEl = $compile('<div panel-backdrop></div>')(backdropScope);
+		body.append(backdropDomEl);
+	
+		var angularDomEl = angular.element('<div panel-window></div>');
+		angularDomEl.attr({
+			'window-class': panelSettings.windowClass,
+			'index': 0,
+			'animate': 'animate'
+		}).html(panelSettings.content);
+	
+		panelDomEl = $compile(angularDomEl)(panelSettings.scope);
+		body.append(panelDomEl);
+		body.addClass(OPENED_MODAL_CLASS);
+	}
+	
+	function removePanelWindow() {
+		var body = $document.find('body').eq(0);
+		// remove window DOM element
+		removeAfterAnimate(panelDomEl, panelSettings.scope, 300, function() {
+			panelSettings.scope.$destroy();
+			body.toggleClass(OPENED_MODAL_CLASS, false);
+			panelDomEl = undefined;
+			panelInstance = undefined;
+			panelSettings = undefined;			
+			checkRemoveBackdrop();
+		});
+	}
+	
+	function removeAfterAnimate(domEl, scope, emulateTime, done) {
+		// Closing animation
+		scope.animate = false;
+
+		function afterAnimating() {
+			if (afterAnimating.done) {
+				return;
+			}
+			afterAnimating.done = true;
+			domEl.remove();
+			if (done) {
+				done();
+			}
+		}
+		
+		var transitionEndEventName = $transition.transitionEndEventName;
+		if (transitionEndEventName) {
+			// transition out
+			var timeout = $timeout(afterAnimating, emulateTime);
+			domEl.bind(transitionEndEventName, function () {
+				$timeout.cancel(timeout);
+				afterAnimating();
+				scope.$apply();
+			});
+		} else {
+			// Ensure this call is async
+			$timeout(afterAnimating);
+		}
+	}
+	
+	function checkRemoveBackdrop() {
+		if (backdropDomEl) {
+			var backdropScopeRef = backdropScope;
+			removeAfterAnimate(backdropDomEl, backdropScope, 150, function () {
+				backdropScopeRef.$destroy();
+				backdropScopeRef = undefined;
+			});
+			backdropDomEl = undefined;
+			backdropScope = undefined;
+		}
+	}
+	
+	var factory = {};
+	
+	factory.open = function(settings) {
+		if (panelInstance) {
+			throw new Error('Panel is already opened.');
+		}
+		deferred = $q.defer();
 		// prepare an instance of a panel to be injected into controllers and returned to a caller
-		var panelInstance = {
-				result: deferred.promise,
-				close: function(result) {
-					console.log('close panel', result);
-					$panelStack.close(panelInstance, result);
-				},
-				dismiss: function(reason) {
-					console.log('dismiss panel', reason);
-					$panelStack.dismiss(panelInstance, reason);
-				}
+		panelInstance = {
+			result: deferred.promise,
+			close: function(result) {
+				console.log('close panel', result);
+				factory.close(result);
+			},
+			dismiss: function(reason) {
+				console.log('dismiss panel', reason);
+				factory.dismiss(reason);
+			}
 		};
         
 		settings = angular.extend({}, defaults, settings);
@@ -450,7 +374,7 @@ angular.module("apx-tools.panel", [])
 				});
 				$controller(settings.controller, ctrlLocals);
 			}
-			$panelStack.open(panelInstance, {
+			panelSettings = {
 				scope: panelScope,
 				deferred: deferred,
 				content: tplAndVars[0],
@@ -459,13 +383,81 @@ angular.module("apx-tools.panel", [])
 				windowClass: settings.windowClass,
 				windowTemplateUrl: settings.windowTemplateUrl,
 				size: settings.size
-			});
+			};
+			open();
 		}, function(reason) {
 			console.log('panel rejected', reason);
 			deferred.reject(reason);
 		});
 	
 		return panelInstance;
+	};
+	
+	factory.close = function(result) {
+		deferred.resolve(result);
+		removePanelWindow();
+	};
+
+	factory.dismiss = function(reason) {
+		deferred.reject(reason);
+		removePanelWindow();
+	};
+	
+	return factory;
+})
+
+.directive("panelWindow", function($timeout, apxSidePanel) {
+	return {
+		restrict : 'EA',
+		scope : {
+			index : '@',
+			animate : '='
+		},
+		replace : true,
+		transclude : true,
+		template : '<div tabindex="-1" class="left-panel" ng-class="{in: animate}" ng-style="{\'z-index\': 1050 + index*10, display: \'block\'}"><div class="left-panel-inner" ng-click="close($event)" ng-transclude></div></div>',
+		link : function(scope, element, attrs) {
+			element.addClass(attrs.windowClass || '');
+			scope.size = attrs.size;
+
+			$timeout(function() {
+				// trigger CSS transitions
+				scope.animate = true;
+				// focus a freshly-opened modal
+				element[0].focus();
+			});
+
+			scope.close = function(evt) {
+				if (apxSidePanel.backdrop && apxSidePanel.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
+					evt.preventDefault();
+					evt.stopPropagation();
+					apxSidePanel.dismiss('backdrop click');
+				}
+			};
+		}
+	};
+})
+
+.directive("panelBackdrop", function($timeout, apxSidePanel) {
+	return {
+		restrict : 'EA',
+		replace : true,
+		template : '<div class="modal-backdrop fade" ng-click="close($event)" ng-class="{in: animate}" ng-style="{\'z-index\': 1040 + (index && 1 || 0) + index*10}"></div>',
+		link : function(scope) {
+			scope.animate = false;
+			// trigger CSS transitions
+			$timeout(function() {
+				scope.animate = true;
+			});
+
+			scope.close = function(evt) {
+				if (apxSidePanel.backdrop && apxSidePanel.backdrop !== 'static' && (evt.target === evt.currentTarget)) {
+					evt.preventDefault();
+					evt.stopPropagation();
+					apxSidePanel.dismiss('backdrop click');
+				}
+			};
+		}
 	};
 })
 
