@@ -14,7 +14,7 @@ angular.module('editor.creature.import.controllers', [])
 	};
 	
 	$scope.validate = function() {
-		$panelInstance.close();
+		$panelInstance.close('validate');
 //		CreatureImportService.import($scope.options).then(function(response) {
 //			$scope.job = response;
 //			$scope.job.end.then(function() {
@@ -28,10 +28,10 @@ angular.module('editor.creature.import.controllers', [])
 
 	$scope.cancel = function() {
 		if (!$scope.job) {
-			$panelInstance.dismiss();
+			$panelInstance.dismiss('cancel');
 		} else {
 			$scope.job.cancel();
-			$panelInstance.dismiss();
+			$panelInstance.dismiss('cancel');
 //			$alertify.confirm($translate.instant("CREATURE.IMPORT.CANCEL_CONFIRM")).then(function() {
 //				$scope.job.cancel();
 //				$panelInstance.close();

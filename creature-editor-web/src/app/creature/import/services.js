@@ -55,7 +55,11 @@ angular.module('editor.creature.import.services', [])
 			resolve : {
 				mods : Mod.query().$promise
 			},
-			backdrop: false
+			side: 'bottom',
+			size: '300px',
+			speed: 1,
+			modal: true,
+			backdrop: true
 		});
 		return panel;
 	};
