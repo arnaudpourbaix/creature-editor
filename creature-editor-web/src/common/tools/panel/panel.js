@@ -8,7 +8,8 @@ angular.module("apx-tools.panel", [])
 		zindex: 1050,
 		backdrop: true,
 		modal: true,
-		keyboard: true
+		keyboard: true,
+		autofocus: false
 	};
 	var deferred;
 	var backdropDomEl, backdropScope;
@@ -38,33 +39,15 @@ angular.module("apx-tools.panel", [])
 	
 	function open() {
 		var body = $document.find('body').eq(0);
-		var angularDomEl;
 	
 		if (panelSettings.modal) {
-			angularDomEl = angular.element('<div apx-side-panel-backdrop></div>');
-			angularDomEl.attr({
-				'speed': panelSettings.speed,
-			});
 			backdropScope = $rootScope.$new(true);
-			backdropDomEl = $compile(angularDomEl)(backdropScope);
+			backdropDomEl = $compile('<div apx-side-panel-backdrop></div>')(backdropScope);
 			body.append(backdropDomEl);
 		}
 	
-		angularDomEl = angular.element('<div apx-side-panel-window></div>');
-		angularDomEl.attr({
-			'window-class': panelSettings.windowClass,
-			'side': panelSettings.side,
-			'size': panelSettings.size,
-			'speed': panelSettings.speed,
-			'zindex': panelSettings.zindex,
-			'customTop': panelSettings.customTop,
-			'customBottom': panelSettings.customBottom,
-			'customLeft': panelSettings.customLeft,
-			'customRight': panelSettings.customRight,
-			'customHeight': panelSettings.customHeight,
-			'customWidth': panelSettings.customWidth,
-			'animate': 'animate'
-		}).html(panelSettings.content);
+		var angularDomEl = angular.element('<div apx-side-panel-window></div>');
+		angularDomEl.html(panelSettings.content);
 	
 		panelDomEl = $compile(angularDomEl)(panelSettings.scope);
 		body.append(panelDomEl);
@@ -106,11 +89,9 @@ angular.module("apx-tools.panel", [])
 		panelInstance = {
 			result: deferred.promise,
 			close: function(result) {
-				console.log('close panel', result);
 				factory.close(result);
 			},
 			dismiss: function(reason) {
-				console.log('dismiss panel', reason);
 				factory.dismiss(reason);
 			}
 		};
@@ -135,29 +116,13 @@ angular.module("apx-tools.panel", [])
 				});
 				$controller(settings.controller, ctrlLocals);
 			}
-			panelSettings = {
+			panelSettings = angular.extend({}, settings, {
 				scope: panelScope,
 				deferred: deferred,
-				content: tplAndVars[0],
-				backdrop: settings.backdrop,
-				modal: settings.modal,
-				keyboard: settings.keyboard,
-				windowClass: settings.windowClass,
-				windowTemplateUrl: settings.windowTemplateUrl,
-				side: settings.side,
-				size: settings.size,
-				speed: settings.speed,
-				zindex: settings.zindex,
-				customTop: settings.customTop,
-				customBottom: settings.customBottom,
-				customLeft: settings.customLeft,
-				customRight: settings.customRight,
-				customHeight: settings.customHeight,
-				customWidth: settings.customWidth
-			};
+				content: tplAndVars[0]
+			});
 			open();
 		}, function(reason) {
-			console.log('panel rejected', reason);
 			deferred.reject(reason);
 		});
 	
@@ -188,51 +153,52 @@ angular.module("apx-tools.panel", [])
 		transclude : true,
 		template : '<div tabindex="-1" role="dialog" class="apx-side-panel"><div ng-transclude></div></div>',
 		link : function($scope, element, attrs) {
-			element.addClass(attrs.windowClass || '');
-			element.css('zIndex', attrs.zindex);
+			var settings = apxSidePanel.settings();
+			
+			element.addClass(settings.windowClass || '');
+			element.css('zIndex', settings.zindex);
 			element.css('position', 'fixed');
 			element.css('width', 0);
 			element.css('height', 0);
-			element.css('transitionDuration', attrs.speed + 's');
+			element.css('transitionDuration', settings.speed + 's');
 			element.css('transitionProperty', 'width, height');
 	
 			var content = element.children();
 			content.css('display', 'none');
 			var updateAttr;
 			
-			switch (attrs.side){
+			switch (settings.side){
 			case 'right':
-				element.css('height', attrs.customHeight || '100%');
-				element.css('top', attrs.customTop ||  '0');
-				element.css('bottom', attrs.customBottom ||  '0');
-				element.css('right', attrs.customRight ||  '0');
+				element.css('height', settings.customHeight || '100%');
+				element.css('top', settings.customTop ||  '0');
+				element.css('bottom', settings.customBottom ||  '0');
+				element.css('right', settings.customRight ||  '0');
 				updateAttr = 'width';
 				break;
 			case 'left':
-				element.css('height', attrs.customHeight || '100%');
-				element.css('top', attrs.customTop || '0');
-				element.css('bottom', attrs.customBottom || '0');
-				element.css('left', attrs.customLeft || '0');
+				element.css('height', settings.customHeight || '100%');
+				element.css('top', settings.customTop || '0');
+				element.css('bottom', settings.customBottom || '0');
+				element.css('left', settings.customLeft || '0');
 				updateAttr = 'width';
 				break;
 			case 'top':
-				element.css('width', attrs.customWidth || '100%');
-				element.css('left', attrs.customLeft || '0');
-				element.css('top', attrs.customTop || '0');
-				element.css('right', attrs.customRight || '0');
+				element.css('width', settings.customWidth || '100%');
+				element.css('left', settings.customLeft || '0');
+				element.css('top', settings.customTop || '0');
+				element.css('right', settings.customRight || '0');
 				updateAttr = 'height';
 				break;
 			case 'bottom':
-				element.css('width', attrs.customWidth || '100%');
-				element.css('bottom', attrs.customBottom || '0');
-				element.css('left', attrs.customLeft || '0');
-				element.css('right', attrs.customRight || '0');
+				element.css('width', settings.customWidth || '100%');
+				element.css('bottom', settings.customBottom || '0');
+				element.css('left', settings.customLeft || '0');
+				element.css('right', settings.customRight || '0');
 				updateAttr = 'height';
 				break;
 			}
 			
-			//element.bind('keydown', function(evt) {
-			$document.bind('keydown', function(evt) {
+			element.bind('keydown', function(evt) {
 				if (evt.which === 27) {
 					if (apxSidePanel.settings().keyboard) {
 						evt.preventDefault();
@@ -244,19 +210,20 @@ angular.module("apx-tools.panel", [])
 			});
 			
 			$timeout(function() {
-				element.css(updateAttr, attrs.size);
+				element.css(updateAttr, settings.size);
 				$timeout(function() {
 					content.css('display', 'block');
-					// focus a freshly-opened modal
-					//element[0].focus();
-				}, attrs.speed * 1000);
+					if (settings.autofocus) {
+						element[0].focus();
+					}
+				}, settings.speed * 1000);
 				
 			});
 	
 			$scope.$closeAnimation = function() {
 				content.css('display', 'none');
 				element.css(updateAttr, 0);
-				return $timeout(angular.noop, attrs.speed * 1000);
+				return $timeout(angular.noop, settings.speed * 1000);
 			};
 		}
 	};
@@ -268,11 +235,13 @@ angular.module("apx-tools.panel", [])
 		replace : true,
 		template : '<div class="apx-panel-backdrop" ng-click="close($event)"></div>',
 		link : function($scope, element, attrs) {
+			var settings = apxSidePanel.settings();
+			
 			element.css('zIndex', 1050);
 			element.css('opacity', 0);
 			$timeout(function() {
 				element.css('opacity', 0.5);
-				element.css('transitionDuration', attrs.speed + 's');
+				element.css('transitionDuration', settings.speed + 's');
 				element.css('transitionProperty', 'opacity');
 			});
 	
@@ -286,7 +255,7 @@ angular.module("apx-tools.panel", [])
 			
 			$scope.$closeAnimation = function() {
 				element.css('opacity', 0);
-				return $timeout(angular.noop, attrs.speed * 1000);
+				return $timeout(angular.noop, settings.speed * 1000);
 			};
 		}
 	};
