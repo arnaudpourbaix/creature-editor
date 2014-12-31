@@ -3,13 +3,11 @@
 @background-overlay-color: black;
 @background-overlay-opacity: 0.5;
 
-.apx-fade {
-	opacity: 0;
-	transition: opacity .15s linear;
-}
-.apx-fade.apx-in {
-	opacity: 1;
-}
+@white: #fff;
+@blue: #0095d8;
+@background-overlay-color: black;
+@background-overlay-opacity: 0.5;
+
 .apx-panel-backdrop {
 	position: fixed;
 	top: 0;
@@ -17,38 +15,7 @@
 	bottom: 0;
 	left: 0;
 	z-index: 1040;
-	background-color: #000;
-}
-
-.apx-panel-backdrop.apx-fade {
-	filter: alpha(opacity=0);
-	opacity: 0;
-}
-.apx-panel-backdrop.apx-in {
-	filter: alpha(opacity=50);
-	opacity: .5;
-}
-
-
-.background-overlay {
-    position: fixed;
-    width: 10000px;
-    height: 10000px;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1000;
 	background-color: @background-overlay-color;
-	opacity: @background-overlay-opacity;
-}
-.background-overlay-add{
-    opacity: 0;
-
-    &.main-overlay-add-active {
-        transition: opacity .35s;
-        opacity: @background-overlay-opacity;
-    }
 }
 
 .apx-side-panel {
