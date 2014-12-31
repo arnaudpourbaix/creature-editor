@@ -1,6 +1,6 @@
 angular.module("apx-tools.panel", [])
 
-.factory('apxSidePanel', function ($q, $http, $templateCache, $document, $injector, $controller, $rootScope, $compile, $transition, $timeout) { "use strict";
+.factory('apxSidePanel', function ($q, $http, $templateCache, $document, $injector, $controller, $rootScope, $compile, $timeout) { "use strict";
 	var defaults = {
 		side: 'left',
 		speed: 0.5,
@@ -38,14 +38,19 @@ angular.module("apx-tools.panel", [])
 	
 	function open() {
 		var body = $document.find('body').eq(0);
+		var angularDomEl;
 	
 		if (panelSettings.modal) {
+			angularDomEl = angular.element('<div apx-side-panel-backdrop></div>');
+			angularDomEl.attr({
+				'speed': panelSettings.speed,
+			});
 			backdropScope = $rootScope.$new(true);
-			backdropDomEl = $compile('<div apx-side-panel-backdrop></div>')(backdropScope);
+			backdropDomEl = $compile(angularDomEl)(backdropScope);
 			body.append(backdropDomEl);
 		}
 	
-		var angularDomEl = angular.element('<div apx-side-panel-window></div>');
+		angularDomEl = angular.element('<div apx-side-panel-window></div>');
 		angularDomEl.attr({
 			'window-class': panelSettings.windowClass,
 			'side': panelSettings.side,
@@ -65,77 +70,36 @@ angular.module("apx-tools.panel", [])
 		body.append(panelDomEl);
 	}
 	
-	function removePanelWindow() {
-		panelSettings.scope.$closePanelAnimation().then(function() {
+	function removePanel() {
+		var promises = [ panelSettings.scope.$closeAnimation() ];
+		if (backdropDomEl) {
+			promises.push(backdropScope.$closeAnimation());
+		}
+		$q.all(promises).then(function() {
 			panelDomEl.remove();
 			panelDomEl = undefined;
 			panelSettings.scope.$destroy();
 			panelInstance = undefined;
 			panelSettings = undefined;			
 			removeBackdrop();
-//			backdropDomEl.remove();
-//			backdropDomEl = undefined;
-//			backdropScope.$destroy();
-//			backdropScope = undefined;
 		});
-//		removeAfterAnimate(panelDomEl, panelSettings.scope, 300, function() {
-//			panelSettings.scope.$destroy();
-//			panelDomEl = undefined;
-//			panelInstance = undefined;
-//			panelSettings = undefined;			
-//			removeBackdrop();
-//		});
 	}
 
 	function removeBackdrop() {
 		if (!backdropDomEl) {
 			return;
 		}
-		var backdropScopeRef = backdropScope;
-		removeAfterAnimate(backdropDomEl, backdropScope, 150, function() {
-			backdropScopeRef.$destroy();
-			backdropScopeRef = undefined;
-			backdropDomEl = undefined;
-			backdropScope = undefined;
-		});
-	}
-	
-	function removeAfterAnimate(domEl, scope, emulateTime, doneFn) {
-		// Closing animation
-		scope.animate = false;
-	
-		function afterAnimating() {
-			if (afterAnimating.done) {
-				return;
-			}
-			afterAnimating.done = true;
-			domEl.remove();
-			if (doneFn) {
-				doneFn();
-			}
-		}
-		
-		var transitionEndEventName = $transition.transitionEndEventName;
-		if (transitionEndEventName) {
-			// transition out
-			var timeout = $timeout(afterAnimating, emulateTime);
-			domEl.bind(transitionEndEventName, function() {
-				$timeout.cancel(timeout);
-				afterAnimating();
-				scope.$apply();
-			});
-		} else {
-			// Ensure this call is async
-			$timeout(afterAnimating);
-		}
+		backdropScope.$destroy();
+		backdropScope = undefined;
+		backdropDomEl.remove();
+		backdropDomEl = undefined;
 	}
 	
 	var factory = {};
 	
 	factory.open = function(settings) {
 		if (panelInstance) {
-			factory.close();
-			//throw new Error('Panel is already opened.');
+			throw new Error('Panel is already opened.');
 		}
 		deferred = $q.defer();
 		// prepare an instance of a panel to be injected into controllers and returned to a caller
@@ -200,37 +164,36 @@ angular.module("apx-tools.panel", [])
 		return panelInstance;
 	};
 	
-	factory.backdrop = function() {
-		return panelSettings && panelSettings.backdrop; 
+	factory.settings = function() {
+		return panelSettings || {}; 
 	};
 	
 	factory.close = function(result) {
 		deferred.resolve(result);
-		removePanelWindow();
+		removePanel();
 	};
 	
 	factory.dismiss = function(reason) {
 		deferred.reject(reason);
-		removePanelWindow();
+		removePanel();
 	};
 	
 	return factory;
 })
 
-.directive("apxSidePanelWindow", function($timeout, apxSidePanel) { "use strict";
+.directive("apxSidePanelWindow", function($timeout, $document, apxSidePanel) { "use strict";
 	return {
 		restrict : 'EA',
 		replace : true,
 		transclude : true,
 		template : '<div tabindex="-1" role="dialog" class="apx-side-panel"><div ng-transclude></div></div>',
-		link : function(scope, element, attrs) {
+		link : function($scope, element, attrs) {
 			element.addClass(attrs.windowClass || '');
-			element.css('transitionDuration', attrs.speed + 's');
-			element.css('webkitTransitionDuration', attrs.speed + 's');
 			element.css('zIndex', attrs.zindex);
 			element.css('position', 'fixed');
 			element.css('width', 0);
 			element.css('height', 0);
+			element.css('transitionDuration', attrs.speed + 's');
 			element.css('transitionProperty', 'width, height');
 	
 			var content = element.children();
@@ -268,17 +231,29 @@ angular.module("apx-tools.panel", [])
 				break;
 			}
 			
+			//element.bind('keydown', function(evt) {
+			$document.bind('keydown', function(evt) {
+				if (evt.which === 27) {
+					if (apxSidePanel.settings().keyboard) {
+						evt.preventDefault();
+						$scope.$apply(function () {
+							apxSidePanel.dismiss('escape key press');
+						});
+					}
+		        }
+			});
+			
 			$timeout(function() {
 				element.css(updateAttr, attrs.size);
 				$timeout(function() {
 					content.css('display', 'block');
 					// focus a freshly-opened modal
-					element[0].focus();
+					//element[0].focus();
 				}, attrs.speed * 1000);
 				
 			});
 	
-			scope.$closePanelAnimation = function(evt) {
+			$scope.$closeAnimation = function() {
 				content.css('display', 'none');
 				element.css(updateAttr, 0);
 				return $timeout(angular.noop, attrs.speed * 1000);
@@ -291,20 +266,27 @@ angular.module("apx-tools.panel", [])
 	return {
 		restrict : 'EA',
 		replace : true,
-		template : '<div class="apx-panel-backdrop apx-fade" ng-click="close($event)" ng-class="{\'apx-in\': animate}" ng-style="{\'z-index\': 1040 }"></div>',
-		link : function(scope) {
-			scope.animate = false;
-			// trigger CSS transitions
+		template : '<div class="apx-panel-backdrop" ng-click="close($event)"></div>',
+		link : function($scope, element, attrs) {
+			element.css('zIndex', 1050);
+			element.css('opacity', 0);
 			$timeout(function() {
-				scope.animate = true;
+				element.css('opacity', 0.5);
+				element.css('transitionDuration', attrs.speed + 's');
+				element.css('transitionProperty', 'opacity');
 			});
 	
-			scope.close = function(evt) {
-				if (apxSidePanel.backdrop() && (evt.target === evt.currentTarget)) {
+			$scope.close = function(evt) {
+				if (apxSidePanel.settings().backdrop && (evt.target === evt.currentTarget)) {
 					evt.preventDefault();
 					evt.stopPropagation();
 					apxSidePanel.dismiss('backdrop click');
 				}
+			};
+			
+			$scope.$closeAnimation = function() {
+				element.css('opacity', 0);
+				return $timeout(angular.noop, attrs.speed * 1000);
 			};
 		}
 	};
