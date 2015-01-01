@@ -57,9 +57,8 @@ angular.module('editor.creature.import.services', [])
 			},
 			side: 'bottom',
 			size: '300px',
-			speed: 1,
-			modal: true,
-			backdrop: true
+			backdrop: false,
+			keyboard: false
 		});
 		return panel;
 	};

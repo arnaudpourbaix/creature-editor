@@ -10,6 +10,9 @@ angular.module('editor.creature.edit.config', [])
 		resolve : {
 			creature : function($stateParams, CreatureService) {
 				return CreatureService.get($stateParams.id);
+			},
+			mods: function(Mod) {
+				return Mod.query().$promise;
 			}
 		}
 	});

@@ -9,7 +9,7 @@ angular.module("apx-tools.panel", [])
 		backdrop: true,
 		modal: true,
 		keyboard: true,
-		autofocus: false
+		autofocus: true
 	};
 	var deferred;
 	var backdropDomEl, backdropScope;
@@ -32,6 +32,8 @@ angular.module("apx-tools.panel", [])
 		angular.forEach(resolves, function(value, key) {
 			if (angular.isFunction(value) || angular.isArray(value)) {
 				promises.push($q.when($injector.invoke(value)));
+			} else {
+				promises.push($q.when(value));
 			}
 		});
 		return promises;

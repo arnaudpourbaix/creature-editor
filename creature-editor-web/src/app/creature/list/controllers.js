@@ -1,15 +1,20 @@
 angular.module('editor.creature.list.controllers', [])
 
-.controller('CreatureListController', function($scope, $translate, $state, $http, toaster, $alertify, creatureSettings, CreatureImportService, creatures, mods) {
+.controller('CreatureListController', function($scope, $translate, $state, $http, toaster, $alertify, creatureSettings, CreatureImportService, Creature, creatures, mods) {
 	$scope.mods = mods;
+	$scope.creatures = [];
 	
-	
-	angular.forEach(creatures, function(creature) {
-		creature.attributeValues = _.indexBy(creature.attributeValues, function(attributeValue) {
-			return attributeValue.attribute.id;
+	var setCreatures = function(list) {
+		angular.forEach(list, function(creature) {
+			creature.attributeValues = _.indexBy(creature.attributeValues, function(attributeValue) {
+				return attributeValue.attribute.id;
+			});
 		});
-	});
-	$scope.creatures = creatures;
+		$scope.creatures.splice(0);
+		$scope.creatures.push.apply($scope.creatures, list);
+	};
+	
+	setCreatures(creatures);
 		
 	$scope.creatureGrid = {
 			datasource : 'creatures',
@@ -87,9 +92,9 @@ angular.module('editor.creature.list.controllers', [])
 	
 	$scope.importPanel = function() {
 		CreatureImportService.getPanel().result.then(function(result) {
-			console.log("panel was a success", result);
-		}, function(reason) {
-			console.log("panel was a failure", reason);
+			Creature.query().$promise.then(function(creatures) {
+				setCreatures(creatures);
+			});
 		});
 	};
 

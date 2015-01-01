@@ -21,7 +21,7 @@ angular.module('crud.directives', [])
 
 // Apply this directive to an element at or below a form that will manage CRUD operations on a resource.
 // The resource must expose the following instance methods: $save(), $id() and $remove()
-.directive('crudEdit', function($parse, $translate, toaster) {  'use strict';
+.directive('crudEdit', function($parse, $translate, toaster, $alertify) {  'use strict';
 	/**
 	 * This function controls that resource has all required methods
 	 */
@@ -110,8 +110,10 @@ angular.module('crud.directives', [])
 
 			// The following functions should be triggered by elements on the form
 			scope.cancel = function() {
-				scope.revertChanges();
-				userOnCancel();
+				$alertify.confirm($translate.instant("CRUD.CANCEL_QUESTION")).then(function() {
+					scope.revertChanges();
+					userOnCancel();
+				});
 			};
 			scope.save = function() {
 				resource.$save(onSave, onSaveError);

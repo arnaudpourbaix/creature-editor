@@ -36,6 +36,14 @@ public class CreatureService {
 	public Creature getById(Integer id) {
 		return creatureRepository.findOne(id);
 	}
+
+	public Creature getById(Integer id, boolean loadAll) {
+		if (loadAll) {
+			return creatureRepository.getCreatureById(id);
+		} else {
+			return creatureRepository.findOne(id);
+		}
+	}
 	
 	public Creature save(Creature creature) {
 		creatureRepository.save(creature);

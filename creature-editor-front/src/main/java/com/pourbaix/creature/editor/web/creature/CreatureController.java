@@ -43,7 +43,7 @@ public class CreatureController {
 
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public Creature getById(@PathVariable Integer id) {
-		return creatureService.getById(id);
+		return creatureService.getById(id, true);
 	}
 
 	@RequestMapping(method = RequestMethod.PUT)
