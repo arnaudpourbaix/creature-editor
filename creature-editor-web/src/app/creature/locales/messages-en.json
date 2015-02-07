@@ -14,7 +14,8 @@
 			"GAME" : "Game",
 			"MOD" : "Mod",
 			"RESOURCE" : "Resource",
-			"NAME" : "Name"
+			"NAME" : "Name",
+			"CATEGORY" : "Categories"
 		},
 		"COLUMNS" : {
 			"ACTION" : "Actions",

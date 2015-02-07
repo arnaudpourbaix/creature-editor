@@ -13,6 +13,9 @@ angular.module('editor.creature.edit.config', [])
 			},
 			mods: function(Mod) {
 				return Mod.query().$promise;
+			},
+			categories : function(Category) {
+				return Category.query().$promise;
 			}
 		}
 	});

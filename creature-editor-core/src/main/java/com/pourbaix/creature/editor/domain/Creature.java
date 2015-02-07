@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @Table(name = "CREATURE", schema = "PUBLIC", catalog = "PUBLIC")
 @NamedEntityGraphs({ 
 	@NamedEntityGraph(name = "Creature.lists", attributeNodes = @NamedAttributeNode("attributeValues")),
-	@NamedEntityGraph(name = "Creature.edit", attributeNodes = @NamedAttributeNode("attributeValues"))
+	@NamedEntityGraph(name = "Creature.edit", attributeNodes = { @NamedAttributeNode("attributeValues"), @NamedAttributeNode("categories") })
 })
 public class Creature implements java.io.Serializable {
 

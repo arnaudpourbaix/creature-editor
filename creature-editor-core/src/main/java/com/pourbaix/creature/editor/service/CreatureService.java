@@ -34,7 +34,7 @@ public class CreatureService {
 	public static final ImmutableSet<AttributeEnum> creatureListAttributes = ImmutableSet.of(AttributeEnum.NAME);
 	
 	public Creature getById(Integer id) {
-		return creatureRepository.findOne(id);
+		return getById(id, false);
 	}
 
 	public Creature getById(Integer id, boolean loadAll) {

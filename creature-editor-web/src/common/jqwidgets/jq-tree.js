@@ -324,8 +324,10 @@ angular.module('apx-jqwidgets.tree', [])
 			return {
 				post : function($scope, element, attrs) {
 					var getParams = function() {
-						return jqCommon.getParams($scope.$eval(attrs.jqTree), [ 'datasource', 'datafields', 'id', 'parent', 'display' ], 
+						var p = jqCommon.getParams($scope.$eval(attrs.jqTree), [ 'datasource', 'datafields', 'id', 'parent', 'display' ], 
 								[ 'settings', 'events', 'buttons', 'filter' ]);
+						p.events = p.events || {};
+						return p;
 					};
 					var getSelectedEntity = function() {
 						var selectedItem = $scope.tree.jqxTree('getSelectedItem');

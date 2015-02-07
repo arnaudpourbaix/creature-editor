@@ -183,7 +183,9 @@ angular.module('apx-jqwidgets.grid', [])
 			return {
 				post : function($scope, element, attrs) {
 					var getParams = function() {
-						return jqCommon.getParams($scope.$eval(attrs.jqGrid), [ 'datasource', 'columns' ], [ 'settings', 'events', 'buttons', 'filter' ]);
+						var p = jqCommon.getParams($scope.$eval(attrs.jqGrid), [ 'datasource', 'columns' ], [ 'settings', 'events', 'buttons', 'filter' ]);
+						p.events = p.events || {};
+						return p;
 					};
 					var getSelectedEntity = function() {
 						var rowIndex = $scope.grid.jqxGrid('getselectedrowindex');
