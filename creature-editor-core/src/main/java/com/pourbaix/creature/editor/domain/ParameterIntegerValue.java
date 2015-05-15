@@ -10,7 +10,7 @@ public class ParameterIntegerValue extends Parameter implements java.io.Serializ
 
 	private static final long serialVersionUID = 1L;
 
-	@Column(name = "VALUE")
+	@Column(name = "VALUE", columnDefinition = "VARCHAR")
 	private Integer value;
 
 	@Column(name = "MIN_VALUE")
