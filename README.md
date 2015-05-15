@@ -34,7 +34,7 @@ On Windows OS, Maven can't execute cmd files (npm and grunt). So they need to be
 ## Install
 
 ### IDE
-1. [Eclipse IDE for Java EE Developers](http://www.eclipse.org/downloads/packages/eclipse-ide-java-ee-developers/keplerr).
+1. [Eclipse IDE for Java EE Developers](https://eclipse.org/downloads/packages/eclipse-ide-java-developers/lunasr2).
 2. [Plugin EasyShell](http://pluginbox.sourceforge.net). Handfull for calling grunt tasks and running hsqldb server.
 3. Add Java 1.7 SDK (Preferences / Installed JREs)
 
@@ -43,6 +43,7 @@ On Windows OS, Maven can't execute cmd files (npm and grunt). So they need to be
 2. Clone a Git Repository and add the clone to this view. 
 3. Clone https://github.com/arnaudpourbaix/creature-editor.git and check "import project"
 4. Right click on project and select Maven > Update Project..., check all sub-modules
+5. Project / Clean... / Clean all projects (if there are some java errors)
 
 ### Core project
 1. Start database, can be done using `start.cmd` in launcher folder (in parent project, right click on `start.cmd` and select Easy Shell > Run...)

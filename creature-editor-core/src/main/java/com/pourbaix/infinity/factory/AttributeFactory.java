@@ -27,15 +27,23 @@ public class AttributeFactory {
 	@Resource
 	private GameEditionRepository gameEditionRepository;
 	
-	public AttributeValue getAttributeValue(Creature creature, AttributeEnum id, String value) {
+	public AttributeValue getAttributeValue(Creature creature, AttributeEnum id, String value, boolean imported) {
 		AttributeValue attributeValue = getAttributeValue(creature, id);
-		attributeValue.setStringValue(value);
+		if (imported) {
+			attributeValue.setImportValue(value);
+		} else {
+			attributeValue.setValue(value);
+		}
 		return attributeValue;
 	}
 
-	public AttributeValue getAttributeValue(Creature creature, AttributeEnum id, long value) {
+	public AttributeValue getAttributeValue(Creature creature, AttributeEnum id, long value, boolean imported) {
 		AttributeValue attributeValue = getAttributeValue(creature, id);
-		attributeValue.setNumberValue(value);
+		if (imported) {
+			attributeValue.setImportValue(String.valueOf(value));
+		} else {
+			attributeValue.setValue(String.valueOf(value));
+		}
 		return attributeValue;
 	}
 	

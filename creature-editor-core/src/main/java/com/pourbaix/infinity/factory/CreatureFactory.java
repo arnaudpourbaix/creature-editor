@@ -283,12 +283,12 @@ public class CreatureFactory {
 	}
 
 	private void addAttribute(Creature creature, RawCreature rawCreature, AttributeEnum attribute, String value) {
-		AttributeValue attributeValue = attributeFactory.getAttributeValue(creature, attribute, value);
+		AttributeValue attributeValue = attributeFactory.getAttributeValue(creature, attribute, value, true);
 		creature.getAttributeValues().add(attributeValue);
 	}
 
 	private void addAttribute(Creature creature, RawCreature rawCreature, AttributeEnum attribute, long value) {
-		AttributeValue attributeValue = attributeFactory.getAttributeValue(creature, attribute, value);
+		AttributeValue attributeValue = attributeFactory.getAttributeValue(creature, attribute, value, true);
 		creature.getAttributeValues().add(attributeValue);
 	}
 	

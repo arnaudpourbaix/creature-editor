@@ -52,18 +52,16 @@ public class AttributeValue implements java.io.Serializable {
 	@JoinColumn(name = "GAME_EDITION_ID")
 	private GameEdition gameEdition;
 
-	@Column(name = "STRING_VALUE", length = 50)
-	private String stringValue;
+	@Column(name = "IMPORT_VALUE", length = 255)
+	private String importValue;
 
-	@Column(name = "NUMBER_VALUE")
-	private Long numberValue;
+	@Column(name = "VALUE", length = 255)
+	private String value;	
 	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (stringValue != null && (attribute.getType() == AttributeTypeEnum.string || attribute.getType() == AttributeTypeEnum.stringref)) {
-			sb.append(attribute.getShortLabel()).append(": ").append(stringValue);
-		} else if (numberValue != null && attribute.getType() == AttributeTypeEnum.number) {
-			sb.append(attribute.getShortLabel()).append(": ").append(numberValue);
+		if (value != null && (attribute.getType() == AttributeTypeEnum.string || attribute.getType() == AttributeTypeEnum.stringref)) {
+			sb.append(attribute.getShortLabel()).append(": ").append(value);
 		}
 		return sb.toString();
 	}
@@ -100,22 +98,6 @@ public class AttributeValue implements java.io.Serializable {
 		this.gameEdition = gameEdition;
 	}
 
-	public String getStringValue() {
-		return stringValue;
-	}
-
-	public void setStringValue(String stringValue) {
-		this.stringValue = stringValue;
-	}
-
-	public Long getNumberValue() {
-		return numberValue;
-	}
-
-	public void setNumberValue(Long numberValue) {
-		this.numberValue = numberValue;
-	}
-
 	public StateEnum getState() {
 		return state;
 	}
@@ -123,5 +105,21 @@ public class AttributeValue implements java.io.Serializable {
 	public void setState(StateEnum state) {
 		this.state = state;
 	}
-	
+
+	public String getImportValue() {
+		return importValue;
+	}
+
+	public void setImportValue(String importValue) {
+		this.importValue = importValue;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+		
 }

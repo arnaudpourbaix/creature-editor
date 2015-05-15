@@ -108,8 +108,8 @@
 			<column name="id" type="int" autoIncrement="true">
 				<constraints primaryKey="true" />
 			</column>
-			<column name="string_value" type="VARCHAR2(30)" />
-			<column name="number_value" type="bigint" />
+			<column name="import_value" type="VARCHAR2(255)" />
+			<column name="value" type="VARCHAR2(255)" />			
 			<column name="creature_id" type="int" />
 			<column name="attribute_id" type="VARCHAR2(30)" />
 			<column name="game_edition_id" type="VARCHAR2(30)" />
