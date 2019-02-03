@@ -1,1 +1,0 @@
-angular.module('editor.creature.import', [ 'editor.creature.import', 'editor.creature.import.controllers', 'editor.creature.import.services' ]);

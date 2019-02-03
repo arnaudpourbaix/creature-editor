@@ -1,1 +1,0 @@
-java -jar sqltool.jar --sql "shutdown;" --inlineRc=url=jdbc:hsqldb:hsql://localhost:9001/creatureEditor,user=sa,password=

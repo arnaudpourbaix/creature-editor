@@ -1,0 +1,22 @@
+import { IRouterContext } from "koa-router";
+import { Inject, Singleton } from "typescript-ioc";
+import CreatureService from "./creature-service";
+
+@Singleton
+export default class CreatureController {
+
+    constructor( @Inject private creatureService: CreatureService) { }
+
+    public async getAllCreatures(ctx: IRouterContext) {
+        ctx.body = await this.creatureService.findAll();
+    }
+
+    public async findMovieById(ctx: IRouterContext) {
+        try {
+            ctx.body = await this.creatureService.findById(ctx.params.id);
+        } catch (e) {
+            ctx.throw(404);
+        }
+    }
+
+}
