@@ -1,12 +1,16 @@
+import { Inject, Singleton } from "typescript-ioc";
 import fs = require('fs');
 import path = require('path');
 
-class GameService {
+@Singleton
+export default class GameService {
 
     private GAME_FOLDER = "D:\\Games\\Beamdog\\00766";
     private DEFAULT_LANGUAGE = "en_US";
     private KEY_FILENAME = "chitin.key";
-    private DIALOG_FILENAME = "dialog.tlk";
+	private DIALOG_FILENAME = "dialog.tlk";
+	
+	constructor() { }
 
 	public openGame() {
 		this.fetchDialogFile();

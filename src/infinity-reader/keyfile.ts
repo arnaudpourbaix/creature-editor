@@ -1,6 +1,10 @@
+import { Inject, Singleton } from "typescript-ioc";
 import fs = require('fs');
 
-class KeyfileService {
+@Singleton
+export default class KeyfileService {
+
+    constructor() { }
 
     public init() {
         const file = fs.readFile('D:\\Games\\Beamdog\\00766\\chitin.key', (err, buffer) => {
@@ -10,5 +14,3 @@ class KeyfileService {
     }
 
 }
-
-export var service = new KeyfileService();
