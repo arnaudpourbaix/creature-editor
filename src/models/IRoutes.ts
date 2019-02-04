@@ -1,5 +1,6 @@
 import * as Router from "koa-router";
 import Route from "./route";
+import { IRouterContext } from "koa-router";
 
 export abstract class IRoutes {
 
@@ -9,6 +10,7 @@ export abstract class IRoutes {
         this.getRoutes().forEach((route) => {
             this.registerRoute(route, router);
         });
+        this.registerRoute(Route.newRoute("/favicon", "get", (ctx: IRouterContext) => {}), router);
     }
 
     private registerRoute = (route: Route, router: Router) => {

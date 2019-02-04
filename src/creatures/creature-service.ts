@@ -3,7 +3,7 @@ import Creature from "./creature-entity";
 import CreatureRepository from "./creature-repository";
 
 @Singleton
-export default class MovieService {
+export default class CreatureService {
 
     constructor( @Inject private creatureRepository: CreatureRepository) { }
 

@@ -13,7 +13,7 @@ export default class CreatureRoutes extends IRoutes {
     protected getRoutes(): Route[] {
         return [
             Route.newRoute("/creatures", "get", (ctx: IRouterContext) => this.creatureController.getAllCreatures(ctx)),
-            Route.newRoute("/creatures/:id", "get", (ctx: IRouterContext) => this.creatureController.findMovieById(ctx))
+            Route.newRoute("/creatures/:id", "get", (ctx: IRouterContext) => this.creatureController.findCreatureById(ctx))
         ];
     }
 }

@@ -11,7 +11,7 @@ export default class CreatureController {
         ctx.body = await this.creatureService.findAll();
     }
 
-    public async findMovieById(ctx: IRouterContext) {
+    public async findCreatureById(ctx: IRouterContext) {
         try {
             ctx.body = await this.creatureService.findById(ctx.params.id);
         } catch (e) {

@@ -1,21 +1,17 @@
 import { expect } from "chai";
 import { Server } from "http";
-import * as Koa from "koa";
 import "mocha";
-import * as sinon from "sinon";
 import { agent } from "supertest";
-import { instance, mock, verify, when } from "ts-mockito";
 import { Container } from "typescript-ioc";
-import Movie from "../src/models/Movie";
-import MovieListr from "../src/MovieListr";
-import DirectorTestBuilder from "../test/testutils/DirectorTestBuilder";
-import MovieTestBuilder from "../test/testutils/MovieTestBuilder";
+import Creature from "../src/creatures/creature-entity";
+import CreatureTestBuilder from "../test/testutils/creature-test-builder";
+import CreatureEditor from "../src/creature-editor";
 
-describe("E2E: Movie Actions", () => {
+describe("E2E: Creature Actions", () => {
 
     let app: Server;
 
-    const title: string = "Spongebob Squarepants Movie";
+    const title: string = "Spongebob Squarepants Creature";
     const rating = 7;
     const duration = 84;
     const releaseYear = 2008;
@@ -24,35 +20,29 @@ describe("E2E: Movie Actions", () => {
     const directorFirstName = "John";
     const directorLastName = "Lasseter";
     const directorBirthYear = 1957;
-    const director = () => DirectorTestBuilder.newDirector()
-        .withId(3)
-        .withFirstName(directorFirstName)
-        .withLastName(directorLastName)
-        .withBirthYear(directorBirthYear);
 
     before(async () => {
-        const movielistr: MovieListr = Container.get(MovieListr);
-        app = await movielistr.start();
+        const creatureEditor: CreatureEditor = Container.get(CreatureEditor);
+        app = await creatureEditor.start();
     });
 
-    describe("GET /movies", () => {
-
-        it("returns a list of all movies", async () => {
+    describe("GET /creatures", () => {
+        it("returns a list of all creatures", async () => {
             const response = await agent(app)
-                .get("/movies")
+                .get("/creatures")
                 .accept("json")
                 .expect(200);
 
-            const result: Movie[] = response.body;
+            const result: Creature[] = response.body;
             expect(result).to.have.length(4);
         });
     });
 
-    describe("GET /movies/:id", () => {
+    describe("GET /creatures/:id", () => {
 
-        it("should return the specific movie", async () => {
+        it("should return the specific creature", async () => {
             const response = await agent(app)
-                .get("/movies/1")
+                .get("/creatures/1")
                 .accept("json")
                 .expect(200);
 
@@ -68,29 +58,27 @@ describe("E2E: Movie Actions", () => {
             expect(result.director.birthYear).to.equal(1957);
         });
 
-        it("should return a 404 when the movie with id doesn't exist", async () => {
+        it("should return a 404 when the creature with id doesn't exist", async () => {
             const response = await agent(app)
-                .get("/movies/999")
+                .get("/creatures/999")
                 .accept("json")
                 .expect(404);
         });
 
     });
 
-    describe("POST /movies", () => {
-
-        it("should add the movie", async () => {
+    describe("POST /creatures", () => {
+        it("should add the creature", async () => {
             const response = await agent(app)
-                .post("/movies")
+                .post("/creatures")
                 .accept("json")
-                .send(MovieTestBuilder
-                    .newMovie()
+                .send(CreatureTestBuilder
+                    .newCreature()
                     .withTitle(title)
                     .withRating(rating)
                     .withDuration(duration)
                     .withReleaseYear(releaseYear)
                     .withSeen(seen)
-                    .withDirector(director().build())
                     .build(),
             ).expect(200);
 
@@ -100,43 +88,41 @@ describe("E2E: Movie Actions", () => {
 
         it("should return 400 if the director does not exist yet", async () => {
             await agent(app)
-                .post("/movies")
+                .post("/creatures")
                 .accept("json")
-                .send(MovieTestBuilder
-                    .newMovie()
+                .send(CreatureTestBuilder
+                    .newCreature()
                     .withTitle(title)
                     .withRating(rating)
                     .withDuration(duration)
                     .withReleaseYear(releaseYear)
                     .withSeen(seen)
-                    .withDirector(director().withId(999).build())
                     .build(),
             ).expect(400);
         });
     });
 
-    describe("PUT /movies/:id", () => {
+    describe("PUT /creatures/:id", () => {
 
-        it("should update the movie with given ID", async () => {
-            const movieResponse = await agent(app)
-                .get("/movies")
+        it("should update the creature with given ID", async () => {
+            const creatureResponse = await agent(app)
+                .get("/creatures")
                 .accept("json")
                 .expect(200);
-            const allMovies = movieResponse.body;
-            const movieId = allMovies[0].id;
+            const allCreatures = creatureResponse.body;
+            const creatureId = allCreatures[0].id;
 
             const response = await agent(app)
-                .put(`/movies/${movieId}`)
+                .put(`/creatures/${creatureId}`)
                 .accept("json")
-                .send(MovieTestBuilder
-                    .newMovie()
-                    .withId(movieId)
+                .send(CreatureTestBuilder
+                    .newCreature()
+                    .withId(creatureId)
                     .withTitle(title)
                     .withRating(rating)
                     .withDuration(duration)
                     .withReleaseYear(releaseYear)
                     .withSeen(seen)
-                    .withDirector(director().build())
                     .build(),
             ).expect(200);
 
@@ -153,71 +139,69 @@ describe("E2E: Movie Actions", () => {
             expect(result.director.birthYear).to.equal(directorBirthYear);
         });
 
-        it("should return 400 if the movie does not exist yet", async () => {
+        it("should return 400 if the creature does not exist yet", async () => {
             await agent(app)
-                .put("/movies/99")
+                .put("/creatures/99")
                 .accept("json")
-                .send(MovieTestBuilder
-                    .newMovie()
+                .send(CreatureTestBuilder
+                    .newCreature()
                     .withId(99)
                     .withTitle(title)
                     .withRating(rating)
                     .withDuration(duration)
                     .withReleaseYear(releaseYear)
                     .withSeen(seen)
-                    .withDirector(director().build())
                     .build(),
             ).expect(400);
         });
 
         it("should return 400 if the id of the request object does not match the url id", async () => {
             await agent(app)
-                .put("/movies/10")
+                .put("/creatures/10")
                 .accept("json")
-                .send(MovieTestBuilder
-                    .newMovie()
+                .send(CreatureTestBuilder
+                    .newCreature()
                     .withId(5)
                     .withTitle(title)
                     .withRating(rating)
                     .withDuration(duration)
                     .withReleaseYear(releaseYear)
                     .withSeen(seen)
-                    .withDirector(director().build())
                     .build(),
             ).expect(400);
         });
     });
 
-    describe("DELETE /movies/:id", () => {
+    describe("DELETE /creatures/:id", () => {
 
-        it("should delete the movie with the given type", async () => {
-            const movieResponse = await agent(app)
-                .get("/movies")
+        it("should delete the creature with the given type", async () => {
+            const creatureResponse = await agent(app)
+                .get("/creatures")
                 .accept("json")
                 .expect(200);
-            const currentMovies = movieResponse.body;
-            const movieId = currentMovies[0].id;
+            const currentCreatures = creatureResponse.body;
+            const creatureId = currentCreatures[0].id;
 
             await agent(app)
-                .delete(`/movies/${movieId}`)
+                .delete(`/creatures/${creatureId}`)
                 .accept("json")
                 .expect(200);
 
             const response = await agent(app)
-                .get("/movies")
+                .get("/creatures")
                 .accept("json")
                 .expect(200);
 
-            const allMovies: Movie[] = response.body;
+            const allCreatures: Creature[] = response.body;
 
-            allMovies.forEach((element) => {
-                expect(element.$id).not.to.equal(movieId);
+            allCreatures.forEach((element) => {
+                expect(element.$id).not.to.equal(creatureId);
             });
         });
 
-        it("should return a 404 if the movie does not exist (anymore)", async () => {
+        it("should return a 404 if the creature does not exist (anymore)", async () => {
             await agent(app)
-                .delete("/movies/999")
+                .delete("/creatures/999")
                 .accept("json")
                 .expect(404);
         });
