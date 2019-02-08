@@ -5,7 +5,7 @@
   "scripts": {
     "build": "tsc --rootDir ./src/",
     "start": "ts-node src/index.ts",
-    "start:debug": "ts-node --inspect=5858 --debug-brk --ignore false src/index.ts",
+    "start:debug": "node -r ts-node/register --inspect=5858 --debug-brk src/index.ts",
     "test": "mocha -r ts-node/register test/**/*.spec.ts",
     "test:debug": "mocha --inspect --debug-brk --not-timeouts --compilers ts:ts-node/register test/**/*.spec.ts",
     "pree2e": "ts-node scripts/start-test-db.ts",

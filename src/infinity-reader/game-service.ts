@@ -1,6 +1,7 @@
 import { Inject, Singleton } from "typescript-ioc";
 import fs = require('fs');
 import path = require('path');
+import KeyfileService from "./keyfile";
 
 @Singleton
 export default class GameService {
@@ -10,13 +11,14 @@ export default class GameService {
     private KEY_FILENAME = "chitin.key";
 	private DIALOG_FILENAME = "dialog.tlk";
 	
-	constructor() { }
+	constructor(@Inject private keyFileService: KeyfileService) { }
 
-	public openGame() {
-		this.fetchDialogFile();
+	public async openGame(): Promise<void> {
+        return this.keyFileService.init();
+		//this.fetchDialogFile();
 		// ResourceFactory.getInstance().setGameVersion(globalContext.getGameVersion());
 		// ResourceFactory.getInstance().setRootDirs(globalContext.getRootDirectories());
-		this.loadResources();
+		//this.loadResources();
 	}
 
 	private fetchDialogFile() {

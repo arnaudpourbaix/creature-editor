@@ -2,7 +2,7 @@ import * as Router from "koa-router";
 import Route from "./route";
 import { IRouterContext } from "koa-router";
 
-export abstract class IRoutes {
+export abstract class BaseRoutes {
 
     protected abstract getRoutes(): Route[];
 
@@ -32,4 +32,4 @@ export abstract class IRoutes {
 
 }
 
-export default IRoutes;
+export default BaseRoutes;
