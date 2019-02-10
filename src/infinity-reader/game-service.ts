@@ -1,56 +1,34 @@
 import { Inject, Singleton } from "typescript-ioc";
 import fs = require('fs');
 import path = require('path');
-import KeyfileService from "./keyfile";
+import KeyfileService from "./keyfile-service";
+import StringService from "./string-service";
+import { ResourceEntry, BiffResourceEntry } from "./ressource-entry";
 
 @Singleton
 export default class GameService {
 
-    private GAME_FOLDER = "D:\\Games\\Beamdog\\00766";
-    private DEFAULT_LANGUAGE = "en_US";
-    private KEY_FILENAME = "chitin.key";
-	private DIALOG_FILENAME = "dialog.tlk";
-	
-	constructor(@Inject private keyFileService: KeyfileService) { }
+
+	constructor(@Inject private keyFileService: KeyfileService, @Inject private stringService: StringService) { }
 
 	public async openGame(): Promise<void> {
-        return this.keyFileService.init();
-		//this.fetchDialogFile();
-		// ResourceFactory.getInstance().setGameVersion(globalContext.getGameVersion());
-		// ResourceFactory.getInstance().setRootDirs(globalContext.getRootDirectories());
-		//this.loadResources();
-	}
-
-	private fetchDialogFile() {
-        let file = path.format({ root: this.GAME_FOLDER, dir: "lang", name: this.DIALOG_FILENAME });
-        fs.readFile(file, (buffer) => {
-
-        });
-	}
-
-	private loadResources() {
-        //StringResource.getInstance().init(globalContext.getDialogFile());
-        // Keyfile.getInstance().init(globalContext.getChitinKey());
-		// // Add override resources
-		// for (final File rootDir : globalContext.getRootDirectories()) {
-		// 	File overrideDir = new File(rootDir, Constant.OVERRIDE_DIRECTORY);
-		// 	if (!overrideDir.exists() || !overrideDir.isDirectory()) {
-		// 		continue;
-		// 	}
-		// 	for (final File overrideFile : overrideDir.listFiles()) {
-		// 		if (overrideFile.isDirectory()) {
-		// 			continue;
-		// 		}
-		// 		String filename = overrideFile.getName().toUpperCase();
-		// 		ResourceEntry entry = Keyfile.getInstance().getResourceEntry(filename);
-		// 		if (entry == null) {
-		// 			ResourceEntry fileEntry = new FileResourceEntry(overrideFile);
-		// 			Keyfile.getInstance().addResourceEntry(fileEntry);
-		// 		} else if (entry instanceof BiffResourceEntry) {
-		// 			((BiffResourceEntry) entry).setOverrideFile(overrideFile);
-		// 		}
-		// 	}
-		// }
+		this.keyFileService.init();
+		this.stringService.init();
+		// Add override resources
+		console.log("GameService", "Adding override resources");
+		const folder = 'D:/Games/Beamdog/00766/Override';
+		if (fs.existsSync(folder)) {
+			fs.readdirSync(folder).forEach((file) => {
+				let entry = this.keyFileService.getResourceEntry(file);
+				if (!entry) {
+					this.keyFileService.addResourceEntry(new ResourceEntry(file));
+				} else if (entry instanceof BiffResourceEntry) {
+					entry.overrideFile = file;
+				}
+			});
+		}
+		let cres = this.keyFileService.getResourceEntriesByExtension("cre");
+		console.log(cres);
 	}
 
 }
