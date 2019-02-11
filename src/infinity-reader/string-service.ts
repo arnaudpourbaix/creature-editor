@@ -5,6 +5,7 @@ import BaseReaderService from "./base-reader";
 @Singleton
 export default class StringService extends BaseReaderService {
 	private nbEntries: number;
+	private startIndex: number;
 
 	constructor() { 
 		super();
@@ -17,10 +18,10 @@ export default class StringService extends BaseReaderService {
         }
         this.buffer = fs.readFileSync(file);
 		const signature = String(this.buffer.subarray(0, 4));
+		const version = String(this.buffer.subarray(4, 8));
 		if (signature.toUpperCase() !== "TLK ") {
 			throw "invalid dialog.tlk file: " + file;
 		}
-		const version = String(this.buffer.subarray(4, 8));
 		if (version.toUpperCase() !== "V1  ") {
 			throw "invalid dialog.tlk version: " + file;
 		}

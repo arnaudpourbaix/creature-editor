@@ -3,7 +3,7 @@ import fs = require('fs');
 import path = require('path');
 import KeyfileService from "./keyfile-service";
 import StringService from "./string-service";
-import { ResourceEntry, BiffResourceEntry } from "./ressource-entry";
+import { FileResourceEntry, BiffResourceEntry } from "./ressource-entry";
 
 @Singleton
 export default class GameService {
@@ -21,14 +21,14 @@ export default class GameService {
 			fs.readdirSync(folder).forEach((file) => {
 				let entry = this.keyFileService.getResourceEntry(file);
 				if (!entry) {
-					this.keyFileService.addResourceEntry(new ResourceEntry(file));
+					this.keyFileService.addResourceEntry(new FileResourceEntry(file));
 				} else if (entry instanceof BiffResourceEntry) {
 					entry.overrideFile = file;
 				}
 			});
 		}
-		let cres = this.keyFileService.getResourceEntriesByExtension("cre");
-		console.log(cres);
+		// let cres = this.keyFileService.getResourceEntriesByExtension("cre");
+		// console.log(cres.map((cre) => cre.resourceName));
 	}
 
 }

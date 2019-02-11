@@ -20,11 +20,12 @@ export default class CreatureController {
     }
 
     public async importFromGame(ctx: IRouterContext) {
-        try {
-            ctx.body = await this.creatureService.importFromGame();
-        } catch (e) {
-            ctx.throw(400, e);
-        }
+        ctx.body = await this.creatureService.importFromGame();
+        // try {
+        //     ctx.body = await this.creatureService.importFromGame();
+        // } catch (e) {
+        //     ctx.throw(400, e);
+        // }
     }
 
 }
