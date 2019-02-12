@@ -1,16 +1,18 @@
 import { Singleton } from "typescript-ioc";
-import BaseReaderService from "./base-reader";
+import FileReader from "./file-reader";
+import BiffEntry from "./biff-entry";
 import { DynamicArray } from "./dynamic-array";
 import { BaseResourceEntry, BiffResourceEntry } from "./ressource-entry";
-import BiffEntry from "./biff-entry";
 import fs = require('fs');
 import _ = require('lodash');
+import { Config } from './config';
 
 @Singleton
-export default class KeyfileService extends BaseReaderService {
+export default class KeyfileService {
 
     private resourceEntries: BaseResourceEntry[];
     private biffEntries: any[];
+    private buffer: Buffer;
     private startIndex: number;
     
     static EXTENSIONS = [
@@ -26,24 +28,20 @@ export default class KeyfileService extends BaseReaderService {
         { key: 0x3fd, value: "PRO" }
     ];
 
-    constructor() { 
-        super();
-    }
+    constructor() {}
 
     public init(): void {
-        const file = 'D:/Games/Beamdog/00766/chitin.key';
-        //const file = 'db-data/chitin.key';
-        if (!fs.existsSync(file)) {
-            throw "chitin.key not found on " + file;
+        if (!fs.existsSync(Config.CHITIN_KEY_FILE)) {
+            throw "chitin.key not found on " + Config.CHITIN_KEY_FILE;
         }
-        this.buffer = fs.readFileSync(file);
+        this.buffer = fs.readFileSync(Config.CHITIN_KEY_FILE);
         const signature = String(this.buffer.subarray(0, 4));
         const version = String(this.buffer.subarray(4, 8));
 		if (signature.toUpperCase() !== "KEY ") {
-			throw "invalid chitin.key file: " + file;
+			throw "invalid chitin.key file: " + Config.CHITIN_KEY_FILE;
 		}
 		if (version.toUpperCase() !== "V1  ") {
-			throw "invalid chitin.key version: " + file;
+			throw "invalid chitin.key version: " + Config.CHITIN_KEY_FILE;
 		}
         this.resourceEntries = [];
         this.biffEntries = [];

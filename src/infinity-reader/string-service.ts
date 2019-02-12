@@ -1,32 +1,32 @@
 import { Singleton } from "typescript-ioc";
 import fs = require('fs');
-import BaseReaderService from "./base-reader";
+import FileReader from "./file-reader";
+import { Config } from './config';
+import { DynamicArray } from "./dynamic-array";
 
 @Singleton
-export default class StringService extends BaseReaderService {
+export default class StringService {
 	private nbEntries: number;
+    private buffer: Buffer;
 	private startIndex: number;
 
-	constructor() { 
-		super();
-	}
+	constructor() {}
 
 	public init(): void {
-		const file = 'D:/Games/Beamdog/00766/lang/en_US/dialog.tlk';
-        if (!fs.existsSync(file)) {
-            throw "dialog.tlk not found on " + file;
+        if (!fs.existsSync(Config.DIALOG_FILE)) {
+            throw "dialog.tlk not found on " + Config.DIALOG_FILE;
         }
-        this.buffer = fs.readFileSync(file);
+        this.buffer = fs.readFileSync(Config.DIALOG_FILE);
 		const signature = String(this.buffer.subarray(0, 4));
 		const version = String(this.buffer.subarray(4, 8));
 		if (signature.toUpperCase() !== "TLK ") {
-			throw "invalid dialog.tlk file: " + file;
+			throw "invalid dialog.tlk file: " + Config.DIALOG_FILE;
 		}
 		if (version.toUpperCase() !== "V1  ") {
-			throw "invalid dialog.tlk version: " + file;
+			throw "invalid dialog.tlk version: " + Config.DIALOG_FILE;
 		}
-		this.nbEntries = this.readInt(0xA, 4);
-		this.startIndex = this.readInt(0xE, 4);
+		this.nbEntries = FileReader.readInt(this.buffer, 0xA, 4);
+		this.startIndex = FileReader.readInt(this.buffer, 0xE, 4);
 	}
 
 	public getStringRef(index: number): string|null {
@@ -37,9 +37,9 @@ export default class StringService extends BaseReaderService {
 			throw "Invalid string index: " + index;
 		}
 		index *= 0x1A;
-		let offset = this.readInt(0x12 + index + 0x12, 4);
-		let length = this.readInt(0x12 + index + 0x16, 4);
-		let result = this.readString(this.startIndex + offset, length);
+		let offset = FileReader.readInt(this.buffer, 0x12 + index + 0x12, 4);
+		let length = FileReader.readInt(this.buffer, 0x12 + index + 0x16, 4);
+		let result = DynamicArray.getString(this.buffer, this.startIndex + offset, length);
 		return result;
 	}
 
