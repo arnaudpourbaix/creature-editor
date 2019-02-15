@@ -6,6 +6,7 @@ import { BaseResourceEntry, BiffResourceEntry } from "./ressource-entry";
 import fs = require('fs');
 import _ = require('lodash');
 import { Config } from './config';
+import { ExtensionEnum } from "./constants";
 
 @Singleton
 export default class KeyfileService {
@@ -16,16 +17,16 @@ export default class KeyfileService {
     private startIndex: number;
     
     static EXTENSIONS = [
-        { key: 0x3ed, value: "ITM" },
-        { key: 0x3ee, value: "SPL" },
-        { key: 0x3ef, value: "BCS" },
-        { key: 0x3f0, value: "IDS" },
-        { key: 0x3f1, value: "CRE" },
-        { key: 0x3f3, value: "DLG" },
-        { key: 0x3f4, value: "2DA" },
-        { key: 0x3f6, value: "STO" },
-        { key: 0x3f8, value: "EFF" },
-        { key: 0x3fd, value: "PRO" }
+        { key: 0x3ed, value: ExtensionEnum.Item },
+        { key: 0x3ee, value: ExtensionEnum.Spell },
+        { key: 0x3ef, value: ExtensionEnum.Script },
+        { key: 0x3f0, value: ExtensionEnum.Identifiers },
+        { key: 0x3f1, value: ExtensionEnum.Creature },
+        { key: 0x3f3, value: ExtensionEnum.Dialog },
+        { key: 0x3f4, value: ExtensionEnum.Data },
+        { key: 0x3f6, value: ExtensionEnum.Store },
+        { key: 0x3f8, value: ExtensionEnum.Effect },
+        { key: 0x3fd, value: ExtensionEnum.Projectile }
     ];
 
     constructor() {}

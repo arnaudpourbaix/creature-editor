@@ -11,7 +11,7 @@ export default class GameService {
 
     public async openGame(): Promise<void> {
         this.keyFileService.init();
-        //this.stringService.init();
+        this.stringService.init();
         // Add override resources
         if (fs.existsSync(Config.OVERRIDE_FOLDER)) {
             fs.readdirSync(Config.OVERRIDE_FOLDER).forEach(file => {
