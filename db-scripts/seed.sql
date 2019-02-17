@@ -1,0 +1,1 @@
+INSERT INTO creature(cre, name) values ("WOLF", "Wolf");
