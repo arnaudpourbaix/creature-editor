@@ -1,7 +1,0 @@
-node_modules/
-dist/
-.ts-node/
-yarn.lock
-yarn-error.lock
-yarn-error.log
-.vscode/settings.json
