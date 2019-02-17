@@ -1,14 +1,14 @@
 import { DatabaseService } from './../data-access/database.service';
 import { Injectable } from "@angular/core";
-import GameService from "../infinity-reader/game.service";
-import KeyfileService from "../infinity-reader/keyfile.service";
+import { GameService } from "../infinity-reader/game.service";
+import { KeyfileService } from "../infinity-reader/keyfile.service";
 import Creature from "../data-access/entities/creature.entity";
 import { ExtensionEnum } from "../infinity-reader/constants";
 
 @Injectable({
    providedIn: "root"
 })
-export default class CreatureService {
+export class CreatureService {
     constructor(private databaseService: DatabaseService, private gameService: GameService, private keyfileService: KeyfileService) {}
 
     public async findById(id: string): Promise<Creature> {

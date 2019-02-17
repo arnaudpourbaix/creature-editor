@@ -1,14 +1,14 @@
 import { Config } from "./config";
 import { Injectable } from '@angular/core';
-import KeyfileService from "./keyfile.service";
+import { KeyfileService } from "./keyfile.service";
 import { BiffResourceEntry, FileResourceEntry } from "./ressource-entry";
-import StringService from "./string.service";
+import { StringService } from "./string.service";
 import * as fs from 'fs';
 
 @Injectable({
    providedIn: "root"
 })
-export default class GameService {
+export class GameService {
     constructor(private keyFileService: KeyfileService, private stringService: StringService) {}
 
     public async openGame(): Promise<void> {

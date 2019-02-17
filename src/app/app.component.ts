@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import Creature from './data-access/entities/creature.entity';
-import CreatureService from './creatures/creature.service';
+import { CreatureService } from './creatures/creature.service';
 
 @Component({
     selector: 'app-root',

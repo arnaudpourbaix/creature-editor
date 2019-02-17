@@ -9,7 +9,7 @@ import { Config } from "./config";
 @Injectable({
    providedIn: "root"
 })
-export default class KeyfileService {
+export class KeyfileService {
    private resourceEntries: BaseResourceEntry[];
    private biffEntries: any[];
    private buffer: Buffer;

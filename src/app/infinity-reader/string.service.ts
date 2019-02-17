@@ -7,7 +7,7 @@ import FileReader from "./file-reader";
 @Injectable({
    providedIn: "root"
 })
-export default class StringService {
+export class StringService {
    private nbEntries: number;
    private buffer: Buffer;
    private startIndex: number;
